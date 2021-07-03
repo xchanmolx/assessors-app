@@ -1,0 +1,211 @@
+Sorting: use => OrderBy and OrderByDescending
+Filtering: use => Where clause or Any Condition clause
+Pagination: use => int Take, int Skip, bool IsPagingEnabled
+Searching: use => Any Condition clause, like "Contains"
+
+for ASPNET Core API - package references - NuGet Package Manager
+Microsoft.EntityFrameworkCore.Design - EntityFrameworkCore will matter the installed runtime of PC
+AutoMapper
+AutoMapper.Extensions.Microsoft.DependencyInjection
+Microsoft.AspNetCore.Authentication.JwtBearer
+
+for Core Class Library
+Microsoft.Extensions.Identity.Stores
+
+for Infrastructure Class Library
+Microsoft.EntityFrameworkCore - EntityFrameworkCore will matter the installed runtime of PC
+Microsoft.EntityFrameworkCore.SqlServer - EntityFrameworkCore will matter the installed runtime of PC
+StackExchange.Redis
+Microsoft.AspNetCore.Identity
+Microsoft.AspNetCore.Identity.EntityFrameworkCore - EntityFrameworkCore will matter the installed runtime of PC
+Microsoft.IdentityModel.Tokens
+System.IdentityModel.Tokens.Jwt
+
+for .NET 5 powershell
+mkdir skinet
+dotnet new -h
+dotnet new -l
+dotnet new sln
+dotnet new webapi -o API
+dotnet sln -h
+dotnet sln add API/
+dotnet sln list
+dotnet dev-certs https
+dotnet dev-certs https -h
+dotnet dev-certs https -t
+dotnet --info
+dotnet tool install --global dotnet-ef --version 5.0.0
+dotnet ef -h
+dotnet ef migrations -h
+dotnet ef migrations add InitialCreate -o Data/Migrations
+dotnet ef database -h
+cd .. to parent folder
+dotnet new -h
+dotnet new -l
+dotnet new classlib -o Core
+dotnet new classlib -o Infrastructure
+dotnet sln add Core/
+dotnet sln add Infrastructure/
+cd to API
+dotnet add reference ../Infrastructure/
+cd .. to parent folder again
+cd Infrastructure
+dotnet add reference ../Core/
+cd .. to parent folder once again
+dotnet restore
+dotnet build
+dotnet ef database drop -p Infrastructure -s API
+dotnet ef migrations remove -p Infrastructure -s API
+dotnet ef migrations add InitialCreate -p Infrastructure -s API -o Data/Migrations
+dotnet ef migrations add IdentityInitial -p Infrastructure -s API -o Identity/Migrations -c AppIdentityDbContext
+dotnet ef migrations remove -p Infrastructure -s API -c AppIdentityDbContext
+
+for Angular powershell
+npm install -g @angular/cli
+ng new client
+ng serve
+ng add ngx-bootstrap
+ng g
+ng g c --help
+ng g c nav-bar --skip-tests
+ng g m core
+ng g s shop --skip-tests --flat
+ng g m shop-routing --flat
+ng g interceptor loading --flat --skip-tests
+
+3rd party Component for Angular
+npm install bootstrap font-awesome
+npm install ngx-bootstrap --save
+npm install ngx-toastr --save
+npm install --save xng-breadcrumb
+npm install bootswatch
+npm install ngx-spinner
+npm install uuid
+
+Make git to github
+cd .. to parent folder
+git status
+git init
+git add .
+git commit -m "Initial Commit"
+git remote add origin "github address"
+git push -u origin master
+git pull --rebase origin main
+git push origin main
+git rm dumb.rdb - rm -> remove
+-f -> force removal
+
+Visual Studio Code Extensions
+Angular Language Service
+Angular Snippets
+Prettier - Code Formatter
+Bracket Pair Colorizer 2
+angular2-switcher
+Auto Rename Tag
+ESLint
+C#
+C# Extensions
+Debugger for Chrome
+Material Icon Theme
+NuGet Package Manager
+
+Install on computer
+.NET Core SDK
+Postman
+Visual Studio Code
+git
+Node JS
+Sql Server Management Studio 2019
+Sql Server Express 2019
+Angular CLI
+Chocolatey Package Manager for Windows
+choco install redis-64
+install Redis via Redis-x64-3.0.504.msi
+Redis Server
+
+for Redis using CMD
+redis-server
+redis-cli
+redis-cli KEYS '*'
+redis-cli GET <keyvalue>
+redis-cli ping
+redis-cli shutdown
+netstat -aon
+
+.gitignore for ASPNET Core API
+.vscode
+bin
+obj
+*.db
+appsettings.json
+wwwroot
+
+Clone the repository you need then,
+locate the folder for API, then run 'dotnet restore'
+locate the folder for SPA, then run 'npm install'
+
+If Intellisense not work for DOTNET
+click Shift + Ctrl + P, then search OmniSharp, then restart OmniSharp
+
+Connection String for SqlServer
+Trusted Connection
+Server=myServerAddress;Database=myDataBase;Trusted_Connection=True;
+
+Using a non-standard port for SqlServer
+Server=.\\SQLEXPRESS,1433;Database=DatingApp.db;User Id=datingappapi;Password=free232469;
+
+Why powershell does not run Angular commands?
+Remove ng.ps1 from the directory C:\Users\%username%\AppData\Roaming\npm\ 
+then try clearing the npm cache at C:\Users\%username%\AppData\Roaming\npm-cache\
+
+<pre>
+  Form Valid: {{loginForm.valid}}
+  Form Touched: {{loginForm.touched}}
+  Form Dirty: {{loginForm.dirty}}
+  Form Values: {{loginForm.value | json}}
+  Username Valid: {{username.valid}}
+  Username Touched: {{username.touched}}
+  Username Dirty: {{username.dirty}}
+  Username Value: {{username.value}}
+  Password Valid: {{password.valid}}
+  Password Touched: {{password.touched}}
+  Password Dirty: {{password.dirty}}
+  Password Value: {{password.value}}
+</pre>
+
+Angular - Parent to Child Component ---> @Input() valuesFromHome: any;
+Angular - Child to Parent Component ---> @Output() cancelRegister = new EventEmitter();
+
+Observable - we can cancel, fail or succeed -> subscibe() or map() or filter() -> data
+
+.pipe() -> chain inside rxjs/operators
+do something = (click)=""
+receiving something = [class.active]="brand.id === brandIdSelected"
+
+Parent Element => position: relative, -> Child Element => position: absolute - 
+change the position whatever you want
+
+use DatabaseName 
+GO
+sp_changedbowner 'sa'
+
+tsconfig.json = "strictDomEventTypes": false
+
+Object is possibly 'undefined'.ts(2532) --> ?
+
+onChange(event: Event): void {
+    (event.currentTarget as HTMLInputElement).value;
+}
+
+(input)="onChange($any($event.currentTarget).value)"
+
+<div class="col-4">
+  <p>Form Status: {{loginForm.status}}</p>
+  <p>Email Status: {{loginForm.get('email')!.status}}</p>
+  <p>Email Touched: {{loginForm.get('email')!.touched}}</p>
+  <p>Email Dirty: {{loginForm.get('email')!.dirty}}</p>
+  <pre>{{loginForm.value | json}}</pre>
+</div>
+
+SQL Server - Create User Id
+Go to Security create a login, then Server Roles --> dbcreator & sysadmin
