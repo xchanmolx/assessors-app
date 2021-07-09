@@ -1,7 +1,8 @@
-namespace Core.Entities
+namespace API.Dtos
 {
-    public class TaxDecOfRealProperty : BaseEntity
+    public class PropertyToReturnDto
     {
+        public int Id { get; set; }
         public string OwnerName { get; set; }
         public string PropertyLocation { get; set; }
         public string TaxDecNumber { get; set; }

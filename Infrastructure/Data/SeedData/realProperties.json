@@ -1,0 +1,52 @@
+[
+    {
+      "OwnerName": "GELLACONE, FRANCISCO R.P.",
+      "PropertyLocation": "ESPERANZA",
+      "TaxDecNumber": "04237",
+      "EffectiveYear": 2020,
+      "SurveyLotNumber": "2288",
+      "LandArea": 624,
+      "PictureUrl": "images/properties/V-20-04-04237.jpg",
+      "Remarks": "General Revision"
+    },
+    {
+        "OwnerName": "GELLACONE MACARIO",
+        "PropertyLocation": "ESPERANZA",
+        "TaxDecNumber": "04236",
+        "EffectiveYear": 2020,
+        "SurveyLotNumber": "2282",
+        "LandArea": 17,
+        "PictureUrl": "images/properties/V-20-04-04236.jpg",
+        "Remarks": "General Revision"
+    },
+    {
+        "OwnerName": "GELLACONE, HERMOGENES",
+        "PropertyLocation": "ESPERANZA",
+        "TaxDecNumber": "04235",
+        "EffectiveYear": 2020,
+        "SurveyLotNumber": "2031",
+        "LandArea": 9870,
+        "PictureUrl": "images/properties/V-20-04-04235.jpg",
+        "Remarks": "General Revision"
+    },
+    {
+        "OwnerName": "GABIANA CERMELITO AND TEODORA C. GABIANA SPS",
+        "PropertyLocation": "ESPERANZA",
+        "TaxDecNumber": "04234",
+        "EffectiveYear": 2020,
+        "SurveyLotNumber": "1573-B",
+        "LandArea": 15,
+        "PictureUrl": "images/properties/V-20-04-04234.jpg",
+        "Remarks": "General Revision"
+    },
+    {
+        "OwnerName": "FLORES, ELLEN RAE G. SINGLE & MICHAEL JONATHAN FLORES G.",
+        "PropertyLocation": "ESPERANZA",
+        "TaxDecNumber": "04233",
+        "EffectiveYear": 2020,
+        "SurveyLotNumber": "1374 C",
+        "LandArea": 4103,
+        "PictureUrl": "images/properties/V-20-04-04233.jpg",
+        "Remarks": "General Revision"
+    }
+]
