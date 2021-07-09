@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Dtos;
+using API.Errors;
 using API.Helpers;
 using AutoMapper;
 using Core.Entities;
@@ -36,6 +37,18 @@ namespace API.Controllers
 
             return Ok(new Pagination<PropertyToReturnDto>(propertyParams.PageIndex, propertyParams.PageSize,
                 totalItems, data));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<PropertyToReturnDto>> GetProperty(int id)
+        {
+            var spec = new PropertyWithRealPropertiesSpecification(id);
+
+            var property = await _propertyRepo.GetEntityWithSpec(spec);
+
+            if (property == null) return NotFound(new ApiResponse(404));
+
+            return _mapper.Map<TaxDecOfRealProperty, PropertyToReturnDto>(property);
         }
     }
 }
