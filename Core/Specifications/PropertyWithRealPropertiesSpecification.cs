@@ -31,5 +31,10 @@ namespace Core.Specifications
                 }
             }
         }
+
+        public PropertyWithRealPropertiesSpecification(int id) 
+            : base(x => x.Id == id)
+        {
+        }
     }
 }
