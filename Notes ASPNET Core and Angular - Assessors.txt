@@ -145,6 +145,7 @@ wwwroot
 
 Clone the repository you need then,
 locate the folder for API, then run 'dotnet restore'
+locate the folder for API, then run 'dotnet build'
 locate the folder for SPA, then run 'npm install'
 
 If Intellisense not work for DOTNET
