@@ -77,6 +77,7 @@ ng g m shop-routing --flat
 ng g interceptor loading --flat --skip-tests
 
 3rd party Component for Angular
+npm install bootstrap@4.0.0 font-awesome
 npm install bootstrap font-awesome
 npm install ngx-bootstrap --save
 npm install ngx-toastr --save

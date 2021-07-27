@@ -1,0 +1,16 @@
+a {
+    text-decoration: none;
+    color: white;
+
+    &.active {
+        color: black;
+    }
+}
+
+.logo {
+    cursor: pointer;
+
+    &:focus {
+        outline: none;
+    }
+}
