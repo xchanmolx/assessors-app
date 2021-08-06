@@ -1,6 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-
-body { padding-top: 70px; }
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 .xng-breadcrumb-root {
     padding: 8px 16px;
@@ -16,3 +15,6 @@ label.xng-breadcrumb-trail {
 .xng-breadcrumb-separator {
     padding: 0 0;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

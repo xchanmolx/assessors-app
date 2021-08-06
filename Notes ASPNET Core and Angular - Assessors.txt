@@ -219,3 +219,8 @@ To enable Service Broker run: ALTER DATABASE [Database_name] SET ENABLE_BROKER W
 To disable Service Broker: ALTER DATABASE [Database_name] SET DISABLE_BROKER WITH ROLLBACK IMMEDIATE;
 To check if Service Broker is enabled on a SQL Server database:
 SELECT is_broker_enabled FROM sys.databases WHERE name = 'Database_name';
+
+email: [null, 
+        [Validators.required, Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')],
+        [this.validateEmailNotTaken()]
+      ]

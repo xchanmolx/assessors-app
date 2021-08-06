@@ -1,12 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { MatToolbarModule } from '@angular/material/toolbar'
+import { MatIconModule } from '@angular/material/icon'
+import { MatButtonModule } from '@angular/material/button'
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { MatMenuModule } from '@angular/material/menu'
+import { MatSidenavModule } from '@angular/material/sidenav'
+import { MatListModule } from '@angular/material/list'
+import { MatDividerModule } from '@angular/material/divider';
+
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
-import { SectionHeaderComponent } from './section-header/section-header.component';
+import { ServerErrorComponent } from './server-error/server-error.component';
 import { BreadcrumbModule } from 'xng-breadcrumb';
-import { ToastrModule } from 'ngx-toastr';
+import { SectionHeaderComponent } from './section-header/section-header.component';
 
 
 
@@ -14,17 +23,22 @@ import { ToastrModule } from 'ngx-toastr';
   declarations: [
     NavBarComponent,
     NotFoundComponent,
+    ServerErrorComponent,
     SectionHeaderComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
-    BreadcrumbModule,
     SharedModule,
-    ToastrModule.forRoot({
-      positionClass: 'toast-bottom-right',
-      preventDuplicates: true
-    })
+    BreadcrumbModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatMenuModule,
+    MatSidenavModule,
+    MatListModule,
+    MatDividerModule
   ],
   exports: [
     NavBarComponent,

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 import { Observable } from 'rxjs';
 import { AccountService } from 'src/app/account/account.service';
 import { IUser } from 'src/app/shared/models/user';
@@ -10,6 +11,7 @@ import { IUser } from 'src/app/shared/models/user';
 })
 export class NavBarComponent implements OnInit {
   currentUser$!: Observable<IUser>;
+  @ViewChild(MatSidenav) sidenav!: MatSidenav;
 
   constructor(private accountService: AccountService) { }
 

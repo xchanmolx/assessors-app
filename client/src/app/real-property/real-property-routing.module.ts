@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RealPropertyComponent } from './real-property/real-property.component';
+import { RealPropertyComponent } from './real-property.component';
 
 const routes: Routes = [
-  {path: '', component: RealPropertyComponent}
+  { path: '', component: RealPropertyComponent }
 ];
 
 @NgModule({

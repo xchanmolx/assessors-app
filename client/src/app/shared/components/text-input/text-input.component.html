@@ -16,7 +16,9 @@
     <div class="invalid-feedback" *ngIf="(controlDir && controlDir.control && 
         !controlDir.control.valid && controlDir.control.touched)">
         <span *ngIf="controlDir.control.errors?.required">{{label}} is required</span>
-        <span *ngIf="controlDir.control.errors?.pattern">Invalid email address</span>
+        <span *ngIf="controlDir.control.errors?.pattern">Invalid {{label}}</span>
+        <span *ngIf="controlDir.control.errors?.minlength">{{label}} must have at least 6 characters</span>
+        <span *ngIf="controlDir.control.errors?.maxlength">{{label}} must have a maximum of 30 characters</span>
     </div>
 
     <div class="invalid-feedback d-block" *ngIf="(controlDir && controlDir.control && 

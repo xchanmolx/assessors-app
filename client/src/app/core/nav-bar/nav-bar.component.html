@@ -1,38 +1,70 @@
-<div class="d-flex flex-column flex-md-row align-items-center justify-content-between p-3 px-md-4 mb-3
-border-bottom shadow-sm fixed-top navbar-dark bg-primary">
-    <span>
-      <img src="/assets/images/logo.png" class="logo" style="max-height: 70px;" alt="Aloguinsan Logo" [routerLink]="['/']">
-      <strong class="text-muted"> Assessor's Office</strong>
+<mat-toolbar color="primary">
+
+  <mat-toolbar-row>
+    <button (click)="sidenav.toggle()" matTooltip="Menu" mat-icon-button aria-label="Menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+  
+    <span class="title-logo" [routerLink]="['/']">
+      <img src="/assets/images/logo-72.png" class="logo" alt="Aloguinsan Logo">
+      Assessor's Office
     </span>
-    <nav class="my-2 my-md-0 mr-md-3 text-uppercase" style="font-size: larger;">
-      <a class="p-2" [routerLink]="['/']" routerLinkActive="active" 
-        [routerLinkActiveOptions]="{exact: true}">Home</a>
-      <a class="p-2" [routerLink]="['/real-property']" routerLinkActive="active">Real Property</a>
-      <a class="p-2" [routerLink]="['/test-error']" routerLinkActive="active">Errors</a>
-    </nav>
-    <div class="d-flex align-items-center">
-      
-      <ng-container *ngIf="(currentUser$ | async) === null">
-        <a routerLink="/account/login" class="btn btn-outline-secondary text-white">Login</a>
-        <a routerLink="/account/register" class="btn btn-outline-secondary mx-1 text-white">Sign up</a>
-      </ng-container>
+  
+    <span class="spacer"></span>
+  
+    <ng-container *ngIf="(currentUser$ | async) === null">
+      <button matTooltip="Login" routerLink="account/login" mat-icon-button aria-label="Login">
+        <mat-icon>login</mat-icon>
+      </button>
+      <button matTooltip="Register" routerLink="account/register" mat-icon-button aria-label="Register">
+        <mat-icon>how_to_reg</mat-icon>
+      </button>
+    </ng-container>
+  
+    <ng-container *ngIf="(currentUser$ | async) as currentUser">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Drop down arrow">
+        <mat-icon matTooltip="Welcome {{currentUser.firstName | titlecase}}">account_circle</mat-icon>
+        <mat-icon matTooltip="Welcome {{currentUser.firstName | titlecase}}">arrow_drop_down</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button routerLink="edit" mat-menu-item>
+          <mat-icon>edit</mat-icon>
+          <span>Edit</span>
+        </button>
+        <button (click)="logout()" mat-menu-item>
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </ng-container>
+  </mat-toolbar-row>
 
-      <ng-container *ngIf="(currentUser$ | async) as currentUser">
-        <div class="dropdown ml-3 mr-5" dropdown>
-          <a class="dropdown-toggle" style="cursor: pointer;" dropdownToggle>
-            <strong>Welcome {{currentUser.firstName}}</strong>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer;" *dropdownMenu>
-            <a routerLink="/basket" class="dropdown-item d-flex align-items-center py-2">
-              <i class="fa fa-user-edit mr-3"></i> Edit
-            </a>
-            <div class="dropdown-divider"></div>
-            <a (click)="logout()" class="dropdown-item d-flex align-items-center py-2">
-              <i class="fa fa-sign-out mr-3"></i> Logout
-            </a>
-          </div>
-        </div>
-      </ng-container>
+</mat-toolbar>
 
+<!-- Side Nav, Side Nav Content, and router-outlet -->
+<mat-sidenav-container>
+  <mat-sidenav #sidenav="matSidenav" class="sidenav" mode="over">
+    <mat-list (click)="sidenav.close()">
+      <div mat-subheader>Menus</div>
+      <mat-list-item routerLink="">
+        <mat-icon mat-list-icon>home</mat-icon>
+        <div mat-line>Home</div>
+      </mat-list-item>
+      <mat-list-item routerLink="real-property">
+        <mat-icon mat-list-icon>landscape</mat-icon>
+        <div mat-line>Real Property</div>
+      </mat-list-item>
+      <mat-list-item routerLink="Error">
+        <mat-icon mat-list-icon>error</mat-icon>
+        <div mat-line>Error</div>
+      </mat-list-item>
+    </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="sidenav-content">
+    <div style="height: 88vh;">
+      <app-section-header></app-section-header>
+      <mat-divider></mat-divider>
+      <router-outlet></router-outlet>
     </div>
-  </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

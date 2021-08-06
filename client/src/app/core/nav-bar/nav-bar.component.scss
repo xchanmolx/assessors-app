@@ -1,16 +1,30 @@
-a {
-    text-decoration: none;
-    color: white;
-
-    &.active {
-        color: black;
-    }
-}
-
 .logo {
     cursor: pointer;
+    max-height: 60px;
+    margin-left: 33px;
 
     &:focus {
         outline: none;
     }
+}
+
+.title-logo {
+    cursor: pointer;
+}
+
+mat-list-item:hover {
+    cursor: pointer;
+    background-color: lightblue;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+  
+.sidenav {
+    padding: 20px;
+}
+
+.mat-list-icon {
+    color: rgba(0, 0, 0, 0.54);
 }

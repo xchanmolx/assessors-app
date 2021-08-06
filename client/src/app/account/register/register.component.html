@@ -1,1 +1,34 @@
-<p class="container mt-3">register works!</p>
+<div class="d-flex justify-content-center mt-3 mb-5">
+    <div class="col-3">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="text-center mb-4">
+              <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+            </div>
+
+            <div class="form-group mb-2">
+                <label class="control-label" style="margin-right:10px">I am a: </label>
+                <label class="radio-inline">
+                  <input class="mx-1" type="radio" value="male" formControlName="gender">Male
+                </label>
+                <label class="radio-inline mx-3">
+                  <input class="mx-1" type="radio" value="female" formControlName="gender">Female
+                </label>
+            </div>
+
+            <app-text-input formControlName="firstName" [label]="'First Name'"></app-text-input>
+            <app-text-input formControlName="lastName" [label]="'Last Name'"></app-text-input>
+            <app-text-input formControlName="phoneNumber" [label]="'Phone Number'"></app-text-input>
+            <app-text-input formControlName="address" [label]="'Address'"></app-text-input>
+            <app-text-input formControlName="email" [label]="'Email Address'"></app-text-input>
+            <app-text-input formControlName="password" [label]="'Password'" [type]="'password'"></app-text-input>
+
+            <ul class="text-danger list-unstyled" *ngIf="errors">
+                <li *ngFor="let error of errors">
+                    {{error}}
+                </li>
+            </ul>
+        
+            <button [disabled]="registerForm.invalid" class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+        </form>
+    </div>
+</div>
