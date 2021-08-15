@@ -75,6 +75,9 @@ ng g m core
 ng g s shop --skip-tests --flat
 ng g m shop-routing --flat
 ng g interceptor loading --flat --skip-tests
+ng g r user-edit --skip-tests
+ng g g prevent-unsaved-changes --skip-tests
+ng g --help
 
 3rd party Component for Angular
 npm install bootstrap@4.0.0 font-awesome
@@ -85,6 +88,13 @@ npm install --save xng-breadcrumb
 npm install bootswatch
 npm install ngx-spinner
 npm install uuid
+npm install material-design-icons --save
+https://google.github.io/material-design-icons/#what-are-material-icons-
+https://stackoverflow.com/questions/37270835/how-to-host-material-icons-offline
+https://github.com/google/material-design-icons/releases
+https://marella.me/material-icons/
+npm install material-icons@latest
+npm install @auth0/angular-jwt
 
 Make git to github
 cd .. to parent folder

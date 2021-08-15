@@ -1,6 +1,7 @@
 using API.Dtos;
 using AutoMapper;
 using Core.Entities;
+using Core.Entities.Identity;
 
 namespace API.Helpers
 {
@@ -10,6 +11,7 @@ namespace API.Helpers
         {
             CreateMap<TaxDecOfRealProperty, PropertyToReturnDto>()
                 .ForMember(d => d.PictureUrl, o => o.MapFrom<PropertyUrlResolver>());
+            CreateMap<AppUser, AppUserDto>();
         }
     }
 }

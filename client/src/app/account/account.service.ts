@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ReplaySubject } from 'rxjs';
+import { ReplaySubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { IUser } from '../shared/models/user';
@@ -13,6 +13,7 @@ export class AccountService {
   baseUrl = environment.apiUrl;
   private currentUserSource = new ReplaySubject<IUser>(1);
   currentUser$ = this.currentUserSource.asObservable();
+  decodedToken: any;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -34,6 +35,30 @@ export class AccountService {
       })
     );
 
+  }
+
+  getUserByEmail(email: string): Observable<IUser> {
+    const token = localStorage.getItem('token');
+
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<IUser>(this.baseUrl + 'account/' + email, {headers});
+  }
+
+  updateUser(values: any) {
+    const token = localStorage.getItem('token');
+
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', `Bearer ${token}`);
+
+    return this.http.put<IUser>(this.baseUrl + 'account/edit', values, {headers}).pipe(
+      map((user: IUser) => {
+        if (user) {
+          this.currentUserSource.next(user);
+        }
+      })
+    );
   }
 
   login(values: any) {

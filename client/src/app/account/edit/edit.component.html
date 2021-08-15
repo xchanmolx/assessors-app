@@ -1,0 +1,58 @@
+<div class="text-center mb-4 mt-3">
+  <h1 class="h3 mb-3 font-weight-normal">Your Profile</h1>
+  <div *ngIf="editForm.dirty" class="alert alert-info">
+    <strong>Information: </strong> You have made changes. Any unsaved changes will be lost!
+  </div>
+</div>
+<div class="d-flex justify-content-center mt-3 mb-5">
+    <div class="col-3">
+        <form #editForm="ngForm" id="editForm" (ngSubmit)="updateUser()">
+
+            <div class="form-group mb-3">
+                <label class="control-label" style="margin-right:10px">I am a: </label>
+                <mat-radio-group
+                  aria-labelledby="radio-group-gender"
+                  id="gender"
+                  name="gender"
+                  [ngModel]="user.gender"
+                  (ngModelChange)="user.gender=$event">
+                  <mat-radio-button class="mx-3" value="male">
+                    Male
+                  </mat-radio-button>
+                  <mat-radio-button class="mx-2" value="female">
+                    Female
+                  </mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="firstName">First name</label>
+                <input type="text" name="firstName" id="firstName" class="form-control" [ngModel]="user.firstName | titlecase"
+                  (ngModelChange)="user.firstName=$event">
+            </div>
+            <div class="form-group mb-3">
+              <label for="firstName">Last name</label>
+              <input type="text" name="lastName" id="lastName" class="form-control" [ngModel]="user.lastName | titlecase"
+                (ngModelChange)="user.lastName=$event">
+            </div>
+            <div class="form-group mb-3">
+              <label for="firstName">Phone number</label>
+              <input type="text" name="phoneNumber" id="phoneNumber" class="form-control" [ngModel]="user.phoneNumber"
+                (ngModelChange)="user.phoneNumber=$event">
+            </div>
+            <div class="form-group mb-3">
+              <label for="firstName">Address</label>
+              <input type="text" name="address" id="address" class="form-control" [ngModel]="user.address | titlecase"
+                (ngModelChange)="user.address=$event">
+            </div>
+
+            <ul class="text-danger list-unstyled" *ngIf="errors">
+                <li *ngFor="let error of errors">
+                    {{error}}
+                </li>
+            </ul>
+        
+            <button mat-raised-button color="primary" type="submit">Submit</button>
+        </form>
+    </div>
+</div>

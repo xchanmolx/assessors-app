@@ -1,0 +1,8 @@
+<div class="container-fluid" id="imgPrint">
+    <div class="row" *ngIf="realProperty">
+        <div class="col">
+            <button (click)="printImage(realProperty.pictureUrl)" mat-icon-button class="float-end" matTooltip="Print"><mat-icon>print</mat-icon></button>
+            <img src="{{realProperty.pictureUrl}}" alt="image for tax declaration of real property" class="img-fluid">
+        </div>
+    </div>
+</div>

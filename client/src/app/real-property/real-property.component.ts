@@ -1,6 +1,5 @@
-import { ThisReceiver, ThrowStmt } from '@angular/compiler';
-import { Component, ElementRef, EventEmitter, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { MatSelectChange } from '@angular/material/select';
 import { IRealProperty } from '../shared/models/realProperty';
 import { RealPropertyParams } from '../shared/models/realPropertyParams';
@@ -16,16 +15,15 @@ export class RealPropertyComponent implements OnInit {
   realProperties!: IRealProperty[];
   realPropertyParams = new RealPropertyParams();
   totalCount!: number;
+  defaultSelect = 'ownerName';
   sortOptions = [
     { name: 'Alphabetical', value: 'ownerName' },
     { name: 'Effective Year: Old Year', value: 'yearAsc'},
     { name: 'Effective Year: Latest Year', value: 'yearDesc'}
   ];
   
-  displayedColumns: string[] = ['ownerName', 'propertyLocation', 'taxDecNumber', 'effectiveYear', 'surveyLotNumber', 'landArea', 'remarks'];
-  pageEvent!: EventEmitter<PageEvent>;
+  displayedColumns: string[] = ['ownerName', 'propertyLocation', 'taxDecNumber', 'effectiveYear', 'surveyLotNumber', 'landArea', 'remarks', 'actions'];
   showFirstLastButtons = true;
-  defaultSelect = 'ownerName';
 
   constructor(private realPropertyService: RealPropertyService) { }
 
@@ -44,21 +42,23 @@ export class RealPropertyComponent implements OnInit {
     });
   }
 
+  onPageChanged(event: PageEvent) {
+    this.realPropertyParams.pageNumber = event.pageIndex+1;
+
+    if (this.realPropertyParams.pageSize !== event.pageSize) {
+      this.realPropertyParams.pageSize = event.pageSize;
+    }
+
+    this.getRealProperties();
+  }
+
   onSortSelected(event: MatSelectChange) {
     this.realPropertyParams.sort = event.value;
     this.getRealProperties();
   }
 
-  onPageChanged(event: PageEvent) {
-    if (this.realPropertyParams.pageNumber !== event.pageIndex) {
-      this.realPropertyParams.pageNumber = event.pageIndex;
-      this.getRealProperties();
-    }
-  }
-
   onSearch() {
     this.realPropertyParams.search = this.searchTerm.nativeElement.value;
-    this.realPropertyParams.pageNumber = 1;
     this.getRealProperties();
   }
 

@@ -13,12 +13,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { RealPropertyRoutingModule } from './real-property-routing.module';
 import { RealPropertyComponent } from './real-property.component';
 import { SharedModule } from '../shared/shared.module';
+import { RealPropertyDetailsComponent } from './real-property-details/real-property-details.component';
 
 
 
 @NgModule({
   declarations: [
-    RealPropertyComponent
+    RealPropertyComponent,
+    RealPropertyDetailsComponent
   ],
   imports: [
     CommonModule,

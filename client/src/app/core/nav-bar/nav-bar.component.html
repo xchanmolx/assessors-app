@@ -13,10 +13,10 @@
     <span class="spacer"></span>
   
     <ng-container *ngIf="(currentUser$ | async) === null">
-      <button matTooltip="Login" routerLink="account/login" mat-icon-button aria-label="Login">
+      <button matTooltip="Login" routerLink="/account/login" mat-icon-button aria-label="Login">
         <mat-icon>login</mat-icon>
       </button>
-      <button matTooltip="Register" routerLink="account/register" mat-icon-button aria-label="Register">
+      <button matTooltip="Register" routerLink="/account/register" mat-icon-button aria-label="Register">
         <mat-icon>how_to_reg</mat-icon>
       </button>
     </ng-container>
@@ -27,7 +27,7 @@
         <mat-icon matTooltip="Welcome {{currentUser.firstName | titlecase}}">arrow_drop_down</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button routerLink="edit" mat-menu-item>
+        <button routerLink="/account/edit" mat-menu-item>
           <mat-icon>edit</mat-icon>
           <span>Edit</span>
         </button>
@@ -46,15 +46,15 @@
   <mat-sidenav #sidenav="matSidenav" class="sidenav" mode="over">
     <mat-list (click)="sidenav.close()">
       <div mat-subheader>Menus</div>
-      <mat-list-item routerLink="">
+      <mat-list-item routerLink="/">
         <mat-icon mat-list-icon>home</mat-icon>
         <div mat-line>Home</div>
       </mat-list-item>
-      <mat-list-item routerLink="real-property">
+      <mat-list-item routerLink="/real-property">
         <mat-icon mat-list-icon>landscape</mat-icon>
         <div mat-line>Real Property</div>
       </mat-list-item>
-      <mat-list-item routerLink="Error">
+      <mat-list-item routerLink="/Error">
         <mat-icon mat-list-icon>error</mat-icon>
         <div mat-line>Error</div>
       </mat-list-item>

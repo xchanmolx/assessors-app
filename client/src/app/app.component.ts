@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { AccountService } from './account/account.service';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +9,10 @@ import { AccountService } from './account/account.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  jwtHelper = new JwtHelperService();
   title = 'Assessor Application | LGU Aloguinsan';
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.loadCurrentUser();
@@ -17,8 +20,9 @@ export class AppComponent implements OnInit {
 
   loadCurrentUser() {
     const token = localStorage.getItem('token');
+
     this.accountService.loadCurrentUser(token)?.subscribe(() => {
-      console.log('loaded user');
+      console.log('Loaded user');
     }, error => {
       console.log(error);
     });
