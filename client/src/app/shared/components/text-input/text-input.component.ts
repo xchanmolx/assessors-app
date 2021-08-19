@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, Self, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, Renderer2, Self, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
@@ -6,12 +6,12 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
   templateUrl: './text-input.component.html',
   styleUrls: ['./text-input.component.scss']
 })
-export class TextInputComponent implements OnInit, ControlValueAccessor {
+export class TextInputComponent implements OnInit, AfterViewInit, ControlValueAccessor {
   @ViewChild('input', {static: true}) input!: ElementRef;
   @Input() type = 'text';
   @Input() label!: string;
 
-  constructor(@Self() public controlDir: NgControl) { 
+  constructor(@Self() public controlDir: NgControl, private renderer: Renderer2) { 
     this.controlDir.valueAccessor = this;
   }
 
@@ -23,6 +23,18 @@ export class TextInputComponent implements OnInit, ControlValueAccessor {
     control?.setValidators(validators);
     control?.setAsyncValidators(asyncValidators);
     control?.updateValueAndValidity();
+  }
+
+  ngAfterViewInit() {
+    if (this.label === 'Email_Address') {
+      const element = this.renderer.selectRootElement('#Email_Address');
+      setTimeout(() => element.focus(), 0);
+    }
+
+    if (this.label === 'First_Name') {
+      const element = this.renderer.selectRootElement('#First_Name');
+      setTimeout(() => element.focus(), 0);
+    }
   }
 
   onChange(event: Event): void {

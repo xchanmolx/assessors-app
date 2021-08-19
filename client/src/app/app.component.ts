@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AccountService } from './account/account.service';
-import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   jwtHelper = new JwtHelperService();
   title = 'Assessor Application | LGU Aloguinsan';
 
-  constructor(private accountService: AccountService, private authService: AuthService) {}
+  constructor(private accountService: AccountService) { }
 
   ngOnInit(): void {
     this.loadCurrentUser();

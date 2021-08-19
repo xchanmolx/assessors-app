@@ -22,18 +22,12 @@
                 </mat-radio-group>
             </div>
 
-            <app-text-input formControlName="firstName" [label]="'First Name'"></app-text-input>
+            <app-text-input formControlName="firstName" [label]="'First_Name'"></app-text-input>
             <app-text-input formControlName="lastName" [label]="'Last Name'"></app-text-input>
             <app-text-input formControlName="phoneNumber" [label]="'Phone Number'"></app-text-input>
             <app-text-input formControlName="address" [label]="'Address'"></app-text-input>
             <app-text-input formControlName="email" [label]="'Email Address'"></app-text-input>
             <app-text-input formControlName="password" [label]="'Password'" [type]="'password'"></app-text-input>
-
-            <ul class="text-danger list-unstyled" *ngIf="errors">
-                <li *ngFor="let error of errors">
-                    {{error}}
-                </li>
-            </ul>
         
             <button [disabled]="registerForm.invalid" mat-raised-button color="primary" type="submit">Register</button>
         </form>

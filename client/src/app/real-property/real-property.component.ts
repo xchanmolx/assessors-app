@@ -1,6 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSelectChange } from '@angular/material/select';
+import { BusyService } from '../core/services/busy.service';
 import { IRealProperty } from '../shared/models/realProperty';
 import { RealPropertyParams } from '../shared/models/realPropertyParams';
 import { RealPropertyService } from './real-property.service';
@@ -10,7 +11,7 @@ import { RealPropertyService } from './real-property.service';
   templateUrl: './real-property.component.html',
   styleUrls: ['./real-property.component.scss']
 })
-export class RealPropertyComponent implements OnInit {
+export class RealPropertyComponent implements OnInit, AfterViewInit {
   @ViewChild('search', { static: false }) searchTerm!: ElementRef;
   realProperties!: IRealProperty[];
   realPropertyParams = new RealPropertyParams();
@@ -25,10 +26,16 @@ export class RealPropertyComponent implements OnInit {
   displayedColumns: string[] = ['ownerName', 'propertyLocation', 'taxDecNumber', 'effectiveYear', 'surveyLotNumber', 'landArea', 'remarks', 'actions'];
   showFirstLastButtons = true;
 
-  constructor(private realPropertyService: RealPropertyService) { }
+  constructor(private realPropertyService: RealPropertyService, 
+    public busyService: BusyService, private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.getRealProperties();
+  }
+
+  ngAfterViewInit() {
+    this.busyService.idle();
+    this.cd.detectChanges();
   }
 
   getRealProperties() {

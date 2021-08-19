@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { MatRadioChange } from '@angular/material/radio';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { NotifierService } from 'src/app/core/services/notifier.service';
 import { IUser } from 'src/app/shared/models/user';
 import { AccountService } from '../account.service';
 
@@ -15,7 +16,6 @@ import { AccountService } from '../account.service';
 export class EditComponent implements OnInit {
   @ViewChild('editForm') editForm!: NgForm;
   user!: IUser;
-  errors!: string[];
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
     if (this.editForm.dirty) {
@@ -24,7 +24,8 @@ export class EditComponent implements OnInit {
   }
   currentUser$!: Observable<IUser>;
 
-  constructor(private accountService: AccountService, private route: ActivatedRoute) { }
+  constructor(private accountService: AccountService, private route: ActivatedRoute,
+    private notifierService: NotifierService) { }
 
   ngOnInit(): void {
     this.currentUser$ = this.accountService.currentUser$;
@@ -41,9 +42,9 @@ export class EditComponent implements OnInit {
   updateUser() {
     this.accountService.updateUser(this.user).subscribe(() => {
       this.editForm.reset(this.user);
-      console.log('Profile updated successfully');
+      this.notifierService.showNotification(`${this.user.firstName}, your profile has been updated successfully.`, 'OK', 'success');
    }, error => {
-     console.log(error);
+    this.notifierService.showNotification(error.errors, 'OK', 'error');
    });
   }
 

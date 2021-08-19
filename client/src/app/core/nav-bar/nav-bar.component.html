@@ -1,4 +1,8 @@
-<mat-toolbar color="primary">
+<div *ngIf="busyService.isLoading | async" class="loader-container">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+
+<mat-toolbar color="primary" class="p-1">
 
   <mat-toolbar-row>
     <button (click)="sidenav.toggle()" matTooltip="Menu" mat-icon-button aria-label="Menu">
@@ -24,7 +28,7 @@
     <ng-container *ngIf="(currentUser$ | async) as currentUser">
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Drop down arrow">
         <mat-icon matTooltip="Welcome {{currentUser.firstName | titlecase}}">account_circle</mat-icon>
-        <mat-icon matTooltip="Welcome {{currentUser.firstName | titlecase}}">arrow_drop_down</mat-icon>
+        <mat-icon>arrow_drop_down</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
         <button routerLink="/account/edit" mat-menu-item>
@@ -50,13 +54,13 @@
         <mat-icon mat-list-icon>home</mat-icon>
         <div mat-line>Home</div>
       </mat-list-item>
-      <mat-list-item routerLink="/real-property">
+      <mat-list-item *ngIf="(currentUser$ | async)" routerLink="/real-property">
         <mat-icon mat-list-icon>landscape</mat-icon>
         <div mat-line>Real Property</div>
       </mat-list-item>
-      <mat-list-item routerLink="/Error">
-        <mat-icon mat-list-icon>error</mat-icon>
-        <div mat-line>Error</div>
+      <mat-list-item routerLink="/about">
+        <mat-icon mat-list-icon>info</mat-icon>
+        <div mat-line>About</div>
       </mat-list-item>
     </mat-list>
   </mat-sidenav>

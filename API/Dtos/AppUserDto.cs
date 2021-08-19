@@ -5,16 +5,16 @@ namespace API.Dtos
     public class AppUserDto
     {
 
-        [Required]
+        [Required(ErrorMessage = "The first name field is required.")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "The last name field is required.")]
         public string LastName { get; set; }
 
         [Required]
         public string Gender { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "The phone number field is required.")]
         public string PhoneNumber { get; set; }
 
         [Required]

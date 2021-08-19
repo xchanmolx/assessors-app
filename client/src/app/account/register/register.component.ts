@@ -4,6 +4,7 @@ import { MatRadioChange } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { of, timer } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { NotifierService } from 'src/app/core/services/notifier.service';
 import { AccountService } from '../account.service';
 
 @Component({
@@ -13,11 +14,10 @@ import { AccountService } from '../account.service';
 })
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
-  errors!: string[];
   defaultGenderRadioButton = 'male';
 
   constructor(private fb: FormBuilder, private accountService: AccountService,
-    private router: Router) { }
+    private router: Router, private notifierService: NotifierService) { }
 
   ngOnInit(): void {
     this.createRegisterForm();
@@ -47,9 +47,9 @@ export class RegisterComponent implements OnInit {
   onSubmit() {
     this.accountService.register(this.registerForm.value).subscribe(response => {
       this.router.navigateByUrl('/real-property');
+      this.notifierService.showNotification('Congratulations, your account has been successfully created.', 'OK', 'success');
     }, error => {
-      console.log(error);
-      this.errors = error.errors;
+      this.notifierService.showNotification(error.errors, 'OK', 'error');
     });
   }
   

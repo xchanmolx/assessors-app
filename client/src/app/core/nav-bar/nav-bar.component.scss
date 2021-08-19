@@ -28,3 +28,9 @@ mat-list-item:hover {
 .mat-list-icon {
     color: rgba(0, 0, 0, 0.54);
 }
+
+.loader-container {
+    position: fixed;
+    width: 100%;
+    z-index: 99;
+}

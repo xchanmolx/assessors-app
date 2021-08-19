@@ -1,6 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 @import '../node_modules/material-icons/iconfont/material-icons.css';
+@import '../node_modules/font-awesome/css/font-awesome.min.css';
+
+.error.mat-snack-bar-container {
+    background-color: #cc0000;
+    color: white;
+}
+
+.success.mat-snack-bar-container {
+    background-color: #00cc00;
+    color: white;
+}
 
 .xng-breadcrumb-root {
     padding: 8px 16px;

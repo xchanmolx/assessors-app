@@ -9,6 +9,7 @@ import { MatMenuModule } from '@angular/material/menu'
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatListModule } from '@angular/material/list'
 import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -16,14 +17,15 @@ import { SharedModule } from '../shared/shared.module';
 import { ServerErrorComponent } from './server-error/server-error.component';
 import { BreadcrumbModule } from 'xng-breadcrumb';
 import { SectionHeaderComponent } from './section-header/section-header.component';
-import { AccountModule } from '../account/account.module';
+import { NotifierComponent } from './notifier/notifier.component';
 
 @NgModule({
   declarations: [
     NavBarComponent,
     NotFoundComponent,
     ServerErrorComponent,
-    SectionHeaderComponent
+    SectionHeaderComponent,
+    NotifierComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +39,8 @@ import { AccountModule } from '../account/account.module';
     MatMenuModule,
     MatSidenavModule,
     MatListModule,
-    MatDividerModule
+    MatDividerModule,
+    MatProgressBarModule
   ],
   exports: [
     NavBarComponent,

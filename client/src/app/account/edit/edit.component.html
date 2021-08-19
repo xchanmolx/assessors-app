@@ -45,12 +45,6 @@
               <input type="text" name="address" id="address" class="form-control" [ngModel]="user.address | titlecase"
                 (ngModelChange)="user.address=$event">
             </div>
-
-            <ul class="text-danger list-unstyled" *ngIf="errors">
-                <li *ngFor="let error of errors">
-                    {{error}}
-                </li>
-            </ul>
         
             <button mat-raised-button color="primary" type="submit">Submit</button>
         </form>

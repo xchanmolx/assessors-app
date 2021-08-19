@@ -1,0 +1,24 @@
+<div class="d-flex justify-content-center mt-3">
+    <div class="col-7">
+        <h3>
+            The Aloguinsan Assessor’s Office (AASSO) is a local Government office in charge of real property assessments 
+            within its territorial jurisdiction as the basis for real property taxation. It includes the preparation, 
+            installation and maintenance of a system of tax mapping, records management, and schedule of market values 
+            of the different classes of real property within its territory. AASSO was mandated in view of 
+            Republic Act No. 7160 or otherwise known as the Local Government Code of 1991, to deliver quality and 
+            reliable Real Property Tax Assessment Services towards becoming a highly competent and 
+            globally competitive local government unit.
+        </h3>
+        <h3><strong>The services offered by the office include:</strong></h3>
+        <mat-list>
+            <mat-list-item *ngFor="let bullet of bullets">
+              <mat-icon mat-list-icon>fiber_manual_record</mat-icon>
+              <div mat-line>{{bullet.name}}</div>
+            </mat-list-item>
+        </mat-list>
+        <h3>
+            Aloguinsan Assessor’s Office is located at the Ground Floor., 
+            Municipal Building, Purok 2, Poblacion, Aloguinsan, Cebu. 
+        </h3>
+    </div>
+</div>

@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { BusyService } from 'src/app/core/services/busy.service';
 import { IRealProperty } from 'src/app/shared/models/realProperty';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { RealPropertyService } from '../real-property.service';
@@ -9,14 +10,19 @@ import { RealPropertyService } from '../real-property.service';
   templateUrl: './real-property-details.component.html',
   styleUrls: ['./real-property-details.component.scss']
 })
-export class RealPropertyDetailsComponent implements OnInit {
+export class RealPropertyDetailsComponent implements OnInit, AfterViewInit {
   realProperty!: IRealProperty;
 
   constructor(private realPropertyService: RealPropertyService, private activatedRoute: ActivatedRoute,
-    private bcService: BreadcrumbService) { }
+    private bcService: BreadcrumbService, public busyService: BusyService, private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.loadRealProperty();
+  }
+
+  ngAfterViewInit() {
+    this.busyService.idle();
+    this.cd.detectChanges();
   }
 
   loadRealProperty() {

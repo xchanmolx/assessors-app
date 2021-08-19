@@ -77,6 +77,7 @@ ng g m shop-routing --flat
 ng g interceptor loading --flat --skip-tests
 ng g r user-edit --skip-tests
 ng g g prevent-unsaved-changes --skip-tests
+ng g d focus-first-input --skip-tests
 ng g --help
 
 3rd party Component for Angular
