@@ -16,6 +16,20 @@ namespace Infrastructure.Data
             _context = context;
         }
 
+        public void Add<Tc>(Tc entity) where Tc : class
+        {
+            _context.Add(entity);
+        }
+
+        public void Delete<Tc>(Tc entity) where Tc : class
+        {
+            _context.Remove(entity);
+        }
+        
+        public async Task<bool> SaveAll()
+        {
+            return await _context.SaveChangesAsync() > 0;
+        }
 
         public async Task<int> CountAsync(ISpecification<T> spec)
         {

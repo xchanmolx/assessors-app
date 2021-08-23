@@ -6,6 +6,6 @@ export interface IRealProperty {
     effectiveYear: number;
     surveyLotNumber: string;
     landArea: number;
-    pictureUrl: string;
     remarks: string;
+    pictureUrl: string;
 }

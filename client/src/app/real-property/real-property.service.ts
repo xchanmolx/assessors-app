@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -11,6 +11,8 @@ import { RealPropertyParams } from '../shared/models/realPropertyParams';
 })
 export class RealPropertyService {
   baseUrl = environment.apiUrl;
+  image!: any;
+  response!: any;
 
   constructor(private http: HttpClient) { }
 
@@ -35,5 +37,32 @@ export class RealPropertyService {
 
   getRealProperty(id: number) {
     return this.http.get<IRealProperty>(this.baseUrl + 'realProperties/' + id);
+  }
+
+  createRealProperty(values: any) {
+    const token = localStorage.getItem('token');
+
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', `Bearer ${token}`);
+    
+    return this.http.post<IRealProperty>(this.baseUrl + 'realProperties', values, {headers});
+  }
+
+  selectFile(event: any) {
+    this.image = event.target.files[0];
+  }
+
+  uploadPhoto() {
+    let formData = new FormData();
+    formData.append('image', this.image);
+    this.http.post(this.baseUrl + 'realProperties/upload', formData)
+      .toPromise().then(
+        response => {
+          this.response = response;
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
 }

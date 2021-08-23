@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ReplaySubject, Observable, Subject } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { ReplaySubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { IUser } from '../shared/models/user';
@@ -14,6 +15,7 @@ export class AccountService {
   private currentUserSource = new ReplaySubject<IUser>(1);
   currentUser$ = this.currentUserSource.asObservable();
   decodedToken: any;
+  jwtHelper = new JwtHelperService();
 
   constructor(private http: HttpClient, private router: Router) { }
 

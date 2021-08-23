@@ -17,7 +17,7 @@ namespace Core.Specifications
 
         public Expression<Func<T, bool>> Criteria { get; }
 
-         public List<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
+        public List<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
 
         public Expression<Func<T, object>> OrderBy { get; private set; }
 

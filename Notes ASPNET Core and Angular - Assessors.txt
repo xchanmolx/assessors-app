@@ -82,7 +82,7 @@ ng g --help
 
 3rd party Component for Angular
 npm install bootstrap@4.0.0 font-awesome
-npm install bootstrap font-awesome
+
 npm install ngx-bootstrap --save
 npm install ngx-toastr --save
 npm install --save xng-breadcrumb
@@ -96,6 +96,7 @@ https://github.com/google/material-design-icons/releases
 https://marella.me/material-icons/
 npm install material-icons@latest
 npm install @auth0/angular-jwt
+npm i ng2-file-upload --save
 
 Make git to github
 cd .. to parent folder

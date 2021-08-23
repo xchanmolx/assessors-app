@@ -8,7 +8,7 @@
                 ? totalCount
                 : pageNumber * pageSize
             }}
-        </strong> of <strong>{{totalCount}}</strong> Results
+        </strong> of <strong>{{totalCount | number}}</strong> Results
     </span>
     <span *ngIf="totalCount === 0">
         There are <strong>0</strong> results for this filter

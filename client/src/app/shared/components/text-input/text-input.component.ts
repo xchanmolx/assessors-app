@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, Renderer2, Self, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, Self, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
@@ -33,6 +33,11 @@ export class TextInputComponent implements OnInit, AfterViewInit, ControlValueAc
 
     if (this.label === 'First_Name') {
       const element = this.renderer.selectRootElement('#First_Name');
+      setTimeout(() => element.focus(), 0);
+    }
+
+    if (this.label === 'Owner_Name') {
+      const element = this.renderer.selectRootElement('#Owner_Name');
       setTimeout(() => element.focus(), 0);
     }
   }

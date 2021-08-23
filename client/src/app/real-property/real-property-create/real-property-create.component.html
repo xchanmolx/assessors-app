@@ -1,0 +1,36 @@
+<mat-grid-list cols="2" rowHeight="400px">
+    <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+        <mat-grid-tile>
+            <div class="col-6">
+                <app-text-input formControlName="ownerName" [label]="'Owner_Name'"></app-text-input>
+                <app-text-input formControlName="taxDecNumber" [label]="'Tax Declaration Number'"></app-text-input>
+                <app-text-input formControlName="surveyLotNumber" [label]="'Survey Lot Number'"></app-text-input>
+                <h3>Upload Photo</h3>
+                <input #fileInput class="form-control" type=file (change)="realPropertyService.selectFile($event)" accept="image/png, image/gif, image/jpeg">
+                <br>
+
+                <div class="mb-2" *ngIf="realPropertyService.response != null">
+                    <span>{{realPropertyService.response.imageUploadSuccess}}</span>
+                </div>
+
+                <input [disabled]="realPropertyService.image == null" class="form-control btn btn-primary" type="button" value="Upload" (click)="upload()">
+
+                <ng-container *ngIf="realPropertyService.response != null">
+                    <app-text-input formControlName="pictureUrl" [(ngModel)]="realPropertyService.response.imagePath" [type]="'hidden'"></app-text-input>
+                </ng-container>
+
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="col-6">
+                <app-text-input formControlName="propertyLocation" [label]="'Property Location'"></app-text-input>
+                <app-text-input formControlName="effectiveYear" [label]="'Effective Year'" [type]="'number'"></app-text-input>
+                <app-text-input formControlName="landArea" [label]="'Land Area'" [type]="'number'"></app-text-input>
+                <app-text-input formControlName="remarks" [label]="'Remarks'"></app-text-input>
+                
+                <button [disabled]="createForm.invalid" class="mx-3" mat-raised-button color="primary" type="submit">Submit</button>
+                <a routerLink="/real-property" mat-raised-button color="warn">Cancel</a>
+            </div>
+        </mat-grid-tile>
+    </form>
+</mat-grid-list>
