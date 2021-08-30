@@ -56,12 +56,8 @@ namespace API.Controllers
     public async Task<ActionResult<AppUserDto>> UpdateUser(AppUserDto user)
     {
         var getUser = await _userManager.FindByEmailFromClaimsPrinciple(HttpContext.User);
-
-        getUser.FirstName = user.FirstName;
-        getUser.LastName = user.LastName;
-        getUser.Gender = user.Gender;
-        getUser.PhoneNumber = user.PhoneNumber;
-        getUser.Address = user.Address;
+        
+        _mapper.Map(user, getUser);
 
         var result = await _userManager.UpdateAsync(getUser);
 

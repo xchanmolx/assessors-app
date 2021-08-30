@@ -11,7 +11,8 @@ namespace API.Helpers
         {
             CreateMap<TaxDecOfRealProperty, PropertyToReturnDto>()
                 .ForMember(d => d.PictureUrl, o => o.MapFrom<PropertyUrlResolver>());
-            CreateMap<AppUser, AppUserDto>();
+            CreateMap<AppUser, AppUserDto>().ReverseMap();
+            CreateMap<PropertyToUpdateDto, TaxDecOfRealProperty>();
         }
     }
 }

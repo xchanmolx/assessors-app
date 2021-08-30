@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'; 
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { IPagination } from '../shared/models/pagination';
@@ -46,6 +46,14 @@ export class RealPropertyService {
     headers = headers.set('Authorization', `Bearer ${token}`);
     
     return this.http.post<IRealProperty>(this.baseUrl + 'realProperties', values, {headers});
+  }
+
+  updateRealProperty(id: number, values: any) {
+    return this.http.put<IRealProperty>(this.baseUrl + 'realProperties/' + id, values);
+  }
+
+  deleteRealProperty(id: number) {
+    return this.http.delete<IRealProperty>(this.baseUrl + 'realProperties/' + id);
   }
 
   selectFile(event: any) {

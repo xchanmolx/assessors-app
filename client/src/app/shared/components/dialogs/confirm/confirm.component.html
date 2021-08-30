@@ -1,0 +1,50 @@
+<div class="header">
+    <h2 mat-dialog-title>
+        <strong>{{action}}</strong> data
+    </h2>
+    <button mat-icon-button [mat-dialog-close]="false">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<div mat-dialog-content>
+    <ng-container *ngIf="action != 'Delete'; else elseTemplate">
+        <mat-form-field>
+            <input placeholder="{{action}} Owner Name" matInput [(ngModel)]="local_data.ownerName">
+        </mat-form-field>
+        <mat-form-field>
+            <input placeholder="{{action}} Property Location" matInput [(ngModel)]="local_data.propertyLocation">
+        </mat-form-field>
+        <mat-form-field>
+            <input placeholder="{{action}} Tax Declaration Number" matInput [(ngModel)]="local_data.taxDecNumber">
+        </mat-form-field>
+        <mat-form-field>
+            <input placeholder="{{action}} Effective Year" matInput [(ngModel)]="local_data.effectiveYear" type="number">
+        </mat-form-field>
+        <mat-form-field>
+            <input placeholder="{{action}} Survey Lot Number" matInput [(ngModel)]="local_data.surveyLotNumber">
+        </mat-form-field>
+        <mat-form-field>
+            <input placeholder="{{action}} Land Area" matInput [(ngModel)]="local_data.landArea" type="number">
+        </mat-form-field>
+        <mat-form-field>
+            <input placeholder="{{action}} Remarks" matInput [(ngModel)]="local_data.remarks">
+        </mat-form-field>
+        <mat-form-field>
+            <input placeholder="{{action}} Picture URL" matInput [(ngModel)]="local_data.pictureUrl">
+        </mat-form-field>
+    </ng-container>
+
+    <ng-template #elseTemplate>
+        Are you sure you want to delete <b>{{local_data.ownerName}}?</b>
+    </ng-template>
+</div>
+
+<div mat-dialog-actions [align]="'end'">
+    <button (click)="closeDialog()" mat-raised-button [mat-dialog-close]="false">
+        Cancel
+    </button>
+    <button (click)="doAction()" mat-raised-button color="primary" [mat-dialog-close]="true">
+        {{action}}
+    </button>
+</div>

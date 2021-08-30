@@ -1,9 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
 
 namespace API.Dtos
 {
-    public class PropertyToCreateDto
+    public class PropertyToUpdateDto
     {
         [Required(ErrorMessage = "The owner name field is required.")]
         public string OwnerName { get; set; }

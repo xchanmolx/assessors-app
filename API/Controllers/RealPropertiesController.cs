@@ -60,6 +60,19 @@ namespace API.Controllers
             return _mapper.Map<TaxDecOfRealProperty, PropertyToReturnDto>(property);
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateProperty(int id, PropertyToUpdateDto propertyToUpdateDto) 
+        {
+            var propertyFromRepo = await _propertyRepo.GetByIdAsync(id);
+
+            _mapper.Map(propertyToUpdateDto, propertyFromRepo);
+
+            if (await _propertyRepo.SaveAll())
+                return NoContent();
+
+            throw new Exception($"Updating real property {id} failed on save");
+        }
+
         [HttpPost]
         public async Task<ActionResult<PropertyToCreateDto>> CreateProperty(PropertyToCreateDto propertyToCreateDto)
         {
@@ -121,7 +134,7 @@ namespace API.Controllers
             }
 
             if (await _propertyRepo.SaveAll())
-                return Ok();
+                return Ok(propertyFromRepo);
 
             return BadRequest(new ApiResponse(400));
         }

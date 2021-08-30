@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ConfirmComponent } from '../shared/components/dialogs/confirm/confirm.component';
 import { RealPropertyCreateComponent } from './real-property-create/real-property-create.component';
 import { RealPropertyDetailsComponent } from './real-property-details/real-property-details.component';
 import { RealPropertyComponent } from './real-property.component';

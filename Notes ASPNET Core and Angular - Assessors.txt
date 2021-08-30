@@ -79,6 +79,8 @@ ng g r user-edit --skip-tests
 ng g g prevent-unsaved-changes --skip-tests
 ng g d focus-first-input --skip-tests
 ng g --help
+ng g s services/dialog --skip-tests
+ng g c dialogs/confirm --skip-tests
 
 3rd party Component for Angular
 npm install bootstrap@4.0.0 font-awesome

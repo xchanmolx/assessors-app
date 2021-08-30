@@ -1,4 +1,4 @@
-<mat-grid-list cols="2" rowHeight="400px">
+<mat-grid-list cols="2" rowHeight="460px">
     <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
         <mat-grid-tile>
             <div class="col-6">
@@ -9,14 +9,14 @@
                 <input #fileInput class="form-control" type=file (change)="realPropertyService.selectFile($event)" accept="image/png, image/gif, image/jpeg">
                 <br>
 
-                <div class="mb-2" *ngIf="realPropertyService.response != null">
+                <div class="mb-2" *ngIf="realPropertyService.response">
                     <span>{{realPropertyService.response.imageUploadSuccess}}</span>
                 </div>
 
-                <input [disabled]="realPropertyService.image == null" class="form-control btn btn-primary" type="button" value="Upload" (click)="upload()">
+                <input [disabled]="!realPropertyService.image" class="form-control btn btn-primary" type="button" value="Upload" (click)="upload()">
 
-                <ng-container *ngIf="realPropertyService.response != null">
-                    <app-text-input formControlName="pictureUrl" [(ngModel)]="realPropertyService.response.imagePath" [type]="'hidden'"></app-text-input>
+                <ng-container *ngIf="realPropertyService.response">
+                    <app-text-input formControlName="pictureUrl" [type]="'hidden'">{{createForm.controls['pictureUrl'].setValue(realPropertyService.response.imagePath)}}</app-text-input>
                 </ng-container>
 
             </div>

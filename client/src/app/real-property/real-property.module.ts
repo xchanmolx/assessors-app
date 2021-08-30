@@ -17,12 +17,14 @@ import { SharedModule } from '../shared/shared.module';
 import { RealPropertyDetailsComponent } from './real-property-details/real-property-details.component';
 import { RealPropertyCreateComponent } from './real-property-create/real-property-create.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { MatInputAutofocusDirective } from './mat-input-autofocus.directive';
 
 @NgModule({
   declarations: [
     RealPropertyComponent,
     RealPropertyDetailsComponent,
-    RealPropertyCreateComponent
+    RealPropertyCreateComponent,
+    MatInputAutofocusDirective
   ],
   imports: [
     CommonModule,

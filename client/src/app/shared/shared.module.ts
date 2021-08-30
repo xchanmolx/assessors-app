@@ -1,9 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TextInputComponent } from './components/text-input/text-input.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
 import { PagerComponent } from './components/pager/pager.component';
 import { PagingHeaderComponent } from './components/paging-header/paging-header.component';
+import { ConfirmComponent } from './components/dialogs/confirm/confirm.component';
 
 
 
@@ -11,17 +18,25 @@ import { PagingHeaderComponent } from './components/paging-header/paging-header.
   declarations: [
     TextInputComponent,
     PagerComponent,
-    PagingHeaderComponent
+    PagingHeaderComponent,
+    ConfirmComponent
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    MatDialogModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   exports: [
     PagingHeaderComponent,
     PagerComponent,
     ReactiveFormsModule,
-    TextInputComponent
+    TextInputComponent,
+    ConfirmComponent
   ]
 })
 export class SharedModule { }
