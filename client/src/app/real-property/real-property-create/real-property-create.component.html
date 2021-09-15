@@ -18,7 +18,6 @@
                 <ng-container *ngIf="realPropertyService.response">
                     <app-text-input formControlName="pictureUrl" [type]="'hidden'">{{createForm.controls['pictureUrl'].setValue(realPropertyService.response.imagePath)}}</app-text-input>
                 </ng-container>
-
             </div>
         </mat-grid-tile>
         <mat-grid-tile>

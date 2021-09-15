@@ -1,6 +1,5 @@
-import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, Optional, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { NotifierService } from 'src/app/core/services/notifier.service';
 import { RealPropertyService } from 'src/app/real-property/real-property.service';
 import { IRealProperty } from 'src/app/shared/models/realProperty';
 
@@ -12,6 +11,7 @@ import { IRealProperty } from 'src/app/shared/models/realProperty';
 export class ConfirmComponent implements OnInit {
   action!: string;
   local_data!: any;
+  @ViewChild('fileInput') fileInput!: ElementRef;
 
   constructor(public realPropertyService: RealPropertyService, 
       @Optional() @Inject(MAT_DIALOG_DATA) public data: IRealProperty, 
@@ -19,12 +19,23 @@ export class ConfirmComponent implements OnInit {
         this.local_data = {...data};
         this.action = this.local_data.action;
       }
-
+      
   ngOnInit(): void {
+    this.local_data.pictureUrl = this.local_data.pictureUrl.substring(23, 126).trim();
+  }
+
+  upload() {
+    this.realPropertyService.uploadPhoto();
+    this.realPropertyService.image = null;
   }
 
   doAction() {
     this.dialogRef.close({event: this.action, data: this.local_data});
+
+    if (this.realPropertyService.response) {
+      this.local_data.pictureUrl = this.realPropertyService.response.imagePath;
+      this.realPropertyService.response.imageUploadSuccess = '';
+    }
   }
 
   closeDialog() {

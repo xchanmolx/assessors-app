@@ -99,6 +99,7 @@ https://marella.me/material-icons/
 npm install material-icons@latest
 npm install @auth0/angular-jwt
 npm i ng2-file-upload --save
+npm install ngx-print
 
 Make git to github
 cd .. to parent folder

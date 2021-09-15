@@ -94,7 +94,7 @@
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let row">
                     <button class="btn btn-outline-primary" routerLink="/real-property/{{row.id}}" mat-icon-button matTooltip="Image for Tax Declaration of Real Property"><mat-icon>image</mat-icon></button>
-                    <button class="btn btn-outline-primary" mat-icon-button matTooltip="Tracer"><mat-icon>text_snippet</mat-icon></button>
+                    <button class="btn btn-outline-primary" routerLink="/real-property/tracer/{{row.surveyLotNumber}}" mat-icon-button matTooltip="Tracer"><mat-icon>text_snippet</mat-icon></button>
                     <button (click)="openDialog('Update', row)" class="btn btn-outline-primary" mat-icon-button matTooltip="Edit"><mat-icon>edit</mat-icon></button>
                     <button (click)="openDialog('Delete', row)" class="btn btn-outline-danger" mat-icon-button color="warn" matTooltip="Delete"><mat-icon>delete</mat-icon></button>
                 </td>
@@ -115,7 +115,7 @@
                 <mat-paginator #paginator
                   [length]="totalCount"
                   [pageSize]="realPropertyParams.pageSize"
-                  [pageSizeOptions]="[2, 5, 10, 25, 100]"
+                  [pageSizeOptions]="[5, 10, 25, 50]"
                   [showFirstLastButtons]="showFirstLastButtons"
                   (page)="onPageChanged($event)"
                   aria-label="Select page">

@@ -18,13 +18,16 @@ import { RealPropertyDetailsComponent } from './real-property-details/real-prope
 import { RealPropertyCreateComponent } from './real-property-create/real-property-create.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { MatInputAutofocusDirective } from './mat-input-autofocus.directive';
+import { RealPropertySearchLotNoComponent } from './real-property-search-lot-no/real-property-search-lot-no.component';
+import { NgxPrintModule } from 'ngx-print';
 
 @NgModule({
   declarations: [
     RealPropertyComponent,
     RealPropertyDetailsComponent,
     RealPropertyCreateComponent,
-    MatInputAutofocusDirective
+    MatInputAutofocusDirective,
+    RealPropertySearchLotNoComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +43,8 @@ import { MatInputAutofocusDirective } from './mat-input-autofocus.directive';
     MatTooltipModule,
     MatTableModule,
     MatPaginatorModule,
-    FileUploadModule
+    FileUploadModule,
+    NgxPrintModule
   ]
 })
 export class RealPropertyModule { }

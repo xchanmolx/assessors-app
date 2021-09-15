@@ -9,6 +9,7 @@ using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
+using Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -23,120 +24,119 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _hostEnvironment;
         public RealPropertiesController(IGenericRepository<TaxDecOfRealProperty> propertyRepo, IMapper mapper,
-            IWebHostEnvironment hostEnvironment)
+        IWebHostEnvironment hostEnvironment)
         {
             _hostEnvironment = hostEnvironment;
             _mapper = mapper;
             _propertyRepo = propertyRepo;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<Pagination<PropertyToReturnDto>>> GetProperties(
-            [FromQuery] PropertySpecParams propertyParams)
+    [HttpGet]
+    public async Task<ActionResult<Pagination<PropertyToReturnDto>>> GetProperties(
+        [FromQuery] PropertySpecParams propertyParams)
+    {
+        var spec = new PropertyWithRealPropertiesSpecification(propertyParams);
+
+        var countSpec = new PropertyWithFiltersForCountSpecification(propertyParams);
+
+        var totalItems = await _propertyRepo.CountAsync(countSpec);
+
+        var properties = await _propertyRepo.ListAsync(spec);
+
+        var data = _mapper.Map<IEnumerable<TaxDecOfRealProperty>, IEnumerable<PropertyToReturnDto>>(properties);
+
+        return Ok(new Pagination<PropertyToReturnDto>(propertyParams.PageIndex, propertyParams.PageSize,
+            totalItems, data));
+    }
+
+    [HttpGet("tracer")]
+    public async Task<ActionResult> SearchLotNo(string lotNo)
+    {
+        var properties = await _propertyRepo.SearchAllLotNoAsync(lotNo);
+
+        return Ok(properties);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<PropertyToReturnDto>> GetProperty(int id)
+    {
+        var spec = new PropertyWithRealPropertiesSpecification(id);
+
+        var property = await _propertyRepo.GetEntityWithSpec(spec);
+
+        if (property == null) return NotFound(new ApiResponse(404));
+
+        return _mapper.Map<TaxDecOfRealProperty, PropertyToReturnDto>(property);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult> UpdateProperty(int id, PropertyToUpdateDto propertyToUpdateDto)
+    {
+        var propertyFromRepo = await _propertyRepo.GetByIdAsync(id);
+
+        _mapper.Map(propertyToUpdateDto, propertyFromRepo);
+
+        if (await _propertyRepo.SaveAll())
+            return Ok(propertyToUpdateDto);
+
+        return BadRequest(new ApiResponse(400, "Problem updating the real property"));
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<PropertyToCreateDto>> CreateProperty(PropertyToCreateDto propertyToCreateDto)
+    {
+        var property = _mapper.Map<PropertyToCreateDto, TaxDecOfRealProperty>(propertyToCreateDto);
+
+        _propertyRepo.Add(property);
+
+        if (await _propertyRepo.SaveAll())
+            return Ok(property);
+
+        return BadRequest(new ApiResponse(400));
+    }
+
+    [HttpPost("upload")]
+    public async Task<ActionResult> UploadPhoto(IFormFile image)
+    {
+        if (image != null)
         {
-            var spec = new PropertyWithRealPropertiesSpecification(propertyParams);
+            var fileName = Path.GetFileName(image.FileName);
+            Guid guid = Guid.NewGuid();
+            fileName = (guid.ToString() + fileName);
+            var filePath = Path.Combine(_hostEnvironment.WebRootPath, @"images\properties", fileName);
+            var imagePath = $"images/properties/{fileName}";
 
-            var countSpec = new PropertyWithFiltersForCountSpecification(propertyParams);
-
-            var totalItems = await _propertyRepo.CountAsync(countSpec);
-
-            var properties = await _propertyRepo.ListAsync(spec);
-
-            var data = _mapper.Map<IEnumerable<TaxDecOfRealProperty>, IEnumerable<PropertyToReturnDto>>(properties);
-
-            return Ok(new Pagination<PropertyToReturnDto>(propertyParams.PageIndex, propertyParams.PageSize,
-                totalItems, data));
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<PropertyToReturnDto>> GetProperty(int id)
-        {
-            var spec = new PropertyWithRealPropertiesSpecification(id);
-
-            var property = await _propertyRepo.GetEntityWithSpec(spec);
-
-            if (property == null) return NotFound(new ApiResponse(404));
-
-            return _mapper.Map<TaxDecOfRealProperty, PropertyToReturnDto>(property);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateProperty(int id, PropertyToUpdateDto propertyToUpdateDto) 
-        {
-            var propertyFromRepo = await _propertyRepo.GetByIdAsync(id);
-
-            _mapper.Map(propertyToUpdateDto, propertyFromRepo);
-
-            if (await _propertyRepo.SaveAll())
-                return NoContent();
-
-            throw new Exception($"Updating real property {id} failed on save");
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<PropertyToCreateDto>> CreateProperty(PropertyToCreateDto propertyToCreateDto)
-        {
-            var property = new TaxDecOfRealProperty 
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
-                OwnerName = propertyToCreateDto.OwnerName,
-                PropertyLocation = propertyToCreateDto.PropertyLocation,
-                TaxDecNumber = propertyToCreateDto.TaxDecNumber,
-                EffectiveYear = propertyToCreateDto.EffectiveYear,
-                SurveyLotNumber = propertyToCreateDto.SurveyLotNumber,
-                LandArea = propertyToCreateDto.LandArea,
-                PictureUrl = propertyToCreateDto.PictureUrl,
-                Remarks = propertyToCreateDto.Remarks
-            };
-
-            _propertyRepo.Add(property);
-            
-            if (await _propertyRepo.SaveAll())
-                return Ok(property);
-
-            return BadRequest(new ApiResponse(400));
-        }
-
-        [HttpPost("upload")]
-        public async Task<ActionResult> UploadPhoto(IFormFile image)
-        {
-            if (image != null)
-            {
-                var fileName = Path.GetFileName(image.FileName);
-                Guid guid = Guid.NewGuid();
-                fileName = (guid.ToString() + fileName);
-                var filePath = Path.Combine(_hostEnvironment.WebRootPath, @"images\properties", fileName);
-                var imagePath = $"images/properties/{fileName}";
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await image.CopyToAsync(fileStream);
-                }
-
-                return Ok(new {
-                    imagePath = imagePath,
-                    imageUploadSuccess = "Photo successfully uploaded"
-                });
-            }
-            else
-            {
-                return BadRequest(new ApiResponse(400));
-            }
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProperty(int id)
-        {
-            var propertyFromRepo = await _propertyRepo.GetByIdAsync(id);
-
-            if (propertyFromRepo.Id > 0)
-            {
-                _propertyRepo.Delete(propertyFromRepo);
+                await image.CopyToAsync(fileStream);
             }
 
-            if (await _propertyRepo.SaveAll())
-                return Ok(propertyFromRepo);
-
+            return Ok(new
+            {
+                imagePath = imagePath,
+                imageUploadSuccess = "Photo successfully uploaded"
+            });
+        }
+        else
+        {
             return BadRequest(new ApiResponse(400));
         }
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteProperty(int id)
+    {
+        var propertyFromRepo = await _propertyRepo.GetByIdAsync(id);
+
+        if (propertyFromRepo.Id > 0)
+        {
+            _propertyRepo.Delete(propertyFromRepo);
+        }
+
+        if (await _propertyRepo.SaveAll())
+            return Ok(propertyFromRepo);
+
+        return BadRequest(new ApiResponse(400));
+    }
+}
 }

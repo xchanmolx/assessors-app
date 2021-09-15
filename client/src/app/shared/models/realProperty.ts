@@ -8,4 +8,5 @@ export interface IRealProperty {
     landArea: number;
     remarks: string;
     pictureUrl: string;
+    imagePath: string;
 }

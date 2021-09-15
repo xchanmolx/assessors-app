@@ -2,7 +2,6 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewCh
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSelectChange } from '@angular/material/select';
-import { MatTable } from '@angular/material/table';
 import { BusyService } from '../core/services/busy.service';
 import { NotifierService } from '../core/services/notifier.service';
 import { ConfirmComponent } from '../shared/components/dialogs/confirm/confirm.component';
@@ -30,11 +29,7 @@ export class RealPropertyComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['ownerName', 'propertyLocation', 'taxDecNumber', 'effectiveYear', 'surveyLotNumber', 'landArea', 'remarks', 'actions'];
   showFirstLastButtons = true;
 
-  str!: string;
-
-  @ViewChild(MatTable, {static: true}) table!: MatTable<IRealProperty>;
-
-  constructor(private realPropertyService: RealPropertyService, 
+  constructor(private realPropertyService: RealPropertyService,
     public busyService: BusyService, private cd: ChangeDetectorRef, public dialog: MatDialog,
     private notifierService: NotifierService) { }
 
@@ -67,23 +62,30 @@ export class RealPropertyComponent implements OnInit, AfterViewInit {
   updateRowData(row_obj: IRealProperty){
     this.realProperties = this.realProperties.filter((value, key) => {
       if(value.id == row_obj.id){
+        value.id = row_obj.id;
         value.ownerName = row_obj.ownerName;
-        value.propertyLocation = row_obj.propertyLocation;
         value.taxDecNumber = row_obj.taxDecNumber;
-        value.effectiveYear = row_obj.effectiveYear;
         value.surveyLotNumber = row_obj.surveyLotNumber;
+        value.pictureUrl = row_obj.pictureUrl;
+        value.propertyLocation = row_obj.propertyLocation;
+        value.effectiveYear = row_obj.effectiveYear;
         value.landArea = row_obj.landArea;
         value.remarks = row_obj.remarks;
-        value.pictureUrl = row_obj.pictureUrl;
+        value.imagePath = row_obj.imagePath;
+
+        this.realPropertyService.updateRealProperty(value.id, value).subscribe((response) => {
+          this.notifierService.showNotification(`${response.ownerName} has been updated successfully.`, 'OK', 'success');
+        }, error => {
+          this.notifierService.showNotification('Problem updating the real property', 'OK', 'error');
+
+          this.getRealProperties();
+        });
+
       }
+
       return true;
     });
 
-    this.realPropertyService.updateRealProperty(row_obj.id, row_obj).subscribe(response => {
-      console.log(response);
-    }, error => {
-      console.log(error);
-    });
   }
 
   deleteRowData(row_obj: IRealProperty){
@@ -95,7 +97,7 @@ export class RealPropertyComponent implements OnInit, AfterViewInit {
       this.notifierService.showNotification(`${realProperty.ownerName} has been deleted successfully.`, 'OK', 'success');
       this.totalCount--;
     }, error => {
-      this.notifierService.showNotification(error, 'OK', 'error');
+      this.notifierService.showNotification('Problem deleting the real property', 'OK', 'error');
     });
   }
 
@@ -106,7 +108,7 @@ export class RealPropertyComponent implements OnInit, AfterViewInit {
       this.realPropertyParams.pageSize = response!.pageSize;
       this.totalCount = response!.count;
     }, error => {
-      console.log(error);
+      console.log(error.errors);
     });
   }
 

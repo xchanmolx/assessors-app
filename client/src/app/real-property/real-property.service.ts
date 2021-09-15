@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core'; 
+import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { IPagination } from '../shared/models/pagination';
@@ -37,6 +38,10 @@ export class RealPropertyService {
 
   getRealProperty(id: number) {
     return this.http.get<IRealProperty>(this.baseUrl + 'realProperties/' + id);
+  }
+
+  searchLotNo(lotNoValue: string) {
+    return this.http.get<IRealProperty[]>(this.baseUrl + `realProperties/tracer?lotNo=${lotNoValue}`);
   }
 
   createRealProperty(values: any) {

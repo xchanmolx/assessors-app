@@ -13,6 +13,7 @@ namespace API.Helpers
                 .ForMember(d => d.PictureUrl, o => o.MapFrom<PropertyUrlResolver>());
             CreateMap<AppUser, AppUserDto>().ReverseMap();
             CreateMap<PropertyToUpdateDto, TaxDecOfRealProperty>();
+            CreateMap<PropertyToCreateDto, TaxDecOfRealProperty>();
         }
     }
 }

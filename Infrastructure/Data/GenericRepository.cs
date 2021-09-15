@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -51,6 +52,19 @@ namespace Infrastructure.Data
             return await _context.Set<T>().ToListAsync();
         }
 
+        public async Task<IEnumerable<TaxDecOfRealProperty>> SearchAllLotNoAsync(string lotNo)
+        {
+            var realProperties = from rp in _context.TaxDecOfRealProperties
+                                 select rp;
+
+            if (!String.IsNullOrEmpty(lotNo))
+            {
+                realProperties = realProperties.Where(s => s.SurveyLotNumber.ToLower().Contains(lotNo)).OrderByDescending(x => x.EffectiveYear);
+            }
+
+            return await realProperties.ToListAsync();
+        }
+
         public async Task<IEnumerable<T>> ListAsync(ISpecification<T> spec)
         {
             return await ApplySpecification(spec).ToListAsync();
@@ -60,5 +74,6 @@ namespace Infrastructure.Data
         {
             return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), spec);
         }
+
     }
 }

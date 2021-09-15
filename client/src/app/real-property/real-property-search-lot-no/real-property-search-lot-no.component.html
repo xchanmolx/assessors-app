@@ -1,0 +1,119 @@
+<div class="row">
+    <div class="col">
+        <button mat-icon-button class="float-end" matTooltip="Print" 
+        [useExistingCss]="true"
+        printTitle="Tracer"
+        printSectionId="print-section" 
+        ngxPrint><mat-icon>print</mat-icon></button>
+    </div>
+</div>
+<div class="container-fluid" id="print-section">
+    <div class="row mt-3">
+        <div class="col">
+            <img src="../../assets/images/logo-512.png" alt="aloguinsan logo" class="logo d-flex justify-content-center">
+            <h6 class="d-flex justify-content-center m-0">Republic of the Philippines</h6>
+            <h6 class="d-flex justify-content-center m-0">Province of Cebu</h6>
+            <h6 class="d-flex justify-content-center m-0">Municipality of Aloguinsan</h6>
+            <h5 class="d-flex justify-content-center m-0"><strong>OFFICE OF THE MUNICIPAL ASSESSOR</strong></h5>
+        </div>
+    </div>
+    <hr class="m-0">
+    <h3 class="d-flex justify-content-center mt-2"><strong>TRACER</strong></h3>
+    <h5 class="d-flex justify-content-center">LOT NO. {{lotNo | uppercase}}</h5>
+    <!-- Material Table  -->
+    <div class="row p-3">
+        <div class="col">
+            
+            <table mat-table [dataSource]="realProperties" class="mat-elevation-z8">
+            
+                <!-- Owner's Name Column -->
+                <ng-container matColumnDef="ownerName">
+                <th mat-header-cell *matHeaderCellDef> Owner's Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.ownerName | uppercase}} </td>
+                </ng-container>
+            
+                <!-- Property Location Column -->
+                <ng-container matColumnDef="propertyLocation">
+                <th mat-header-cell *matHeaderCellDef> Property Location </th>
+                <td mat-cell *matCellDef="let element"> {{element.propertyLocation | uppercase}} </td>
+                </ng-container>
+            
+                <!-- Tax Declaration Number Column -->
+                <ng-container matColumnDef="taxDecNumber">
+                <th mat-header-cell *matHeaderCellDef> Tax Declaration Number </th>
+                <td mat-cell *matCellDef="let element"> {{element.taxDecNumber | uppercase}} </td>
+                </ng-container>
+            
+                <!-- Effective Year Column -->
+                <ng-container matColumnDef="effectiveYear">
+                <th mat-header-cell *matHeaderCellDef> Effective Year </th>
+                <td mat-cell *matCellDef="let element"> {{element.effectiveYear}} </td>
+                </ng-container>
+
+                <!-- Survey Lot Number Column -->
+                <ng-container matColumnDef="surveyLotNumber">
+                <th mat-header-cell *matHeaderCellDef> Lot No. </th>
+                <td mat-cell *matCellDef="let element"> {{element.surveyLotNumber | uppercase}} </td>
+                </ng-container>
+
+                <!-- Land Area Column -->
+                <ng-container matColumnDef="landArea">
+                <th mat-header-cell *matHeaderCellDef> Land Area </th>
+                <td mat-cell *matCellDef="let element"> {{element.landArea | number}} </td>
+                </ng-container>
+
+                <!-- Remarks Column -->
+                <ng-container matColumnDef="remarks">
+                <th mat-header-cell *matHeaderCellDef> Remarks </th>
+                <td mat-cell *matCellDef="let element"> {{element.remarks | uppercase}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
+
+        </div>
+        <div class="row mt-3 mb-2">
+            <div class="col-1"></div>
+            <div class="col-11">
+                This tracer is issued upon the request of 
+                <mat-form-field style="width: 190px; text-align: center;">
+                    <input placeholder="Name of requester" matInput>
+                </mat-form-field> 
+                for whatever legal purpose this may serve.<br>
+                <div>
+                    Given this
+                    <mat-form-field style="width: 230px; text-align: center;">
+                        <input placeholder="Date" matInput>
+                    </mat-form-field>
+                    .
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                Verified by: <br><br>
+                <h5 class="m-0"><strong><u>JUAN C. GACANG</u></strong></h5>
+                <h6 class="m-0">&nbsp;&nbsp;&nbsp; Assessor's Staff</h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-end">
+                <h5 class="m-0"><strong><u>ROY D. BENDANILLO</u></strong></h5>
+                <h6>Municipal Assessor &nbsp;&nbsp;&nbsp;</h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h6 class="m-0">O.R. No. &nbsp;&nbsp;&nbsp;: 
+                    <mat-form-field style="width: 90px; font-weight: bold;">
+                        <input placeholder="O.R. No." matInput>
+                    </mat-form-field> 
+                </h6>
+                <h6 class="m-0">Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{formattedDate}}</h6>
+                <h6 class="m-0">Place &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Aloguinsan, Cebu</h6>
+            </div>
+        </div>
+    </div>
+</div>
