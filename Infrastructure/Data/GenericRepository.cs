@@ -59,7 +59,7 @@ namespace Infrastructure.Data
 
             if (!String.IsNullOrEmpty(lotNo))
             {
-                realProperties = realProperties.Where(s => s.SurveyLotNumber.ToLower().Contains(lotNo)).OrderByDescending(x => x.EffectiveYear);
+                realProperties = realProperties.Where(s => s.SurveyLotNumber.ToLower().Equals(lotNo)).OrderByDescending(x => x.EffectiveYear);
             }
 
             return await realProperties.ToListAsync();
