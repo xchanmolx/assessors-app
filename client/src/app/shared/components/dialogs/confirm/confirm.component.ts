@@ -21,7 +21,7 @@ export class ConfirmComponent implements OnInit {
       }
       
   ngOnInit(): void {
-    this.local_data.pictureUrl = this.local_data.pictureUrl.substring(23, 126).trim();
+    this.local_data.pictureUrl = this.local_data.pictureUrl.substring(31, 126).trim();
   }
 
   upload() {

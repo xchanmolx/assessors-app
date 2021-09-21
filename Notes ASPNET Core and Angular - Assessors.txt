@@ -1,4 +1,4 @@
-Publishing: 290 - Video: 3:26
+Publishing: 292 - Video: 4:20
 
 Sorting: use => OrderBy and OrderByDescending
 Filtering: use => Where clause or Any Condition clause

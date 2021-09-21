@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BusyService } from 'src/app/core/services/busy.service';
 import { NotifierService } from 'src/app/core/services/notifier.service';
@@ -10,7 +10,7 @@ import { RealPropertyService } from '../real-property.service';
   templateUrl: './real-property-create.component.html',
   styleUrls: ['./real-property-create.component.scss']
 })
-export class RealPropertyCreateComponent implements OnInit, AfterViewInit {
+export class RealPropertyCreateComponent implements OnInit, AfterViewInit, AfterViewChecked {
   createForm!: FormGroup;
   @ViewChild('fileInput') fileInput!: ElementRef;
   @ViewChild(TextInputComponent) textInputComponent!: TextInputComponent;
@@ -24,6 +24,10 @@ export class RealPropertyCreateComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.busyService.idle();
+    this.cd.detectChanges();
+  }
+
+  ngAfterViewChecked() {
     this.cd.detectChanges();
   }
 

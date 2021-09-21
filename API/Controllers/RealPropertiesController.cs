@@ -9,8 +9,6 @@ using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
-using Infrastructure.Data;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,11 +20,9 @@ namespace API.Controllers
     {
         private readonly IGenericRepository<TaxDecOfRealProperty> _propertyRepo;
         private readonly IMapper _mapper;
-        private readonly IWebHostEnvironment _hostEnvironment;
         public RealPropertiesController(IGenericRepository<TaxDecOfRealProperty> propertyRepo, IMapper mapper,
         IWebHostEnvironment hostEnvironment)
         {
-            _hostEnvironment = hostEnvironment;
             _mapper = mapper;
             _propertyRepo = propertyRepo;
         }
@@ -103,7 +99,7 @@ namespace API.Controllers
             var fileName = Path.GetFileName(image.FileName);
             Guid guid = Guid.NewGuid();
             fileName = (guid.ToString() + fileName);
-            var filePath = Path.Combine(_hostEnvironment.WebRootPath, @"images\properties", fileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"Content\images\properties", fileName);
             var imagePath = $"images/properties/{fileName}";
 
             using (var fileStream = new FileStream(filePath, FileMode.Create))
