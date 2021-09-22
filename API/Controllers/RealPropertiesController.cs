@@ -9,13 +9,14 @@ using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    // [Authorize]
+    [Authorize]
     public class RealPropertiesController : BaseApiController
     {
         private readonly IGenericRepository<TaxDecOfRealProperty> _propertyRepo;
@@ -77,7 +78,7 @@ namespace API.Controllers
 
         return BadRequest(new ApiResponse(400, "Problem updating the real property"));
     }
-
+    
     [HttpPost]
     public async Task<ActionResult<PropertyToCreateDto>> CreateProperty(PropertyToCreateDto propertyToCreateDto)
     {

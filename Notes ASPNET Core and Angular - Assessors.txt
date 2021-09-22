@@ -1,5 +1,3 @@
-Publishing: 292 - Video: 4:20
-
 Sorting: use => OrderBy and OrderByDescending
 Filtering: use => Where clause or Any Condition clause
 Pagination: use => int Take, int Skip, bool IsPagingEnabled
@@ -83,6 +81,7 @@ ng g d focus-first-input --skip-tests
 ng g --help
 ng g s services/dialog --skip-tests
 ng g c dialogs/confirm --skip-tests
+ng add @angular/pwa
 
 3rd party Component for Angular
 npm install bootstrap@4.0.0 font-awesome
@@ -160,6 +159,7 @@ obj
 *.db
 appsettings.json
 wwwroot
+Content
 
 Clone the repository you need then,
 locate the folder for API, then run 'dotnet restore'
@@ -241,3 +241,12 @@ email: [null,
         [Validators.required, Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')],
         [this.validateEmailNotTaken()]
       ]
+
+--------------------------------------------
+for Publishing the Angular
+angular.json ---> "outputPath": "../DatingApp.API/wwwroot"
+ng build
+
+--------------------------------------------
+for Publishing the DOTNET Core
+dotnet publish -c Release
