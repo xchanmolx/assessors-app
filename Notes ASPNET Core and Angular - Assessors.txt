@@ -242,6 +242,8 @@ email: [null,
         [this.validateEmailNotTaken()]
       ]
 
+https://stackoverflow.com/questions/8169999/how-can-i-create-a-self-signed-cert-for-localhost/48790088#48790088
+
 --------------------------------------------
 for Publishing the Angular
 angular.json ---> "outputPath": "../DatingApp.API/wwwroot"
