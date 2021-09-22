@@ -9,14 +9,12 @@ using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Authorize]
     public class RealPropertiesController : BaseApiController
     {
         private readonly IGenericRepository<TaxDecOfRealProperty> _propertyRepo;

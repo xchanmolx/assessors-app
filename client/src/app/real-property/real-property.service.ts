@@ -27,12 +27,7 @@ export class RealPropertyService {
     params = params.append('pageIndex', realPropertyParams.pageNumber.toString());
     params = params.append('pageSize', realPropertyParams.pageSize.toString());
 
-    const token = localStorage.getItem('token');
-
-    let headers = new HttpHeaders();
-    headers = headers.set('Authorization', `Bearer ${token}`);
-
-    return this.http.get<IPagination>(this.baseUrl + 'realProperties', { observe: 'response', params, headers })
+    return this.http.get<IPagination>(this.baseUrl + 'realProperties', { observe: 'response', params })
       .pipe(
         map(response => {
           return response.body;
@@ -41,21 +36,11 @@ export class RealPropertyService {
   }
 
   getRealProperty(id: number) {
-    const token = localStorage.getItem('token');
-
-    let headers = new HttpHeaders();
-    headers = headers.set('Authorization', `Bearer ${token}`);
-
-    return this.http.get<IRealProperty>(this.baseUrl + 'realProperties/' + id, {headers});
+    return this.http.get<IRealProperty>(this.baseUrl + 'realProperties/' + id);
   }
 
   searchLotNo(lotNoValue: string) {
-    const token = localStorage.getItem('token');
-
-    let headers = new HttpHeaders();
-    headers = headers.set('Authorization', `Bearer ${token}`);
-
-    return this.http.get<IRealProperty[]>(this.baseUrl + `realProperties/tracer?lotNo=${lotNoValue}`, {headers});
+    return this.http.get<IRealProperty[]>(this.baseUrl + `realProperties/tracer?lotNo=${lotNoValue}`);
   }
 
   createRealProperty(values: any) {
@@ -68,21 +53,11 @@ export class RealPropertyService {
   }
 
   updateRealProperty(id: number, values: any) {
-    const token = localStorage.getItem('token');
-
-    let headers = new HttpHeaders();
-    headers = headers.set('Authorization', `Bearer ${token}`);
-
-    return this.http.put<IRealProperty>(this.baseUrl + 'realProperties/' + id, values, {headers});
+    return this.http.put<IRealProperty>(this.baseUrl + 'realProperties/' + id, values);
   }
 
   deleteRealProperty(id: number) {
-    const token = localStorage.getItem('token');
-
-    let headers = new HttpHeaders();
-    headers = headers.set('Authorization', `Bearer ${token}`);
-
-    return this.http.delete<IRealProperty>(this.baseUrl + 'realProperties/' + id, {headers});
+    return this.http.delete<IRealProperty>(this.baseUrl + 'realProperties/' + id);
   }
 
   selectFile(event: any) {
@@ -93,12 +68,7 @@ export class RealPropertyService {
     let formData = new FormData();
     formData.append('image', this.image);
 
-    const token = localStorage.getItem('token');
-
-    let headers = new HttpHeaders();
-    headers = headers.set('Authorization', `Bearer ${token}`);
-
-    this.http.post(this.baseUrl + 'realProperties/upload', formData, {headers})
+    this.http.post(this.baseUrl + 'realProperties/upload', formData)
       .toPromise().then(
         response => {
           this.response = response;
