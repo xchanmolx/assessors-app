@@ -15,7 +15,7 @@ export class ConfirmComponent implements OnInit {
 
   constructor(public realPropertyService: RealPropertyService, 
       @Optional() @Inject(MAT_DIALOG_DATA) public data: IRealProperty, 
-      public dialogRef: MatDialogRef<ConfirmComponent>) { 
+      public dialogRef: MatDialogRef<ConfirmComponent>) {
         this.local_data = {...data};
         this.action = this.local_data.action;
       }

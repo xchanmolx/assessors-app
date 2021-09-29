@@ -15,7 +15,7 @@ namespace Infrastructure.Identity
                 {
                     FirstName = "Chiantine",
                     LastName = "Manigos",
-                    Gender = "Male",
+                    Gender = "male",
                     Address = "Purok 7, Tagaytay Bojo, Aloguinsan, Cebu",
                     Email = "cmanigos@gmail.com",
                     UserName = "cmanigos@gmail.com",
