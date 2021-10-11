@@ -52,6 +52,16 @@ namespace Infrastructure.Data
             return await _context.Set<T>().ToListAsync();
         }
 
+        public async Task<IEnumerable<T>> ListAsync(ISpecification<T> spec)
+        {
+            return await ApplySpecification(spec).ToListAsync();
+        }
+
+        private IQueryable<T> ApplySpecification(ISpecification<T> spec)
+        {
+            return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), spec);
+        }
+
         public async Task<IEnumerable<TaxDecOfRealProperty>> SearchAllLotNoAsync(string lotNo)
         {
             var realProperties = from rp in _context.TaxDecOfRealProperties
@@ -65,15 +75,17 @@ namespace Infrastructure.Data
             return await realProperties.ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> ListAsync(ISpecification<T> spec)
+        public async Task<IEnumerable<Photo>> PhotosWithSameId(int id)
         {
-            return await ApplySpecification(spec).ToListAsync();
-        }
+            var photos = from p in _context.Photos
+                                 select p;
 
-        private IQueryable<T> ApplySpecification(ISpecification<T> spec)
-        {
-            return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), spec);
-        }
+            if (id > 0)
+            {
+                photos = photos.Where(x => x.TaxDecOfRealPropertyId == id);
+            }
 
+            return await photos.ToListAsync();
+        }
     }
 }

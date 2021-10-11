@@ -1,3 +1,4 @@
+using System.Linq;
 using Core.Entities;
 
 namespace Core.Specifications
@@ -35,6 +36,7 @@ namespace Core.Specifications
         public PropertyWithRealPropertiesSpecification(int id) 
             : base(x => x.Id == id)
         {
+            AddInclude(p => p.Photos);
         }
     }
 }

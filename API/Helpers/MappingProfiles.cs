@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using API.Dtos;
 using AutoMapper;
 using Core.Entities;
@@ -9,11 +10,14 @@ namespace API.Helpers
     {
         public MappingProfiles()
         {
-            CreateMap<TaxDecOfRealProperty, PropertyToReturnDto>()
-                .ForMember(d => d.PictureUrl, o => o.MapFrom<PropertyUrlResolver>());
+            CreateMap<TaxDecOfRealProperty, PropertyToReturnDto>();
             CreateMap<AppUser, AppUserDto>().ReverseMap();
             CreateMap<PropertyToUpdateDto, TaxDecOfRealProperty>();
             CreateMap<PropertyToCreateDto, TaxDecOfRealProperty>();
+            CreateMap<PhotoForCreationDto, Photo>();
+            CreateMap<Photo, PhotoForDetailsDto>()
+                .ForMember(d => d.Url, o => o.MapFrom<PropertyUrlResolver>());
+            CreateMap<TaxDecOfRealProperty, PropertyToDeleteDto>();
         }
     }
 }

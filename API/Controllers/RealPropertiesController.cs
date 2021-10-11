@@ -9,8 +9,6 @@ using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -19,11 +17,13 @@ namespace API.Controllers
     {
         private readonly IGenericRepository<TaxDecOfRealProperty> _propertyRepo;
         private readonly IMapper _mapper;
-        public RealPropertiesController(IGenericRepository<TaxDecOfRealProperty> propertyRepo, IMapper mapper,
-        IWebHostEnvironment hostEnvironment)
+        private readonly IGenericRepository<Photo> _photoRepo;
+        public RealPropertiesController(IGenericRepository<TaxDecOfRealProperty> propertyRepo,
+        IGenericRepository<Photo> photoRepo, IMapper mapper)
         {
-            _mapper = mapper;
             _propertyRepo = propertyRepo;
+            _photoRepo = photoRepo;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -38,30 +38,30 @@ namespace API.Controllers
 
             var properties = await _propertyRepo.ListAsync(spec);
 
-            var data = _mapper.Map<IEnumerable<TaxDecOfRealProperty>, IEnumerable<PropertyToReturnDto>>(properties);
+            var data = _mapper.Map<IEnumerable<PropertyToReturnDto>>(properties);
 
             return Ok(new Pagination<PropertyToReturnDto>(propertyParams.PageIndex, propertyParams.PageSize,
                 totalItems, data));
         }
 
         [HttpGet("tracer")]
-        public async Task<ActionResult> SearchLotNo(string lotNo)
+        public async Task<ActionResult<IEnumerable<PropertyToReturnDto>>> SearchLotNo(string lotNo)
         {
             var properties = await _propertyRepo.SearchAllLotNoAsync(lotNo);
 
-            return Ok(properties);
+            var propertiesMap = _mapper.Map<IEnumerable<PropertyToReturnDto>>(properties);
+
+            return Ok(propertiesMap);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<PropertyToReturnDto>> GetProperty(int id)
+        public async Task<ActionResult<IEnumerable<PhotoForDetailsDto>>> GetProperty(int id)
         {
-            var spec = new PropertyWithRealPropertiesSpecification(id);
+            var photos = await _photoRepo.PhotosWithSameId(id);
 
-            var property = await _propertyRepo.GetEntityWithSpec(spec);
+            var photosMap = _mapper.Map<IEnumerable<PhotoForDetailsDto>>(photos);
 
-            if (property == null) return NotFound(new ApiResponse(404));
-
-            return _mapper.Map<TaxDecOfRealProperty, PropertyToReturnDto>(property);
+            return Ok(photosMap);
         }
 
         [HttpPut("{id}")]
@@ -80,46 +80,18 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<PropertyToCreateDto>> CreateProperty(PropertyToCreateDto propertyToCreateDto)
         {
-            var property = _mapper.Map<PropertyToCreateDto, TaxDecOfRealProperty>(propertyToCreateDto);
+            var property = _mapper.Map<TaxDecOfRealProperty>(propertyToCreateDto);
 
             _propertyRepo.Add(property);
 
             if (await _propertyRepo.SaveAll())
-                return Ok(property);
+                return Ok(propertyToCreateDto);
 
             return BadRequest(new ApiResponse(400));
         }
 
-        [HttpPost("upload")]
-        public async Task<ActionResult> UploadPhoto(IFormFile image)
-        {
-            if (image != null)
-            {
-                var fileName = Path.GetFileName(image.FileName);
-                Guid guid = Guid.NewGuid();
-                fileName = (guid.ToString() + fileName);
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"Content\images\properties", fileName);
-                var imagePath = $"images/properties/{fileName}";
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await image.CopyToAsync(fileStream);
-                }
-
-                return Ok(new
-                {
-                    imagePath = imagePath,
-                    imageUploadSuccess = "Photo successfully uploaded"
-                });
-            }
-            else
-            {
-                return BadRequest(new ApiResponse(400));
-            }
-        }
-
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProperty(int id)
+        public async Task<ActionResult<PropertyToDeleteDto>> DeleteProperty(int id)
         {
             var propertyFromRepo = await _propertyRepo.GetByIdAsync(id);
 
@@ -129,7 +101,7 @@ namespace API.Controllers
             }
 
             if (await _propertyRepo.SaveAll())
-                return Ok(propertyFromRepo);
+                return Ok(_mapper.Map<PropertyToDeleteDto>(propertyFromRepo));
 
             return BadRequest(new ApiResponse(400));
         }

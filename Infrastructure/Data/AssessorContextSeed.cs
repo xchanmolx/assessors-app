@@ -28,6 +28,20 @@ namespace Infrastructure.Data
 
                      await context.SaveChangesAsync();
                  }
+
+                 if (!context.Photos.Any())
+                 {
+                     var propertyPhotos = File.ReadAllText("../Infrastructure/Data/SeedData/realPropertyPhotos.json");
+
+                     var photos = JsonSerializer.Deserialize<List<Photo>>(propertyPhotos);
+
+                     foreach (var item in photos)
+                     {
+                         context.Photos.Add(item);
+                     }
+
+                     await context.SaveChangesAsync();
+                 }
              }
              catch (Exception ex)
              {

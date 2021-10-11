@@ -15,8 +15,17 @@ namespace Infrastructure.Data.Config
             builder.Property(p => p.EffectiveYear).IsRequired().HasMaxLength(13);
             builder.Property(p => p.SurveyLotNumber).IsRequired().HasMaxLength(255);
             builder.Property(p => p.LandArea).IsRequired();
-            builder.Property(p => p.PictureUrl).IsRequired();
+            builder.HasMany(p => p.Photos);
             builder.Property(p => p.Remarks).HasComment("e.g. General Revision");
+            builder.Property(p => p.PropertyIndex).IsRequired().HasMaxLength(33);
+            builder.Property(p => p.ARPNumber).IsRequired().HasMaxLength(33);
+            builder.Property(p => p.OwnerAddress).IsRequired().HasMaxLength(255);
+            builder.Property(p => p.Kind).IsRequired().HasMaxLength(33);
+            builder.Property(p => p.Class).IsRequired().HasMaxLength(33);
+            builder.Property(a => a.AssessedValue).HasColumnType("decimal(18,2)");
+            builder.Property(ptd => ptd.PreviousTDNumber).IsRequired().HasMaxLength(33);
+            builder.Property(pa => pa.PreviousAV).HasColumnType("decimal(18,2)");
+            builder.Property(p => p.TaxableExempt).IsRequired().HasMaxLength(33);
         }
     }
 }

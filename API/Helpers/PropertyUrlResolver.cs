@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using API.Dtos;
@@ -7,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace API.Helpers
 {
-    public class PropertyUrlResolver : IValueResolver<TaxDecOfRealProperty, PropertyToReturnDto, string>
+    public class PropertyUrlResolver : IValueResolver<Photo, PhotoForDetailsDto, string>
     {
         private readonly IConfiguration _config;
         public PropertyUrlResolver(IConfiguration config)
@@ -15,27 +16,27 @@ namespace API.Helpers
             _config = config;
         }
 
-        public string Resolve(TaxDecOfRealProperty source, PropertyToReturnDto destination, string destMember, ResolutionContext context)
+        public string Resolve(Photo source, PhotoForDetailsDto destination, string destMember, ResolutionContext context)
         {
             // Production mode
-            IPHostEntry hostEntry;
-            hostEntry = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (IPAddress ip in hostEntry.AddressList)
-            {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    if (!string.IsNullOrEmpty(source.PictureUrl))
-                    {
-                        return "http://" + ip + ":86/Content/" + source.PictureUrl;
-                    }
-                }
-            }
-
-            // Developement mode
-            // if (!string.IsNullOrEmpty(source.PictureUrl))
+            // IPHostEntry hostEntry;
+            // hostEntry = Dns.GetHostEntry(Dns.GetHostName());
+            // foreach (IPAddress ip in hostEntry.AddressList)
             // {
-            //     return _config["ApiUrl"] + source.PictureUrl;
+            //     if (ip.AddressFamily == AddressFamily.InterNetwork)
+            //     {
+            //         if (!string.IsNullOrEmpty(source.Url))
+            //         {
+            //             return "http://" + ip + ":86/" + source.Url;
+            //         }
+            //     }
             // }
+
+            // Development mode
+            if (!string.IsNullOrEmpty(source.Url))
+            {
+                return _config["ApiUrl"] + source.Url;
+            }
 
             return null;
         }

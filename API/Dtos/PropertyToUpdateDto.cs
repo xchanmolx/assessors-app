@@ -23,7 +23,29 @@ namespace API.Dtos
         public double LandArea { get; set; }
         public string Remarks { get; set; }
 
-        [Required(ErrorMessage = "The photo upload is required.")]
-        public string PictureUrl { get; set; }
+        [Required(ErrorMessage = "The property index is required.")]
+        public string PropertyIndex { get; set; }
+
+        [Required(ErrorMessage = "The ARP number is required.")]
+        public string ARPNumber { get; set; }
+
+        [Required(ErrorMessage = "The owner's address is required.")]
+        public string OwnerAddress { get; set; }
+
+        [Required(ErrorMessage = "The kind is required.")]
+        public string Kind { get; set; }
+
+        [Required(ErrorMessage = "The class is required.")]
+        public string Class { get; set; }
+
+        [Required(ErrorMessage = "The assessed value is required.")]
+        public decimal AssessedValue { get; set; }
+
+        [Required(ErrorMessage = "The previous tax declaration number is required.")]
+        public string PreviousTDNumber { get; set; }
+
+        [Required(ErrorMessage = "The previous A.V. is required.")]
+        public decimal PreviousAV { get; set; }
+        public string TaxableExempt { get; set; }
     }
 }

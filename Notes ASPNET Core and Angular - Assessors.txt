@@ -11,6 +11,7 @@ Microsoft.AspNetCore.Authentication.JwtBearer
 
 for Core Class Library
 Microsoft.Extensions.Identity.Stores
+Microsoft.AspNetCore.Http
 
 for Infrastructure Class Library
 Microsoft.EntityFrameworkCore - EntityFrameworkCore will matter the installed runtime of PC
@@ -55,11 +56,15 @@ cd .. to parent folder once again
 dotnet restore
 dotnet build
 dotnet ef database drop -p Infrastructure -s API
+dotnet ef database drop -p Infrastructure -s API -c AssessorContext
+dotnet ef database drop -p Infrastructure -s API -c AppIdentityDbContext
 dotnet ef migrations remove -p Infrastructure -s API
-dotnet ef migrations add InitialCreate -p Infrastructure -s API -o Data/Migrations
+dotnet ef migrations add InitialCreate -p Infrastructure -s API -o Data/Migrations -c AssessorContext
 dotnet ef migrations list -p Infrastructure -s API
+dotnet ef migrations list -p Infrastructure -s API -c AssessorContext
 dotnet ef migrations add IdentityInitial -p Infrastructure -s API -o Identity/Migrations -c AppIdentityDbContext
 dotnet ef migrations remove -p Infrastructure -s API -c AppIdentityDbContext
+dotnet ef migrations remove -p Infrastructure -s API -c AssessorContext
 dotnet run
 dotnet watch run
 

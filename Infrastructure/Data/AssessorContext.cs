@@ -9,6 +9,7 @@ namespace Infrastructure.Data
         public AssessorContext(DbContextOptions<AssessorContext> options) : base(options){}
 
         public DbSet<TaxDecOfRealProperty> TaxDecOfRealProperties { get; set; }
+        public DbSet<Photo> Photos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {

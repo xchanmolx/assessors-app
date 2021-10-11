@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using Core.Entities;
 
 namespace API.Dtos
 {
-    public class PropertyToReturnDto
+    public class PropertyToDetailsDto
     {
         public int Id { get; set; }
         public string OwnerName { get; set; }
@@ -11,6 +12,6 @@ namespace API.Dtos
         public int EffectiveYear { get; set; }
         public string SurveyLotNumber { get; set; }
         public double LandArea { get; set; }
-        public string Remarks { get; set; }
+        public string PhotoUrl { get; set; }
     }
 }

@@ -6,7 +6,8 @@
                 <app-text-input formControlName="taxDecNumber" [label]="'Tax Declaration Number'"></app-text-input>
                 <app-text-input formControlName="surveyLotNumber" [label]="'Survey Lot Number'"></app-text-input>
                 <h3>Upload Photo</h3>
-                <input #fileInput class="form-control" type=file (change)="realPropertyService.selectFile($event)" accept="image/png, image/gif, image/jpeg">
+                <!-- <input #fileInput class="form-control" type=file (change)="realPropertyService.selectFile($event)" accept="image/png, image/gif, image/jpeg"> -->
+                <input #fileInput class="form-control" type=file (change)="realPropertyService.selectFile($event)" accept="image/*">
                 <br>
 
                 <div class="mb-2" *ngIf="realPropertyService.response">

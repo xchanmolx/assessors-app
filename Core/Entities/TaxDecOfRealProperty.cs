@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Core.Entities
 {
     public class TaxDecOfRealProperty : BaseEntity
@@ -8,7 +10,16 @@ namespace Core.Entities
         public int EffectiveYear { get; set; }
         public string SurveyLotNumber { get; set; }
         public double LandArea { get; set; }
-        public string PictureUrl { get; set; }
+        public ICollection<Photo> Photos { get; set; }
         public string Remarks { get; set; }
+        public string PropertyIndex { get; set; }
+        public string ARPNumber { get; set; }
+        public string OwnerAddress { get; set; }
+        public string Kind { get; set; }
+        public string Class { get; set; }
+        public decimal AssessedValue { get; set; }
+        public string PreviousTDNumber { get; set; }
+        public decimal PreviousAV { get; set; }
+        public string TaxableExempt { get; set; }
     }
 }
