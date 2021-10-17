@@ -1,8 +1,43 @@
-<div class="container-fluid" id="imgPrint">
-    <div class="row" *ngIf="realProperty">
-        <div class="col">
-            <button (click)="printImage(realProperty.pictureUrl)" mat-icon-button class="float-end" matTooltip="Print"><mat-icon>print</mat-icon></button>
-            <img src="{{realProperty.pictureUrl}}" alt="image for tax declaration of real property" class="img-fluid">
+<div class="container-fluid">
+    <div class="container row mt-3" *ngIf="displayElement">
+        <div class="col-4">
+            <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+                <div class="form-group mb-3">
+                    <label for="formFiles">Upload Photos</label>
+                    <input 
+                        formControlName="formFiles"
+                        id="formFiles" 
+                        type="file" 
+                        multiple
+                        class="form-control"
+                        accept="image/png, image/gif, image/jpeg"
+                        (click)="clearInputFileValue()"
+                        (change)="realPropertyService.onPhotoFileChange($event)">
+                </div>
+        
+                <button [disabled]="createForm.invalid" class="w-50 mx-2" mat-raised-button color="primary" type="submit">Submit</button>
+                <button (click)="hideUploadPhotos()" class="w-25" mat-raised-button color="warn">Cancel</button>
+            </form>
         </div>
+    </div>
+
+    <div>
+        <button (click)="displayUploadPhotos()" mat-icon-button class="float-end" matTooltip="Upload Photo/s"><mat-icon>file_upload</mat-icon></button>
+    </div>
+
+    <div *ngIf="photos.length > 0">
+        <button mat-icon-button class="float-end" matTooltip="Print" 
+        [useExistingCss]="true"
+        printTitle="Photo/s"
+        printSectionId="print-section"
+        ngxPrint><mat-icon>print</mat-icon></button>
+        <div class="col">
+            <div class="row" id="print-section">
+                <img src="{{photo.url}}" *ngFor="let photo of photos" (click)="openDialog('Delete', photo)" alt="image for tax declaration of real property" class="img-fluid">
+            </div>
+        </div>
+    </div>
+    <div class="container col mt-3" *ngIf="photos.length <= 0">
+        <h3><strong>No photo/s found</strong></h3>
     </div>
 </div>

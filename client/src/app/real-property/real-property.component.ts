@@ -5,6 +5,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { BusyService } from '../core/services/busy.service';
 import { NotifierService } from '../core/services/notifier.service';
 import { ConfirmComponent } from '../shared/components/dialogs/confirm/confirm.component';
+import { PhotoParams } from '../shared/models/photoParams';
 import { IRealProperty } from '../shared/models/realProperty';
 import { RealPropertyParams } from '../shared/models/realPropertyParams';
 import { RealPropertyService } from './real-property.service';
@@ -18,6 +19,7 @@ export class RealPropertyComponent implements OnInit, AfterViewInit {
   @ViewChild('search', { static: false }) searchTerm!: ElementRef;
   realProperties!: IRealProperty[];
   realPropertyParams = new RealPropertyParams();
+  photoParams = new PhotoParams();
   totalCount!: number;
   defaultSelect = 'ownerName';
   sortOptions = [
@@ -26,7 +28,9 @@ export class RealPropertyComponent implements OnInit, AfterViewInit {
     { name: 'Effective Year: Latest Year', value: 'yearDesc'}
   ];
   
-  displayedColumns: string[] = ['ownerName', 'propertyLocation', 'taxDecNumber', 'effectiveYear', 'surveyLotNumber', 'landArea', 'remarks', 'actions'];
+  displayedColumns: string[] = ['taxDecNumber', 'ownerName', 'ownerAddress', 'propertyLocation', 'surveyLotNumber',
+   'landArea', 'effectiveYear', 'propertyIndex', 'arpNumber', 'kind', 'class', 'assessedValue',
+   'previousTDNumber', 'previousAV','taxableExempt', 'remarks', 'actions'];
   showFirstLastButtons = true;
 
   constructor(private realPropertyService: RealPropertyService,
@@ -46,7 +50,7 @@ export class RealPropertyComponent implements OnInit, AfterViewInit {
     obj.action = action;
     const dialogRef = this.dialog.open(ConfirmComponent, {
       data: obj,
-      width: '400px',
+      width: '600px',
       disableClose: true
     });
 
@@ -66,12 +70,19 @@ export class RealPropertyComponent implements OnInit, AfterViewInit {
         value.ownerName = row_obj.ownerName;
         value.taxDecNumber = row_obj.taxDecNumber;
         value.surveyLotNumber = row_obj.surveyLotNumber;
-        value.pictureUrl = row_obj.pictureUrl;
         value.propertyLocation = row_obj.propertyLocation;
         value.effectiveYear = row_obj.effectiveYear;
         value.landArea = row_obj.landArea;
         value.remarks = row_obj.remarks;
-        value.imagePath = row_obj.imagePath;
+        value.propertyIndex = row_obj.propertyIndex;
+        value.arpNumber = row_obj.arpNumber;
+        value.ownerAddress = row_obj.ownerAddress;
+        value.kind = row_obj.kind;
+        value.class = row_obj.class;
+        value.assessedValue = row_obj.assessedValue;
+        value.previousTDNumber = row_obj.previousTDNumber;
+        value.previousAV = row_obj.previousAV;
+        value.taxableExempt = row_obj.taxableExempt;
 
         this.realPropertyService.updateRealProperty(value.id, value).subscribe((response) => {
           this.notifierService.showNotification(`${response.ownerName} has been updated successfully.`, 'OK', 'success');
@@ -88,17 +99,13 @@ export class RealPropertyComponent implements OnInit, AfterViewInit {
 
   }
 
-  deleteRowData(row_obj: IRealProperty){
+  deleteRowData(row_obj: IRealProperty) {
     this.realProperties = this.realProperties.filter((value, key) => {
       return value.id != row_obj.id;
     });
 
-    this.realPropertyService.deleteRealProperty(row_obj.id).subscribe((realProperty) => {
-      this.notifierService.showNotification(`${realProperty.ownerName} has been deleted successfully.`, 'OK', 'success');
-      this.totalCount--;
-    }, error => {
-      this.notifierService.showNotification('Problem deleting the real property', 'OK', 'error');
-    });
+    this.realPropertyService.deleteRealProperty(row_obj.id, this.photoParams);
+    this.totalCount--;
   }
 
   getRealProperties() {

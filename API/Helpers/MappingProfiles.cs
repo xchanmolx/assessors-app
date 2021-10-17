@@ -11,6 +11,7 @@ namespace API.Helpers
         public MappingProfiles()
         {
             CreateMap<TaxDecOfRealProperty, PropertyToReturnDto>();
+            CreateMap<TaxDecOfRealProperty, PropertyToTraceDto>();
             CreateMap<AppUser, AppUserDto>().ReverseMap();
             CreateMap<PropertyToUpdateDto, TaxDecOfRealProperty>();
             CreateMap<PropertyToCreateDto, TaxDecOfRealProperty>();
@@ -18,6 +19,7 @@ namespace API.Helpers
             CreateMap<Photo, PhotoForDetailsDto>()
                 .ForMember(d => d.Url, o => o.MapFrom<PropertyUrlResolver>());
             CreateMap<TaxDecOfRealProperty, PropertyToDeleteDto>();
+            CreateMap<Photo, PhotoToDeleteDto>();
         }
     }
 }

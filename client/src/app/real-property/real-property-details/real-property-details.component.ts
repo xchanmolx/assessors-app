@@ -1,8 +1,12 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { BusyService } from 'src/app/core/services/busy.service';
-import { IRealProperty } from 'src/app/shared/models/realProperty';
-import { BreadcrumbService } from 'xng-breadcrumb';
+import { NotifierService } from 'src/app/core/services/notifier.service';
+import { ConfirmImageComponent } from 'src/app/shared/components/dialogs/confirm-image/confirm-image.component';
+import { IPhoto } from 'src/app/shared/models/photo';
+import { PhotoParams } from 'src/app/shared/models/photoParams';
 import { RealPropertyService } from '../real-property.service';
 
 @Component({
@@ -11,13 +15,18 @@ import { RealPropertyService } from '../real-property.service';
   styleUrls: ['./real-property-details.component.scss']
 })
 export class RealPropertyDetailsComponent implements OnInit, AfterViewInit {
-  realProperty!: IRealProperty;
+  photos: IPhoto[] = [];
+  photoParams = new PhotoParams();
+  createForm!: FormGroup;
+  displayElement = false;
 
-  constructor(private realPropertyService: RealPropertyService, private activatedRoute: ActivatedRoute,
-    private bcService: BreadcrumbService, public busyService: BusyService, private cd: ChangeDetectorRef) { }
+  constructor(public realPropertyService: RealPropertyService, private activatedRoute: ActivatedRoute,
+    public busyService: BusyService, private cd: ChangeDetectorRef, public dialog: MatDialog, private fb: FormBuilder,
+    private notifierService: NotifierService) { }
 
   ngOnInit(): void {
-    this.loadRealProperty();
+    this.loadPhotos();
+    this.createAddPhotoForm();
   }
 
   ngAfterViewInit() {
@@ -25,31 +34,65 @@ export class RealPropertyDetailsComponent implements OnInit, AfterViewInit {
     this.cd.detectChanges();
   }
 
-  loadRealProperty() {
-    this.realPropertyService.getRealProperty(+this.activatedRoute.snapshot.paramMap.get('id')!).subscribe(realProperty => {
-      this.realProperty = realProperty;
-      this.bcService.set('@realPropertyDetails', realProperty.ownerName);
+  openDialog(action: any, obj: any) {
+    obj.action = action;
+    const dialogRef = this.dialog.open(ConfirmImageComponent, {
+      data: obj,
+      width: '400px',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.event == 'Delete') {
+        this.deleteRowData(result.data);
+      }
+    });
+  }
+
+  deleteRowData(row_obj: IPhoto) {
+    this.photos = this.photos.filter((value, key) => {
+      return value.id != row_obj.id;
+    });
+
+    this.realPropertyService.deletePhoto(row_obj.id, this.photoParams);
+  }
+
+  loadPhotos() {
+    this.realPropertyService.getRealPropertyPhotos(+this.activatedRoute.snapshot.paramMap.get('id')!).subscribe(photos => {
+      this.photos = photos;
     }, error => {
       console.log(error);
     });
   }
 
-  imagetoPrint(source: string) {
-    return "<html><head><scri"+"pt>function step1(){\n" +
-              "setTimeout('step2()', 10);}\n" +
-              "function step2(){window.print();window.close()}\n" +
-              "</scri" + "pt></head><body onload='step1()'>\n" +
-              "<img src='" + source + "' /></body></html>";
+  createAddPhotoForm() {
+    this.createForm = this.fb.group({
+      formFiles: [null, Validators.required]
+    });
   }
 
-  printImage(source: string) {
-      var Pagelink = "about:blank";
-      var pwa = window.open(Pagelink, "_new");
-      if (pwa) {
-        pwa.document.open();
-        pwa.document.write(this.imagetoPrint(source));
-        pwa.document.close();
-      }
+  clearInputFileValue() {
+    this.realPropertyService.formFiles = [];
+  }
+
+  displayUploadPhotos() {
+    this.displayElement = true;
+  }
+
+  hideUploadPhotos() {
+    this.displayElement = false;
+  }
+
+  onSubmit() {
+    this.photoParams.taxDecId = +this.activatedRoute.snapshot.paramMap.get('id')!;
+    this.realPropertyService.uploadPhoto(this.photoParams);
+    this.clearInputFileValue();
+
+    window.location.reload();
+    
+    this.displayElement = false;
+    
+    this.notifierService.showNotification('Photo/s has been uploaded successfully.', 'OK', 'success');
   }
 
 }

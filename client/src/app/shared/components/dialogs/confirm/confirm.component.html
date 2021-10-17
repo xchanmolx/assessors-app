@@ -9,41 +9,75 @@
 
 <div mat-dialog-content>
     <ng-container *ngIf="action != 'Delete'; else elseTemplate">
-        <mat-form-field>
+        <mat-form-field class="mx-3">
             <input placeholder="{{action}} Owner Name" matInput [(ngModel)]="local_data.ownerName">
         </mat-form-field>
         <mat-form-field>
             <input placeholder="{{action}} Tax Declaration Number" matInput [(ngModel)]="local_data.taxDecNumber">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field class="mx-3">
             <input placeholder="{{action}} Survey Lot Number" matInput [(ngModel)]="local_data.surveyLotNumber">
-        </mat-form-field>
-        <mat-form-field>
-            <input placeholder="{{action}} Property Location" matInput [(ngModel)]="local_data.propertyLocation">
         </mat-form-field>
         <mat-form-field>
             <input placeholder="{{action}} Effective Year" matInput [(ngModel)]="local_data.effectiveYear" type="number">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field class="mx-3">
             <input placeholder="{{action}} Land Area" matInput [(ngModel)]="local_data.landArea" type="number">
         </mat-form-field>
         <mat-form-field>
             <input placeholder="{{action}} Remarks" matInput [(ngModel)]="local_data.remarks">
         </mat-form-field>
-
-        <h3>Update Photo</h3>
-        <input #fileInput class="form-control" type=file (change)="realPropertyService.selectFile($event)" accept="image/png, image/gif, image/jpeg">
-        <br>
-
-        <div class="mb-2" *ngIf="realPropertyService.response">
-            <span>{{realPropertyService.response.imageUploadSuccess}}</span>
-        </div>
-
-        <input [disabled]="!realPropertyService.image" class="form-control btn btn-primary" type="button" value="Upload" (click)="upload()">
-
-        <ng-container *ngIf="realPropertyService.response">
-            <app-text-input [type]="'hidden'" [(ngModel)]="realPropertyService.response.imagePath === '' ? local_data.pictureUrl : realPropertyService.response.imagePath"></app-text-input>
-        </ng-container>
+        <mat-form-field class="mx-3">
+            <input placeholder="{{action}} Property Index" matInput [(ngModel)]="local_data.propertyIndex">
+        </mat-form-field>
+        <mat-form-field>
+            <input placeholder="{{action}} ARP Number" matInput [(ngModel)]="local_data.arpNumber">
+        </mat-form-field>
+        <mat-form-field class="mx-3">
+            <input placeholder="{{action}} Owner's Address" matInput [(ngModel)]="local_data.ownerAddress">
+        </mat-form-field>
+        <mat-form-field>
+            <input placeholder="{{action}} Kind" matInput [(ngModel)]="local_data.kind">
+        </mat-form-field>
+        <mat-form-field class="mx-3">
+            <input placeholder="{{action}} Class" matInput [(ngModel)]="local_data.class">
+        </mat-form-field>
+        <mat-form-field>
+            <input placeholder="{{action}} Assessed Value" matInput [(ngModel)]="local_data.assessedValue" type="number">
+        </mat-form-field>
+        <mat-form-field class="mx-3">
+            <input placeholder="{{action}} Previous TD No." matInput [(ngModel)]="local_data.previousTDNumber">
+        </mat-form-field>
+        <mat-form-field>
+            <input placeholder="{{action}} Previous Assessed Value" matInput [(ngModel)]="local_data.previousAV" type="number">
+        </mat-form-field>
+        <mat-form-field class="mx-3" appearance="fill">
+            <mat-label>Property Location</mat-label>
+            <mat-select [(ngModel)]="local_data.propertyLocation">
+              <mat-option value="angilan">Angilan</mat-option>
+              <mat-option value="bojo">Bojo</mat-option>
+              <mat-option value="bonbon">Bonbon</mat-option>
+              <mat-option value="esperanza">Esperanza</mat-option>
+              <mat-option value="kandingan">Kandingan</mat-option>
+              <mat-option value="kantabogon">Kantabogon</mat-option>
+              <mat-option value="kawasan">Kawasan</mat-option>
+              <mat-option value="olango">Olango</mat-option>
+              <mat-option value="poblacion">Poblacion</mat-option>
+              <mat-option value="punay">Punay</mat-option>
+              <mat-option value="rosario">Rosario</mat-option>
+              <mat-option value="saksak">Saksak</mat-option>
+              <mat-option value="tampaan">Tampaan</mat-option>
+              <mat-option value="toyokon">Toyokon</mat-option>
+              <mat-option value="zaragosa">Zaragosa</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Taxable or Exempt</mat-label>
+            <mat-select [(ngModel)]="local_data.taxableExempt">
+              <mat-option value="taxable">Taxable</mat-option>
+              <mat-option value="exempt">Exempt</mat-option>
+            </mat-select>
+        </mat-form-field>
     </ng-container>
 
     <ng-template #elseTemplate>

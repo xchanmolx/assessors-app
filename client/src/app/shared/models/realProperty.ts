@@ -1,12 +1,19 @@
 export interface IRealProperty {
     id: number;
     ownerName: string;
-    propertyLocation: string;
     taxDecNumber: string;
-    effectiveYear: number;
     surveyLotNumber: string;
+    propertyLocation: string;
+    effectiveYear: number;
     landArea: number;
     remarks: string;
-    pictureUrl: string;
-    imagePath: string;
+    propertyIndex: string;
+    arpNumber: string;
+    ownerAddress: string;
+    kind: string;
+    class: string;
+    assessedValue: number;
+    previousTDNumber: string;
+    previousAV: number;
+    taxableExempt: string;
 }

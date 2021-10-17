@@ -11,6 +11,8 @@ import { MatInputModule } from '@angular/material/input';
 import { PagerComponent } from './components/pager/pager.component';
 import { PagingHeaderComponent } from './components/paging-header/paging-header.component';
 import { ConfirmComponent } from './components/dialogs/confirm/confirm.component';
+import { MatSelectModule } from '@angular/material/select';
+import { ConfirmImageComponent } from './components/dialogs/confirm-image/confirm-image.component';
 
 
 
@@ -19,7 +21,8 @@ import { ConfirmComponent } from './components/dialogs/confirm/confirm.component
     TextInputComponent,
     PagerComponent,
     PagingHeaderComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    ConfirmImageComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +32,8 @@ import { ConfirmComponent } from './components/dialogs/confirm/confirm.component
     MatIconModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule
   ],
   exports: [
     PagingHeaderComponent,

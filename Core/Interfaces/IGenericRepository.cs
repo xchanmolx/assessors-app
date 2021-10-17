@@ -8,7 +8,7 @@ namespace Core.Interfaces
     public interface IGenericRepository<T> where T : BaseEntity
     {
         Task<IEnumerable<TaxDecOfRealProperty>> SearchAllLotNoAsync(string lotNo);
-    Task<IEnumerable<Photo>> PhotosWithSameId(int id);
+        Task<IEnumerable<Photo>> PhotosWithSameId(int id);
         Task<T> GetByIdAsync(int id);
         Task<IEnumerable<T>> ListAllAsync();
         Task<T> GetEntityWithSpec(ISpecification<T> spec);

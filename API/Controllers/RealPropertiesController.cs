@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
@@ -44,26 +45,6 @@ namespace API.Controllers
                 totalItems, data));
         }
 
-        [HttpGet("tracer")]
-        public async Task<ActionResult<IEnumerable<PropertyToReturnDto>>> SearchLotNo(string lotNo)
-        {
-            var properties = await _propertyRepo.SearchAllLotNoAsync(lotNo);
-
-            var propertiesMap = _mapper.Map<IEnumerable<PropertyToReturnDto>>(properties);
-
-            return Ok(propertiesMap);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<PhotoForDetailsDto>>> GetProperty(int id)
-        {
-            var photos = await _photoRepo.PhotosWithSameId(id);
-
-            var photosMap = _mapper.Map<IEnumerable<PhotoForDetailsDto>>(photos);
-
-            return Ok(photosMap);
-        }
-
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateProperty(int id, PropertyToUpdateDto propertyToUpdateDto)
         {
@@ -85,19 +66,55 @@ namespace API.Controllers
             _propertyRepo.Add(property);
 
             if (await _propertyRepo.SaveAll())
-                return Ok(propertyToCreateDto);
+                return Ok(property);
 
             return BadRequest(new ApiResponse(400));
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<PropertyToDeleteDto>> DeleteProperty(int id)
+        [HttpGet("tracer")]
+        public async Task<ActionResult<IEnumerable<PropertyToTraceDto>>> SearchLotNo(string lotNo)
         {
+            var properties = await _propertyRepo.SearchAllLotNoAsync(lotNo);
+
+            var propertiesMap = _mapper.Map<IEnumerable<PropertyToTraceDto>>(properties);
+
+            return Ok(propertiesMap);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<PhotoForDetailsDto>>> GetProperty(int id)
+        {
+            var photos = await _photoRepo.PhotosWithSameId(id);
+
+            var photosMap = _mapper.Map<IEnumerable<PhotoForDetailsDto>>(photos);
+            
+            return Ok(photosMap);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<PropertyToDeleteDto>> DeleteProperty(int id, string subDirectory)
+        {
+            subDirectory = subDirectory ?? string.Empty;
+            string[] picList = Directory.GetFiles(subDirectory);
+
+            var photos = await _photoRepo.PhotosWithSameId(id);
+
             var propertyFromRepo = await _propertyRepo.GetByIdAsync(id);
 
             if (propertyFromRepo.Id > 0)
             {
                 _propertyRepo.Delete(propertyFromRepo);
+
+                foreach (var pic in picList)
+                {
+                    foreach (var photo in photos)
+                    {
+                        if (pic == photo.Url)
+                        {
+                            System.IO.File.Delete(pic);
+                        }
+                    }
+                }
             }
 
             if (await _propertyRepo.SaveAll())

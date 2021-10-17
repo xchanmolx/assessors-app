@@ -47,28 +47,28 @@
               
             <table mat-table [dataSource]="realProperties" #mytable class="my-table mat-elevation-z8">
             
+                <!-- Tax Declaration Number Column -->
+                <ng-container matColumnDef="taxDecNumber">
+                <th mat-header-cell *matHeaderCellDef> TD No. </th>
+                <td mat-cell *matCellDef="let element"> {{element.taxDecNumber | uppercase}} </td>
+                </ng-container>
+
                 <!-- Owner's Name Column -->
                 <ng-container matColumnDef="ownerName">
                 <th mat-header-cell *matHeaderCellDef> Owner's Name </th>
                 <td mat-cell *matCellDef="let element"> {{element.ownerName | uppercase}} </td>
+                </ng-container>
+
+                <!-- Owner Address Column -->
+                <ng-container matColumnDef="ownerAddress">
+                <th mat-header-cell *matHeaderCellDef> Owner's Address </th>
+                <td mat-cell *matCellDef="let element"> {{element.ownerAddress | uppercase}} </td>
                 </ng-container>
             
                 <!-- Property Location Column -->
                 <ng-container matColumnDef="propertyLocation">
                 <th mat-header-cell *matHeaderCellDef> Property Location </th>
                 <td mat-cell *matCellDef="let element"> {{element.propertyLocation | uppercase}} </td>
-                </ng-container>
-            
-                <!-- Tax Declaration Number Column -->
-                <ng-container matColumnDef="taxDecNumber">
-                <th mat-header-cell *matHeaderCellDef> Tax Declaration Number </th>
-                <td mat-cell *matCellDef="let element"> {{element.taxDecNumber | uppercase}} </td>
-                </ng-container>
-            
-                <!-- Effective Year Column -->
-                <ng-container matColumnDef="effectiveYear">
-                <th mat-header-cell *matHeaderCellDef> Effective Year </th>
-                <td mat-cell *matCellDef="let element"> {{element.effectiveYear}} </td>
                 </ng-container>
 
                 <!-- Survey Lot Number Column -->
@@ -82,6 +82,60 @@
                 <th mat-header-cell *matHeaderCellDef> Land Area </th>
                 <td mat-cell *matCellDef="let element"> {{element.landArea | number}} </td>
                 </ng-container>
+            
+                <!-- Effective Year Column -->
+                <ng-container matColumnDef="effectiveYear">
+                <th mat-header-cell *matHeaderCellDef> Effective Year </th>
+                <td mat-cell *matCellDef="let element"> {{element.effectiveYear}} </td>
+                </ng-container>
+
+                <!-- Property Index Column -->
+                <ng-container matColumnDef="propertyIndex">
+                <th mat-header-cell [hidden]="true" *matHeaderCellDef> Property Index </th>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.propertyIndex}} </td>
+                </ng-container>
+
+                <!-- ARP Number Column -->
+                <ng-container matColumnDef="arpNumber">
+                <th mat-header-cell [hidden]="true" *matHeaderCellDef> ARP Number </th>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.arpNumber}} </td>
+                </ng-container>
+
+                <!-- Kind Column -->
+                <ng-container matColumnDef="kind">
+                <th mat-header-cell [hidden]="true" *matHeaderCellDef> Kind </th>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.kind}} </td>
+                </ng-container>
+
+                <!-- Class Column -->
+                <ng-container matColumnDef="class">
+                <th mat-header-cell [hidden]="true" *matHeaderCellDef> Class </th>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.class}} </td>
+                </ng-container>
+
+                <!-- Assessed Value Column -->
+                <ng-container matColumnDef="assessedValue">
+                <th mat-header-cell [hidden]="true" *matHeaderCellDef> Assessed Value </th>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.assessedValue}} </td>
+                </ng-container>
+
+                <!-- Previous Tax Declaration Number Column -->
+                <ng-container matColumnDef="previousTDNumber">
+                <th mat-header-cell [hidden]="true" *matHeaderCellDef> Previous TD No. </th>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.previousTDNumber}} </td>
+                </ng-container>
+
+                <!-- Previous Assessed Value Column -->
+                <ng-container matColumnDef="previousAV">
+                <th mat-header-cell [hidden]="true" *matHeaderCellDef> Previous A.V </th>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.previousAV}} </td>
+                </ng-container>
+
+                <!-- Taxable or Exempt Column -->
+                <ng-container matColumnDef="taxableExempt">
+                <th mat-header-cell *matHeaderCellDef> Taxable or Exempt </th>
+                <td mat-cell *matCellDef="let element"> {{element.taxableExempt | uppercase}} </td>
+                </ng-container>
 
                 <!-- Remarks Column -->
                 <ng-container matColumnDef="remarks">
@@ -93,7 +147,7 @@
                 <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let row">
-                    <button class="btn btn-outline-primary" routerLink="/real-property/{{row.id}}" mat-icon-button matTooltip="Image for Tax Declaration of Real Property"><mat-icon>image</mat-icon></button>
+                    <button class="btn btn-outline-primary" routerLink="/real-property/{{row.id}}" mat-icon-button matTooltip="Photo/s for Tax Declaration of Real Property"><mat-icon>image</mat-icon></button>
                     <button class="btn btn-outline-primary" routerLink="/real-property/tracer/{{row.surveyLotNumber}}" mat-icon-button matTooltip="Tracer"><mat-icon>text_snippet</mat-icon></button>
                     <button (click)="openDialog('Update', row)" class="btn btn-outline-primary" mat-icon-button matTooltip="Edit"><mat-icon>edit</mat-icon></button>
                     <button (click)="openDialog('Delete', row)" class="btn btn-outline-danger" mat-icon-button color="warn" matTooltip="Delete"><mat-icon>delete</mat-icon></button>

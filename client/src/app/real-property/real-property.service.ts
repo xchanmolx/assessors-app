@@ -1,8 +1,12 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core'; 
 import { map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment.prod';
+// import { environment } from 'src/environments/environment.prod'; // Production
+import { environment } from 'src/environments/environment'; // Development
+import { NotifierService } from '../core/services/notifier.service';
 import { IPagination } from '../shared/models/pagination';
+import { IPhoto } from '../shared/models/photo';
+import { PhotoParams } from '../shared/models/photoParams';
 import { IRealProperty } from '../shared/models/realProperty';
 import { RealPropertyParams } from '../shared/models/realPropertyParams';
 
@@ -11,10 +15,10 @@ import { RealPropertyParams } from '../shared/models/realPropertyParams';
 })
 export class RealPropertyService {
   baseUrl = environment.apiUrl;
-  image!: any;
-  response!: any;
+  photosResponse!: any;
+  formFiles: string[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private notifierService: NotifierService) { }
 
   getRealProperties(realPropertyParams: RealPropertyParams) {
     let params = new HttpParams();
@@ -35,8 +39,8 @@ export class RealPropertyService {
       );
   }
 
-  getRealProperty(id: number) {
-    return this.http.get<IRealProperty>(this.baseUrl + 'realProperties/' + id);
+  getRealPropertyPhotos(id: number) {
+    return this.http.get<IPhoto[]>(this.baseUrl + 'realProperties/' + id);
   }
 
   searchLotNo(lotNoValue: string) {
@@ -52,30 +56,60 @@ export class RealPropertyService {
     return this.http.post<IRealProperty>(this.baseUrl + 'realProperties', values, {headers});
   }
 
+  onPhotoFileChange(event: any) {
+    for (var i = 0; i < event.target.files.length; i++) { 
+      this.formFiles.push(event.target.files[i]);
+    }
+  }
+
+  uploadPhoto(photoParams: PhotoParams) {
+    let params = new HttpParams();
+
+    if (photoParams.taxDecId) {
+      params = params.append('taxDecId', photoParams.taxDecId);
+    }
+
+    params = params.append('subDirectory', photoParams.subDirectory);
+
+    let formData = new FormData();
+
+    for (let i = 0; i < this.formFiles.length; i++) {
+      formData.append('formFiles', this.formFiles[i]);
+    }
+
+    this.http.post(this.baseUrl + 'photos', formData, { params })
+      .toPromise().then(response => {
+          this.photosResponse = response;
+        }, error => {
+          console.log(error);
+        });
+  }
+
+  deletePhoto(id: number, photoParams: PhotoParams) {
+    let params = new HttpParams();
+
+    params = params.append('subDirectory', photoParams.subDirectory);
+
+    this.http.delete<IPhoto>(this.baseUrl + 'photos/' + id, { params }).subscribe(() => {
+      this.notifierService.showNotification('Photo has been deleted successfully.', 'OK', 'success');
+    }, error => {
+      this.notifierService.showNotification('Problem deleting the photo', 'OK', 'error');
+    });
+  }
+
   updateRealProperty(id: number, values: any) {
     return this.http.put<IRealProperty>(this.baseUrl + 'realProperties/' + id, values);
   }
 
-  deleteRealProperty(id: number) {
-    return this.http.delete<IRealProperty>(this.baseUrl + 'realProperties/' + id);
-  }
+  deleteRealProperty(id: number, photoParams: PhotoParams) {
+    let params = new HttpParams();
 
-  selectFile(event: any) {
-    this.image = event.target.files[0];
-  }
+    params = params.append('subDirectory', photoParams.subDirectory);
 
-  uploadPhoto() {
-    let formData = new FormData();
-    formData.append('image', this.image);
-
-    this.http.post(this.baseUrl + 'realProperties/upload', formData)
-      .toPromise().then(
-        response => {
-          this.response = response;
-        },
-        error => {
-          console.log(error);
-        }
-      );
+    return this.http.delete<IRealProperty>(this.baseUrl + 'realProperties/' + id, { params }).subscribe((realProperty) => {
+      this.notifierService.showNotification(`${realProperty.ownerName} has been deleted successfully.`, 'OK', 'success');
+    }, error => {
+      this.notifierService.showNotification('Problem deleting the real property', 'OK', 'error');
+    });
   }
 }

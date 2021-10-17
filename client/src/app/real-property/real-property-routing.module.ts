@@ -8,7 +8,7 @@ import { RealPropertyComponent } from './real-property.component';
 const routes: Routes = [
   { path: '', component: RealPropertyComponent },
   { path: 'add', component: RealPropertyCreateComponent, data: {breadcrumb: 'Add Real Property'}},
-  { path: ':id', component: RealPropertyDetailsComponent, data: {breadcrumb: {alias: 'realPropertyDetails'}}},
+  { path: ':id', component: RealPropertyDetailsComponent, data: {breadcrumb: 'Photo/s'}},
   { path: 'tracer/:lotNo', component: RealPropertySearchLotNoComponent, data: {breadcrumb: 'Tracer of Real Properties'}}
 ];
 
