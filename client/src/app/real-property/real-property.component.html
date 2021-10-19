@@ -169,7 +169,7 @@
                 <mat-paginator #paginator
                   [length]="totalCount"
                   [pageSize]="realPropertyParams.pageSize"
-                  [pageSizeOptions]="[5, 10, 25, 50]"
+                  [pageSizeOptions]="[5, 10, 25, 50, 100, 250, 500, 1000, 2000, 3000, 6000, 9000]"
                   [showFirstLastButtons]="showFirstLastButtons"
                   (page)="onPageChanged($event)"
                   aria-label="Select page">

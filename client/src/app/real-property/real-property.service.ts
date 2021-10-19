@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 // import { environment } from 'src/environments/environment.prod'; // Production
 import { environment } from 'src/environments/environment'; // Development
 import { NotifierService } from '../core/services/notifier.service';
+import { IOwnerNamePhotos } from '../shared/models/ownerNamePhotos';
 import { IPagination } from '../shared/models/pagination';
 import { IPhoto } from '../shared/models/photo';
 import { PhotoParams } from '../shared/models/photoParams';
@@ -27,6 +28,18 @@ export class RealPropertyService {
       params = params.append('search', realPropertyParams.search);
     }
 
+    if (realPropertyParams.taxableExempt) {
+      params = params.append('taxableExempt', realPropertyParams.taxableExempt);
+    }
+
+    if (realPropertyParams.effectiveYear) {
+      params = params.append('effectiveYear', realPropertyParams.effectiveYear);
+    }
+
+    if (realPropertyParams.propertyLocation) {
+      params = params.append('propertyLocation', realPropertyParams.propertyLocation);
+    }
+
     params = params.append('sort', realPropertyParams.sort);
     params = params.append('pageIndex', realPropertyParams.pageNumber.toString());
     params = params.append('pageSize', realPropertyParams.pageSize.toString());
@@ -40,7 +53,7 @@ export class RealPropertyService {
   }
 
   getRealPropertyPhotos(id: number) {
-    return this.http.get<IPhoto[]>(this.baseUrl + 'realProperties/' + id);
+    return this.http.get<IOwnerNamePhotos>(this.baseUrl + 'realProperties/' + id);
   }
 
   searchLotNo(lotNoValue: string) {

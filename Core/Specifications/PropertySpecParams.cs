@@ -2,7 +2,7 @@ namespace Core.Specifications
 {
     public class PropertySpecParams
     {
-        private const int MaxPageSize = 50;
+        private const int MaxPageSize = 300000;
         public int PageIndex { get; set; } = 1;
         
         private int _pageSize = 5;
@@ -19,5 +19,24 @@ namespace Core.Specifications
             get => _search;
             set => _search = value.ToLower();
         }
+
+        private string _taxableExempt;
+        public string TaxableExempt
+        {
+            get => _taxableExempt; 
+            set => _taxableExempt = value.ToLower();
+        }
+        
+        public int EffectiveYear { get; set; }
+        
+        private string _propertyLocation;
+        public string PropertyLocation
+        {
+            get => _propertyLocation;
+            set => _propertyLocation = value.ToLower();
+        }
+
+        public decimal TotalAssessedValue { get; set; }        
+        public decimal TotalPrevAssessedValue { get; set; }        
     }
 }

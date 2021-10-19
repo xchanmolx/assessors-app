@@ -50,14 +50,22 @@
   <mat-sidenav #sidenav="matSidenav" class="sidenav" mode="over">
     <mat-list (click)="sidenav.close()">
       <div mat-subheader>Menus</div>
+      
       <mat-list-item routerLink="/">
         <mat-icon mat-list-icon>home</mat-icon>
         <div mat-line>Home</div>
       </mat-list-item>
+
       <mat-list-item *ngIf="(currentUser$ | async)" routerLink="/real-property">
         <mat-icon mat-list-icon>landscape</mat-icon>
         <div mat-line>Real Property</div>
       </mat-list-item>
+
+      <mat-list-item *ngIf="(currentUser$ | async)" routerLink="/real-property/assessment-roll">
+        <mat-icon mat-list-icon>assessment</mat-icon>
+        <div mat-line>Assessment Roll</div>
+      </mat-list-item>
+
       <mat-list-item routerLink="/about">
         <mat-icon mat-list-icon>info</mat-icon>
         <div mat-line>About</div>

@@ -1,0 +1,154 @@
+<div class="container-fluid">
+
+    <div class="row p-3">
+        <div class="col-3 d-flex justify-content-center">
+            <h3><span><strong>{{totalCount}}</strong> Results</span></h3>
+        </div>
+        <div class="col-3">
+            <ng-container>
+                <mat-form-field appearance="fill">
+                    <mat-label>Select Barangay</mat-label>
+                    <mat-select (selectionChange)="onBarangaySelected($event)" [(value)]="defaultAngilanSelect">
+                      <mat-option *ngFor="let barangay of barangayOptions" [value]="barangay.value">
+                          {{barangay.name}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </ng-container>
+        </div>
+        <div class="col-3">
+            <ng-container>
+                <mat-form-field appearance="fill">
+                    <mat-label>Select Taxable or Exempt</mat-label>
+                    <mat-select (selectionChange)="onTaxableExemptSelected($event)" [(value)]="defaultTaxableSelect">
+                      <mat-option *ngFor="let taxableExempt of taxableExemptOptions" [value]="taxableExempt.value">
+                          {{taxableExempt.name}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </ng-container>
+        </div>
+        <div class="col-3">
+            <mat-form-field style="width: 60%;" appearance="fill">
+                <mat-label>Effective Year</mat-label>
+                <input #effectiveYear (keyup.enter)="onEffectiveYear()" matInput appMatInputAutofocus #message maxlength="4" placeholder="Ex. 2020"
+                    type="number" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                <mat-hint align="start"><strong>Type a year.</strong> </mat-hint>
+                <mat-hint align="end">{{message.value.length}} / 4</mat-hint>
+            </mat-form-field>
+            <button matTooltip="Search Effective Year" mat-icon-button (click)="onEffectiveYear()" class="btn btn-outline-primary">
+                <mat-icon aria-hidden="false" aria-label="Search">search</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Print" 
+            [useExistingCss]="true"
+            printTitle="Assessment Roll"
+            printSectionId="print-section"
+            ngxPrint><mat-icon>print</mat-icon></button>
+        </div>
+    </div>
+
+    <!-- Material Table  -->
+    <div class="row" id="print-section">
+        <div class="col">
+              
+            <table mat-table [dataSource]="realProperties" #mytable class="my-table mat-elevation-z8">
+            
+                <!-- Owner Name Column -->
+                <ng-container matColumnDef="ownerName">
+                <th mat-header-cell *matHeaderCellDef> Owner Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.ownerName | uppercase}} </td>
+                <td mat-footer-cell *matFooterCellDef> TOTAL </td>
+                </ng-container>
+
+                <!-- Property Index Column -->
+                <ng-container matColumnDef="propertyIndex">
+                <th mat-header-cell *matHeaderCellDef> Property Index </th>
+                <td mat-cell *matCellDef="let element"> {{element.propertyIndex | uppercase}} </td>
+                <td mat-footer-cell *matFooterCellDef>  </td>
+                </ng-container>
+
+                <!-- TD No. Column -->
+                <ng-container matColumnDef="taxDecNumber">
+                <th mat-header-cell *matHeaderCellDef> TD No. </th>
+                <td mat-cell *matCellDef="let element"> {{element.taxDecNumber | uppercase}} </td>
+                <td mat-footer-cell *matFooterCellDef>  </td>
+                </ng-container>
+            
+                <!-- ARP No. Column -->
+                <ng-container matColumnDef="arpNumber">
+                <th mat-header-cell *matHeaderCellDef> ARP </th>
+                <td mat-cell *matCellDef="let element"> {{element.arpNumber | uppercase}} </td>
+                <td mat-footer-cell *matFooterCellDef>  </td>
+                </ng-container>
+
+                <!-- Owner's Address Column -->
+                <ng-container matColumnDef="ownerAddress">
+                <th mat-header-cell *matHeaderCellDef> Owner's Address </th>
+                <td mat-cell *matCellDef="let element"> {{element.ownerAddress | uppercase}} </td>
+                <td mat-footer-cell *matFooterCellDef>  </td>
+                </ng-container>
+
+                <!-- Kind Column -->
+                <ng-container matColumnDef="kind">
+                <th mat-header-cell *matHeaderCellDef> Kind </th>
+                <td mat-cell *matCellDef="let element"> {{element.kind | uppercase}} </td>
+                <td mat-footer-cell *matFooterCellDef>  </td>
+                </ng-container>
+            
+                <!-- Class Column -->
+                <ng-container matColumnDef="class">
+                <th mat-header-cell *matHeaderCellDef> Class </th>
+                <td mat-cell *matCellDef="let element"> {{element.class | uppercase}} </td>
+                <td mat-footer-cell *matFooterCellDef>  </td>
+                </ng-container>
+
+                <!-- Property Location Column -->
+                <ng-container matColumnDef="propertyLocation">
+                <th mat-header-cell *matHeaderCellDef> Property Location </th>
+                <td mat-cell *matCellDef="let element"> {{element.propertyLocation | uppercase}} </td>
+                <td mat-footer-cell *matFooterCellDef>  </td>
+                </ng-container>
+
+                <!-- Assessed Value Column -->
+                <ng-container matColumnDef="assessedValue">
+                <th mat-header-cell *matHeaderCellDef> Assessed Value </th>
+                <td mat-cell *matCellDef="let element"> {{element.assessedValue | number}} </td>
+                <td mat-footer-cell *matFooterCellDef> {{totalAssessedValue}} </td>
+                </ng-container>
+
+                <!-- Previous TD No. Column -->
+                <ng-container matColumnDef="previousTDNumber">
+                <th mat-header-cell *matHeaderCellDef> Previous TD No. </th>
+                <td mat-cell *matCellDef="let element"> {{element.previousTDNumber | uppercase}} </td>
+                <td mat-footer-cell *matFooterCellDef>  </td>
+                </ng-container>
+
+                <!-- Previous A.V. Column -->
+                <ng-container matColumnDef="previousAV">
+                <th mat-header-cell *matHeaderCellDef> Previous A.V. </th>
+                <td mat-cell *matCellDef="let element"> {{element.previousAV | number}} </td>
+                <td mat-footer-cell *matFooterCellDef> {{totalPrevAssessedValue}} </td>
+                </ng-container>
+
+                <!-- Effective Year Column -->
+                <ng-container matColumnDef="effectiveYear">
+                <th mat-header-cell *matHeaderCellDef> Effectivity </th>
+                <td mat-cell *matCellDef="let element"> {{element.effectiveYear}} </td>
+                <td mat-footer-cell *matFooterCellDef>  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+
+            </table>
+
+            <ng-container *ngIf="totalCount === 0">
+                <div class="mt-3 text-center">
+                    There are <strong>0</strong> results for this table
+                </div>
+            </ng-container>
+
+        </div>
+    </div>
+</div>

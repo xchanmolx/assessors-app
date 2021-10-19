@@ -17,10 +17,10 @@ import { RealPropertyService } from './real-property.service';
 })
 export class RealPropertyComponent implements OnInit, AfterViewInit {
   @ViewChild('search', { static: false }) searchTerm!: ElementRef;
-  realProperties!: IRealProperty[];
+  realProperties: IRealProperty[] = [];
   realPropertyParams = new RealPropertyParams();
   photoParams = new PhotoParams();
-  totalCount!: number;
+  totalCount: number = 0;
   defaultSelect = 'ownerName';
   sortOptions = [
     { name: 'Alphabetical', value: 'ownerName' },

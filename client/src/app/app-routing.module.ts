@@ -5,7 +5,6 @@ import { NotFoundComponent } from './core/not-found/not-found.component';
 import { ServerErrorComponent } from './core/server-error/server-error.component';
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
-import { ConfirmComponent } from './shared/components/dialogs/confirm/confirm.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, data: {breadcrumb: 'Home'} },
