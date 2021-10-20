@@ -28,7 +28,7 @@ export class RealPropertyComponent implements OnInit, AfterViewInit {
     { name: 'Effective Year: Latest Year', value: 'yearDesc'}
   ];
   
-  displayedColumns: string[] = ['taxDecNumber', 'ownerName', 'ownerAddress', 'propertyLocation', 'surveyLotNumber',
+  displayedColumns: string[] = ['taxDecNumber', 'ownerName', 'ownerAddress', 'surveyLotNumber', 'propertyLocation',
    'landArea', 'effectiveYear', 'propertyIndex', 'arpNumber', 'kind', 'class', 'assessedValue',
    'previousTDNumber', 'previousAV','taxableExempt', 'remarks', 'actions'];
   showFirstLastButtons = true;

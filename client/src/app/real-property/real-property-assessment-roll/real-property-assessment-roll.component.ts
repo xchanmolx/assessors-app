@@ -17,6 +17,7 @@ export class RealPropertyAssessmentRollComponent implements OnInit, AfterViewIni
   totalCount: number = 0;
   totalAssessedValue: number = 0;
   totalPrevAssessedValue: number = 0;
+  yearInput!: string;
   defaultPageSize = 300000;
   defaultTaxableSelect = 'taxable';
   taxableExemptOptions = [
@@ -86,6 +87,12 @@ export class RealPropertyAssessmentRollComponent implements OnInit, AfterViewIni
 
   onEffectiveYear() {
     this.realPropertyParams.effectiveYear = this.effectiveYearTerm.nativeElement.value;
+    this.getRealPropertiesAssessmentRoll();
+  }
+
+  onReset() {
+    this.effectiveYearTerm.nativeElement.value = '';
+    this.realPropertyParams = new RealPropertyParams();
     this.getRealPropertiesAssessmentRoll();
   }
 

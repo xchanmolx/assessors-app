@@ -1,14 +1,14 @@
 <div class="container-fluid">
 
     <div class="row p-3">
-        <div class="col-3 d-flex justify-content-center">
+        <div class="col-2 d-flex justify-content-center">
             <h3><span><strong>{{totalCount}}</strong> Results</span></h3>
         </div>
         <div class="col-3">
             <ng-container>
                 <mat-form-field appearance="fill">
                     <mat-label>Select Barangay</mat-label>
-                    <mat-select (selectionChange)="onBarangaySelected($event)" [(value)]="defaultAngilanSelect">
+                    <mat-select (selectionChange)="onBarangaySelected($event)" [(ngModel)]="defaultAngilanSelect">
                       <mat-option *ngFor="let barangay of barangayOptions" [value]="barangay.value">
                           {{barangay.name}}
                       </mat-option>
@@ -20,7 +20,7 @@
             <ng-container>
                 <mat-form-field appearance="fill">
                     <mat-label>Select Taxable or Exempt</mat-label>
-                    <mat-select (selectionChange)="onTaxableExemptSelected($event)" [(value)]="defaultTaxableSelect">
+                    <mat-select (selectionChange)="onTaxableExemptSelected($event)" [(ngModel)]="defaultTaxableSelect">
                       <mat-option *ngFor="let taxableExempt of taxableExemptOptions" [value]="taxableExempt.value">
                           {{taxableExempt.name}}
                       </mat-option>
@@ -28,16 +28,19 @@
                 </mat-form-field>
             </ng-container>
         </div>
-        <div class="col-3">
-            <mat-form-field style="width: 60%;" appearance="fill">
+        <div class="col-4">
+            <mat-form-field style="width: 50%;" appearance="fill">
                 <mat-label>Effective Year</mat-label>
-                <input #effectiveYear (keyup.enter)="onEffectiveYear()" matInput appMatInputAutofocus #message maxlength="4" placeholder="Ex. 2020"
+                <input [(ngModel)]="yearInput" #effectiveYear (keyup.enter)="onEffectiveYear()" matInput appMatInputAutofocus #message maxlength="4" placeholder="Ex. 2020"
                     type="number" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                 <mat-hint align="start"><strong>Type a year.</strong> </mat-hint>
                 <mat-hint align="end">{{message.value.length}} / 4</mat-hint>
             </mat-form-field>
             <button matTooltip="Search Effective Year" mat-icon-button (click)="onEffectiveYear()" class="btn btn-outline-primary">
                 <mat-icon aria-hidden="false" aria-label="Search">search</mat-icon>
+            </button>
+            <button matTooltip="Clear effective year box" mat-icon-button (click)="onReset()" class="btn btn-outline-success mx-1">
+                <mat-icon aria-hidden="false" aria-label="Reset">clear</mat-icon>
             </button>
             <button mat-icon-button matTooltip="Print" 
             [useExistingCss]="true"
@@ -49,13 +52,30 @@
 
     <!-- Material Table  -->
     <div class="row" id="print-section">
+
+        <h1 class="d-flex justify-content-center m-0" style="font-weight: bold;">ASSESSMENT ROLL</h1>
+        <h3 class="d-flex justify-content-center m-0">{{defaultTaxableSelect | titlecase}} Properties</h3>
+        <h3 class="d-flex justify-content-center mb-1">(General Revision Year {{yearInput}})</h3>
+
+        <div class="row">
+            <div class="col-4">
+                <h4 class="m-0">PROVINCE/CITY: <u>CEBU</u></h4>
+            </div>
+            <div class="col-4">
+                <h4 class="m-0">MUNICIPALITY/DISTRICT: <u>ALOGUINSAN</u></h4>
+            </div>
+            <div class="col-4">
+                <h4 class="m-0">BARANGAY: <u>{{defaultAngilanSelect | uppercase}}</u></h4>
+            </div>
+        </div>
+
         <div class="col">
               
             <table mat-table [dataSource]="realProperties" #mytable class="my-table mat-elevation-z8">
             
                 <!-- Owner Name Column -->
                 <ng-container matColumnDef="ownerName">
-                <th mat-header-cell *matHeaderCellDef> Owner Name </th>
+                <th mat-header-cell *matHeaderCellDef> Owner's Name </th>
                 <td mat-cell *matCellDef="let element"> {{element.ownerName | uppercase}} </td>
                 <td mat-footer-cell *matFooterCellDef> TOTAL </td>
                 </ng-container>
@@ -113,7 +133,7 @@
                 <ng-container matColumnDef="assessedValue">
                 <th mat-header-cell *matHeaderCellDef> Assessed Value </th>
                 <td mat-cell *matCellDef="let element"> {{element.assessedValue | number}} </td>
-                <td mat-footer-cell *matFooterCellDef> {{totalAssessedValue}} </td>
+                <td mat-footer-cell *matFooterCellDef> {{totalAssessedValue | number}} </td>
                 </ng-container>
 
                 <!-- Previous TD No. Column -->
@@ -127,7 +147,7 @@
                 <ng-container matColumnDef="previousAV">
                 <th mat-header-cell *matHeaderCellDef> Previous A.V. </th>
                 <td mat-cell *matCellDef="let element"> {{element.previousAV | number}} </td>
-                <td mat-footer-cell *matFooterCellDef> {{totalPrevAssessedValue}} </td>
+                <td mat-footer-cell *matFooterCellDef> {{totalPrevAssessedValue | number}} </td>
                 </ng-container>
 
                 <!-- Effective Year Column -->

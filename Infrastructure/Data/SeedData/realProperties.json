@@ -1,7 +1,7 @@
 [
     {
       "OwnerName": "GELLACONE, FRANCISCO R.P.",
-      "PropertyLocation": "ESPERANZA",
+      "PropertyLocation": "esperanza",
       "TaxDecNumber": "20-04-04237",
       "EffectiveYear": 2020,
       "SurveyLotNumber": "2288",
@@ -19,7 +19,7 @@
     },
     {
       "OwnerName": "Juan Dela Cruz",
-      "PropertyLocation": "POBLACION",
+      "PropertyLocation": "poblacion",
       "TaxDecNumber": "85-04-04221",
       "EffectiveYear": 1985,
       "SurveyLotNumber": "1126",
@@ -37,7 +37,7 @@
     },
     {
       "OwnerName": "Juana Bartolomeo",
-      "PropertyLocation": "BONBON",
+      "PropertyLocation": "bonbon",
       "TaxDecNumber": "17-04-00067",
       "EffectiveYear": 2017,
       "SurveyLotNumber": "1187",
@@ -55,7 +55,7 @@
     },
     {
       "OwnerName": "John Doe",
-      "PropertyLocation": "TAMPAAN",
+      "PropertyLocation": "tampaan",
       "TaxDecNumber": "82-04-00067",
       "EffectiveYear": 1982,
       "SurveyLotNumber": "1190",
@@ -73,7 +73,7 @@
     },
     {
       "OwnerName": "Luke Estrada",
-      "PropertyLocation": "PUNAY",
+      "PropertyLocation": "punay",
       "TaxDecNumber": "89-04-00079",
       "EffectiveYear": 1989,
       "SurveyLotNumber": "1199",

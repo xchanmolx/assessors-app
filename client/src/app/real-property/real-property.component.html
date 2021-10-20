@@ -65,16 +65,16 @@
                 <td mat-cell *matCellDef="let element"> {{element.ownerAddress | uppercase}} </td>
                 </ng-container>
             
-                <!-- Property Location Column -->
-                <ng-container matColumnDef="propertyLocation">
-                <th mat-header-cell *matHeaderCellDef> Property Location </th>
-                <td mat-cell *matCellDef="let element"> {{element.propertyLocation | uppercase}} </td>
-                </ng-container>
-
                 <!-- Survey Lot Number Column -->
                 <ng-container matColumnDef="surveyLotNumber">
                 <th mat-header-cell *matHeaderCellDef> Lot No. </th>
                 <td mat-cell *matCellDef="let element"> {{element.surveyLotNumber | uppercase}} </td>
+                </ng-container>
+
+                <!-- Property Location Column -->
+                <ng-container matColumnDef="propertyLocation">
+                <th mat-header-cell *matHeaderCellDef> Property Location </th>
+                <td mat-cell *matCellDef="let element"> {{element.propertyLocation | uppercase}} </td>
                 </ng-container>
 
                 <!-- Land Area Column -->
