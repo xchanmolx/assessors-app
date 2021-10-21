@@ -56,15 +56,22 @@
         <div mat-line>Home</div>
       </mat-list-item>
 
-      <mat-list-item *ngIf="(currentUser$ | async)" routerLink="/real-property">
-        <mat-icon mat-list-icon>landscape</mat-icon>
-        <div mat-line>Real Property</div>
-      </mat-list-item>
+      <ng-container *ngIf="loggedIn()">
+        <mat-list-item *appHasRole="['Admin']" routerLink="/admin">
+          <mat-icon mat-list-icon>admin_panel_settings</mat-icon>
+          <div mat-line>Admin</div>
+        </mat-list-item>
 
-      <mat-list-item *ngIf="(currentUser$ | async)" routerLink="/real-property/assessment-roll">
-        <mat-icon mat-list-icon>assessment</mat-icon>
-        <div mat-line>Assessment Roll</div>
-      </mat-list-item>
+        <mat-list-item *appHasRole="['Admin', 'Moderator', 'Member']" routerLink="/real-property">
+          <mat-icon mat-list-icon>landscape</mat-icon>
+          <div mat-line>Real Property</div>
+        </mat-list-item>
+  
+        <mat-list-item *appHasRole="['Admin', 'Moderator', 'Member']" routerLink="/real-property/assessment-roll">
+          <mat-icon mat-list-icon>assessment</mat-icon>
+          <div mat-line>Assessment Roll</div>
+        </mat-list-item>
+      </ng-container>
 
       <mat-list-item routerLink="/about">
         <mat-icon mat-list-icon>info</mat-icon>

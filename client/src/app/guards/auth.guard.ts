@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AccountService } from '../account/account.service';
-import { AuthService } from '../auth/auth.service';
 import { NotifierService } from '../core/services/notifier.service';
 
 @Injectable({
@@ -9,11 +8,11 @@ import { NotifierService } from '../core/services/notifier.service';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private authService: AuthService, private router: Router,
+  constructor(private accountService: AccountService, private router: Router,
       private notifierService: NotifierService) {}
 
   canActivate(): boolean {
-    if (this.authService.loggedIn()) {
+    if (this.accountService.loggedIn()) {
       return true;
     }
 

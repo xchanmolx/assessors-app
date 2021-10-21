@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/co
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { AccountService } from 'src/app/account/account.service';
 import { BusyService } from 'src/app/core/services/busy.service';
 import { NotifierService } from 'src/app/core/services/notifier.service';
 import { ConfirmImageComponent } from 'src/app/shared/components/dialogs/confirm-image/confirm-image.component';
@@ -24,7 +25,7 @@ export class RealPropertyDetailsComponent implements OnInit, AfterViewInit {
 
   constructor(public realPropertyService: RealPropertyService, private activatedRoute: ActivatedRoute,
     public busyService: BusyService, private cd: ChangeDetectorRef, public dialog: MatDialog, private fb: FormBuilder,
-    private notifierService: NotifierService, private bc: BreadcrumbService) { }
+    private notifierService: NotifierService, private bc: BreadcrumbService, private accountService: AccountService) { }
 
   ngOnInit(): void {
     this.loadPhotos();
@@ -34,6 +35,10 @@ export class RealPropertyDetailsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.busyService.idle();
     this.cd.detectChanges();
+  }
+
+  loggedIn() {
+    return this.accountService.loggedIn();
   }
 
   openDialog(action: any, obj: any) {

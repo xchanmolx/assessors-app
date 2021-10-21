@@ -13,6 +13,7 @@ import { PagingHeaderComponent } from './components/paging-header/paging-header.
 import { ConfirmComponent } from './components/dialogs/confirm/confirm.component';
 import { MatSelectModule } from '@angular/material/select';
 import { ConfirmImageComponent } from './components/dialogs/confirm-image/confirm-image.component';
+import { HasRoleDirective } from './directives/has-role.directive';
 
 
 
@@ -22,7 +23,8 @@ import { ConfirmImageComponent } from './components/dialogs/confirm-image/confir
     PagerComponent,
     PagingHeaderComponent,
     ConfirmComponent,
-    ConfirmImageComponent
+    ConfirmImageComponent,
+    HasRoleDirective
   ],
   imports: [
     CommonModule,
@@ -40,7 +42,8 @@ import { ConfirmImageComponent } from './components/dialogs/confirm-image/confir
     PagerComponent,
     ReactiveFormsModule,
     TextInputComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    HasRoleDirective
   ]
 })
 export class SharedModule { }

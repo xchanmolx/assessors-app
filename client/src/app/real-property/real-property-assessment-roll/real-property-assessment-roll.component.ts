@@ -1,5 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
+import { AccountService } from 'src/app/account/account.service';
 import { BusyService } from 'src/app/core/services/busy.service';
 import { IRealProperty } from 'src/app/shared/models/realProperty';
 import { RealPropertyParams } from 'src/app/shared/models/realPropertyParams';
@@ -48,7 +49,7 @@ export class RealPropertyAssessmentRollComponent implements OnInit, AfterViewIni
   showFirstLastButtons = true;
 
   constructor(private realPropertyService: RealPropertyService, 
-    public busyService: BusyService, private cd: ChangeDetectorRef) { }
+    public busyService: BusyService, private cd: ChangeDetectorRef, private accountService: AccountService) { }
 
   ngOnInit(): void {
     this.getRealPropertiesAssessmentRoll();
@@ -57,6 +58,10 @@ export class RealPropertyAssessmentRollComponent implements OnInit, AfterViewIni
   ngAfterViewInit() {
     this.busyService.idle();
     this.cd.detectChanges();
+  }
+
+  loggedIn() {
+    return this.accountService.loggedIn();
   }
 
   getRealPropertiesAssessmentRoll() {
@@ -92,6 +97,7 @@ export class RealPropertyAssessmentRollComponent implements OnInit, AfterViewIni
 
   onReset() {
     this.effectiveYearTerm.nativeElement.value = '';
+    this.yearInput = '';
     this.realPropertyParams = new RealPropertyParams();
     this.getRealPropertiesAssessmentRoll();
   }

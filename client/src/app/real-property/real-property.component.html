@@ -15,9 +15,11 @@
                 <button matTooltip="Clear search box" mat-icon-button (click)="onReset()" class="btn btn-outline-success mx-1">
                     <mat-icon aria-hidden="false" aria-label="Reset">clear</mat-icon>
                 </button>
-                <button routerLink="/real-property/add" matTooltip="Add real property" mat-icon-button class="btn btn-outline-primary">
-                    <mat-icon aria-hidden="false" aria-label="Add">add</mat-icon>
-                </button>
+                <ng-container *ngIf="loggedIn()">
+                    <button *appHasRole="['Admin', 'Moderator']" routerLink="/real-property/add" matTooltip="Add real property" mat-icon-button class="btn btn-outline-primary">
+                        <mat-icon aria-hidden="false" aria-label="Add">add</mat-icon>
+                    </button>
+                </ng-container>
             </div>
         </div>
         <div class="col-3 d-flex justify-content-center">
@@ -149,8 +151,12 @@
                 <td mat-cell *matCellDef="let row">
                     <button class="btn btn-outline-primary" routerLink="/real-property/{{row.id}}" mat-icon-button matTooltip="Photo/s for Tax Declaration of Real Property"><mat-icon>image</mat-icon></button>
                     <button class="btn btn-outline-primary" routerLink="/real-property/tracer/{{row.surveyLotNumber}}" mat-icon-button matTooltip="Tracer"><mat-icon>text_snippet</mat-icon></button>
-                    <button (click)="openDialog('Update', row)" class="btn btn-outline-primary" mat-icon-button matTooltip="Edit"><mat-icon>edit</mat-icon></button>
-                    <button (click)="openDialog('Delete', row)" class="btn btn-outline-danger" mat-icon-button color="warn" matTooltip="Delete"><mat-icon>delete</mat-icon></button>
+                    <ng-container *ngIf="loggedIn()">
+                        <span *appHasRole="['Admin', 'Moderator']">
+                            <button (click)="openDialog('Update', row)" class="btn btn-outline-primary" mat-icon-button matTooltip="Edit"><mat-icon>edit</mat-icon></button>
+                            <button (click)="openDialog('Delete', row)" class="btn btn-outline-danger" mat-icon-button color="warn" matTooltip="Delete"><mat-icon>delete</mat-icon></button>
+                        </span>
+                    </ng-container>                    
                 </td>
                 </ng-container>
 

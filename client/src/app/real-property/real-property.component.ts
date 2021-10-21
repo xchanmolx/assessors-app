@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewCh
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSelectChange } from '@angular/material/select';
+import { AccountService } from '../account/account.service';
 import { BusyService } from '../core/services/busy.service';
 import { NotifierService } from '../core/services/notifier.service';
 import { ConfirmComponent } from '../shared/components/dialogs/confirm/confirm.component';
@@ -33,7 +34,7 @@ export class RealPropertyComponent implements OnInit, AfterViewInit {
    'previousTDNumber', 'previousAV','taxableExempt', 'remarks', 'actions'];
   showFirstLastButtons = true;
 
-  constructor(private realPropertyService: RealPropertyService,
+  constructor(private realPropertyService: RealPropertyService, private accountService: AccountService,
     public busyService: BusyService, private cd: ChangeDetectorRef, public dialog: MatDialog,
     private notifierService: NotifierService) { }
 
@@ -44,6 +45,10 @@ export class RealPropertyComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.busyService.idle();
     this.cd.detectChanges();
+  }
+
+  loggedIn() {
+    return this.accountService.loggedIn();
   }
 
   openDialog(action: any, obj: any) {

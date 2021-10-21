@@ -27,4 +27,8 @@ export class NavBarComponent implements OnInit {
     this.notifierService.showNotification('You have successfully logged out.', 'OK', 'success');
   }
 
+  loggedIn() {
+    return this.accountService.loggedIn();
+  }
+
 }

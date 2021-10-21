@@ -64,6 +64,7 @@ dotnet ef migrations remove -p Infrastructure -s API
 dotnet ef migrations add InitialCreate -p Infrastructure -s API -o Data/Migrations -c AssessorContext
 dotnet ef migrations list -p Infrastructure -s API
 dotnet ef migrations list -p Infrastructure -s API -c AssessorContext
+dotnet ef migrations list -p Infrastructure -s API -c AppIdentityDbContext
 dotnet ef migrations add IdentityInitial -p Infrastructure -s API -o Identity/Migrations -c AppIdentityDbContext
 dotnet ef migrations remove -p Infrastructure -s API -c AppIdentityDbContext
 dotnet ef migrations remove -p Infrastructure -s API -c AssessorContext
@@ -259,3 +260,5 @@ ng build
 --------------------------------------------
 for Publishing the DOTNET Core
 dotnet publish -c Release
+
+Search prefix in settings on VS Code then click to C# Extensions, then add underscore( _ )

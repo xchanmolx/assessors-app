@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AccountService } from 'src/app/account/account.service';
 import { BusyService } from 'src/app/core/services/busy.service';
 import { IRealProperty } from 'src/app/shared/models/realProperty';
 import { RealPropertyService } from '../real-property.service';
@@ -20,7 +21,7 @@ export class RealPropertySearchLotNoComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['ownerName', 'propertyLocation', 'taxDecNumber', 'effectiveYear', 'surveyLotNumber', 'landArea', 'remarks'];
 
   constructor(private realPropertyService: RealPropertyService, public busyService: BusyService,
-     private cd: ChangeDetectorRef, private activatedRoute: ActivatedRoute) { }
+     private cd: ChangeDetectorRef, private activatedRoute: ActivatedRoute, private accountService: AccountService) { }
 
   ngOnInit(): void {
     this.lotNo = this.activatedRoute.snapshot.paramMap.get('lotNo')!;
@@ -31,6 +32,10 @@ export class RealPropertySearchLotNoComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.busyService.idle();
     this.cd.detectChanges();
+  }
+
+  loggedIn() {
+    return this.accountService.loggedIn();
   }
 
   loadRealProperties() {

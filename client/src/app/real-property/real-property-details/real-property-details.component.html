@@ -21,22 +21,44 @@
         </div>
     </div>
 
-    <div>
-        <button (click)="displayUploadPhotos()" mat-icon-button class="float-end" matTooltip="Upload Photo/s"><mat-icon>file_upload</mat-icon></button>
-    </div>
+    <ng-container *ngIf="loggedIn()">
+        <div *appHasRole="['Admin', 'Moderator']">
+            <div>
+                <button (click)="displayUploadPhotos()" mat-icon-button class="float-end" matTooltip="Upload Photo/s"><mat-icon>file_upload</mat-icon></button>
+            </div>
+            <button mat-icon-button class="float-end" matTooltip="Print" 
+            [useExistingCss]="true"
+            printTitle="Photo/s"
+            printSectionId="print-section"
+            ngxPrint><mat-icon>print</mat-icon></button>
+        </div>
+    </ng-container>
 
-    <div *ngIf="photos.length > 0">
-        <button mat-icon-button class="float-end" matTooltip="Print" 
-        [useExistingCss]="true"
-        printTitle="Photo/s"
-        printSectionId="print-section"
-        ngxPrint><mat-icon>print</mat-icon></button>
-        <div class="col">
-            <div class="row" id="print-section">
-                <img src="{{photo.url}}" *ngFor="let photo of photos" (click)="openDialog('Delete', photo)" alt="image for tax declaration of real property" class="img-fluid">
+    <ng-container *ngIf="loggedIn()">
+        <div *appHasRole="['Admin', 'Moderator']">
+            <div *ngIf="photos.length > 0">
+                <div class="col">
+                    <div class="row" id="print-section">
+                        <img src="{{photo.url}}" *ngFor="let photo of photos" (click)="openDialog('Delete', photo)" alt="photo/s for tax declaration of real property" class="img-fluid">
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </ng-container>
+
+    <ng-container *ngIf="loggedIn()">
+        <div *appHasRole="['Member']">
+            <div *ngIf="photos.length > 0">
+                <div class="col">
+                    <div class="row" id="print-section">
+                        <img src="{{photo.url}}" *ngFor="let photo of photos" alt="photo/s for tax declaration of real property" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+
     <div class="container col mt-3" *ngIf="photos.length <= 0">
         <h3><strong>No photo/s found</strong></h3>
     </div>

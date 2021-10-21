@@ -42,30 +42,32 @@
             <button matTooltip="Clear effective year box" mat-icon-button (click)="onReset()" class="btn btn-outline-success mx-1">
                 <mat-icon aria-hidden="false" aria-label="Reset">clear</mat-icon>
             </button>
-            <button mat-icon-button matTooltip="Print" 
-            [useExistingCss]="true"
-            printTitle="Assessment Roll"
-            printSectionId="print-section"
-            ngxPrint><mat-icon>print</mat-icon></button>
+            <ng-container *ngIf="loggedIn()">
+                <button *appHasRole="['Admin', 'Moderator']" mat-icon-button matTooltip="Print" 
+                [useExistingCss]="true"
+                printTitle="Assessment Roll"
+                printSectionId="print-section"
+                ngxPrint><mat-icon>print</mat-icon></button>
+            </ng-container>
         </div>
     </div>
 
     <!-- Material Table  -->
     <div class="row" id="print-section">
 
-        <h1 class="d-flex justify-content-center m-0" style="font-weight: bold;">ASSESSMENT ROLL</h1>
-        <h3 class="d-flex justify-content-center m-0">{{defaultTaxableSelect | titlecase}} Properties</h3>
-        <h3 class="d-flex justify-content-center mb-1">(General Revision Year {{yearInput}})</h3>
+        <h2 class="d-flex justify-content-center m-0" style="font-weight: bold;">ASSESSMENT ROLL</h2>
+        <h4 class="d-flex justify-content-center m-0">{{defaultTaxableSelect | titlecase}} Properties</h4>
+        <h4 class="d-flex justify-content-center mb-1">(General Revision Year {{yearInput}})</h4>
 
         <div class="row">
             <div class="col-4">
-                <h4 class="m-0">PROVINCE/CITY: <u>CEBU</u></h4>
+                <h5 class="m-0">PROVINCE/CITY: <u>CEBU</u></h5>
             </div>
             <div class="col-4">
-                <h4 class="m-0">MUNICIPALITY/DISTRICT: <u>ALOGUINSAN</u></h4>
+                <h5 class="m-0">MUNICIPALITY/DISTRICT: <u>ALOGUINSAN</u></h5>
             </div>
             <div class="col-4">
-                <h4 class="m-0">BARANGAY: <u>{{defaultAngilanSelect | uppercase}}</u></h4>
+                <h5 class="m-0">BARANGAY: <u>{{defaultAngilanSelect | uppercase}}</u></h5>
             </div>
         </div>
 
