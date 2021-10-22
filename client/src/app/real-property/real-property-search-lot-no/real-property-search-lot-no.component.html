@@ -1,13 +1,17 @@
-<div class="row">
-    <ng-container *ngIf="loggedIn()">
-        <div class="col" *appHasRole="['Admin', 'Moderator']">
-            <button mat-icon-button class="float-end" matTooltip="Print" 
-            [useExistingCss]="true"
-            printTitle="Tracer"
-            printSectionId="print-section" 
-            ngxPrint><mat-icon>print</mat-icon></button>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <ng-container *ngIf="loggedIn()">
+                <div class="col" *appHasRole="['Admin', 'Moderator']">
+                    <button mat-icon-button class="float-end mx-3" matTooltip="Print" 
+                    [useExistingCss]="true"
+                    printTitle="Tracer"
+                    printSectionId="print-section" 
+                    ngxPrint><mat-icon>print</mat-icon></button>
+                </div>
+            </ng-container>
         </div>
-    </ng-container>
+    </div>
 </div>
 <div class="container-fluid" id="print-section">
     <div class="row mt-3">

@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ReplaySubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-// import { environment } from 'src/environments/environment.prod'; // Production
-import { environment } from 'src/environments/environment'; // Development
+import { environment } from 'src/environments/environment.prod'; // Production
+// import { environment } from 'src/environments/environment'; // Development
 import { IUser } from '../shared/models/user';
 
 @Injectable({
@@ -64,6 +64,15 @@ export class AccountService {
     );
   }
 
+  deleteUser(id: number) {
+    const token = localStorage.getItem('token');
+
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', `Bearer ${token}`);
+
+    return this.http.delete<IUser>(this.baseUrl + 'account/' + id, {headers});
+  }
+
   loggedIn() {
     const token = localStorage.getItem('token');
     return !this.jwtHelper.isTokenExpired(token?.toString());
@@ -86,6 +95,7 @@ export class AccountService {
       map((user: IUser) => {
         if (user) {
           localStorage.setItem('token', user.token);
+          this.decodedToken = this.jwtHelper.decodeToken(user.token);
           this.currentUserSource.next(user);
         }
       })

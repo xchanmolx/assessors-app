@@ -14,6 +14,7 @@ import { ConfirmComponent } from './components/dialogs/confirm/confirm.component
 import { MatSelectModule } from '@angular/material/select';
 import { ConfirmImageComponent } from './components/dialogs/confirm-image/confirm-image.component';
 import { HasRoleDirective } from './directives/has-role.directive';
+import { ConfirmUserDeleteComponent } from './components/dialogs/confirm-user-delete/confirm-user-delete.component';
 
 
 
@@ -24,7 +25,8 @@ import { HasRoleDirective } from './directives/has-role.directive';
     PagingHeaderComponent,
     ConfirmComponent,
     ConfirmImageComponent,
-    HasRoleDirective
+    HasRoleDirective,
+    ConfirmUserDeleteComponent
   ],
   imports: [
     CommonModule,

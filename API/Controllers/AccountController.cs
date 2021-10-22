@@ -68,6 +68,21 @@ namespace API.Controllers
             return BadRequest("Problem updating the user");
         }
 
+        [Authorize]
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<UserToDeleteDto>> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            var userMap = _mapper.Map<UserToDeleteDto>(user);
+
+            var result = await _userManager.DeleteAsync(user);
+
+            if (result.Succeeded) return Ok(userMap);
+
+            return BadRequest("Problem deleting the user");
+        }
+
         [HttpGet("emailexists")]
         public async Task<ActionResult<bool>> CheckEmailExistsAsync([FromQuery] string email)
         {

@@ -21,7 +21,6 @@ import { MatInputAutofocusDirective } from './mat-input-autofocus.directive';
 import { RealPropertySearchLotNoComponent } from './real-property-search-lot-no/real-property-search-lot-no.component';
 import { NgxPrintModule } from 'ngx-print';
 import { RealPropertyAssessmentRollComponent } from './real-property-assessment-roll/real-property-assessment-roll.component';
-import { HasRoleDirective } from '../shared/directives/has-role.directive';
 
 @NgModule({
   declarations: [

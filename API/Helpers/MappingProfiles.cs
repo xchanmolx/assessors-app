@@ -20,6 +20,7 @@ namespace API.Helpers
                 .ForMember(d => d.Url, o => o.MapFrom<PropertyUrlResolver>());
             CreateMap<TaxDecOfRealProperty, PropertyToDeleteDto>();
             CreateMap<Photo, PhotoToDeleteDto>();
+            CreateMap<AppUser, UserToDeleteDto>();
         }
     }
 }

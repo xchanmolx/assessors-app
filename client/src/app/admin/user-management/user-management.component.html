@@ -1,0 +1,17 @@
+<table class="table">
+    <tr>
+    <th style="width: 10%;">User ID</th>
+    <th style="width: 20%;">First Name</th>
+    <th style="width: 30%;">Username</th>
+    <th style="width: 20%;">Active Roles</th>
+    <th style="width: 20%;"></th>
+    </tr>
+    <tr *ngFor="let user of users">
+        <td>{{user.id}}</td>
+        <td>{{user.firstName}}</td>
+        <td>{{user.userName}}</td>
+        <td>{{user.roles}}</td>
+        <button (click)="editRolesModal(user)" class="btn btn-outline-primary" mat-icon-button matTooltip="Edit Roles"><mat-icon>edit</mat-icon></button>
+        <button [disabled]="user.userName === 'cmanigos@gmail.com'" (click)="openDialog('Delete', user)" class="btn btn-outline-danger" mat-icon-button color="warn" matTooltip="Delete"><mat-icon>delete</mat-icon></button>
+    </tr>
+</table>

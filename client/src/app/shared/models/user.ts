@@ -1,5 +1,6 @@
 export interface IUser {
     id: string;
+    userName: string;
     email: string;
     firstName: string;
     token: string;
@@ -8,4 +9,5 @@ export interface IUser {
     phoneNumber?: string;
     address?: string;
     password?: string;
+    roles?: string[];
 }
