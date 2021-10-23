@@ -9,7 +9,6 @@ import { AccountService } from './account/account.service';
 })
 export class AppComponent implements OnInit {
   jwtHelper = new JwtHelperService();
-  title = 'Assessor Application | LGU Aloguinsan';
 
   constructor(private accountService: AccountService) { }
 
@@ -25,7 +24,7 @@ export class AppComponent implements OnInit {
     }
 
     this.accountService.loadCurrentUser(token)?.subscribe(() => {
-      console.log('Loaded user');
+      // console.log('Loaded user');
     }, error => {
       console.log(error);
     });
