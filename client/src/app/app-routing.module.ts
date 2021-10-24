@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'real-property', loadChildren: () => import('./real-property/real-property.module').then(mod => mod.RealPropertyModule), 
     data: {breadcrumb: 'Real Property'}, canActivate: [AuthGuard], runGuardsAndResolvers: 'always' },
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(mod => mod.AdminModule),
-    data: {breadcrumb: 'Admin Panel'} },
+    data: {breadcrumb: 'Admin Panel', roles: ['Admin']} },
   { path: 'account', loadChildren: () => import('./account/account.module').then(mod => mod.AccountModule), data: {breadcrumb: {skip: true}} },
   { path: '**', redirectTo: 'not-found', pathMatch: 'full'}
 ];
