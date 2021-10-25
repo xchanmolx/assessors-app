@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core'; 
+import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod'; // Production
 // import { environment } from 'src/environments/environment'; // Development
@@ -90,12 +90,19 @@ export class RealPropertyService {
       formData.append('formFiles', this.formFiles[i]);
     }
 
-    this.http.post(this.baseUrl + 'photos', formData, { params })
-      .toPromise().then(response => {
-          this.photosResponse = response;
-        }, error => {
-          console.log(error);
-        });
+    this.http.post(this.baseUrl + 'photos', formData, { params }).subscribe(response => {
+      this.photosResponse = response;
+
+      // Refresh page
+      window.location.reload();
+    }, error => {
+      console.log(error);
+    });
+      // .toPromise().then(response => {
+      //     this.photosResponse = response;
+      //   }, error => {
+      //     console.log(error);
+      //   });
   }
 
   deletePhoto(id: number, photoParams: PhotoParams) {

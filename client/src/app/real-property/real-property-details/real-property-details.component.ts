@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from 'src/app/account/account.service';
 import { BusyService } from 'src/app/core/services/busy.service';
 import { NotifierService } from 'src/app/core/services/notifier.service';
@@ -25,7 +25,8 @@ export class RealPropertyDetailsComponent implements OnInit, AfterViewInit {
 
   constructor(public realPropertyService: RealPropertyService, private activatedRoute: ActivatedRoute,
     public busyService: BusyService, private cd: ChangeDetectorRef, public dialog: MatDialog, private fb: FormBuilder,
-    private notifierService: NotifierService, private bc: BreadcrumbService, private accountService: AccountService) { }
+    private notifierService: NotifierService, private bc: BreadcrumbService, private accountService: AccountService, private router: Router) 
+    { }
 
   ngOnInit(): void {
     this.loadPhotos();
@@ -94,9 +95,8 @@ export class RealPropertyDetailsComponent implements OnInit, AfterViewInit {
   onSubmit() {
     this.photoParams.taxDecId = +this.activatedRoute.snapshot.paramMap.get('id')!;
     this.realPropertyService.uploadPhoto(this.photoParams);
-    this.clearInputFileValue();
 
-    window.location.reload();
+    this.clearInputFileValue();
     
     this.displayElement = false;
     
