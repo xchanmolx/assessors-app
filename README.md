@@ -1,4 +1,4 @@
 # assessors-app
 
-Assessor's Application | LGU Aloguinsan
-Using .Net Core Web API and Angular
+Assessor's Application | LGU Aloguinsan,
+using .Net Core Web API and Angular
