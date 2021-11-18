@@ -1,0 +1,22 @@
+[
+    {
+        "Name": "I-1",
+        "MarketValue": 1000
+    },
+    {
+        "Name": "I-2",
+        "MarketValue": 700
+    },
+    {
+        "Name": "I-3",
+        "MarketValue": 550
+    },
+    {
+        "Name": "I-4",
+        "MarketValue": 400
+    },
+    {
+        "Name": "I-5",
+        "MarketValue": 300
+    }
+]

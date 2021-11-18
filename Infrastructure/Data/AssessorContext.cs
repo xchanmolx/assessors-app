@@ -9,7 +9,14 @@ namespace Infrastructure.Data
         public AssessorContext(DbContextOptions<AssessorContext> options) : base(options){}
 
         public DbSet<TaxDecOfRealProperty> TaxDecOfRealProperties { get; set; }
+        public DbSet<Boundary> Boundaries { get; set; }
+        public DbSet<KindOfProperty> KindOfProperties { get; set; }
         public DbSet<Photo> Photos { get; set; }
+        public DbSet<AgriculturalLand> AgriculturalLands { get; set; }
+        public DbSet<ResidentialLand> ResidentialLands { get; set; }
+        public DbSet<CommercialLand> CommercialLands { get; set; }
+        public DbSet<IndustrialLand> IndustrialLands { get; set; }
+        public DbSet<PropertyLand> PropertyLands { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {

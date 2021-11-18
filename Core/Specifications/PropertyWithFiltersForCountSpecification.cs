@@ -6,9 +6,9 @@ namespace Core.Specifications
     {
         public PropertyWithFiltersForCountSpecification(PropertySpecParams propertyParams)
             : base(x =>
-                (string.IsNullOrEmpty(propertyParams.Search) || x.OwnerName.ToLower()
-                    .Contains(propertyParams.Search) || x.TaxDecNumber.ToLower().Contains(propertyParams.Search)
-                    || x.SurveyLotNumber.ToLower().Contains(propertyParams.Search))
+                (string.IsNullOrEmpty(propertyParams.Search) || x.Owner.ToLower()
+                    .Contains(propertyParams.Search) || x.TdNo.ToLower().Contains(propertyParams.Search)
+                    || x.SurveyLotNo.ToLower().Contains(propertyParams.Search))
             )
         {
         }

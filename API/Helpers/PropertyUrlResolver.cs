@@ -19,24 +19,24 @@ namespace API.Helpers
         public string Resolve(Photo source, PhotoForDetailsDto destination, string destMember, ResolutionContext context)
         {
             // Production mode
-            IPHostEntry hostEntry;
-            hostEntry = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (IPAddress ip in hostEntry.AddressList)
-            {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    if (!string.IsNullOrEmpty(source.Url))
-                    {
-                        return "http://" + ip + ":86/" + source.Url;
-                    }
-                }
-            }
+            // IPHostEntry hostEntry;
+            // hostEntry = Dns.GetHostEntry(Dns.GetHostName());
+            // foreach (IPAddress ip in hostEntry.AddressList)
+            // {
+            //     if (ip.AddressFamily == AddressFamily.InterNetwork)
+            //     {
+            //         if (!string.IsNullOrEmpty(source.Url))
+            //         {
+            //             return "http://" + ip + ":86/" + source.Url;
+            //         }
+            //     }
+            // }
 
             // Development mode
-            // if (!string.IsNullOrEmpty(source.Url))
-            // {
-            //     return _config["ApiUrl"] + source.Url;
-            // }
+            if (!string.IsNullOrEmpty(source.Url))
+            {
+                return _config["ApiUrl"] + source.Url;
+            }
 
             return null;
         }

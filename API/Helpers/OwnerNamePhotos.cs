@@ -4,13 +4,13 @@ namespace API.Helpers
 {
     public class OwnerNamePhotos<T> where T: class
     {
-        public OwnerNamePhotos(string ownerName, IEnumerable<T> photos)
+        public OwnerNamePhotos(string owner, IEnumerable<T> photos)
         {
-            OwnerName = ownerName;
+            Owner = owner;
             Photos = photos;
         }
 
-        public string OwnerName { get; set; }
+        public string Owner { get; set; }
         public IEnumerable<T> Photos { get; set; }
     }
 }

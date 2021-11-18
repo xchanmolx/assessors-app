@@ -8,11 +8,11 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Photo> builder)
         {
-            builder.Property(p => p.Id).IsRequired();
-            builder.Property(u => u.Url).IsRequired();
-            builder.HasOne(t => t.TaxDecOfRealProperty)
-                .WithMany(p => p.Photos)
-                .HasForeignKey(t => t.TaxDecOfRealPropertyId)
+            builder.Property(x => x.Id).IsRequired();
+            builder.Property(x => x.Url).IsRequired().HasMaxLength(230);
+            builder.HasOne(x => x.TaxDecOfRealProperty)
+                .WithMany(x => x.Photos)
+                .HasForeignKey(x => x.TaxDecOfRealPropertyId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

@@ -27,7 +27,7 @@ namespace Core.Specifications
             set => _taxableExempt = value.ToLower();
         }
         
-        public int EffectiveYear { get; set; }
+        public int Year { get; set; }
         
         private string _propertyLocation;
         public string PropertyLocation

@@ -29,15 +29,57 @@ namespace Infrastructure.Data
                      await context.SaveChangesAsync();
                  }
 
-                 if (!context.Photos.Any())
+                 if (!context.AgriculturalLands.Any())
                  {
-                     var propertyPhotos = File.ReadAllText("../Infrastructure/Data/SeedData/realPropertyPhotos.json");
+                     var agriLandData = File.ReadAllText("../Infrastructure/Data/SeedData/agriculturalLand.json");
 
-                     var photos = JsonSerializer.Deserialize<List<Photo>>(propertyPhotos);
+                     var agriLands = JsonSerializer.Deserialize<List<AgriculturalLand>>(agriLandData);
 
-                     foreach (var item in photos)
+                     foreach (var item in agriLands)
                      {
-                         context.Photos.Add(item);
+                         context.AgriculturalLands.Add(item);
+                     }
+
+                     await context.SaveChangesAsync();
+                 }
+
+                 if (!context.ResidentialLands.Any())
+                 {
+                     var residentialLandData = File.ReadAllText("../Infrastructure/Data/SeedData/residentialLand.json");
+
+                     var residentialLands = JsonSerializer.Deserialize<List<ResidentialLand>>(residentialLandData);
+
+                     foreach (var item in residentialLands)
+                     {
+                         context.ResidentialLands.Add(item);
+                     }
+
+                     await context.SaveChangesAsync();
+                 }
+
+                 if (!context.CommercialLands.Any())
+                 {
+                     var commercialLandData = File.ReadAllText("../Infrastructure/Data/SeedData/commercialLand.json");
+
+                     var commercialLands = JsonSerializer.Deserialize<List<CommercialLand>>(commercialLandData);
+
+                     foreach (var item in commercialLands)
+                     {
+                         context.CommercialLands.Add(item);
+                     }
+
+                     await context.SaveChangesAsync();
+                 }
+
+                 if (!context.IndustrialLands.Any())
+                 {
+                     var industrialLandData = File.ReadAllText("../Infrastructure/Data/SeedData/industrialLand.json");
+
+                     var industrialLands = JsonSerializer.Deserialize<List<IndustrialLand>>(industrialLandData);
+
+                     foreach (var item in industrialLands)
+                     {
+                         context.IndustrialLands.Add(item);
                      }
 
                      await context.SaveChangesAsync();

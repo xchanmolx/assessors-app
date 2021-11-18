@@ -1,52 +1,73 @@
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
 
 namespace API.Dtos
 {
     public class PropertyToCreateDto
     {
-        [Required(ErrorMessage = "The owner name field is required.")]
-        public string OwnerName { get; set; }
-
         [Required(ErrorMessage = "The tax declaration number field is required.")]
-        public string TaxDecNumber { get; set; }
+        public string TdNo { get; set; }
 
-        [Required(ErrorMessage = "The survey lot number field is required.")]
-        public string SurveyLotNumber { get; set; }
+        [Required]
+        public string Owner { get; set; }
+        
+        [Required]
+        public string Address { get; set; }
 
         [Required(ErrorMessage = "The property location field is required.")]
         public string PropertyLocation { get; set; }
 
-        [Required(ErrorMessage = "The effective year field is required.")]
-        public int EffectiveYear { get; set; }
+        [Required(ErrorMessage = "The property identification number field is required.")]
+        public string PropertyIndentificationNo { get; set; }
 
-        [Required(ErrorMessage = "The land area field is required.")]
-        public double LandArea { get; set; }
-        public string Remarks { get; set; }
+        public string ArpNo { get; set; }
+        public string TinNo { get; set; }
+        public string TelephoneNo { get; set; }
+        public string OctTctCloaNo { get; set; }
+        public string OctNo { get; set; }
+        public string Dated { get; set; }
 
-        [Required(ErrorMessage = "The property index is required.")]
-        public string PropertyIndex { get; set; }
+        [Required(ErrorMessage = "The survey lot number field is required.")]
+        public string SurveyLotNo { get; set; }
 
-        [Required(ErrorMessage = "The ARP number is required.")]
-        public string ARPNumber { get; set; }
+        public string AssessorLotNo { get; set; }
+        public string BlkNo { get; set; }
 
-        [Required(ErrorMessage = "The owner's address is required.")]
-        public string OwnerAddress { get; set; }
+        public BoundaryToCreateDto Boundary { get; set; }
 
-        [Required(ErrorMessage = "The kind is required.")]
-        public string Kind { get; set; }
+        public string KindOfPropertyAssessed { get; set; }
+        public string NoOfStoreys { get; set; }
+        public string BriefDescription { get; set; }
+        public string Specify { get; set; }
 
-        [Required(ErrorMessage = "The class is required.")]
-        public string Class { get; set; }
+        public List<KindOfPropertyToCreateDto> KindOfProperties { get; set; }
 
-        [Required(ErrorMessage = "The assessed value is required.")]
-        public decimal AssessedValue { get; set; }
+        [Required(ErrorMessage = "The total assessed value in word field is required.")]
+        public string TotalAssessedValueInWord { get; set; }
 
-        [Required(ErrorMessage = "The previous tax declaration number is required.")]
-        public string PreviousTDNumber { get; set; }
-
-        [Required(ErrorMessage = "The previous A.V. is required.")]
-        public decimal PreviousAV { get; set; }
+        [Required(ErrorMessage = "The taxable or exempt field is required.")]
         public string TaxableExempt { get; set; }
+
+        [Required]
+        public string Quarter { get; set; }
+
+        [Required]
+        public int Year { get; set; }
+
+        public string RecommendedBy { get; set; }
+        public string ApprovedBy { get; set; }
+        
+        [Required]
+        public DateTime Date { get; set; }
+
+        [Required(ErrorMessage = "The declaration cancels field is required.")]
+        public string DeclarationCancels { get; set; }
+
+        public string OwnerTdNoCancels { get; set; }
+        public decimal PreviousAssessedValue { get; set; }
+        public string Memoranda { get; set; }
+        public string ApprovedMessage { get; set; }
+        public string Notes { get; set; }
     }
 }

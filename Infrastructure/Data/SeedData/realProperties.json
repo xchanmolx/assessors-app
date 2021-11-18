@@ -1,92 +1,127 @@
 [
+  {
+    "TdNo": "20-04-08076",
+    "Owner": "ABABA, MARCIANO & MELCHORA QUIJOY",
+    "Address": "SAKSAK, ALOGUINSAN, CEBU",
+    "PropertyLocation": "saksak",
+    "PropertyIndentificationNo": "043-04-0012-017-007",
+    "ArpNo": "0012-00002",
+    "TinNo": "",
+    "TelephoneNo": "",
+    "OctTctCloaNo": "",
+    "OctNo": "",
+    "Dated": "",
+    "SurveyLotNo": "3230 PART",
+    "AssessorLotNo": "007",
+    "BlkNo": "",
+    "Boundary": 
     {
-      "OwnerName": "GELLACONE, FRANCISCO R.P.",
-      "PropertyLocation": "esperanza",
-      "TaxDecNumber": "20-04-04237",
-      "EffectiveYear": 2020,
-      "SurveyLotNumber": "2288",
-      "LandArea": 624,
-      "Remarks": "General Revision",
-      "PropertyIndex": "043-04-0003-006-066",
-      "ARPNumber": "0003-00001",
-      "OwnerAddress": "Cebu City",
-      "Kind": "L",
-      "Class": "AL",
-      "AssessedValue": 7100,
-      "PreviousTDNumber": "10248",
-      "PreviousAV": 3380,
-      "TaxableExempt": "taxable"
+      "North": "LOT NO. 3085",
+      "East": "LOT NO. 3230 P",
+      "South": "BARILI CAD",
+      "West": "LOT NO. 3091"
     },
+    "KindOfPropertyAssessed": "LAND",
+    "NoOfStoreys": "",
+    "BriefDescription": "",
+    "Specify": "",
+    "KindOfProperties":
+    [
+      {
+        "Classification": "SecondClass",
+        "Area": 2.0412,
+        "MarketValue": 379340,
+        "ActualUse": "Corn Land",
+        "Level": 25,
+        "AssessedValue": 94840
+      }
+    ],
+    "TotalAssessedValueInWord": "NINETY FOUR THOUSAND EIGHT HUNDRED FORTY PESOS",
+    "TaxableExempt": "taxable",
+    "Quarter": "3rd",
+    "Year": 2020,
+    "RecommendedBy": "",
+    "ApprovedBy": "ROY D. BENDANILLO",
+    "Date": "2020-11-11T19:01:55.714942+03:00",
+    "DeclarationCancels": "TD NO. 12-04-07822",
+    "OwnerTdNoCancels": "ABABA, MARCIANO & MELCHORA QUIJOY",
+    "PreviousAssessedValue": 42710,
+    "Memoranda": "GENERAL REVISION 2020",
+    "ApprovedMessage": "*Approved by authority from Mariflor D. Vero, OIC-Provincial Assessor Per office memorandum dated January 14, 2020 & pursuant to SEC. 472 (b) (12) of R.A. 7160",
+    "Notes": "This decalration is for real property taxation purpose only and the valuation indicated herein are based on theschedure of base unit & fair market value prepared for the herein purpose and duly enacted into Ordinance by the Sangguniang Panlalawigan Under Ordinance No. 2019-17 dated December 26, 2019 & approved by Gwendolyn F. Garcia, Provincial Governor dated January 3, 2020 & office circular no. 01-2020.",
+    "Photos":
+    [
+      {
+        "Url": "Content/images/properties/7c984372-1cc4-4da2-9aa4-7c37997afca8_V-20-04-04234.jpg"
+      },
+      {
+        "Url": "Content/images/properties/e69bb52c-d13a-4f73-a369-96506ceae3af_V-20-04-04237.jpg"
+      }
+    ]
+  },
+  {
+    "TdNo": "12-04-08076",
+    "Owner": "JUAN DELA CRUZ",
+    "Address": "BONBON, ALOGUINSAN, CEBU",
+    "PropertyLocation": "bonbon",
+    "PropertyIndentificationNo": "043-04-0012-017-009",
+    "ArpNo": "0012-00009",
+    "TinNo": "",
+    "TelephoneNo": "",
+    "OctTctCloaNo": "",
+    "OctNo": "",
+    "Dated": "",
+    "SurveyLotNo": "3233",
+    "AssessorLotNo": "009",
+    "BlkNo": "",
+    "Boundary": 
     {
-      "OwnerName": "Juan Dela Cruz",
-      "PropertyLocation": "poblacion",
-      "TaxDecNumber": "85-04-04221",
-      "EffectiveYear": 1985,
-      "SurveyLotNumber": "1126",
-      "LandArea": 222,
-      "Remarks": "General Revision",
-      "PropertyIndex": "043-04-0003-003-010",
-      "ARPNumber": "0003-00002",
-      "OwnerAddress": "POBLACION, ALOGUINSAN, CEBU",
-      "Kind": "L",
-      "Class": "AL",
-      "AssessedValue": 48540,
-      "PreviousTDNumber": "01456",
-      "PreviousAV": 19270,
-      "TaxableExempt": "exempt"
+      "North": "LOT NO. 3085",
+      "East": "LOT NO. 3230 P",
+      "South": "BARILI CAD",
+      "West": "LOT NO. 3091"
     },
-    {
-      "OwnerName": "Juana Bartolomeo",
-      "PropertyLocation": "bonbon",
-      "TaxDecNumber": "17-04-00067",
-      "EffectiveYear": 2017,
-      "SurveyLotNumber": "1187",
-      "LandArea": 356,
-      "Remarks": "General Revision",
-      "PropertyIndex": "043-04-0003-003-010-1001",
-      "ARPNumber": "0003-00003",
-      "OwnerAddress": "BOJO, ALOGUINSAN, CEBU",
-      "Kind": "B",
-      "Class": "RB",
-      "AssessedValue": 0,
-      "PreviousTDNumber": "01457",
-      "PreviousAV": 0,
-      "TaxableExempt": "taxable"
-    },
-    {
-      "OwnerName": "John Doe",
-      "PropertyLocation": "tampaan",
-      "TaxDecNumber": "82-04-00067",
-      "EffectiveYear": 1982,
-      "SurveyLotNumber": "1190",
-      "LandArea": 399,
-      "Remarks": "General Revision",
-      "PropertyIndex": "043-04-0003-003-029",
-      "ARPNumber": "0003-00004",
-      "OwnerAddress": "OLANGO, ALOGUINSAN, CEBU",
-      "Kind": "L",
-      "Class": "AL",
-      "AssessedValue": 2310,
-      "PreviousTDNumber": "01455",
-      "PreviousAV": 1100,
-      "TaxableExempt": "exempt"
-    },
-    {
-      "OwnerName": "Luke Estrada",
-      "PropertyLocation": "punay",
-      "TaxDecNumber": "89-04-00079",
-      "EffectiveYear": 1989,
-      "SurveyLotNumber": "1199",
-      "LandArea": 311,
-      "Remarks": "General Revision",
-      "PropertyIndex": "043-04-0005-003-029",
-      "ARPNumber": "0003-000078",
-      "OwnerAddress": "PARDO CEBU, CITY",
-      "Kind": "L",
-      "Class": "AL",
-      "AssessedValue": 1023,
-      "PreviousTDNumber": "01955",
-      "PreviousAV": 1101,
-      "TaxableExempt": "exempt"
-    }
+    "KindOfPropertyAssessed": "LAND",
+    "NoOfStoreys": "",
+    "BriefDescription": "",
+    "Specify": "",
+    "KindOfProperties":
+    [
+      {
+        "Classification": "FirstClass",
+        "Area": 2.0419,
+        "MarketValue": 379349,
+        "ActualUse": "Coconut Land",
+        "Level": 25,
+        "AssessedValue": 94840
+      },
+      {
+        "Classification": "ThirdClass",
+        "Area": 2.0419,
+        "MarketValue": 379349,
+        "ActualUse": "Coffee Land",
+        "Level": 25,
+        "AssessedValue": 94840
+      }
+    ],
+    "TotalAssessedValueInWord": "NINETY FOUR THOUSAND EIGHT HUNDRED FORTY PESOS",
+    "TaxableExempt": "taxable",
+    "Quarter": "3rd",
+    "Year": 2012,
+    "RecommendedBy": "",
+    "ApprovedBy": "ROY D. BENDANILLO",
+    "Date": "2020-11-11T19:01:55.714942+03:00",
+    "DeclarationCancels": "TD NO. 12-04-07822",
+    "OwnerTdNoCancels": "JUAN DELA CRUZ",
+    "PreviousAssessedValue": 42710,
+    "Memoranda": "GENERAL REVISION 2012",
+    "ApprovedMessage": "*Approved by authority from Mariflor D. Vero, OIC-Provincial Assessor Per office memorandum dated January 14, 2020 & pursuant to SEC. 472 (b) (12) of R.A. 7160",
+    "Notes": "This decalration is for real property taxation purpose only and the valuation indicated herein are based on theschedure of base unit & fair market value prepared for the herein purpose and duly enacted into Ordinance by the Sangguniang Panlalawigan Under Ordinance No. 2019-17 dated December 26, 2019 & approved by Gwendolyn F. Garcia, Provincial Governor dated January 3, 2020 & office circular no. 01-2020.",
+    "Photos":
+    [
+      {
+        "Url": "Content/images/properties/7c984372-1cc4-4da2-9aa4-7c37997afca8_V-20-04-04234.jpg"
+      }
+    ]
+  }
 ]

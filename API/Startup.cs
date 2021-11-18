@@ -33,6 +33,11 @@ namespace API
             services.AddDbContext<AppIdentityDbContext>(x => 
                 x.UseSqlServer(_config.GetConnectionString("IdentityConnection")));
 
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
             services.AddControllers();
             services.AddApplicationServices();
             services.AddIdentityServices(_config);

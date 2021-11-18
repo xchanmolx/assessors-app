@@ -29,8 +29,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<List<PhotoForCreationDto>>> CreatePhotos([Required] List<IFormFile> formFiles, [Required] string subDirectory, [Required] int taxDecId)
         {
-            var photoForCreationDtos = new List<PhotoForCreationDto>();
-            var photos = _mapper.Map<List<Photo>>(photoForCreationDtos);
+            var photos = new List<Photo>();
 
             subDirectory = subDirectory ?? string.Empty;
             var target = Path.Combine(_hostEnvironment.ContentRootPath, subDirectory);
@@ -65,7 +64,7 @@ namespace API.Controllers
             });
 
             if (await _photoRepo.SaveAll())
-                return Ok(photos);
+                return Ok(_mapper.Map<List<PhotoForCreationDto>>(photos));
 
             return BadRequest();
         }

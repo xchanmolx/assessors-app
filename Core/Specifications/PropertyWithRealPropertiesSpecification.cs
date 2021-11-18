@@ -6,12 +6,14 @@ namespace Core.Specifications
     {
         public PropertyWithRealPropertiesSpecification(PropertySpecParams propertyParams)
             : base(x =>
-                (string.IsNullOrEmpty(propertyParams.Search) || x.OwnerName.ToLower()
-                    .Contains(propertyParams.Search) || x.TaxDecNumber.ToLower().Contains(propertyParams.Search)
-                    || x.SurveyLotNumber.ToLower().Contains(propertyParams.Search))
+                (string.IsNullOrEmpty(propertyParams.Search) || x.Owner.ToLower()
+                    .Contains(propertyParams.Search) || x.TdNo.ToLower().Contains(propertyParams.Search)
+                    || x.SurveyLotNo.ToLower().Contains(propertyParams.Search))
             )
         {
-            AddOrderBy(x => x.OwnerName);
+            AddInclude(x => x.Boundary);
+            AddInclude(x => x.KindOfProperties);
+            AddOrderBy(x => x.Owner);
             ApplyPaging(propertyParams.PageSize * (propertyParams.PageIndex - 1), 
                 propertyParams.PageSize);
 
@@ -20,13 +22,13 @@ namespace Core.Specifications
                 switch (propertyParams.Sort)
                 {
                     case "yearAsc":
-                        AddOrderBy(y => y.EffectiveYear);
+                        AddOrderBy(x => x.Year);
                         break;
                     case "yearDesc":
-                        AddOrderByDescending(y => y.EffectiveYear);
+                        AddOrderByDescending(x => x.Year);
                         break;
                     default:
-                        AddOrderBy(x => x.OwnerName);
+                        AddOrderBy(x => x.Owner);
                         break;
                 }
             }

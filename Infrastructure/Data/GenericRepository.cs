@@ -61,31 +61,5 @@ namespace Infrastructure.Data
         {
             return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), spec);
         }
-
-        public async Task<IEnumerable<TaxDecOfRealProperty>> SearchAllLotNoAsync(string lotNo)
-        {
-            var realProperties = from rp in _context.TaxDecOfRealProperties
-                                 select rp;
-
-            if (!String.IsNullOrEmpty(lotNo))
-            {
-                realProperties = realProperties.Where(s => s.SurveyLotNumber.ToLower().Equals(lotNo)).OrderByDescending(x => x.EffectiveYear);
-            }
-
-            return await realProperties.ToListAsync();
-        }
-
-        public async Task<IEnumerable<Photo>> PhotosWithSameId(int id)
-        {
-            var photos = from p in _context.Photos
-                                 select p;
-
-            if (id > 0)
-            {
-                photos = photos.Where(x => x.TaxDecOfRealPropertyId == id);
-            }
-
-            return await photos.ToListAsync();
-        }
     }
 }

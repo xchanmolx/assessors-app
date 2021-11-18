@@ -7,9 +7,8 @@ namespace API.Dtos
 {
     public class PhotoForCreationDto
     {
+        [Required]
         public string Url { get; set; }
-
-        [Required(ErrorMessage = "The tax declaration property ID is required.")]
         public int TaxDecOfRealPropertyId { get; set; }
     }
 }

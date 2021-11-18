@@ -60,7 +60,7 @@ dotnet build
 dotnet ef database drop -p Infrastructure -s API
 dotnet ef database drop -p Infrastructure -s API -c AssessorContext
 dotnet ef database drop -p Infrastructure -s API -c AppIdentityDbContext
-dotnet ef migrations remove -p Infrastructure -s API
+dotnet ef migrations remove -p Infrastructure -s API -c AssessorContext
 dotnet ef migrations add InitialCreate -p Infrastructure -s API -o Data/Migrations -c AssessorContext
 dotnet ef migrations list -p Infrastructure -s API
 dotnet ef migrations list -p Infrastructure -s API -c AssessorContext
@@ -215,7 +215,7 @@ receiving something = [class.active]="brand.id === brandIdSelected"
 Parent Element => position: relative, -> Child Element => position: absolute - 
 change the position whatever you want
 
-use DatabaseName 
+use DatabaseName
 GO
 sp_changedbowner 'sa'
 

@@ -1,0 +1,146 @@
+[
+    {
+        "Name": "Riceland (Irrigated)",
+        "FirstClass": 404000,
+        "SecondClass": 269000,
+        "ThirdClass": 157000
+    },
+    {
+        "Name": "Riceland (Unirrigated)",
+        "FirstClass": 150000,
+        "SecondClass": 100000,
+        "ThirdClass": 58000
+    },
+    {
+        "Name": "Abaca Land",
+        "FirstClass": 388000,
+        "SecondClass": 198000,
+        "ThirdClass": 61000
+    },
+    {
+        "Name": "Banana Land",
+        "FirstClass": 1384000,
+        "SecondClass": 865000,
+        "ThirdClass": 288000
+    },
+    {
+        "Name": "Bamboo Land",
+        "FirstClass": 2474000,
+        "SecondClass": 1327000,
+        "ThirdClass": 483000
+    },
+    {
+        "Name": "Cacao Land",
+        "FirstClass": 204000,
+        "SecondClass": 130000,
+        "ThirdClass": 74000
+    },
+    {
+        "Name": "Coconut Land",
+        "FirstClass": 711000,
+        "SecondClass": 361000,
+        "ThirdClass": 179000
+    },
+    {
+        "Name": "Coffee Land",
+        "FirstClass": 146000,
+        "SecondClass": 104000,
+        "ThirdClass": 63000
+    },
+    {
+        "Name": "Corn Land",
+        "FirstClass": 288000,
+        "SecondClass": 202000,
+        "ThirdClass": 115000
+    },
+    {
+        "Name": "Fishpond (Milkfish/Tilapia)",
+        "FirstClass": 1330000,
+        "SecondClass": 846000,
+        "ThirdClass": 302000
+    },
+    {
+        "Name": "High-value Fruit/Crop Land",
+        "FirstClass": 2724000,
+        "SecondClass": 1634000,
+        "ThirdClass": 817000
+    },
+    {
+        "Name": "Mango Land",
+        "FirstClass": 1598000,
+        "SecondClass": 999000,
+        "ThirdClass": 533000
+    },
+    {
+        "Name": "Mudcrab Pond",
+        "FirstClass": 2195000,
+        "SecondClass": 1397000,
+        "ThirdClass": 499000
+    },
+    {
+        "Name": "Nipa/Sacsac Land",
+        "FirstClass": 162000,
+        "SecondClass": 114000,
+        "ThirdClass": 65000
+    },
+    {
+        "Name": "Orchard Land",
+        "FirstClass": 935000,
+        "SecondClass": 584000,
+        "ThirdClass": 312000
+    },
+    {
+        "Name": "Piggery Farm",
+        "FirstClass": 6793000,
+        "SecondClass": 3706000,
+        "ThirdClass": 1235000
+    },
+    {
+        "Name": "Poultry Farm",
+        "FirstClass": 3480000,
+        "SecondClass": 2436000,
+        "ThirdClass": 1740000
+    },
+    {
+        "Name": "Rootcrops Land",
+        "FirstClass": 1003000,
+        "SecondClass": 627000,
+        "ThirdClass": 334000
+    },
+    {
+        "Name": "Salt Beds",
+        "FirstClass": 280000,
+        "SecondClass": 160000,
+        "ThirdClass": 80000
+    },
+    {
+        "Name": "Seaweed Farm",
+        "FirstClass": 1160000,
+        "SecondClass": 789000,
+        "ThirdClass": 518000
+    },
+    {
+        "Name": "Shrimp Pond",
+        "FirstClass": 5322000,
+        "SecondClass": 3725000,
+        "ThirdClass": 2129000
+    },
+    {
+        "Name": "Sugarland",
+        "FirstClass": 436000,
+        "SecondClass": 254000,
+        "ThirdClass": 182000
+    },
+    {
+        "Name": "Vegetable Beds",
+        "FirstClass": 1119000,
+        "SecondClass": 768000,
+        "ThirdClass": 439000
+    },
+    {
+        "Name": "Woodland/Pasture (Grazing) Land",
+        "FirstClass": 150000,
+        "SecondClass": 100000,
+        "ThirdClass": 50000
+    }
+]
