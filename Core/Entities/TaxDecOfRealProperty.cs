@@ -39,5 +39,6 @@ namespace Core.Entities
         public string ApprovedMessage { get; set; }
         public string Notes { get; set; }
         public ICollection<Photo> Photos { get; set; }
+        public ICollection<PropertyLand> PropertyLands { get; set; }
     }
 }

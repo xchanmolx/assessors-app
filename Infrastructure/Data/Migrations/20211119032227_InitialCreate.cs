@@ -196,25 +196,25 @@ namespace Infrastructure.Data.Migrations
                         column: x => x.AgriculturalLandId,
                         principalTable: "AgriculturalLands",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PropertyLands_CommercialLands_CommercialLandId",
                         column: x => x.CommercialLandId,
                         principalTable: "CommercialLands",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PropertyLands_IndustrialLands_IndustrialLandId",
                         column: x => x.IndustrialLandId,
                         principalTable: "IndustrialLands",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PropertyLands_ResidentialLands_ResidentialLandId",
                         column: x => x.ResidentialLandId,
                         principalTable: "ResidentialLands",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PropertyLands_TaxDecOfRealProperties_TaxDecOfRealPropertyId",
                         column: x => x.TaxDecOfRealPropertyId,
@@ -242,37 +242,27 @@ namespace Infrastructure.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_PropertyLands_AgriculturalLandId",
                 table: "PropertyLands",
-                column: "AgriculturalLandId",
-                unique: true,
-                filter: "[AgriculturalLandId] IS NOT NULL");
+                column: "AgriculturalLandId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PropertyLands_CommercialLandId",
                 table: "PropertyLands",
-                column: "CommercialLandId",
-                unique: true,
-                filter: "[CommercialLandId] IS NOT NULL");
+                column: "CommercialLandId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PropertyLands_IndustrialLandId",
                 table: "PropertyLands",
-                column: "IndustrialLandId",
-                unique: true,
-                filter: "[IndustrialLandId] IS NOT NULL");
+                column: "IndustrialLandId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PropertyLands_ResidentialLandId",
                 table: "PropertyLands",
-                column: "ResidentialLandId",
-                unique: true,
-                filter: "[ResidentialLandId] IS NOT NULL");
+                column: "ResidentialLandId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PropertyLands_TaxDecOfRealPropertyId",
                 table: "PropertyLands",
-                column: "TaxDecOfRealPropertyId",
-                unique: true,
-                filter: "[TaxDecOfRealPropertyId] IS NOT NULL");
+                column: "TaxDecOfRealPropertyId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

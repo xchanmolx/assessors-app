@@ -28,7 +28,7 @@
     "KindOfProperties":
     [
       {
-        "Classification": "SecondClass",
+        "Classification": "Second Class",
         "Area": 2.0412,
         "MarketValue": 379340,
         "ActualUse": "Corn Land",
@@ -88,7 +88,7 @@
     "KindOfProperties":
     [
       {
-        "Classification": "FirstClass",
+        "Classification": "First Class",
         "Area": 2.0419,
         "MarketValue": 379349,
         "ActualUse": "Coconut Land",
@@ -96,10 +96,10 @@
         "AssessedValue": 94840
       },
       {
-        "Classification": "ThirdClass",
+        "Classification": "C-5",
         "Area": 2.0419,
         "MarketValue": 379349,
-        "ActualUse": "Coffee Land",
+        "ActualUse": "C-5",
         "Level": 25,
         "AssessedValue": 94840
       }

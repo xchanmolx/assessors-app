@@ -9,24 +9,8 @@ namespace Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<PropertyLand> builder)
         {
             builder.HasOne(x => x.TaxDecOfRealProperty)
-                .WithOne()
-                .HasForeignKey<PropertyLand>(x => x.TaxDecOfRealPropertyId)
-                .OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(x => x.AgriculturalLand)
-                .WithOne()
-                .HasForeignKey<PropertyLand>(x => x.AgriculturalLandId)
-                .OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(x => x.CommercialLand)
-                .WithOne()
-                .HasForeignKey<PropertyLand>(x => x.CommercialLandId)
-                .OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(x => x.IndustrialLand)
-                .WithOne()
-                .HasForeignKey<PropertyLand>(x => x.IndustrialLandId)
-                .OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(x => x.ResidentialLand)
-                .WithOne()
-                .HasForeignKey<PropertyLand>(x => x.ResidentialLandId)
+                .WithMany(x => x.PropertyLands)
+                .HasForeignKey(x => x.TaxDecOfRealPropertyId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

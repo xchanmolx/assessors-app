@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AssessorContext))]
-    [Migration("20211118074356_InitialCreate")]
+    [Migration("20211119032227_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -206,25 +206,15 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AgriculturalLandId")
-                        .IsUnique()
-                        .HasFilter("[AgriculturalLandId] IS NOT NULL");
+                    b.HasIndex("AgriculturalLandId");
 
-                    b.HasIndex("CommercialLandId")
-                        .IsUnique()
-                        .HasFilter("[CommercialLandId] IS NOT NULL");
+                    b.HasIndex("CommercialLandId");
 
-                    b.HasIndex("IndustrialLandId")
-                        .IsUnique()
-                        .HasFilter("[IndustrialLandId] IS NOT NULL");
+                    b.HasIndex("IndustrialLandId");
 
-                    b.HasIndex("ResidentialLandId")
-                        .IsUnique()
-                        .HasFilter("[ResidentialLandId] IS NOT NULL");
+                    b.HasIndex("ResidentialLandId");
 
-                    b.HasIndex("TaxDecOfRealPropertyId")
-                        .IsUnique()
-                        .HasFilter("[TaxDecOfRealPropertyId] IS NOT NULL");
+                    b.HasIndex("TaxDecOfRealPropertyId");
 
                     b.ToTable("PropertyLands");
                 });
@@ -429,28 +419,24 @@ namespace Infrastructure.Data.Migrations
             modelBuilder.Entity("Core.Entities.PropertyLand", b =>
                 {
                     b.HasOne("Core.Entities.AgriculturalLand", "AgriculturalLand")
-                        .WithOne()
-                        .HasForeignKey("Core.Entities.PropertyLand", "AgriculturalLandId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("AgriculturalLandId");
 
                     b.HasOne("Core.Entities.CommercialLand", "CommercialLand")
-                        .WithOne()
-                        .HasForeignKey("Core.Entities.PropertyLand", "CommercialLandId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("CommercialLandId");
 
                     b.HasOne("Core.Entities.IndustrialLand", "IndustrialLand")
-                        .WithOne()
-                        .HasForeignKey("Core.Entities.PropertyLand", "IndustrialLandId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("IndustrialLandId");
 
                     b.HasOne("Core.Entities.ResidentialLand", "ResidentialLand")
-                        .WithOne()
-                        .HasForeignKey("Core.Entities.PropertyLand", "ResidentialLandId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("ResidentialLandId");
 
                     b.HasOne("Core.Entities.TaxDecOfRealProperty", "TaxDecOfRealProperty")
-                        .WithOne()
-                        .HasForeignKey("Core.Entities.PropertyLand", "TaxDecOfRealPropertyId")
+                        .WithMany("PropertyLands")
+                        .HasForeignKey("TaxDecOfRealPropertyId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("AgriculturalLand");
@@ -471,6 +457,8 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("KindOfProperties");
 
                     b.Navigation("Photos");
+
+                    b.Navigation("PropertyLands");
                 });
 #pragma warning restore 612, 618
         }
