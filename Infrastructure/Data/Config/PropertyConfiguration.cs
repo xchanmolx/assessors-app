@@ -43,7 +43,6 @@ namespace Infrastructure.Data.Config
             builder.Property(x => x.ApprovedMessage).HasMaxLength(230);
             builder.Property(x => x.Notes).HasMaxLength(600);
             builder.HasMany(x => x.Photos);
-            builder.HasMany(x => x.PropertyLands);
         }
     }
 }

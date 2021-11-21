@@ -131,6 +131,9 @@ namespace Infrastructure.Data.Migrations
                         .HasMaxLength(90)
                         .HasColumnType("nvarchar(90)");
 
+                    b.Property<int?>("AgriculturalLandId")
+                        .HasColumnType("int");
+
                     b.Property<double>("Area")
                         .HasColumnType("float");
 
@@ -142,11 +145,20 @@ namespace Infrastructure.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int?>("CommercialLandId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IndustrialLandId")
+                        .HasColumnType("int");
+
                     b.Property<double>("Level")
                         .HasColumnType("float");
 
                     b.Property<decimal>("MarketValue")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("ResidentialLandId")
+                        .HasColumnType("int");
 
                     b.Property<int>("TaxDecOfRealPropertyId")
                         .HasColumnType("int");
@@ -178,43 +190,6 @@ namespace Infrastructure.Data.Migrations
                     b.HasIndex("TaxDecOfRealPropertyId");
 
                     b.ToTable("Photos");
-                });
-
-            modelBuilder.Entity("Core.Entities.PropertyLand", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int?>("AgriculturalLandId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CommercialLandId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IndustrialLandId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ResidentialLandId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TaxDecOfRealPropertyId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AgriculturalLandId");
-
-                    b.HasIndex("CommercialLandId");
-
-                    b.HasIndex("IndustrialLandId");
-
-                    b.HasIndex("ResidentialLandId");
-
-                    b.HasIndex("TaxDecOfRealPropertyId");
-
-                    b.ToTable("PropertyLands");
                 });
 
             modelBuilder.Entity("Core.Entities.ResidentialLand", b =>
@@ -414,40 +389,6 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("TaxDecOfRealProperty");
                 });
 
-            modelBuilder.Entity("Core.Entities.PropertyLand", b =>
-                {
-                    b.HasOne("Core.Entities.AgriculturalLand", "AgriculturalLand")
-                        .WithMany()
-                        .HasForeignKey("AgriculturalLandId");
-
-                    b.HasOne("Core.Entities.CommercialLand", "CommercialLand")
-                        .WithMany()
-                        .HasForeignKey("CommercialLandId");
-
-                    b.HasOne("Core.Entities.IndustrialLand", "IndustrialLand")
-                        .WithMany()
-                        .HasForeignKey("IndustrialLandId");
-
-                    b.HasOne("Core.Entities.ResidentialLand", "ResidentialLand")
-                        .WithMany()
-                        .HasForeignKey("ResidentialLandId");
-
-                    b.HasOne("Core.Entities.TaxDecOfRealProperty", "TaxDecOfRealProperty")
-                        .WithMany("PropertyLands")
-                        .HasForeignKey("TaxDecOfRealPropertyId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("AgriculturalLand");
-
-                    b.Navigation("CommercialLand");
-
-                    b.Navigation("IndustrialLand");
-
-                    b.Navigation("ResidentialLand");
-
-                    b.Navigation("TaxDecOfRealProperty");
-                });
-
             modelBuilder.Entity("Core.Entities.TaxDecOfRealProperty", b =>
                 {
                     b.Navigation("Boundary");
@@ -455,8 +396,6 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("KindOfProperties");
 
                     b.Navigation("Photos");
-
-                    b.Navigation("PropertyLands");
                 });
 #pragma warning restore 612, 618
         }

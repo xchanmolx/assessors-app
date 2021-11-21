@@ -143,7 +143,11 @@ namespace Infrastructure.Data.Migrations
                     ActualUse = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: false),
                     Level = table.Column<double>(type: "float", nullable: false),
                     AssessedValue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TaxDecOfRealPropertyId = table.Column<int>(type: "int", nullable: false)
+                    TaxDecOfRealPropertyId = table.Column<int>(type: "int", nullable: false),
+                    AgriculturalLandId = table.Column<int>(type: "int", nullable: true),
+                    CommercialLandId = table.Column<int>(type: "int", nullable: true),
+                    IndustrialLandId = table.Column<int>(type: "int", nullable: true),
+                    ResidentialLandId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -176,53 +180,6 @@ namespace Infrastructure.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "PropertyLands",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TaxDecOfRealPropertyId = table.Column<int>(type: "int", nullable: true),
-                    AgriculturalLandId = table.Column<int>(type: "int", nullable: true),
-                    CommercialLandId = table.Column<int>(type: "int", nullable: true),
-                    IndustrialLandId = table.Column<int>(type: "int", nullable: true),
-                    ResidentialLandId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PropertyLands", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PropertyLands_AgriculturalLands_AgriculturalLandId",
-                        column: x => x.AgriculturalLandId,
-                        principalTable: "AgriculturalLands",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PropertyLands_CommercialLands_CommercialLandId",
-                        column: x => x.CommercialLandId,
-                        principalTable: "CommercialLands",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PropertyLands_IndustrialLands_IndustrialLandId",
-                        column: x => x.IndustrialLandId,
-                        principalTable: "IndustrialLands",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PropertyLands_ResidentialLands_ResidentialLandId",
-                        column: x => x.ResidentialLandId,
-                        principalTable: "ResidentialLands",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PropertyLands_TaxDecOfRealProperties_TaxDecOfRealPropertyId",
-                        column: x => x.TaxDecOfRealPropertyId,
-                        principalTable: "TaxDecOfRealProperties",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Boundaries_TaxDecOfRealPropertyId",
                 table: "Boundaries",
@@ -238,55 +195,27 @@ namespace Infrastructure.Data.Migrations
                 name: "IX_Photos_TaxDecOfRealPropertyId",
                 table: "Photos",
                 column: "TaxDecOfRealPropertyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PropertyLands_AgriculturalLandId",
-                table: "PropertyLands",
-                column: "AgriculturalLandId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PropertyLands_CommercialLandId",
-                table: "PropertyLands",
-                column: "CommercialLandId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PropertyLands_IndustrialLandId",
-                table: "PropertyLands",
-                column: "IndustrialLandId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PropertyLands_ResidentialLandId",
-                table: "PropertyLands",
-                column: "ResidentialLandId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PropertyLands_TaxDecOfRealPropertyId",
-                table: "PropertyLands",
-                column: "TaxDecOfRealPropertyId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Boundaries");
-
-            migrationBuilder.DropTable(
-                name: "KindOfProperties");
-
-            migrationBuilder.DropTable(
-                name: "Photos");
-
-            migrationBuilder.DropTable(
-                name: "PropertyLands");
-
-            migrationBuilder.DropTable(
                 name: "AgriculturalLands");
+
+            migrationBuilder.DropTable(
+                name: "Boundaries");
 
             migrationBuilder.DropTable(
                 name: "CommercialLands");
 
             migrationBuilder.DropTable(
                 name: "IndustrialLands");
+
+            migrationBuilder.DropTable(
+                name: "KindOfProperties");
+
+            migrationBuilder.DropTable(
+                name: "Photos");
 
             migrationBuilder.DropTable(
                 name: "ResidentialLands");

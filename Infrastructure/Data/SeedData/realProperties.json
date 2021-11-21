@@ -33,7 +33,11 @@
         "MarketValue": 379340,
         "ActualUse": "Corn Land",
         "Level": 25,
-        "AssessedValue": 94840
+        "AssessedValue": 94840,
+        "AgriculturalLandId": 22,
+        "CommercialLandId": 0,
+        "IndustrialLandId": 0,
+        "ResidentialLandId": 0
       }
     ],
     "TotalAssessedValueInWord": "NINETY FOUR THOUSAND EIGHT HUNDRED FORTY PESOS",
@@ -93,7 +97,11 @@
         "MarketValue": 379349,
         "ActualUse": "Coconut Land",
         "Level": 25,
-        "AssessedValue": 94840
+        "AssessedValue": 94840,
+        "AgriculturalLandId": 20,
+        "CommercialLandId": 0,
+        "IndustrialLandId": 0,
+        "ResidentialLandId": 0
       },
       {
         "Classification": "C-5",
@@ -101,7 +109,11 @@
         "MarketValue": 379349,
         "ActualUse": "C-5",
         "Level": 25,
-        "AssessedValue": 94840
+        "AssessedValue": 94840,
+        "AgriculturalLandId": 0,
+        "CommercialLandId": 1,
+        "IndustrialLandId": 0,
+        "ResidentialLandId": 0
       }
     ],
     "TotalAssessedValueInWord": "NINETY FOUR THOUSAND EIGHT HUNDRED FORTY PESOS",

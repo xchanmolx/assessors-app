@@ -16,7 +16,6 @@ namespace Infrastructure.Data
         public DbSet<ResidentialLand> ResidentialLands { get; set; }
         public DbSet<CommercialLand> CommercialLands { get; set; }
         public DbSet<IndustrialLand> IndustrialLands { get; set; }
-        public DbSet<PropertyLand> PropertyLands { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {

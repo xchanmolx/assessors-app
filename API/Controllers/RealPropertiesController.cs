@@ -18,14 +18,12 @@ namespace API.Controllers
         private readonly IGenericRepository<TaxDecOfRealProperty> _propertyRepo;
         private readonly IGenericRepository<Photo> _photoRepo;
         private readonly IMapper _mapper;
-        private readonly IGenericRepository<PropertyLand> _propLandRepo;
         public RealPropertiesController(IGenericRepository<TaxDecOfRealProperty> propertyRepo,
-        IGenericRepository<Photo> photoRepo, IMapper mapper, IGenericRepository<PropertyLand> propLandRepo)
+        IGenericRepository<Photo> photoRepo, IMapper mapper)
         {
             _propertyRepo = propertyRepo;
             _photoRepo = photoRepo;
             _mapper = mapper;
-            _propLandRepo = propLandRepo;
         }
 
         [HttpGet]
@@ -226,36 +224,29 @@ namespace API.Controllers
             var properties = await _propertyRepo.ListAsync(spec);
 
             var property = properties.Where(x => x.Id == id).FirstOrDefault();
-
-
-            var specPropertyLand = new PropertyLandSpecification();
-
-            var propertyLands = await _propLandRepo.ListAsync(specPropertyLand);
-
-            var propertyLand = propertyLands.Where(x => x.TaxDecOfRealPropertyId == property.Id).FirstOrDefault();
             
 
             var kindOfProperty = property.KindOfProperties.Where(x => x.TaxDecOfRealPropertyId == id).FirstOrDefault();
 
             decimal marketValueAgri = 0;
 
-            if (kindOfProperty.ActualUse == propertyLand.AgriculturalLand.Name)
-            {
-                if (kindOfProperty.Classification.Contains("Third Class"))
-                {
-                    marketValueAgri = propertyLand.AgriculturalLand.ThirdClass;
-                }
-                else if(kindOfProperty.Classification.Contains("Second Class"))
-                {
-                    marketValueAgri = propertyLand.AgriculturalLand.SecondClass;
-                }
-                else if(kindOfProperty.Classification.Contains("First Class"))
-                {
-                    marketValueAgri = propertyLand.AgriculturalLand.FirstClass;
-                }
-            }
+            // if (kindOfProperty.ActualUse == propertyLand.AgriculturalLand.Name)
+            // {
+            //     if (kindOfProperty.Classification.Contains("Third Class"))
+            //     {
+            //         marketValueAgri = propertyLand.AgriculturalLand.ThirdClass;
+            //     }
+            //     else if(kindOfProperty.Classification.Contains("Second Class"))
+            //     {
+            //         marketValueAgri = propertyLand.AgriculturalLand.SecondClass;
+            //     }
+            //     else if(kindOfProperty.Classification.Contains("First Class"))
+            //     {
+            //         marketValueAgri = propertyLand.AgriculturalLand.FirstClass;
+            //     }
+            // }
 
-            return Ok(new {propertyLand, marketValueAgri});
+            return Ok(new {marketValueAgri});
         }
     }
 }
