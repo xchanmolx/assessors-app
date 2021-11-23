@@ -21,12 +21,12 @@ namespace API.Dtos
         public string SurveyLotNo { get; set; }
         public string AssessorLotNo { get; set; }
         public string BlkNo { get; set; }
-        public BoundaryForListDto Boundary { get; set; } = new BoundaryForListDto();
+        public BoundaryForListDto Boundary { get; set; }
         public string KindOfPropertyAssessed { get; set; }
         public string NoOfStoreys { get; set; }
         public string BriefDescription { get; set; }
         public string Specify { get; set; }
-        public ICollection<KindOfPropertyForListDto> KindOfProperties { get; set; } = new List<KindOfPropertyForListDto>();
+        public List<KindOfPropertyForListDto> KindOfProperties { get; set; }
         public string TotalAssessedValueInWord { get; set; }
         public string TaxableExempt { get; set; }
         public string Quarter { get; set; }

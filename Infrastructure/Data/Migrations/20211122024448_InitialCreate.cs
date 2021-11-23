@@ -144,9 +144,13 @@ namespace Infrastructure.Data.Migrations
                     Level = table.Column<double>(type: "float", nullable: false),
                     AssessedValue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TaxDecOfRealPropertyId = table.Column<int>(type: "int", nullable: false),
+                    MarketValueAgri = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     AgriculturalLandId = table.Column<int>(type: "int", nullable: true),
+                    MarketValueComm = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     CommercialLandId = table.Column<int>(type: "int", nullable: true),
+                    MarketValueIndu = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     IndustrialLandId = table.Column<int>(type: "int", nullable: true),
+                    MarketValueResi = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     ResidentialLandId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

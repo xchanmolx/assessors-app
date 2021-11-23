@@ -19,6 +19,10 @@ namespace Infrastructure.Data.Config
                 .WithMany(x => x.KindOfProperties)
                 .HasForeignKey(x => x.TaxDecOfRealPropertyId)
                 .OnDelete(DeleteBehavior.Cascade);
+            builder.Property(x => x.MarketValueAgri).HasColumnType("decimal(18,2)");
+            builder.Property(x => x.MarketValueComm).HasColumnType("decimal(18,2)");
+            builder.Property(x => x.MarketValueIndu).HasColumnType("decimal(18,2)");
+            builder.Property(x => x.MarketValueResi).HasColumnType("decimal(18,2)");
         }
     }
 }

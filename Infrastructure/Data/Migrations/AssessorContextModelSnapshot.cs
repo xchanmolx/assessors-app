@@ -157,6 +157,18 @@ namespace Infrastructure.Data.Migrations
                     b.Property<decimal>("MarketValue")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal?>("MarketValueAgri")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("MarketValueComm")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("MarketValueIndu")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("MarketValueResi")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int?>("ResidentialLandId")
                         .HasColumnType("int");
 

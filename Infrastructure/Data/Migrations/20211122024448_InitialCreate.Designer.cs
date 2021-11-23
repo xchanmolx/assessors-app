@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AssessorContext))]
-    [Migration("20211121133443_InitialCreate")]
+    [Migration("20211122024448_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,6 +157,18 @@ namespace Infrastructure.Data.Migrations
                         .HasColumnType("float");
 
                     b.Property<decimal>("MarketValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("MarketValueAgri")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("MarketValueComm")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("MarketValueIndu")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("MarketValueResi")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("ResidentialLandId")
