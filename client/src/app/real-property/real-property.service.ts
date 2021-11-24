@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment.prod'; // Production
-// import { environment } from 'src/environments/environment'; // Development
+// import { environment } from 'src/environments/environment.prod'; // Production
+import { environment } from 'src/environments/environment'; // Development
 import { NotifierService } from '../core/services/notifier.service';
 import { IOwnerNamePhotos } from '../shared/models/ownerNamePhotos';
 import { IPagination } from '../shared/models/pagination';
@@ -127,7 +127,7 @@ export class RealPropertyService {
     params = params.append('subDirectory', photoParams.subDirectory);
 
     return this.http.delete<IRealProperty>(this.baseUrl + 'realProperties/' + id, { params }).subscribe((realProperty) => {
-      this.notifierService.showNotification(`${realProperty.ownerName} has been deleted successfully.`, 'OK', 'success');
+      this.notifierService.showNotification(`${realProperty.owner} has been deleted successfully.`, 'OK', 'success');
     }, error => {
       this.notifierService.showNotification('Problem deleting the real property', 'OK', 'error');
     });

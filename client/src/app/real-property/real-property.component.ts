@@ -22,16 +22,19 @@ export class RealPropertyComponent implements OnInit, AfterViewInit {
   realPropertyParams = new RealPropertyParams();
   photoParams = new PhotoParams();
   totalCount: number = 0;
-  defaultSelect = 'ownerName';
+  defaultSelect = 'owner';
   sortOptions = [
-    { name: 'Alphabetical', value: 'ownerName' },
+    { name: 'Alphabetical', value: 'owner' },
     { name: 'Effective Year: Old Year', value: 'yearAsc'},
     { name: 'Effective Year: Latest Year', value: 'yearDesc'}
   ];
   
-  displayedColumns: string[] = ['taxDecNumber', 'ownerName', 'ownerAddress', 'surveyLotNumber', 'propertyLocation',
-   'landArea', 'effectiveYear', 'propertyIndex', 'arpNumber', 'kind', 'class', 'assessedValue',
-   'previousTDNumber', 'previousAV','taxableExempt', 'remarks', 'actions'];
+  displayedColumns: string[] = ['tdNo', 'owner', 'address', 'propertyLocation', 'propertyIndentificationNo',
+  'arpNo', 'tinNo', 'telephoneNo', 'octTctCloaNo', 'octNo', 'dated', 'surveyLotNo', 'assessorLotNo', 'blkNo',
+  'boundary', 'kindOfPropertyAssessed', 'noOfStoreys', 'briefDescription', 'specify',
+  'kindOfProperties', 'totalAssessedValueInWord', 'taxableExempt', 'quarter', 'year', 'recommendedBy',
+  'approvedBy', 'date', 'declarationCancels', 'ownerTdNoCancels', 'previousAssessedValue', 'memoranda',
+  'approvedMessage', 'notes', 'actions'];
   showFirstLastButtons = true;
 
   constructor(private realPropertyService: RealPropertyService, private accountService: AccountService,
@@ -72,25 +75,41 @@ export class RealPropertyComponent implements OnInit, AfterViewInit {
     this.realProperties = this.realProperties.filter((value, key) => {
       if(value.id == row_obj.id){
         value.id = row_obj.id;
-        value.ownerName = row_obj.ownerName;
-        value.taxDecNumber = row_obj.taxDecNumber;
-        value.surveyLotNumber = row_obj.surveyLotNumber;
+        value.tdNo = row_obj.tdNo;
+        value.owner = row_obj.owner;
+        value.address = row_obj.address;
         value.propertyLocation = row_obj.propertyLocation;
-        value.effectiveYear = row_obj.effectiveYear;
-        value.landArea = row_obj.landArea;
-        value.remarks = row_obj.remarks;
-        value.propertyIndex = row_obj.propertyIndex;
-        value.arpNumber = row_obj.arpNumber;
-        value.ownerAddress = row_obj.ownerAddress;
-        value.kind = row_obj.kind;
-        value.class = row_obj.class;
-        value.assessedValue = row_obj.assessedValue;
-        value.previousTDNumber = row_obj.previousTDNumber;
-        value.previousAV = row_obj.previousAV;
+        value.propertyIndentificationNo = row_obj.propertyIndentificationNo;
+        value.arpNo = row_obj.arpNo;
+        value.tinNo = row_obj.tinNo;
+        value.telephoneNo = row_obj.telephoneNo;
+        value.octTctCloaNo = row_obj.octTctCloaNo;
+        value.octNo = row_obj.octNo;
+        value.dated = row_obj.dated;
+        value.surveyLotNo = row_obj.surveyLotNo;
+        value.assessorLotNo = row_obj.assessorLotNo;
+        value.blkNo = row_obj.blkNo;
+        value.boundary = row_obj.boundary; // Boundary object
+        value.kindOfPropertyAssessed = row_obj.kindOfPropertyAssessed;
+        value.noOfStoreys = row_obj.noOfStoreys;
+        value.briefDescription = row_obj.briefDescription;
+        value.specify = row_obj.specify;
+        value.kindOfProperties = row_obj.kindOfProperties; // Kind of Properties object
+        value.totalAssessedValueInWord = row_obj.totalAssessedValueInWord;
         value.taxableExempt = row_obj.taxableExempt;
+        value.quarter = row_obj.quarter;
+        value.year = row_obj.year;
+        value.recommendedBy = row_obj.recommendedBy;
+        value.approvedBy = row_obj.approvedBy;
+        value.declarationCancels = row_obj.declarationCancels;
+        value.ownerTdNoCancels = row_obj.ownerTdNoCancels;
+        value.previousAssessedValue = row_obj.previousAssessedValue;
+        value.memoranda = row_obj.memoranda;
+        value.approvedMessage = row_obj.approvedMessage;
+        value.notes = row_obj.notes;
 
         this.realPropertyService.updateRealProperty(value.id, value).subscribe((response) => {
-          this.notifierService.showNotification(`${response.ownerName} has been updated successfully.`, 'OK', 'success');
+          this.notifierService.showNotification(`${response.owner} has been updated successfully.`, 'OK', 'success');
         }, error => {
           this.notifierService.showNotification('Problem updating the real property', 'OK', 'error');
 
