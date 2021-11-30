@@ -1,28 +1,13 @@
 <div class="container mt-3">
     <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
-        <div class="row">
-            <div class="col-4">
-                <app-text-input formControlName="ownerName" [label]="'Owner_Name'"></app-text-input>
-                <app-text-input formControlName="taxDecNumber" [label]="'Tax Declaration Number'"></app-text-input>
-                <app-text-input formControlName="ownerAddress" [label]="'Owner Address'"></app-text-input>
-                <app-text-input formControlName="surveyLotNumber" [label]="'Survey Lot Number'"></app-text-input>
-                <app-text-input formControlName="effectiveYear" [label]="'Effective Year'" [type]="'number'"></app-text-input>
-                <app-text-input formControlName="landArea" [label]="'Land Area'" [type]="'number'"></app-text-input>
-                <app-text-input formControlName="remarks" [label]="'Remarks'"></app-text-input>
-            </div>
-            <div class="col-4">
-                <app-text-input formControlName="propertyIndex" [label]="'Property Index'"></app-text-input>
-                <app-text-input formControlName="arpNumber" [label]="'ARP Number'"></app-text-input>
-                <app-text-input formControlName="kind" [label]="'Kind'"></app-text-input>
-                <app-text-input formControlName="class" [label]="'Class'"></app-text-input>
-                <app-text-input formControlName="assessedValue" [label]="'Assessed Value'" [type]="'number'"></app-text-input>
-                <app-text-input formControlName="previousTDNumber" [label]="'Previous Tax Declaration Number'"></app-text-input>
-                <app-text-input formControlName="previousAV" [label]="'Previous Assessed Value'" [type]="'number'"></app-text-input>
-            </div>
-            <div class="col-4">
-
+        <h3 class="text-center"><strong>TAX DECLARATION OF REAL PROPERTY</strong></h3>
+        <div class="row border border-secondary p-3">
+            <div class="col-6">
+                <app-text-input formControlName="tdNo" [label]="'TD_Number'"></app-text-input>
+                <app-text-input formControlName="owner" [label]="'Owner'"></app-text-input>
+                <app-text-input formControlName="address" [label]="'Address'"></app-text-input>
                 <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>Property Location</mat-label>
+                    <mat-label>Location of Property</mat-label>
                     <mat-select formControlName="propertyLocation">
                       <mat-option value="angilan">Angilan</mat-option>
                       <mat-option value="bojo">Bojo</mat-option>
@@ -41,33 +26,194 @@
                       <mat-option value="zaragosa">Zaragosa</mat-option>
                     </mat-select>
                 </mat-form-field>
+            </div>
+            <div class="col-6">
+                <app-text-input formControlName="propertyIndentificationNo" [label]="'Property Identification No.'"></app-text-input>
+                <app-text-input formControlName="arpNo" [label]="'ARP No.'"></app-text-input>
+                <app-text-input formControlName="tinNo" [label]="'TIN No.'"></app-text-input>
+                <app-text-input formControlName="telephoneNo" [label]="'Telephone No.'"></app-text-input>
+            </div>
+        </div>
+        <div class="row border border-secondary p-3 my-3">
+            <div class="col-6">
+                <app-text-input formControlName="octTctCloaNo" [label]="'OCT/TCT/CLOA No.'"></app-text-input>
+                <app-text-input formControlName="octNo" [label]="'OCT No.'"></app-text-input>
+                <app-text-input formControlName="dated" [label]="'Dated'"></app-text-input>
+            </div>
+            <div class="col-6">
+                <app-text-input formControlName="surveyLotNo" [label]="'Survey Lot No.'"></app-text-input>
+                <app-text-input formControlName="assessorLotNo" [label]="'Assessor\'s Lot No.'"></app-text-input>
+                <app-text-input formControlName="blkNo" [label]="'Blk No.'"></app-text-input>
+            </div>
+        </div>
+        <div class="row border border-secondary p-3 my-3" formGroupName="boundary">
+            <p class="m-0"><strong>Boundaries</strong></p>
+            <div class="col-6">
+                <app-text-input formControlName="north" [label]="'North'"></app-text-input>
+                <app-text-input formControlName="east" [label]="'East'"></app-text-input>
+            </div>
+            <div class="col-6">
+                <app-text-input formControlName="south" [label]="'South'"></app-text-input>
+                <app-text-input formControlName="west" [label]="'West'"></app-text-input>
+            </div>
+        </div>
+        <div class="row border border-secondary p-3 my-3">
+            <ng-container>
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Kind of Property Assessed</mat-label>
+                    <mat-select formControlName="kindOfPropertyAssessed">
+                      <mat-option value="land">Land</mat-option>
+                      <mat-option value="building">Building</mat-option>
+                      <mat-option value="machinery">Machinery</mat-option>
+                      <mat-option value="others">Others</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </ng-container>
 
+            <ng-container *ngIf="createForm.get('kindOfPropertyAssessed')!.value === 'building'">
+                <app-text-input formControlName="noOfStoreys" [label]="'No. of Storeys'"></app-text-input>
+                <app-text-input formControlName="briefDescription" [label]="'Brief Description'"></app-text-input>
+            </ng-container>
+    
+            <ng-container *ngIf="createForm.get('kindOfPropertyAssessed')!.value === 'machinery'">
+                <app-text-input formControlName="briefDescription" [label]="'Brief Description'"></app-text-input>
+            </ng-container>
+    
+            <ng-container *ngIf="createForm.get('kindOfPropertyAssessed')!.value === 'others'">
+                <app-text-input formControlName="specify" [label]="'Specify'"></app-text-input>
+            </ng-container>
+            <div formArrayName="kindOfProperties">
+                <div class="m-0" *ngFor="let kindOfProperty of kindOfProperties.controls; let i=index">
+                    <p class="m-0">
+                        <strong>Kind of Property Assessed {{i+1}}</strong>
+                        <button matTooltip="Add another Kind of Property Assessed" mat-icon-button (click)="addKindOfProperty()" class="btn btn-outline-primary m-0">
+                            <mat-icon aria-hidden="false" aria-label="Search">add</mat-icon>
+                        </button>
+                    </p>
+                    <div [formGroupName]="i" class="border border-secondary mb-3 p-3">
+                        <div class="row">
+                            <ng-container>
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Kind of Lands</mat-label>
+                                    <mat-select formControlName="kindOfLands">
+                                      <mat-option value="agricultural">Agricultural</mat-option>
+                                      <mat-option value="commercial">Commercial</mat-option>
+                                      <mat-option value="industrial">Industrial</mat-option>
+                                      <mat-option value="residential">Residential</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </ng-container>
+                            <div class="col-2">
+                                <ng-container *ngIf="kindOfProperty.get('kindOfLands')!.value === 'agricultural'">
+                                    <mat-form-field appearance="fill" style="width: 100%;">
+                                        <mat-label>Classification</mat-label>
+                                        <mat-select formControlName="classification">
+                                            <mat-option value="1st class">1st class</mat-option>
+                                            <mat-option value="2nd class">2nd class</mat-option>
+                                            <mat-option value="3rd class">3rd class</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="kindOfProperty.get('classification')!.hasError('required')">Please select a classification</mat-error>
+                                    </mat-form-field>
+                                </ng-container>
+                            </div>
+                            <div class="col-2">
+                                <app-text-input formControlName="area" [label]="'Area in hectares'" [type]="'number'"></app-text-input>
+                            </div>
+                            <div class="col-2">
+                                <app-text-input formControlName="marketValue" [label]="'Market Value'" [type]="'number'"></app-text-input>
+                            </div>
+                            <div class="col-2">
+                                <ng-container *ngIf="kindOfProperty.get('kindOfLands')!.value === 'agricultural'">
+                                    <mat-form-field appearance="fill" style="width: 100%;">
+                                        <mat-label>Actual Use</mat-label>
+                                        <mat-select (selectionChange)="onActualUseSelected($event)" formControlName="actualUse">
+                                            <mat-option *ngFor="let agri of agriculturals" [value]="agri.name">{{agri.name}}</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="kindOfProperty.get('actualUse')!.hasError('required')">Please select an actual use</mat-error>
+                                    </mat-form-field>
+                                </ng-container>
+                            </div>
+                            <div class="col-2">
+                                <app-text-input formControlName="level" [label]="'Level'" [type]="'number'"></app-text-input>
+                            </div>
+                            <div class="col-2">
+                                <app-text-input formControlName="assessedValue" [label]="'Assessed Value'" [type]="'number'"></app-text-input>
+                            </div>
+                        </div>
+                        <!-- <app-text-input formControlName="agriculturalLandId" [label]="'Agricultural Land Id'" [type]="'number'">{{kindOfProperty.get('agriculturalLandId')!.value}}</app-text-input> -->
+                        <app-text-input [hidden]="true" formControlName="commercialLandId" [label]="'Commercial Land Id'" [type]="'number'"></app-text-input>
+                        <app-text-input [hidden]="true" formControlName="industrialLandId" [label]="'Industrial Land Id'" [type]="'number'"></app-text-input>
+                        <app-text-input [hidden]="true" formControlName="residentialLandId" [label]="'Residendial Land Id'" [type]="'number'"></app-text-input>
+                        <ng-container *ngIf="i === 1">
+                            <button matTooltip="Delete Kind of Property Assessed" mat-icon-button (click)="deleteKindOfProperty(i)" class="btn btn-outline-danger">
+                                <mat-icon aria-hidden="false" aria-label="Search">delete</mat-icon>
+                            </button>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <app-text-input formControlName="totalAssessedValueInWord" [label]="'Total Assessed Value (Amount in Words)'"></app-text-input>
+        </div>
+        <div class="row border border-secondary p-3">
+            <div class="col-4">
                 <ng-container>
                     <mat-form-field appearance="fill" style="width: 100%;">
                         <mat-label>Taxable or Exempt</mat-label>
                         <mat-select formControlName="taxableExempt">
-                          <mat-option value="taxable">Taxable</mat-option>
-                          <mat-option value="exempt">Exempt</mat-option>
+                        <mat-option value="taxable">Taxable</mat-option>
+                        <mat-option value="exempt">Exempt</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </ng-container>
-
-                <div class="form-group mb-3">
-                    <label for="formFiles">Upload Photos</label>
-                    <input 
-                        formControlName="formFiles"
-                        id="formFiles" 
-                        type="file" 
-                        multiple
-                        class="form-control"
-                        accept="image/png, image/gif, image/jpeg"
-                        (click)="clearInputFileValue()"
-                        (change)="realPropertyService.onPhotoFileChange($event)">
-                </div>
-
-                <button [disabled]="createForm.invalid" class="w-50 mx-2" mat-raised-button color="primary" type="submit">Submit</button>
-                <a routerLink="/real-property" class="w-25" mat-raised-button color="warn">Cancel</a>
             </div>
+            <div class="col-4">
+                <app-text-input formControlName="quarter" [label]="'Quarter'"></app-text-input>
+            </div>
+            <div class="col-4">
+                <app-text-input formControlName="year" [label]="'Year'" [type]="'number'"></app-text-input>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <app-text-input formControlName="recommendedBy" [label]="'Recommended by'"></app-text-input>
+                </div>
+                <div class="col-6">
+                    <app-text-input formControlName="approvedBy" [label]="'Approved by'"></app-text-input>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <app-text-input formControlName="declarationCancels" [label]="'This declaration cancels'"></app-text-input>
+                </div>
+                <div class="col-6">
+                    <app-text-input formControlName="previousAssessedValue" [label]="'Previous Assessed Value'" [type]="'number'"></app-text-input>
+                </div>
+            </div>
+            <app-text-input formControlName="ownerTdNoCancels" [label]="'Owner of declaration cancels'"></app-text-input>
+            <app-text-input class="w-100" formControlName="memoranda" [label]="'Memoranda'"></app-text-input>
+            <label for="approvedMessage"><strong>Approved Message</strong></label>
+            <textarea id="approvedMessage" class="w-100 mb-3" formControlName="approvedMessage" placeholder="Approved Message"></textarea>
+            <label for="notes"><strong>Notes</strong></label>
+            <textarea id="notes" rows="4" class="w-100 mb-3" formControlName="notes" placeholder="Notes"></textarea>
+    
+            <div class="form-group mb-3">
+                <label for="formFiles">Upload Photos</label>
+                <input 
+                    formControlName="formFiles"
+                    id="formFiles" 
+                    type="file" 
+                    multiple
+                    class="form-control"
+                    accept="image/png, image/gif, image/jpeg"
+                    (click)="clearInputFileValue()"
+                    (change)="realPropertyService.onPhotoFileChange($event)">
+            </div>
+    
+            <button [disabled]="createForm.invalid" class="w-50 mx-2" mat-raised-button color="primary" type="submit">Submit</button>
+            <a routerLink="/real-property" class="w-25" mat-raised-button color="warn">Cancel</a>
         </div>
+
+        
     </form>
 </div>

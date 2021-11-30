@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 // import { environment } from 'src/environments/environment.prod'; // Production
 import { environment } from 'src/environments/environment'; // Development
 import { NotifierService } from '../core/services/notifier.service';
+import { IAgricultural } from '../shared/models/agricultural';
 import { IOwnerNamePhotos } from '../shared/models/ownerNamePhotos';
 import { IPagination } from '../shared/models/pagination';
 import { IPhoto } from '../shared/models/photo';
@@ -131,5 +132,9 @@ export class RealPropertyService {
     }, error => {
       this.notifierService.showNotification('Problem deleting the real property', 'OK', 'error');
     });
+  }
+
+  getAgriculturals() {
+    return this.http.get<IAgricultural[]>(this.baseUrl + 'agricultural');
   }
 }

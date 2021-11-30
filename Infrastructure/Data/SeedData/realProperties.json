@@ -28,7 +28,8 @@
     "KindOfProperties":
     [
       {
-        "Classification": "Second Class",
+        "KindOfLands": "agricultural",
+        "Classification": "2nd class",
         "Area": 2.0412,
         "MarketValue": 379340,
         "ActualUse": "Corn Land",
@@ -51,8 +52,8 @@
     "OwnerTdNoCancels": "ABABA, MARCIANO & MELCHORA QUIJOY",
     "PreviousAssessedValue": 42710,
     "Memoranda": "GENERAL REVISION 2020",
-    "ApprovedMessage": "*Approved by authority from Mariflor D. Vero, OIC-Provincial Assessor Per office memorandum dated January 14, 2020 & pursuant to SEC. 472 (b) (12) of R.A. 7160",
-    "Notes": "This decalration is for real property taxation purpose only and the valuation indicated herein are based on theschedure of base unit & fair market value prepared for the herein purpose and duly enacted into Ordinance by the Sangguniang Panlalawigan Under Ordinance No. 2019-17 dated December 26, 2019 & approved by Gwendolyn F. Garcia, Provincial Governor dated January 3, 2020 & office circular no. 01-2020.",
+    "ApprovedMessage": "*Approved by authority from Mariflor D. Vero, OIC-Provincial Assessor Per office memorandum dated January 14, 2020, & pursuant to SEC. 472 (b) (12) of R.A. 7160",
+    "Notes": "This declaration is for real property taxation purpose only and the valuation indicated herein are based on the schedule of base unit & fair market value prepared for the herein purpose and duly enacted into Ordinance by the Sangguniang Panlalawigan Under Ordinance No. 2019-17 dated December 26, 2019, & approved by Gwendolyn F. Garcia, Provincial Governor dated January 3, 2020, & office circular no. 01-2020.",
     "Photos":
     [
       {
@@ -92,7 +93,8 @@
     "KindOfProperties":
     [
       {
-        "Classification": "First Class",
+        "KindOfLands": "agricultural",
+        "Classification": "1st class",
         "Area": 2.0419,
         "MarketValue": 379349,
         "ActualUse": "Coconut Land",
@@ -104,10 +106,11 @@
         "ResidentialLandId": 0
       },
       {
+        "KindOfLands": "commercial",
         "Classification": "C-5",
         "Area": 2.0419,
         "MarketValue": 379349,
-        "ActualUse": "C-5",
+        "ActualUse": "commercial",
         "Level": 25,
         "AssessedValue": 94840,
         "AgriculturalLandId": 0,
@@ -127,8 +130,8 @@
     "OwnerTdNoCancels": "JUAN DELA CRUZ",
     "PreviousAssessedValue": 42710,
     "Memoranda": "GENERAL REVISION 2012",
-    "ApprovedMessage": "*Approved by authority from Mariflor D. Vero, OIC-Provincial Assessor Per office memorandum dated January 14, 2020 & pursuant to SEC. 472 (b) (12) of R.A. 7160",
-    "Notes": "This decalration is for real property taxation purpose only and the valuation indicated herein are based on theschedure of base unit & fair market value prepared for the herein purpose and duly enacted into Ordinance by the Sangguniang Panlalawigan Under Ordinance No. 2019-17 dated December 26, 2019 & approved by Gwendolyn F. Garcia, Provincial Governor dated January 3, 2020 & office circular no. 01-2020.",
+    "ApprovedMessage": "*Approved by authority from Mariflor D. Vero, OIC-Provincial Assessor Per office memorandum dated January 14, 2020, & pursuant to SEC. 472 (b) (12) of R.A. 7160",
+    "Notes": "This declaration is for real property taxation purpose only and the valuation indicated herein are based on the schedule of base unit & fair market value prepared for the herein purpose and duly enacted into Ordinance by the Sangguniang Panlalawigan Under Ordinance No. 2019-17 dated December 26, 2019, & approved by Gwendolyn F. Garcia, Provincial Governor dated January 3, 2020, & office circular no. 01-2020.",
     "Photos":
     [
       {

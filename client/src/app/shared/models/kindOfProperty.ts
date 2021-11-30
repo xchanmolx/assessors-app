@@ -1,5 +1,6 @@
 export interface IKindOfProperty {
     id: number;
+    kindOfLands: string;
     classification: string;
     area: number;
     marketValue: number;

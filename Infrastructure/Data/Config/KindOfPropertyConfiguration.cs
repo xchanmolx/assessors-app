@@ -9,6 +9,7 @@ namespace Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<KindOfProperty> builder)
         {
             builder.Property(x => x.Id).IsRequired();
+            builder.Property(x => x.KindOfLands).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Classification).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Area).IsRequired();
             builder.Property(x => x.MarketValue).IsRequired().HasColumnType("decimal(18,2)");

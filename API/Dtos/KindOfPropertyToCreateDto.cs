@@ -4,6 +4,7 @@ namespace API.Dtos
 {
     public class KindOfPropertyToCreateDto
     {
+        public string KindOfLands { get; set; }
         [Required]
         public string Classification { get; set; }
 

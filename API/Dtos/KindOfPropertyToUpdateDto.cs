@@ -5,6 +5,7 @@ namespace API.Dtos
     public class KindOfPropertyToUpdateDto
     {
         public int Id { get; set; }
+        public string KindOfLands { get; set; }
 
         [Required]
         public string Classification { get; set; }

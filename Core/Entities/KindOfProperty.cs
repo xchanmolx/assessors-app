@@ -2,6 +2,7 @@ namespace Core.Entities
 {
     public class KindOfProperty : BaseEntity
     {
+        public string KindOfLands { get; set; }
         public string Classification { get; set; }
         public double Area { get; set; }
         public decimal MarketValue { get; set; }

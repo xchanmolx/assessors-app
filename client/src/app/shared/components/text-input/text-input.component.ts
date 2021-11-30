@@ -36,8 +36,8 @@ export class TextInputComponent implements OnInit, AfterViewInit, ControlValueAc
       setTimeout(() => element.focus(), 0);
     }
 
-    if (this.label === 'Owner_Name') {
-      const element = this.renderer.selectRootElement('#Owner_Name');
+    if (this.label === 'TD_Number') {
+      const element = this.renderer.selectRootElement('#TD_Number');
       setTimeout(() => element.focus(), 0);
     }
   }
