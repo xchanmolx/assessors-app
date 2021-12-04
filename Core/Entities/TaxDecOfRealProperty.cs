@@ -16,7 +16,14 @@ namespace Core.Entities
         public string OctTctCloaNo { get; set; }
         public string OctNo { get; set; }
         public string Dated { get; set; }
-        public string SurveyLotNo { get; set; }
+        
+        private string _surveyLotNo;
+        public string SurveyLotNo
+        {
+            get { return _surveyLotNo; }
+            set { _surveyLotNo = value.ToLower(); }
+        }
+        
         public string AssessorLotNo { get; set; }
         public string BlkNo { get; set; }
         public Boundary Boundary { get; set; }

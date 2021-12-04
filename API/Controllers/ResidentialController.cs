@@ -4,6 +4,7 @@ using API.Errors;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
+using Core.Specifications;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -21,7 +22,8 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<ResidentialLand>> GetResidentialLands()
         {
-            var resiLands = await _resiRepo.ListAllAsync();
+            var spec = new ResidentialOrderByNameSpecification();
+            var resiLands = await _resiRepo.ListAsync(spec);
 
             return Ok(resiLands);
         }

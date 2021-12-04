@@ -16,7 +16,7 @@ import { RealPropertyService } from '../real-property.service';
   templateUrl: './real-property-details.component.html',
   styleUrls: ['./real-property-details.component.scss']
 })
-export class RealPropertyDetailsComponent implements OnInit, AfterViewInit {
+export class RealPropertyDetailsComponent implements OnInit {
   photos: IPhoto[] = [];
   photoParams = new PhotoParams();
   createForm!: FormGroup;
@@ -24,18 +24,13 @@ export class RealPropertyDetailsComponent implements OnInit, AfterViewInit {
   ownerName!: string;
 
   constructor(public realPropertyService: RealPropertyService, private activatedRoute: ActivatedRoute,
-    public busyService: BusyService, private cd: ChangeDetectorRef, public dialog: MatDialog, private fb: FormBuilder,
-    private notifierService: NotifierService, private bc: BreadcrumbService, private accountService: AccountService, private router: Router) 
-    { }
+    public busyService: BusyService, public dialog: MatDialog, private fb: FormBuilder,
+    private notifierService: NotifierService, private bc: BreadcrumbService, private accountService: AccountService) {
+      this.loadPhotos();
+      this.createAddPhotoForm();  
+    }
 
   ngOnInit(): void {
-    this.loadPhotos();
-    this.createAddPhotoForm();
-  }
-
-  ngAfterViewInit() {
-    this.busyService.idle();
-    this.cd.detectChanges();
   }
 
   loggedIn() {
@@ -67,7 +62,7 @@ export class RealPropertyDetailsComponent implements OnInit, AfterViewInit {
 
   loadPhotos() {
     this.realPropertyService.getRealPropertyPhotos(+this.activatedRoute.snapshot.paramMap.get('id')!).subscribe(response => {
-      this.bc.set('@ownerName', response.ownerName);
+      this.bc.set('@ownerName', response.owner);
       this.photos = response.photos;
     }, error => {
       console.log(error);
@@ -94,13 +89,17 @@ export class RealPropertyDetailsComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     this.photoParams.taxDecId = +this.activatedRoute.snapshot.paramMap.get('id')!;
-    this.realPropertyService.uploadPhoto(this.photoParams);
+    this.realPropertyService.uploadPhoto(this.photoParams).subscribe(() => {
+      this.loadPhotos();
 
-    this.clearInputFileValue();
-    
-    this.displayElement = false;
-    
-    this.notifierService.showNotification('Photo/s has been uploaded successfully.', 'OK', 'success');
+      this.clearInputFileValue();
+      
+      this.displayElement = false;
+      
+      this.notifierService.showNotification('Photo/s has been uploaded successfully.', 'OK', 'success');
+    }, error => {
+      console.log(error);
+    });
   }
 
 }

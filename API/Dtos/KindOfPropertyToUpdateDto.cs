@@ -24,5 +24,10 @@ namespace API.Dtos
 
         [Required(ErrorMessage = "The assessed value field is required.")]
         public decimal AssessedValue { get; set; }
+        public int TaxDecOfRealPropertyId { get; set; }
+        public int AgriculturalLandId { get; set; }
+        public int CommercialLandId { get; set; }
+        public int IndustrialLandId { get; set; }
+        public int ResidentialLandId { get; set; }
     }
 }

@@ -58,7 +58,7 @@ export class RealPropertyComponent implements OnInit, AfterViewInit {
     obj.action = action;
     const dialogRef = this.dialog.open(ConfirmComponent, {
       data: obj,
-      width: '600px',
+      width: '1200px',
       disableClose: true
     });
 

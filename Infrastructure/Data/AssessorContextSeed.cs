@@ -84,6 +84,20 @@ namespace Infrastructure.Data
 
                      await context.SaveChangesAsync();
                  }
+
+                 if (!context.Barangays.Any())
+                 {
+                     var barangayData = File.ReadAllText("../Infrastructure/Data/SeedData/barangay.json");
+
+                     var barangays = JsonSerializer.Deserialize<List<Barangay>>(barangayData);
+
+                     foreach (var item in barangays)
+                     {
+                         context.Barangays.Add(item);
+                     }
+
+                     await context.SaveChangesAsync();
+                 }
              }
              catch (Exception ex)
              {

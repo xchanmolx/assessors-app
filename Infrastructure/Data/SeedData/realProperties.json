@@ -21,7 +21,7 @@
       "South": "BARILI CAD",
       "West": "LOT NO. 3091"
     },
-    "KindOfPropertyAssessed": "LAND",
+    "KindOfPropertyAssessed": "land",
     "NoOfStoreys": "",
     "BriefDescription": "",
     "Specify": "",
@@ -86,7 +86,7 @@
       "South": "BARILI CAD",
       "West": "LOT NO. 3091"
     },
-    "KindOfPropertyAssessed": "LAND",
+    "KindOfPropertyAssessed": "land",
     "NoOfStoreys": "",
     "BriefDescription": "",
     "Specify": "",

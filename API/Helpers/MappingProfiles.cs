@@ -74,6 +74,15 @@ namespace API.Helpers
 
             // Delete for Residential Land
             CreateMap<ResidentialLand, ResidentialToDeleteDto>();
+
+            // Creation for Barangay
+            CreateMap<BarangayToCreateDto, Barangay>();
+
+            // Update for Barangay
+            CreateMap<BarangayToUpdateDto, Barangay>();
+
+            // Delete for Barangay
+            CreateMap<Barangay, BarangayToDeleteDto>();
         }
     }
 }

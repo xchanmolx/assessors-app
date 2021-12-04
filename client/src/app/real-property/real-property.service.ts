@@ -5,19 +5,22 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment'; // Development
 import { NotifierService } from '../core/services/notifier.service';
 import { IAgricultural } from '../shared/models/agricultural';
+import { IBarangay } from '../shared/models/barangay';
+import { ICommercial } from '../shared/models/commercial';
+import { IIndustrial } from '../shared/models/industrial';
 import { IOwnerNamePhotos } from '../shared/models/ownerNamePhotos';
 import { IPagination } from '../shared/models/pagination';
 import { IPhoto } from '../shared/models/photo';
 import { PhotoParams } from '../shared/models/photoParams';
 import { IRealProperty } from '../shared/models/realProperty';
 import { RealPropertyParams } from '../shared/models/realPropertyParams';
+import { IResidential } from '../shared/models/residential';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RealPropertyService {
   baseUrl = environment.apiUrl;
-  photosResponse!: any;
   formFiles: string[] = [];
 
   constructor(private http: HttpClient, private notifierService: NotifierService) { }
@@ -54,7 +57,7 @@ export class RealPropertyService {
   }
 
   getRealPropertyPhotos(id: number) {
-    return this.http.get<IOwnerNamePhotos>(this.baseUrl + 'realProperties/' + id);
+    return this.http.get<IOwnerNamePhotos>(this.baseUrl + 'realProperties/photo/' + id);
   }
 
   searchLotNo(lotNoValue: string) {
@@ -91,19 +94,7 @@ export class RealPropertyService {
       formData.append('formFiles', this.formFiles[i]);
     }
 
-    this.http.post(this.baseUrl + 'photos', formData, { params }).subscribe(response => {
-      this.photosResponse = response;
-
-      // Refresh page
-      window.location.reload();
-    }, error => {
-      console.log(error);
-    });
-      // .toPromise().then(response => {
-      //     this.photosResponse = response;
-      //   }, error => {
-      //     console.log(error);
-      //   });
+    return this.http.post(this.baseUrl + 'photos', formData, { params });
   }
 
   deletePhoto(id: number, photoParams: PhotoParams) {
@@ -111,7 +102,7 @@ export class RealPropertyService {
 
     params = params.append('subDirectory', photoParams.subDirectory);
 
-    this.http.delete<IPhoto>(this.baseUrl + 'photos/' + id, { params }).subscribe(() => {
+    return this.http.delete<IPhoto>(this.baseUrl + 'photos/' + id, { params }).subscribe(() => {
       this.notifierService.showNotification('Photo has been deleted successfully.', 'OK', 'success');
     }, error => {
       this.notifierService.showNotification('Problem deleting the photo', 'OK', 'error');
@@ -136,5 +127,21 @@ export class RealPropertyService {
 
   getAgriculturals() {
     return this.http.get<IAgricultural[]>(this.baseUrl + 'agricultural');
+  }
+
+  getCommercials() {
+    return this.http.get<ICommercial[]>(this.baseUrl + 'commercial');
+  }
+
+  getIndustrials() {
+    return this.http.get<IIndustrial[]>(this.baseUrl + 'industrial');
+  }
+
+  getResidentials() {
+    return this.http.get<IResidential[]>(this.baseUrl + 'residential');
+  }
+
+  getBarangays() {
+    return this.http.get<IBarangay[]>(this.baseUrl + 'barangay');
   }
 }

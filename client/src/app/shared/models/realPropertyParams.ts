@@ -1,5 +1,5 @@
 export class RealPropertyParams {
-    sort = 'ownerName';
+    sort = 'owner';
     pageNumber = 1;
     pageSize = 5;
     search?: string;

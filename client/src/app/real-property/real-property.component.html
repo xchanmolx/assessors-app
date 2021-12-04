@@ -76,43 +76,43 @@
                 <!-- Property Identification No. Column -->
                 <ng-container matColumnDef="propertyIndentificationNo">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> PIN </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.propertyIndentificationNo}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.propertyIndentificationNo | uppercase}} </td>
                 </ng-container>
 
                 <!-- ARP No. Column -->
                 <ng-container matColumnDef="arpNo">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> ARP No. </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.arpNo}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.arpNo | uppercase}} </td>
                 </ng-container>
 
                 <!-- TIN No. Column -->
                 <ng-container matColumnDef="tinNo">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> TIN No. </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.tinNo}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.tinNo | uppercase}} </td>
                 </ng-container>
 
                 <!-- Telephone No. Column -->
                 <ng-container matColumnDef="telephoneNo">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> Telephone No. </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.telephoneNo}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.telephoneNo | uppercase}} </td>
                 </ng-container>
                 
                 <!-- OCT/TCT/CLOA No. Column -->
                 <ng-container matColumnDef="octTctCloaNo">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> OCT/TCT/CLOA No. </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.octTctCloaNo}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.octTctCloaNo | uppercase}} </td>
                 </ng-container>
 
                 <!-- OCT No. Column -->
                 <ng-container matColumnDef="octNo">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> OCT No. </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.octNo}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.octNo | uppercase}} </td>
                 </ng-container>
 
                 <!-- Dated Column -->
                 <ng-container matColumnDef="dated">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> Dated </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.dated}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.dated | uppercase}} </td>
                 </ng-container>
 
                 <!-- Survey Lot No. Column -->
@@ -124,13 +124,13 @@
                 <!-- Assessor's Lot No. Column -->
                 <ng-container matColumnDef="assessorLotNo">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> Assessor's Lot No. </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.assessorLotNo}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.assessorLotNo | uppercase}} </td>
                 </ng-container>
 
                 <!-- Blk No. Column -->
                 <ng-container matColumnDef="blkNo">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> Blk No. </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.blkNo}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.blkNo | uppercase}} </td>
                 </ng-container>
 
                 <!-- Boundary Object Column -->
@@ -139,10 +139,10 @@
                 <td mat-cell [hidden]="true" *matCellDef="let row">  
                     <div class="text-muted">
                         <p>{{row.boundary.id}}</p>
-                        <p>{{row.boundary.north}}</p>
-                        <p>{{row.boundary.east}}</p>
-                        <p>{{row.boundary.south}}</p>
-                        <p>{{row.boundary.west}}</p>
+                        <p>{{row.boundary.north | uppercase}}</p>
+                        <p>{{row.boundary.east | uppercase}}</p>
+                        <p>{{row.boundary.south | uppercase}}</p>
+                        <p>{{row.boundary.west | uppercase}}</p>
                     </div>
                 </td>
                 </ng-container>
@@ -150,25 +150,25 @@
                 <!-- Kind of Property Assessed Column -->
                 <ng-container matColumnDef="kindOfPropertyAssessed">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> Kind of Property Assessed </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.kindOfPropertyAssessed}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.kindOfPropertyAssessed | uppercase}} </td>
                 </ng-container>
 
                 <!-- No. of Storeys Column -->
                 <ng-container matColumnDef="noOfStoreys">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> No. of Storeys </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.noOfStoreys}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.noOfStoreys | uppercase}} </td>
                 </ng-container>
 
                 <!-- Brief Description Column -->
                 <ng-container matColumnDef="briefDescription">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> Brief Description </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.briefDescription}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.briefDescription | uppercase}} </td>
                 </ng-container>
 
                 <!-- Specify Column -->
                 <ng-container matColumnDef="specify">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> Specify </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.specify}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.specify | uppercase}} </td>
                 </ng-container>
 
                 <!-- Kind of Properties Object Column -->
@@ -190,7 +190,7 @@
                 <!-- Total Assessed Value in Word Column -->
                 <ng-container matColumnDef="totalAssessedValueInWord">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> Total Assessed Value in Word </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.totalAssessedValueInWord}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.totalAssessedValueInWord | uppercase}} </td>
                 </ng-container>
 
                 <!-- Taxable or Exempt Column -->
@@ -202,7 +202,7 @@
                 <!-- Quarter Column -->
                 <ng-container matColumnDef="quarter">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> Quarter </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.quarter}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.quarter | uppercase}} </td>
                 </ng-container>
 
                 <!-- Year Column -->
@@ -214,13 +214,13 @@
                 <!-- Recommended by Column -->
                 <ng-container matColumnDef="recommendedBy">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> Recommended by </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.recommendedBy}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.recommendedBy | uppercase}} </td>
                 </ng-container>
 
                 <!-- Approve by Column -->
                 <ng-container matColumnDef="approvedBy">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> Approve by </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.approvedBy}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.approvedBy | uppercase} </td>
                 </ng-container>
 
                 <!-- Date Column -->
@@ -232,25 +232,25 @@
                 <!-- Declaration Cancels Column -->
                 <ng-container matColumnDef="declarationCancels">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> Declaration Cancels </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.declarationCancels}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.declarationCancels | uppercase}} </td>
                 </ng-container>
 
                 <!-- Owner TD No. Cancels Column -->
                 <ng-container matColumnDef="ownerTdNoCancels">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> Owner TD No. Cancels </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.ownerTdNoCancels}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.ownerTdNoCancels | uppercase}} </td>
                 </ng-container>
 
                 <!-- Previous Assessed Value Column -->
                 <ng-container matColumnDef="previousAssessedValue">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> Previous Assessed Value </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.previousAssessedValue}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.previousAssessedValue | number}} </td>
                 </ng-container>
 
                 <!-- Memoranda Column -->
                 <ng-container matColumnDef="memoranda">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> Memoranda </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.memoranda}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.memoranda | uppercase}} </td>
                 </ng-container>
 
                 <!-- Approved Message Column -->
@@ -270,7 +270,7 @@
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let row">
                     <button class="btn btn-outline-primary" routerLink="/real-property/{{row.id}}" mat-icon-button matTooltip="Photo/s for Tax Declaration of Real Property"><mat-icon>image</mat-icon></button>
-                    <button class="btn btn-outline-primary" routerLink="/real-property/tracer/{{row.surveyLotNumber}}" mat-icon-button matTooltip="Tracer"><mat-icon>text_snippet</mat-icon></button>
+                    <button class="btn btn-outline-primary" routerLink="/real-property/tracer/{{row.surveyLotNo}}" mat-icon-button matTooltip="Tracer"><mat-icon>text_snippet</mat-icon></button>
                     <ng-container *ngIf="loggedIn()">
                         <span *appHasRole="['Admin', 'Moderator']">
                             <button (click)="openDialog('Update', row)" class="btn btn-outline-primary" mat-icon-button matTooltip="Edit"><mat-icon>edit</mat-icon></button>

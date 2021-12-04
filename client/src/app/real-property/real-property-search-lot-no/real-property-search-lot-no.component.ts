@@ -1,8 +1,7 @@
 import { DatePipe } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AccountService } from 'src/app/account/account.service';
-import { BusyService } from 'src/app/core/services/busy.service';
 import { IRealProperty } from 'src/app/shared/models/realProperty';
 import { RealPropertyService } from '../real-property.service';
 
@@ -11,27 +10,23 @@ import { RealPropertyService } from '../real-property.service';
   templateUrl: './real-property-search-lot-no.component.html',
   styleUrls: ['./real-property-search-lot-no.component.scss']
 })
-export class RealPropertySearchLotNoComponent implements OnInit, AfterViewInit {
+export class RealPropertySearchLotNoComponent implements OnInit {
   realProperties!: IRealProperty[];
   lotNo!: string;
   pipe = new DatePipe('en-PH');
   now = Date.now();
   formattedDate = this.pipe.transform(this.now, 'short');
 
-  displayedColumns: string[] = ['ownerName', 'propertyLocation', 'taxDecNumber', 'effectiveYear', 'surveyLotNumber', 'landArea', 'remarks'];
+  displayedColumns: string[] = ['owner', 'propertyLocation', 'tdNo', 'year', 'surveyLotNo', 'kindOfProperties', 'memoranda'];
 
-  constructor(private realPropertyService: RealPropertyService, public busyService: BusyService,
-     private cd: ChangeDetectorRef, private activatedRoute: ActivatedRoute, private accountService: AccountService) { }
+  constructor(private realPropertyService: RealPropertyService, private activatedRoute: ActivatedRoute, 
+    private accountService: AccountService) { 
+      this.lotNo = this.activatedRoute.snapshot.paramMap.get('lotNo')!;
+
+      this.loadRealProperties();   
+     }
 
   ngOnInit(): void {
-    this.lotNo = this.activatedRoute.snapshot.paramMap.get('lotNo')!;
-
-    this.loadRealProperties();
-  }
-
-  ngAfterViewInit() {
-    this.busyService.idle();
-    this.cd.detectChanges();
   }
 
   loggedIn() {

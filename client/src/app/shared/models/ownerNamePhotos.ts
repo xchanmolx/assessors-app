@@ -1,6 +1,6 @@
 import { IPhoto } from "./photo";
 
 export interface IOwnerNamePhotos {
-    ownerName: string;
+    owner: string;
     photos: IPhoto[];
 }
