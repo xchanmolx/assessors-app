@@ -16,7 +16,7 @@ import { RealPropertyService } from './real-property.service';
   templateUrl: './real-property.component.html',
   styleUrls: ['./real-property.component.scss']
 })
-export class RealPropertyComponent implements OnInit, AfterViewInit {
+export class RealPropertyComponent implements OnInit {
   @ViewChild('search', { static: false }) searchTerm!: ElementRef;
   realProperties: IRealProperty[] = [];
   realPropertyParams = new RealPropertyParams();
@@ -38,16 +38,11 @@ export class RealPropertyComponent implements OnInit, AfterViewInit {
   showFirstLastButtons = true;
 
   constructor(private realPropertyService: RealPropertyService, private accountService: AccountService,
-    public busyService: BusyService, private cd: ChangeDetectorRef, public dialog: MatDialog,
-    private notifierService: NotifierService) { }
+    public dialog: MatDialog, private notifierService: NotifierService) {
+      this.getRealProperties();
+    }
 
   ngOnInit(): void {
-    this.getRealProperties();
-  }
-  
-  ngAfterViewInit() {
-    this.busyService.idle();
-    this.cd.detectChanges();
   }
 
   loggedIn() {
@@ -111,7 +106,7 @@ export class RealPropertyComponent implements OnInit, AfterViewInit {
         this.realPropertyService.updateRealProperty(value.id, value).subscribe((response) => {
           this.notifierService.showNotification(`${response.owner} has been updated successfully.`, 'OK', 'success');
         }, error => {
-          this.notifierService.showNotification('Problem updating the real property', 'OK', 'error');
+          this.notifierService.showNotification(`${error.errors} Problem updating the real property`, 'OK', 'error');
 
           this.getRealProperties();
         });

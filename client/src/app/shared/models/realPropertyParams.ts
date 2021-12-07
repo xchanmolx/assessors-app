@@ -4,6 +4,6 @@ export class RealPropertyParams {
     pageSize = 5;
     search?: string;
     taxableExempt?: string;
-    effectiveYear?: number;
+    year?: number;
     propertyLocation?: string;
 }

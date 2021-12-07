@@ -13,9 +13,9 @@
         <h3 class="text-center">Update <strong>{{local_data.owner | titlecase}}</strong> real property</h3>
         <div class="row border border-secondary p-3">
             <div class="col-6">
-                <app-text-input [(ngModel)]="local_data.tdNo" [label]="'TD No.'"></app-text-input>
-                <app-text-input [(ngModel)]="local_data.owner" [label]="'Owner'"></app-text-input>
-                <app-text-input [(ngModel)]="local_data.address" [label]="'Address'"></app-text-input>
+                <app-text-input [(ngModel)]="local_data.tdNo" [label]="'TD No.'" required></app-text-input>
+                <app-text-input [(ngModel)]="local_data.owner" [label]="'Owner'" required></app-text-input>
+                <app-text-input [(ngModel)]="local_data.address" [label]="'Address'" required></app-text-input>
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Location of Property</mat-label>
                     <mat-select [(ngModel)]="local_data.propertyLocation">
@@ -24,7 +24,7 @@
                 </mat-form-field>
             </div>
             <div class="col-6">
-                <app-text-input [(ngModel)]="local_data.propertyIndentificationNo" [label]="'Property Identification No.'"></app-text-input>
+                <app-text-input [(ngModel)]="local_data.propertyIndentificationNo" [label]="'Property Identification No.'" required></app-text-input>
                 <app-text-input [(ngModel)]="local_data.arpNo" [label]="'ARP No.'"></app-text-input>
                 <app-text-input [(ngModel)]="local_data.tinNo" [label]="'TIN No.'"></app-text-input>
                 <app-text-input [(ngModel)]="local_data.telephoneNo" [label]="'Telephone No.'"></app-text-input>
@@ -38,7 +38,7 @@
                 <app-text-input [(ngModel)]="local_data.dated" [label]="'Dated'"></app-text-input>
             </div>
             <div class="col-6">
-                <app-text-input [(ngModel)]="local_data.surveyLotNo" [label]="'Survey Lot No.'"></app-text-input>
+                <app-text-input [(ngModel)]="local_data.surveyLotNo" [label]="'Survey Lot No.'" required></app-text-input>
                 <app-text-input [(ngModel)]="local_data.assessorLotNo" [label]="'Assessor\'s Lot No.'"></app-text-input>
                 <app-text-input [(ngModel)]="local_data.blkNo" [label]="'Blk No.'"></app-text-input>
             </div>
@@ -91,7 +91,7 @@
                         <ng-container>
                             <mat-form-field appearance="fill" style="width: 100%;">
                                 <mat-label>Kind of Lands</mat-label>
-                                <mat-select (selectionChange)="kindOfLandsCondition($event)" [(ngModel)]="kindOfProperty.kindOfLands">
+                                <mat-select (selectionChange)="zerosKindOfLandsIdSelected($event)" [(ngModel)]="kindOfProperty.kindOfLands">
                                 <mat-option value="agricultural">Agricultural</mat-option>
                                 <mat-option value="commercial">Commercial</mat-option>
                                 <mat-option value="industrial">Industrial</mat-option>
@@ -116,85 +116,90 @@
                                 <ng-container *ngIf="kindOfProperty.kindOfLands === 'agricultural'">
                                     <mat-form-field appearance="fill" style="width: 100%;">
                                         <mat-label>Classification</mat-label>
-                                        <mat-select [(ngModel)]="kindOfProperty.classification">
+                                        <mat-select [(ngModel)]="kindOfProperty.classification" #classification="ngModel" required>
                                             <mat-option value="1st class">1st class</mat-option>
                                             <mat-option value="2nd class">2nd class</mat-option>
                                             <mat-option value="3rd class">3rd class</mat-option>
                                         </mat-select>
+                                        <mat-error *ngIf="classification.invalid && (classification.dirty || classification.touched)">Please select a classification</mat-error>
                                     </mat-form-field>
                                 </ng-container>
 
                                 <ng-container *ngIf="kindOfProperty.kindOfLands === 'commercial'">
                                     <mat-form-field appearance="fill" style="width: 100%;">
                                         <mat-label>Classification</mat-label>
-                                        <mat-select (selectionChange)="kindOfLandsCondition($event)" [(ngModel)]="kindOfProperty.classification">
+                                        <mat-select (selectionChange)="onClassificationCommSelected($event)" [(ngModel)]="kindOfProperty.classification" #classification="ngModel" required>
                                             <mat-option *ngFor="let comm of commercials" [value]="comm.name">{{comm.name}}</mat-option>
                                         </mat-select>
+                                        <mat-error *ngIf="classification.invalid && (classification.dirty || classification.touched)">Please select a classification</mat-error>
                                     </mat-form-field>
                                 </ng-container>
 
                                 <ng-container *ngIf="kindOfProperty.kindOfLands === 'industrial'">
                                     <mat-form-field appearance="fill" style="width: 100%;">
                                         <mat-label>Classification</mat-label>
-                                        <mat-select (selectionChange)="kindOfLandsCondition($event)" [(ngModel)]="kindOfProperty.classification">
+                                        <mat-select (selectionChange)="onClassificationInduSelected($event)" [(ngModel)]="kindOfProperty.classification" #classification="ngModel" required>
                                             <mat-option *ngFor="let indu of industrials" [value]="indu.name">{{indu.name}}</mat-option>
                                         </mat-select>
+                                        <mat-error *ngIf="classification.invalid && (classification.dirty || classification.touched)">Please select a classification</mat-error>
                                     </mat-form-field>
                                 </ng-container>
 
                                 <ng-container *ngIf="kindOfProperty.kindOfLands === 'residential'">
                                     <mat-form-field appearance="fill" style="width: 100%;">
                                         <mat-label>Classification</mat-label>
-                                        <mat-select (selectionChange)="kindOfLandsCondition($event)" [(ngModel)]="kindOfProperty.classification">
+                                        <mat-select (selectionChange)="onClassificationResiSelected($event)" [(ngModel)]="kindOfProperty.classification" #classification="ngModel" required>
                                             <mat-option *ngFor="let resi of residentials" [value]="resi.name">{{resi.name}}</mat-option>
                                         </mat-select>
+                                        <mat-error *ngIf="classification.invalid && (classification.dirty || classification.touched)">Please select a classification</mat-error>
                                     </mat-form-field>
                                 </ng-container>
                             </ng-template>
                         </div>
                         <div class="col-2">
-                            <app-text-input [(ngModel)]="kindOfProperty.area" [label]="'Area in hectares'" [type]="'number'"></app-text-input>
+                            <app-text-input [(ngModel)]="kindOfProperty.area" [label]="'Area in hectares'" [type]="'number'" required></app-text-input>
                         </div>
                         <div class="col-2">
-                            <app-text-input [(ngModel)]="kindOfProperty.marketValue" [label]="'Market Value'" [type]="'number'"></app-text-input>
+                            <app-text-input [(ngModel)]="kindOfProperty.marketValue" [label]="'Market Value'" [type]="'number'" required></app-text-input>
                         </div>
                         <div class="col-2"> <!-- Actual Use -->
                             <ng-container *ngIf="local_data.kindOfPropertyAssessed === 'building'; else elseTemplate2">
-                                <app-text-input [(ngModel)]="kindOfProperty.actualUse" [label]="'Actual Use'"></app-text-input>
+                                <app-text-input [(ngModel)]="kindOfProperty.actualUse" [label]="'Actual Use'" required></app-text-input>
                             </ng-container>
                             <ng-template #elseTemplate2>
                                 <ng-container *ngIf="kindOfProperty.kindOfLands === 'agricultural'">
                                     <mat-form-field appearance="fill" style="width: 100%;">
                                         <mat-label>Actual Use</mat-label>
-                                        <mat-select (selectionChange)="onActualUseAgriSelected($event)" [(ngModel)]="kindOfProperty.actualUse">
+                                        <mat-select (selectionChange)="onActualUseAgriSelected($event)" [(ngModel)]="kindOfProperty.actualUse" #actualUse="ngModel" required>
                                             <mat-option *ngFor="let agri of agriculturals" [value]="agri.name">{{agri.name}}</mat-option>
                                         </mat-select>
+                                        <mat-error *ngIf="actualUse.invalid && (actualUse.dirty || actualUse.touched)">Please select an actual use</mat-error>
                                     </mat-form-field>
                                 </ng-container>
 
                                 <ng-container *ngIf="kindOfProperty.kindOfLands === 'commercial'">
-                                    <app-text-input [(ngModel)]="kindOfProperty.actualUse" [label]="'Actual Use'"></app-text-input>
+                                    <app-text-input [(ngModel)]="kindOfProperty.actualUse" [label]="'Actual Use'" required></app-text-input>
                                 </ng-container>
 
                                 <ng-container *ngIf="kindOfProperty.kindOfLands === 'industrial'">
-                                    <app-text-input [(ngModel)]="kindOfProperty.actualUse" [label]="'Actual Use'"></app-text-input>
+                                    <app-text-input [(ngModel)]="kindOfProperty.actualUse" [label]="'Actual Use'" required></app-text-input>
                                 </ng-container>
 
                                 <ng-container *ngIf="kindOfProperty.kindOfLands === 'residential'">
-                                    <app-text-input [(ngModel)]="kindOfProperty.actualUse" [label]="'Actual Use'"></app-text-input>
+                                    <app-text-input [(ngModel)]="kindOfProperty.actualUse" [label]="'Actual Use'" required></app-text-input>
                                 </ng-container>
                             </ng-template>
                         </div>
                         <div class="col-2">
-                            <app-text-input [(ngModel)]="kindOfProperty.level" [label]="'Level'" [type]="'number'"></app-text-input>
+                            <app-text-input [(ngModel)]="kindOfProperty.level" [label]="'Level'" [type]="'number'" required></app-text-input>
                         </div>
                         <div class="col-2">
-                            <app-text-input [(ngModel)]="kindOfProperty.assessedValue" [label]="'Assessed Value'" [type]="'number'"></app-text-input>
+                            <app-text-input [(ngModel)]="kindOfProperty.assessedValue" [label]="'Assessed Value'" [type]="'number'" required></app-text-input>
                         </div>
                     </div>
                 </div>
             </div>
-            <app-text-input [(ngModel)]="local_data.totalAssessedValueInWord" [label]="'Total Assessed Value (Amount in Words)'"></app-text-input>
+            <app-text-input [(ngModel)]="local_data.totalAssessedValueInWord" [label]="'Total Assessed Value (Amount in Words)'" required></app-text-input>
         </div>
 
         <div class="row border border-secondary p-3">
@@ -210,10 +215,10 @@
                 </ng-container>
             </div>
             <div class="col-4">
-                <app-text-input [(ngModel)]="local_data.quarter" [label]="'Quarter'"></app-text-input>
+                <app-text-input [(ngModel)]="local_data.quarter" [label]="'Quarter'" required></app-text-input>
             </div>
             <div class="col-4">
-                <app-text-input [(ngModel)]="local_data.year" [label]="'Year'" [type]="'number'"></app-text-input>
+                <app-text-input [(ngModel)]="local_data.year" [label]="'Year'" [type]="'number'" required></app-text-input>
             </div>
 
             <div class="row">
@@ -227,10 +232,10 @@
 
             <div class="row">
                 <div class="col-6">
-                    <app-text-input [(ngModel)]="local_data.declarationCancels" [label]="'This declaration cancels'"></app-text-input>
+                    <app-text-input [(ngModel)]="local_data.declarationCancels" [label]="'This declaration cancels'" required></app-text-input>
                 </div>
                 <div class="col-6">
-                    <app-text-input [(ngModel)]="local_data.previousAssessedValue" [label]="'Previous Assessed Value'" [type]="'number'"></app-text-input>
+                    <app-text-input [(ngModel)]="local_data.previousAssessedValue" [label]="'Previous Assessed Value'" [type]="'number'" required></app-text-input>
                 </div>
             </div>
             <app-text-input [(ngModel)]="local_data.ownerTdNoCancels" [label]="'Owner of declaration cancels'"></app-text-input>

@@ -1,7 +1,7 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { AccountService } from 'src/app/account/account.service';
-import { BusyService } from 'src/app/core/services/busy.service';
+import { IBarangay } from 'src/app/shared/models/barangay';
 import { IRealProperty } from 'src/app/shared/models/realProperty';
 import { RealPropertyParams } from 'src/app/shared/models/realPropertyParams';
 import { RealPropertyService } from '../real-property.service';
@@ -11,53 +11,32 @@ import { RealPropertyService } from '../real-property.service';
   templateUrl: './real-property-assessment-roll.component.html',
   styleUrls: ['./real-property-assessment-roll.component.scss']
 })
-export class RealPropertyAssessmentRollComponent implements OnInit, AfterViewInit {
-  @ViewChild('effectiveYear', { static: false }) effectiveYearTerm!: ElementRef;
+export class RealPropertyAssessmentRollComponent implements OnInit {
   realProperties: IRealProperty[] = [];
   realPropertyParams = new RealPropertyParams();
   totalCount: number = 0;
   totalAssessedValue: number = 0;
   totalPrevAssessedValue: number = 0;
-  yearInput!: string;
   defaultPageSize = 300000;
   defaultTaxableSelect = 'taxable';
   taxableExemptOptions = [
     { name: 'Taxable', value: 'taxable' },
     { name: 'Exempt', value: 'exempt'}
   ];
-  defaultAngilanSelect = 'angilan';
-  barangayOptions = [
-    { name: 'Angilan', value: 'angilan' },
-    { name: 'Bojo', value: 'bojo'},
-    { name: 'Bonbon', value: 'bonbon'},
-    { name: 'Esperanza', value: 'esperanza'},
-    { name: 'Kandingan', value: 'kandingan'},
-    { name: 'Kantabogon', value: 'kantabogon'},
-    { name: 'Kawasan', value: 'kawasan'},
-    { name: 'Olango', value: 'olango'},
-    { name: 'Poblacion', value: 'poblacion'},
-    { name: 'Punay', value: 'punay'},
-    { name: 'Rosario', value: 'rosario'},
-    { name: 'Saksak', value: 'saksak'},
-    { name: 'Tampaan', value: 'tampaan'},
-    { name: 'Toyokon', value: 'toyokon'},
-    { name: 'Zaragosa', value: 'zaragosa'},
-  ];
+  barangays: IBarangay[] = [];
+  defaultBarangaySelect!: string;
+  maxYear!: number;
 
-  displayedColumns: string[] = ['ownerName', 'propertyIndex', 'taxDecNumber', 'arpNumber', 'ownerAddress',
-   'kind', 'class', 'propertyLocation', 'assessedValue', 'previousTDNumber', 'previousAV', 'effectiveYear'];
+  displayedColumns: string[] = ['owner', 'propertyIndentificationNo', 'tdNo', 'arpNo', 'address',
+   'kindOfPropertyAssessed', 'kindOfProperties.kindOfLands', 'propertyLocation', 'kindOfProperties.assessedValue', 'declarationCancels', 'previousAssessedValue', 'year'];
   showFirstLastButtons = true;
 
-  constructor(private realPropertyService: RealPropertyService, 
-    public busyService: BusyService, private cd: ChangeDetectorRef, private accountService: AccountService) { }
-
-  ngOnInit(): void {
+  constructor(private realPropertyService: RealPropertyService, private accountService: AccountService) {
     this.getRealPropertiesAssessmentRoll();
+    this.getBarangays();
   }
 
-  ngAfterViewInit() {
-    this.busyService.idle();
-    this.cd.detectChanges();
+  ngOnInit(): void {
   }
 
   loggedIn() {
@@ -67,7 +46,8 @@ export class RealPropertyAssessmentRollComponent implements OnInit, AfterViewIni
   getRealPropertiesAssessmentRoll() {
     this.realPropertyParams.pageSize = this.defaultPageSize;
     this.realPropertyParams.taxableExempt = this.defaultTaxableSelect;
-    this.realPropertyParams.propertyLocation = this.defaultAngilanSelect;
+    this.realPropertyParams.propertyLocation = this.defaultBarangaySelect;
+    this.realPropertyParams.sort = "yearDesc";
 
     this.realPropertyService.getRealProperties(this.realPropertyParams).subscribe(response => {
       this.realProperties = response!.data;
@@ -91,15 +71,32 @@ export class RealPropertyAssessmentRollComponent implements OnInit, AfterViewIni
   }
 
   onEffectiveYear() {
-    this.realPropertyParams.effectiveYear = this.effectiveYearTerm.nativeElement.value;
+    this.realPropertyParams.year = this.maxYear;
     this.getRealPropertiesAssessmentRoll();
   }
 
   onReset() {
-    this.effectiveYearTerm.nativeElement.value = '';
-    this.yearInput = '';
+    this.maxYear = 0;
     this.realPropertyParams = new RealPropertyParams();
     this.getRealPropertiesAssessmentRoll();
   }
 
+  getBarangays() {
+    this.realPropertyService.getBarangays().subscribe((barangays) => {
+      this.barangays = barangays;
+
+      // First element or index of barangays array
+      this.defaultBarangaySelect = this.barangays[0].name;
+
+      // First element or index of year array
+      this.maxYear = this.realProperties[0].year;
+
+      // Pass latest year params
+      this.realPropertyParams.year = this.maxYear;
+
+      this.getRealPropertiesAssessmentRoll();
+    }, error => {
+      console.log(error);
+    });
+  }
 }

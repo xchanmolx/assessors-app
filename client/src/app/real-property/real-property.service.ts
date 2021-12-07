@@ -36,8 +36,8 @@ export class RealPropertyService {
       params = params.append('taxableExempt', realPropertyParams.taxableExempt);
     }
 
-    if (realPropertyParams.effectiveYear) {
-      params = params.append('effectiveYear', realPropertyParams.effectiveYear);
+    if (realPropertyParams.year) {
+      params = params.append('year', realPropertyParams.year);
     }
 
     if (realPropertyParams.propertyLocation) {

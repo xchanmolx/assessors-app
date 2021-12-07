@@ -19,7 +19,6 @@ export class ConfirmComponent implements OnInit {
   action!: string;
   barangays: IBarangay[] = [];
   agriculturals: IAgricultural[] = [];
-  agri!: IAgricultural | undefined;
   commercials: ICommercial[] = [];
   industrials: IIndustrial[] = [];
   residentials: IResidential[] = [];
@@ -63,16 +62,54 @@ export class ConfirmComponent implements OnInit {
   }
 
   onActualUseAgriSelected(event: MatSelectChange) {
-    this.agri = this.agriculturals.find(agri => agri.name === event.value);
+    let agri = this.agriculturals.find(agri => agri.name === event.value);
 
     for (const kindOfProperty of this.local_data.kindOfProperties) {
-      if (this.agri?.name === kindOfProperty.actualUse) {
-         kindOfProperty.agriculturalLandId = this.agri?.id;
+      if (agri?.name === kindOfProperty.actualUse) {
+         kindOfProperty.agriculturalLandId = agri?.id;
       }
-      console.log(kindOfProperty.agriculturalLandId);
     }
       
     this.getAgriculturals();
+  }
+
+  onClassificationCommSelected(event: MatSelectChange) {
+    let comm = this.commercials.find(comm => comm.name === event.value);
+
+    for (const kindOfProperty of this.local_data.kindOfProperties) {
+      if (comm?.name === kindOfProperty.classification) {
+        kindOfProperty.commercialLandId = comm?.id;
+        kindOfProperty.actualUse = 'Commercial';
+      }
+    }
+      
+    this.getCommercials();
+  }
+
+  onClassificationInduSelected(event: MatSelectChange) {
+    let indu = this.industrials.find(indu => indu.name === event.value);
+
+    for (const kindOfProperty of this.local_data.kindOfProperties) {
+      if (indu?.name === kindOfProperty.classification) {
+        kindOfProperty.industrialLandId = indu?.id;
+        kindOfProperty.actualUse = 'Industrial';
+      }
+    }
+      
+    this.getIndustrials();
+  }
+
+  onClassificationResiSelected(event: MatSelectChange) {
+    let resi = this.residentials.find(resi => resi.name === event.value);
+
+    for (const kindOfProperty of this.local_data.kindOfProperties) {
+      if (resi?.name === kindOfProperty.classification) {
+        kindOfProperty.residentialLandId = resi?.id;
+        kindOfProperty.actualUse = 'Residential';
+      }
+    }
+      
+    this.getResidentials();
   }
 
   getCommercials() {
@@ -99,31 +136,52 @@ export class ConfirmComponent implements OnInit {
     });
   }
 
-  kindOfLandsCondition(event: MatSelectChange) {
-    for (let kindOfProperty of this.local_data.kindOfProperties) {
-      if (kindOfProperty.kindOfLands === 'commercial') {
-        if (event.value) {
-          kindOfProperty.actualUse = 'Commerial';
+  zerosKindOfLandsIdSelected(event: MatSelectChange) {
+      for (const kindOfProperty of this.local_data.kindOfProperties) {
+        if (kindOfProperty.kindOfLands === event.value) {
+          kindOfProperty.agriculturalLandId = 0;
+          kindOfProperty.commercialLandId = 0;
+          kindOfProperty.industrialLandId = 0;
+          kindOfProperty.residentialLandId = 0;
+          kindOfProperty.classification = null; // back to null for required validation
+          kindOfProperty.actualUse = null; // back to null for required validation
         }
-      }
+        
+        // Kind of Property Assessed - Building
+        if (this.local_data.kindOfPropertyAssessed === 'building') {
+          if (event.value === 'agricultural') {
+            if (kindOfProperty.kindOfLands === event.value) {
+              kindOfProperty.classification = 'agricultural';
+              kindOfProperty.actualUse = 'Agricultural';
+            }
+          }
 
-      if (kindOfProperty.kindOfLands === 'industrial') {
-        if (event.value) {
-          kindOfProperty.actualUse = 'Industrial';
-        }
-      }
+          if (event.value === 'commercial') {
+            if (kindOfProperty.kindOfLands === event.value) {
+              kindOfProperty.classification = 'commercial';
+              kindOfProperty.actualUse = 'Commercial';
+            }
+          }
 
-      if (kindOfProperty.kindOfLands === 'residential') {
-        if (event.value) {
-          kindOfProperty.actualUse = 'Residential';
-        }
-      }
+          if (event.value === 'industrial') {
+            if (kindOfProperty.kindOfLands === event.value) {
+              kindOfProperty.classification = 'industrial';
+              kindOfProperty.actualUse = 'Industrial';
+            }
+          }
 
-      if (kindOfProperty.kindOfLands === 'agricultural') {
-        if (event.value) {
-          kindOfProperty.actualUse = 'Agricultural';
+          if (event.value === 'residential') {
+            if (kindOfProperty.kindOfLands === event.value) {
+              kindOfProperty.classification = 'residential';
+              kindOfProperty.actualUse = 'Residential';
+            }
+          }
         }
       }
-    }
+      
+    this.getAgriculturals();
+    this.getCommercials();
+    this.getIndustrials();
+    this.getResidentials();
   }
 }
