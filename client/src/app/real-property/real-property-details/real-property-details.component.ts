@@ -1,7 +1,7 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AccountService } from 'src/app/account/account.service';
 import { BusyService } from 'src/app/core/services/busy.service';
 import { NotifierService } from 'src/app/core/services/notifier.service';
@@ -57,7 +57,11 @@ export class RealPropertyDetailsComponent implements OnInit {
       return value.id != row_obj.id;
     });
 
-    this.realPropertyService.deletePhoto(row_obj.id, this.photoParams);
+    this.realPropertyService.deletePhoto(row_obj.id, this.photoParams).subscribe(() => {
+      this.notifierService.showNotification('Photo has been deleted successfully.', 'OK', 'success');
+    }, error => {
+      this.notifierService.showNotification(`${error.errors} Problem deleting the photo.`, 'OK', 'error');
+    });
   }
 
   loadPhotos() {
@@ -65,7 +69,7 @@ export class RealPropertyDetailsComponent implements OnInit {
       this.bc.set('@ownerName', response.owner);
       this.photos = response.photos;
     }, error => {
-      console.log(error);
+      this.notifierService.showNotification(`${error.errors} Problem loading the photo/s.`, 'OK', 'error');
     });
   }
 
@@ -98,7 +102,7 @@ export class RealPropertyDetailsComponent implements OnInit {
       
       this.notifierService.showNotification('Photo/s has been uploaded successfully.', 'OK', 'success');
     }, error => {
-      console.log(error);
+      this.notifierService.showNotification(`${error.errors} Problem uploading the photo/s.`, 'OK', 'error');
     });
   }
 

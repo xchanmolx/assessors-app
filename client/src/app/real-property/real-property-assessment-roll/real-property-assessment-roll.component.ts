@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { AccountService } from 'src/app/account/account.service';
+import { NotifierService } from 'src/app/core/services/notifier.service';
 import { IBarangay } from 'src/app/shared/models/barangay';
 import { IRealProperty } from 'src/app/shared/models/realProperty';
 import { RealPropertyParams } from 'src/app/shared/models/realPropertyParams';
@@ -31,7 +32,8 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
    'kindOfPropertyAssessed', 'kindOfProperties.kindOfLands', 'propertyLocation', 'kindOfProperties.assessedValue', 'declarationCancels', 'previousAssessedValue', 'year'];
   showFirstLastButtons = true;
 
-  constructor(private realPropertyService: RealPropertyService, private accountService: AccountService) {
+  constructor(private realPropertyService: RealPropertyService, private accountService: AccountService,
+    private notifierService: NotifierService) {
     this.getRealPropertiesAssessmentRoll();
     this.getBarangays();
   }
@@ -44,10 +46,11 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   }
 
   getRealPropertiesAssessmentRoll() {
+    this.realPropertyParams.sort = "yearDesc";
+    this.realPropertyParams.year = this.maxYear;
+    this.realPropertyParams.propertyLocation = this.defaultBarangaySelect;
     this.realPropertyParams.pageSize = this.defaultPageSize;
     this.realPropertyParams.taxableExempt = this.defaultTaxableSelect;
-    this.realPropertyParams.propertyLocation = this.defaultBarangaySelect;
-    this.realPropertyParams.sort = "yearDesc";
 
     this.realPropertyService.getRealProperties(this.realPropertyParams).subscribe(response => {
       this.realProperties = response!.data;
@@ -56,7 +59,7 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
       this.totalAssessedValue = response!.totalAssessedValue;
       this.totalPrevAssessedValue = response!.totalPrevAssessedValue;
     }, error => {
-      console.log(error.errors);
+      this.notifierService.showNotification(`${error.errors} Problem loading the assessment roll data.`, 'OK', 'error');
     });
   }
 
@@ -82,21 +85,21 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   }
 
   getBarangays() {
-    this.realPropertyService.getBarangays().subscribe((barangays) => {
-      this.barangays = barangays;
+    this.realPropertyService.getBarangays().subscribe((response) => {
+      this.barangays = response;
 
       // First element or index of barangays array
-      this.defaultBarangaySelect = this.barangays[0].name;
+      this.defaultBarangaySelect = this.barangays[0]!.name;
 
-      // First element or index of year array
-      this.maxYear = this.realProperties[0].year;
-
-      // Pass latest year params
-      this.realPropertyParams.year = this.maxYear;
-
+      this.getMaxYear();
       this.getRealPropertiesAssessmentRoll();
     }, error => {
-      console.log(error);
+      this.notifierService.showNotification(`${error.errors} Problem loading the barangays.`, 'OK', 'error');
     });
+  }
+
+  getMaxYear() {
+    // First element or index of year array
+    this.maxYear = this.realProperties[0]!.year;
   }
 }

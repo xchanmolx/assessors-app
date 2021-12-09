@@ -1,7 +1,6 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/account/account.service';
-import { BusyService } from 'src/app/core/services/busy.service';
 import { NotifierService } from 'src/app/core/services/notifier.service';
 import { IUser } from 'src/app/shared/models/user';
 import { AdminService } from '../admin.service';
@@ -11,20 +10,15 @@ import { AdminService } from '../admin.service';
   templateUrl: './admin-panel.component.html',
   styleUrls: ['./admin-panel.component.scss']
 })
-export class AdminPanelComponent implements OnInit, AfterViewInit {
+export class AdminPanelComponent implements OnInit {
   users!: IUser[];
 
   constructor(private adminService: AdminService, private notifierService: NotifierService,
-    private accountService: AccountService, public busyService: BusyService, private cd: ChangeDetectorRef,
-    private router: Router) { }
-
-  ngOnInit(): void {
-    this.loadUsersWithRoles();
+    private accountService: AccountService, private router: Router) {
+      this.loadUsersWithRoles();
   }
 
-  ngAfterViewInit() {
-    this.busyService.idle();
-    this.cd.detectChanges();
+  ngOnInit(): void {
   }
 
   loggedIn() {
@@ -32,10 +26,10 @@ export class AdminPanelComponent implements OnInit, AfterViewInit {
   }
 
   loadUsersWithRoles() {
-    this.adminService.getUsersWithRoles().subscribe((users: any) => {
-      this.users = users;
+    this.adminService.getUsersWithRoles().subscribe((response: any) => {
+      this.users = response;
     }, error => {
-      this.notifierService.showNotification('You are not authorized to access this page.', 'OK', 'error');
+      this.notifierService.showNotification(`${error.errors} You are not authorized to access this page.`, 'OK', 'error');
       this.router.navigate(['/']);
     });
   }

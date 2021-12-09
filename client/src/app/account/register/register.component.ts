@@ -17,10 +17,11 @@ export class RegisterComponent implements OnInit {
   defaultGenderRadioButton = 'male';
 
   constructor(private fb: FormBuilder, private accountService: AccountService,
-    private router: Router, private notifierService: NotifierService) { }
+    private router: Router, private notifierService: NotifierService) { 
+      this.createRegisterForm();
+  }
 
   ngOnInit(): void {
-    this.createRegisterForm();
   }
   
   createRegisterForm() {
@@ -45,11 +46,11 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    this.accountService.register(this.registerForm.value).subscribe(response => {
+    this.accountService.register(this.registerForm.value).subscribe(() => {
       this.router.navigateByUrl('/real-property');
       this.notifierService.showNotification('Congratulations, your account has been successfully created.', 'OK', 'success');
     }, error => {
-      this.notifierService.showNotification(error.errors, 'OK', 'error');
+      this.notifierService.showNotification(`${error.errors} Problem registering the user.`, 'OK', 'error');
     });
   }
   

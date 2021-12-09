@@ -36,11 +36,6 @@ export class RealPropertyCreateComponent implements OnInit {
   industrials: IIndustrial[] = [];
   residentials: IResidential[] = [];
   barangays: IBarangay[] = [];
-  agri!: IAgricultural | undefined;
-  comm!: ICommercial | undefined;
-  indu!: IIndustrial | undefined;
-  resi!: IResidential | undefined;
-
 
   constructor(private fb: FormBuilder, public realPropertyService: RealPropertyService,
     private notifierService: NotifierService) {
@@ -150,13 +145,13 @@ export class RealPropertyCreateComponent implements OnInit {
     this.realPropertyService.uploadPhoto(this.photoParams).subscribe(() => {
       this.clearInputFileValue();
     }, error => {
-      console.log(error);
+      this.notifierService.showNotification(`${error.errors} Problem uploading the photo.`, 'OK', 'error');
     });
   }
 
   onSubmit() {
-    this.realPropertyService.createRealProperty(this.createForm.value).subscribe((property) => {
-      this.taxDecId = property.id;      
+    this.realPropertyService.createRealProperty(this.createForm.value).subscribe((response) => {
+      this.taxDecId = response.id;      
 
       this.notifierService.showNotification(`${this.createForm.get('owner')?.value} has been added successfully.`, 'OK', 'success');
 
@@ -167,8 +162,7 @@ export class RealPropertyCreateComponent implements OnInit {
 
       this.uploadPhoto();
     }, error => {
-      // this.notifierService.showNotification(`${error.errors}`, 'OK', 'error');
-      console.log(error.errors);
+      this.notifierService.showNotification(`${error.errors} Problem adding the real property.`, 'OK', 'error');
     });
   }
 
@@ -232,11 +226,11 @@ export class RealPropertyCreateComponent implements OnInit {
   }
 
   onActualUseAgriSelected(event: MatSelectChange) {
-    this.agri = this.agriculturals.find(agri => agri.name === event.value);
+    let agri = this.agriculturals.find(agri => agri.name === event.value);
 
     for (const kindOfProperty of this.kindOfProperties.controls) {
-      if (this.agri?.name === kindOfProperty.get('actualUse')!.value) {
-         kindOfProperty.patchValue({agriculturalLandId: this.agri?.id});
+      if (agri?.name === kindOfProperty.get('actualUse')!.value) {
+         kindOfProperty.patchValue({agriculturalLandId: agri?.id});
       }
     }
       
@@ -244,12 +238,12 @@ export class RealPropertyCreateComponent implements OnInit {
   }
 
   onClassificationCommSelected(event: MatSelectChange) {
-    this.comm = this.commercials.find(comm => comm.name === event.value);
+    let comm = this.commercials.find(comm => comm.name === event.value);
 
     for (const kindOfProperty of this.kindOfProperties.controls) {
-      if (this.comm?.name === kindOfProperty.get('classification')!.value) {
+      if (comm?.name === kindOfProperty.get('classification')!.value) {
           kindOfProperty.patchValue({
-            commercialLandId: this.comm?.id, 
+            commercialLandId: comm?.id, 
             actualUse: 'Commercial'
           });
       }
@@ -259,12 +253,12 @@ export class RealPropertyCreateComponent implements OnInit {
   }
 
   onClassificationInduSelected(event: MatSelectChange) {
-    this.indu = this.industrials.find(indu => indu.name === event.value);
+    let indu = this.industrials.find(indu => indu.name === event.value);
 
     for (const kindOfProperty of this.kindOfProperties.controls) {
-      if (this.indu?.name === kindOfProperty.get('classification')!.value) {
+      if (indu?.name === kindOfProperty.get('classification')!.value) {
           kindOfProperty.patchValue({
-            industrialLandId: this.indu?.id,
+            industrialLandId: indu?.id,
             actualUse: 'Industrial'
           });
       }
@@ -274,12 +268,12 @@ export class RealPropertyCreateComponent implements OnInit {
   }
 
   onClassificationResiSelected(event: MatSelectChange) {
-    this.resi = this.residentials.find(resi => resi.name === event.value);
+    let resi = this.residentials.find(resi => resi.name === event.value);
 
     for (const kindOfProperty of this.kindOfProperties.controls) {
-      if (this.resi?.name === kindOfProperty.get('classification')!.value) {
+      if (resi?.name === kindOfProperty.get('classification')!.value) {
           kindOfProperty.patchValue({
-            residentialLandId: this.resi?.id,
+            residentialLandId: resi?.id,
             actualUse: 'Residential'
           });
       }
@@ -289,49 +283,49 @@ export class RealPropertyCreateComponent implements OnInit {
   }
 
   getAgriculturals() {
-    this.realPropertyService.getAgriculturals().subscribe((agriculturals) => {
-      this.agriculturals = agriculturals;
+    this.realPropertyService.getAgriculturals().subscribe((response) => {
+      this.agriculturals = response;
     }, error => {
-      console.log(error);
+      this.notifierService.showNotification(`${error.errors} Problem loading the agricultural lands.`, 'OK', 'error');
     });
   }
 
   getCommercials() {
-    this.realPropertyService.getCommercials().subscribe((commercials) => {
-      this.commercials = commercials;
+    this.realPropertyService.getCommercials().subscribe((response) => {
+      this.commercials = response;
     }, error => {
-      console.log(error);
+      this.notifierService.showNotification(`${error.errors} Problem loading the commercial lands.`, 'OK', 'error');
     });
   }
 
   getIndustrials() {
-    this.realPropertyService.getIndustrials().subscribe((industrials) => {
-      this.industrials = industrials;
+    this.realPropertyService.getIndustrials().subscribe((response) => {
+      this.industrials = response;
     }, error => {
-      console.log(error);
+      this.notifierService.showNotification(`${error.errors} Problem loading the industrial lands.`, 'OK', 'error');
     });
   }
 
   getResidentials() {
-    this.realPropertyService.getResidentials().subscribe((residentials) => {
-      this.residentials = residentials;
+    this.realPropertyService.getResidentials().subscribe((response) => {
+      this.residentials = response;
     }, error => {
-      console.log(error);
+      this.notifierService.showNotification(`${error.errors} Problem loading the residential lands.`, 'OK', 'error');
     });
   }
 
   getBarangays() {
-    this.realPropertyService.getBarangays().subscribe((barangays) => {
-      this.barangays = barangays;
+    this.realPropertyService.getBarangays().subscribe((response) => {
+      this.barangays = response;
 
       this.setDefaultPropertyLocationByBarangay();  
     }, error => {
-      console.log(error);
+      this.notifierService.showNotification(`${error.errors} Problem loading the barangays.`, 'OK', 'error');
     });
   }
 
   setDefaultPropertyLocationByBarangay() {
-    this.defaultPropertyLocationSelect = this.barangays[0].name;
+    this.defaultPropertyLocationSelect = this.barangays[0]!.name;
     this.createForm.patchValue({
       propertyLocation: this.defaultPropertyLocationSelect
     });

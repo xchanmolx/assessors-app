@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
+import { NotifierService } from 'src/app/core/services/notifier.service';
 import { RealPropertyService } from 'src/app/real-property/real-property.service';
 import { IAgricultural } from 'src/app/shared/models/agricultural';
 import { IBarangay } from 'src/app/shared/models/barangay';
@@ -24,7 +25,8 @@ export class ConfirmComponent implements OnInit {
   residentials: IResidential[] = [];
 
   constructor(@Optional() @Inject(MAT_DIALOG_DATA) public data: IRealProperty,
-      public dialogRef: MatDialogRef<ConfirmComponent>, public realPropertyService: RealPropertyService) {
+      public dialogRef: MatDialogRef<ConfirmComponent>, public realPropertyService: RealPropertyService,
+      private notifierService: NotifierService) {
         this.local_data = {...data};
         this.action = this.local_data.action;
 
@@ -46,18 +48,18 @@ export class ConfirmComponent implements OnInit {
   }
 
   getBarangays() {
-    this.realPropertyService.getBarangays().subscribe((barangays) => {
-      this.barangays = barangays;
+    this.realPropertyService.getBarangays().subscribe((response) => {
+      this.barangays = response;
     }, error => {
-      console.log(error);
+      this.notifierService.showNotification(`${error.errors} Problem loading the barangays.`, 'OK', 'error');
     });
   }
 
   getAgriculturals() {
-    this.realPropertyService.getAgriculturals().subscribe((agriculturals) => {
-      this.agriculturals = agriculturals;
+    this.realPropertyService.getAgriculturals().subscribe((response) => {
+      this.agriculturals = response;
     }, error => {
-      console.log(error);
+      this.notifierService.showNotification(`${error.errors} Problem loading the agricultural lands.`, 'OK', 'error');
     });
   }
 
@@ -113,26 +115,26 @@ export class ConfirmComponent implements OnInit {
   }
 
   getCommercials() {
-    this.realPropertyService.getCommercials().subscribe((commercials) => {
-      this.commercials = commercials;
+    this.realPropertyService.getCommercials().subscribe((response) => {
+      this.commercials = response;
     }, error => {
-      console.log(error);
+      this.notifierService.showNotification(`${error.errors} Problem loading the commercial lands.`, 'OK', 'error');
     });
   }
 
   getIndustrials() {
-    this.realPropertyService.getIndustrials().subscribe((industrials) => {
-      this.industrials = industrials;
+    this.realPropertyService.getIndustrials().subscribe((response) => {
+      this.industrials = response;
     }, error => {
-      console.log(error);
+      this.notifierService.showNotification(`${error.errors} Problem loading the industrial lands.`, 'OK', 'error');
     });
   }
 
   getResidentials() {
-    this.realPropertyService.getResidentials().subscribe((residentials) => {
-      this.residentials = residentials;
+    this.realPropertyService.getResidentials().subscribe((response) => {
+      this.residentials = response;
     }, error => {
-      console.log(error);
+      this.notifierService.showNotification(`${error.errors} Problem loading the residential lands.`, 'OK', 'error');
     });
   }
 

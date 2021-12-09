@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 // import { environment } from 'src/environments/environment.prod'; // Production
 import { environment } from 'src/environments/environment'; // Development
-import { NotifierService } from '../core/services/notifier.service';
 import { IAgricultural } from '../shared/models/agricultural';
 import { IBarangay } from '../shared/models/barangay';
 import { ICommercial } from '../shared/models/commercial';
@@ -23,7 +22,7 @@ export class RealPropertyService {
   baseUrl = environment.apiUrl;
   formFiles: string[] = [];
 
-  constructor(private http: HttpClient, private notifierService: NotifierService) { }
+  constructor(private http: HttpClient) { }
 
   getRealProperties(realPropertyParams: RealPropertyParams) {
     let params = new HttpParams();
@@ -102,11 +101,7 @@ export class RealPropertyService {
 
     params = params.append('subDirectory', photoParams.subDirectory);
 
-    return this.http.delete<IPhoto>(this.baseUrl + 'photos/' + id, { params }).subscribe(() => {
-      this.notifierService.showNotification('Photo has been deleted successfully.', 'OK', 'success');
-    }, error => {
-      this.notifierService.showNotification('Problem deleting the photo', 'OK', 'error');
-    });
+    return this.http.delete<IPhoto>(this.baseUrl + 'photos/' + id, { params });
   }
 
   updateRealProperty(id: number, values: any) {
@@ -118,11 +113,7 @@ export class RealPropertyService {
 
     params = params.append('subDirectory', photoParams.subDirectory);
 
-    return this.http.delete<IRealProperty>(this.baseUrl + 'realProperties/' + id, { params }).subscribe((realProperty) => {
-      this.notifierService.showNotification(`${realProperty.owner} has been deleted successfully.`, 'OK', 'success');
-    }, error => {
-      this.notifierService.showNotification('Problem deleting the real property', 'OK', 'error');
-    });
+    return this.http.delete<IRealProperty>(this.baseUrl + 'realProperties/' + id, { params });
   }
 
   getAgriculturals() {

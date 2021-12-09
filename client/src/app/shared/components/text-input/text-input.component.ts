@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, Self, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, Renderer2, Self, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
@@ -13,16 +13,17 @@ export class TextInputComponent implements OnInit, AfterViewInit, ControlValueAc
 
   constructor(@Self() public controlDir: NgControl, private renderer: Renderer2) { 
     this.controlDir.valueAccessor = this;
-  }
 
-  ngOnInit(): void {
     const control = this.controlDir.control;
     const validators = control?.validator ? [control.validator] : [];
     const asyncValidators = control?.asyncValidator ? [control.asyncValidator] : [];
-
+  
     control?.setValidators(validators);
     control?.setAsyncValidators(asyncValidators);
     control?.updateValueAndValidity();
+  }
+
+  ngOnInit(): void {
   }
 
   ngAfterViewInit() {

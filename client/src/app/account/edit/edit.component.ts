@@ -25,14 +25,15 @@ export class EditComponent implements OnInit {
   currentUser$!: Observable<IUser>;
 
   constructor(private accountService: AccountService, private route: ActivatedRoute,
-    private notifierService: NotifierService) { }
+    private notifierService: NotifierService) { 
+      this.currentUser$ = this.accountService.currentUser$;
+
+      this.route.data.subscribe(data => {
+        this.user = data.user;
+      });
+  }
 
   ngOnInit(): void {
-    this.currentUser$ = this.accountService.currentUser$;
-
-    this.route.data.subscribe(data => {
-      this.user = data.user;
-    });
   }
 
   onRadioChanged(event: MatRadioChange) {
@@ -44,7 +45,7 @@ export class EditComponent implements OnInit {
       this.editForm.reset(this.user);
       this.notifierService.showNotification(`${this.user.firstName}, your profile has been updated successfully.`, 'OK', 'success');
    }, error => {
-    this.notifierService.showNotification(error.errors, 'OK', 'error');
+    this.notifierService.showNotification(`${error.errors} Problem updating the profile.`, 'OK', 'error');
    });
   }
 

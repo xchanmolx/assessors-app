@@ -71,6 +71,11 @@
           <mat-icon mat-list-icon>assessment</mat-icon>
           <div mat-line>Assessment Roll</div>
         </mat-list-item>
+
+        <mat-list-item *appHasRole="['Admin', 'Moderator']" routerLink="/kind-of-lands">
+          <mat-icon mat-list-icon>vrpano</mat-icon>
+          <div mat-line>Kind of Lands</div>
+        </mat-list-item>
       </ng-container>
 
       <mat-list-item routerLink="/about">

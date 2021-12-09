@@ -43,10 +43,10 @@ export class UserManagementComponent implements OnInit {
       return value.id != row_obj.id;
     });
 
-    this.accountService.deleteUser(+row_obj.id).subscribe(user => {
-      this.notifierService.showNotification(`${user.firstName} has been deleted successfully.`, 'OK', 'success');
+    this.accountService.deleteUser(+row_obj.id).subscribe(response => {
+      this.notifierService.showNotification(`${response.firstName} has been deleted successfully.`, 'OK', 'success');
     }, error => {
-      this.notifierService.showNotification('Problem deleting the user', 'OK', 'error');
+      this.notifierService.showNotification(`${error.errors} Problem deleting the user.`, 'OK', 'error');
     });
   }
 
@@ -56,9 +56,9 @@ export class UserManagementComponent implements OnInit {
       roles: this.getRolesArray(user)
     };
     this.bsModalRef = this.modalService.show(RolesModalComponent, {initialState});
-    this.bsModalRef.content.updateSelectedRoles.subscribe((values: any) => {
+    this.bsModalRef.content.updateSelectedRoles.subscribe((response: any) => {
       const rolesToUpdate = {
-        roleNames: [...values.filter((el: any) => el.checked === true).map((el: any) => el.name)]
+        roleNames: [...response.filter((el: any) => el.checked === true).map((el: any) => el.name)]
       };
       if (rolesToUpdate) {
         this.adminService.updateUserRoles(user, rolesToUpdate).subscribe(() => {

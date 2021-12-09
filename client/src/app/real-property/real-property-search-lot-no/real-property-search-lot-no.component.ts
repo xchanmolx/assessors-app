@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AccountService } from 'src/app/account/account.service';
+import { NotifierService } from 'src/app/core/services/notifier.service';
 import { IRealProperty } from 'src/app/shared/models/realProperty';
 import { RealPropertyService } from '../real-property.service';
 
@@ -20,7 +21,7 @@ export class RealPropertySearchLotNoComponent implements OnInit {
   displayedColumns: string[] = ['owner', 'propertyLocation', 'tdNo', 'year', 'surveyLotNo', 'kindOfProperties', 'memoranda'];
 
   constructor(private realPropertyService: RealPropertyService, private activatedRoute: ActivatedRoute, 
-    private accountService: AccountService) { 
+    private accountService: AccountService, private notifierService: NotifierService) { 
       this.lotNo = this.activatedRoute.snapshot.paramMap.get('lotNo')!;
 
       this.loadRealProperties();   
@@ -34,10 +35,10 @@ export class RealPropertySearchLotNoComponent implements OnInit {
   }
 
   loadRealProperties() {
-    this.realPropertyService.searchLotNo(this.activatedRoute.snapshot.paramMap.get('lotNo')!).subscribe(realProperties => {
-      this.realProperties = realProperties;
+    this.realPropertyService.searchLotNo(this.activatedRoute.snapshot.paramMap.get('lotNo')!).subscribe(response => {
+      this.realProperties = response;
     }, error => {
-      console.log(error);
+      this.notifierService.showNotification(`${error.errors} Problem loading the data.`, 'OK', 'error');
     })
   }
 

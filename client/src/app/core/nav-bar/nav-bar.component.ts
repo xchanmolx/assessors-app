@@ -16,10 +16,11 @@ export class NavBarComponent implements OnInit {
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
 
   constructor(private accountService: AccountService, public busyService: BusyService,
-    private notifierService: NotifierService) { }
+    private notifierService: NotifierService) { 
+      this.currentUser$ = this.accountService.currentUser$;
+    }
 
   ngOnInit(): void {
-    this.currentUser$ = this.accountService.currentUser$;
   }
 
   logout() {

@@ -1,9 +1,8 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSelectChange } from '@angular/material/select';
 import { AccountService } from '../account/account.service';
-import { BusyService } from '../core/services/busy.service';
 import { NotifierService } from '../core/services/notifier.service';
 import { ConfirmComponent } from '../shared/components/dialogs/confirm/confirm.component';
 import { PhotoParams } from '../shared/models/photoParams';
@@ -106,7 +105,7 @@ export class RealPropertyComponent implements OnInit {
         this.realPropertyService.updateRealProperty(value.id, value).subscribe((response) => {
           this.notifierService.showNotification(`${response.owner} has been updated successfully.`, 'OK', 'success');
         }, error => {
-          this.notifierService.showNotification(`${error.errors} Problem updating the real property`, 'OK', 'error');
+          this.notifierService.showNotification(`${error.errors} Problem updating the real property.`, 'OK', 'error');
 
           this.getRealProperties();
         });
@@ -123,8 +122,12 @@ export class RealPropertyComponent implements OnInit {
       return value.id != row_obj.id;
     });
 
-    this.realPropertyService.deleteRealProperty(row_obj.id, this.photoParams);
-    this.totalCount--;
+    this.realPropertyService.deleteRealProperty(row_obj.id, this.photoParams).subscribe((response) => {
+      this.notifierService.showNotification(`${response.owner} has been deleted successfully.`, 'OK', 'success');
+      this.totalCount--;
+    }, error => {
+      this.notifierService.showNotification(`${error.errors} Problem deleting the real property.`, 'OK', 'error');
+    });
   }
 
   getRealProperties() {
@@ -134,7 +137,7 @@ export class RealPropertyComponent implements OnInit {
       this.realPropertyParams.pageSize = response!.pageSize;
       this.totalCount = response!.count;
     }, error => {
-      console.log(error.errors);
+      this.notifierService.showNotification(`${error.errors} Problem loading the data.`, 'OK', 'error');
     });
   }
 

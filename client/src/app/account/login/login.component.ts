@@ -14,11 +14,12 @@ export class LoginComponent implements OnInit {
   returnUrl!: string;
 
   constructor(private accountService: AccountService, private router: Router,
-    private activatedRoute: ActivatedRoute, private notifierService: NotifierService) { }
+    private activatedRoute: ActivatedRoute, private notifierService: NotifierService) { 
+      this.returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl || '/real-property';
+      this.createLoginForm();
+  }
 
   ngOnInit(): void {
-    this.returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl || '/real-property';
-    this.createLoginForm();
   }
 
   createLoginForm() {
@@ -34,7 +35,7 @@ export class LoginComponent implements OnInit {
       this.router.navigateByUrl(this.returnUrl);
       this.notifierService.showNotification('You have successfully logged in.', 'OK', 'success');
     }, error => {
-      this.notifierService.showNotification('Invalid email address or password.', 'OK', 'error');
+      this.notifierService.showNotification(`${error.errors} Invalid email address or password.`, 'OK', 'error');
     });
   }
 

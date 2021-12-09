@@ -10,10 +10,11 @@ import { AccountService } from './account/account.service';
 export class AppComponent implements OnInit {
   jwtHelper = new JwtHelperService();
 
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService) { 
+    this.loadCurrentUser();
+  }
 
   ngOnInit(): void {
-    this.loadCurrentUser();
   }
 
   loadCurrentUser() {

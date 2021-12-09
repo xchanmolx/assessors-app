@@ -15,6 +15,8 @@ const routes: Routes = [
     data: {breadcrumb: 'Real Property'}, canActivate: [AuthGuard], runGuardsAndResolvers: 'always' },
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(mod => mod.AdminModule),
     data: {breadcrumb: 'Admin Panel', roles: ['Admin']}},
+  { path: 'kind-of-lands', loadChildren: () => import('./kind-of-lands/kind-of-lands.module').then(mod => mod.KindOfLandsModule),
+    data: {breadcrumb: 'Kind of Lands'}},
   { path: 'account', loadChildren: () => import('./account/account.module').then(mod => mod.AccountModule), data: {breadcrumb: {skip: true}} },
   { path: '**', redirectTo: 'not-found', pathMatch: 'full'}
 ];
