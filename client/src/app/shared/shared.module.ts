@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ConfirmImageComponent } from './components/dialogs/confirm-image/confirm-image.component';
 import { HasRoleDirective } from './directives/has-role.directive';
 import { ConfirmUserDeleteComponent } from './components/dialogs/confirm-user-delete/confirm-user-delete.component';
+import { ConfirmAgriComponent } from './components/dialogs/confirm-agri/confirm-agri.component';
 
 
 
@@ -26,7 +27,8 @@ import { ConfirmUserDeleteComponent } from './components/dialogs/confirm-user-de
     ConfirmComponent,
     ConfirmImageComponent,
     HasRoleDirective,
-    ConfirmUserDeleteComponent
+    ConfirmUserDeleteComponent,
+    ConfirmAgriComponent
   ],
   imports: [
     CommonModule,

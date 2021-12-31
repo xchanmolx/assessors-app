@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
+using API.Helpers;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
@@ -20,12 +21,16 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IndustrialLand>> GetIndustrialLands()
+        public async Task<ActionResult<CountAndListKindOfLands<IndustrialLand>>> GetIndustrialLands(
+            [FromQuery] KindOfLandsSpecParams industrialSpecParams)
         {
-            var spec = new IndustrialOrderByNameSpecification();
-            var induLands = await _induRepo.ListAsync(spec);
+            var spec = new IndustrialWithSpecification(industrialSpecParams);
+            var countSpec = new IndustrialWithFiltersForCountSpecification(industrialSpecParams);
+            var totalItems = await _induRepo.CountAsync(countSpec);
 
-            return Ok(induLands);
+            var data = await _induRepo.ListAsync(spec);
+
+            return Ok(new CountAndListKindOfLands<IndustrialLand>(totalItems, data));
         }
 
         [HttpPost]

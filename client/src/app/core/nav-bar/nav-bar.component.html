@@ -1,7 +1,6 @@
-<div *ngIf="busyService.isLoading | async" class="loader-container">
-  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+<div *ngIf="loader.loading$ | async" class="loader-container">
+  <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
 </div>
-
 <mat-toolbar color="primary" class="p-1">
 
   <mat-toolbar-row>

@@ -2,14 +2,17 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { NotifierService } from 'src/app/core/services/notifier.service';
+import { KindOfLandsService } from 'src/app/kind-of-lands/kind-of-lands.service';
 import { TextInputComponent } from 'src/app/shared/components/text-input/text-input.component';
 import { IAgricultural } from 'src/app/shared/models/agricultural';
+import { KindOfLandsParams } from 'src/app/shared/models/kindOfLandsParams';
 import { IBarangay } from 'src/app/shared/models/barangay';
 import { ICommercial } from 'src/app/shared/models/commercial';
 import { IIndustrial } from 'src/app/shared/models/industrial';
 import { PhotoParams } from 'src/app/shared/models/photoParams';
 import { IResidential } from 'src/app/shared/models/residential';
 import { RealPropertyService } from '../real-property.service';
+import { BarangayParams } from 'src/app/shared/models/barangayParams';
 
 @Component({
   selector: 'app-real-property-create',
@@ -32,13 +35,20 @@ export class RealPropertyCreateComponent implements OnInit {
   photoParams = new PhotoParams();
   today = new Date().toLocaleDateString();
   agriculturals: IAgricultural[] = [];
+  totalCountAgri: number = 0;
   commercials: ICommercial[] = [];
+  totalCountComm: number = 0;
   industrials: IIndustrial[] = [];
+  totalCountIndu: number = 0;
   residentials: IResidential[] = [];
+  totalCountResi: number = 0;
   barangays: IBarangay[] = [];
+  totalCountBara: number = 0;
+  barangayParams = new BarangayParams();
+  kindOfLandsParams = new KindOfLandsParams();
 
   constructor(private fb: FormBuilder, public realPropertyService: RealPropertyService,
-    private notifierService: NotifierService) {
+    private notifierService: NotifierService, private kindOfLandsService: KindOfLandsService) {
     this.createAddRealPropertyForm();
     this.getAgriculturals();
     this.getCommercials();
@@ -162,7 +172,7 @@ export class RealPropertyCreateComponent implements OnInit {
 
       this.uploadPhoto();
     }, error => {
-      this.notifierService.showNotification(`${error.errors} Problem adding the real property.`, 'OK', 'error');
+      console.log(`${error.errors} Adding Kind of Property.`); // Console log error consider, because of the error of addKindOfProperty method
     });
   }
 
@@ -283,40 +293,45 @@ export class RealPropertyCreateComponent implements OnInit {
   }
 
   getAgriculturals() {
-    this.realPropertyService.getAgriculturals().subscribe((response) => {
-      this.agriculturals = response;
+    this.kindOfLandsService.getAgriculturals(this.kindOfLandsParams).subscribe(response => {
+      this.totalCountAgri = response!.count;
+      this.agriculturals = response!.data;
     }, error => {
-      this.notifierService.showNotification(`${error.errors} Problem loading the agricultural lands.`, 'OK', 'error');
+      this.notifierService.showNotification(`Problem loading the agricultural land. ${error.errors}`, 'OK', 'error');
     });
   }
 
   getCommercials() {
-    this.realPropertyService.getCommercials().subscribe((response) => {
-      this.commercials = response;
+    this.kindOfLandsService.getCommercials(this.kindOfLandsParams).subscribe((response) => {
+      this.totalCountComm = response!.count;
+      this.commercials = response!.data;
     }, error => {
       this.notifierService.showNotification(`${error.errors} Problem loading the commercial lands.`, 'OK', 'error');
     });
   }
 
   getIndustrials() {
-    this.realPropertyService.getIndustrials().subscribe((response) => {
-      this.industrials = response;
+    this.kindOfLandsService.getIndustrials(this.kindOfLandsParams).subscribe((response) => {
+      this.totalCountIndu = response!.count;
+      this.industrials = response!.data;
     }, error => {
       this.notifierService.showNotification(`${error.errors} Problem loading the industrial lands.`, 'OK', 'error');
     });
   }
 
   getResidentials() {
-    this.realPropertyService.getResidentials().subscribe((response) => {
-      this.residentials = response;
+    this.kindOfLandsService.getResidentials(this.kindOfLandsParams).subscribe((response) => {
+      this.totalCountResi = response!.count;
+      this.residentials = response!.data;
     }, error => {
       this.notifierService.showNotification(`${error.errors} Problem loading the residential lands.`, 'OK', 'error');
     });
   }
 
   getBarangays() {
-    this.realPropertyService.getBarangays().subscribe((response) => {
-      this.barangays = response;
+    this.kindOfLandsService.getBarangays(this.barangayParams).subscribe((response) => {
+      this.totalCountBara = response!.count;
+      this.barangays = response!.data;
 
       this.setDefaultPropertyLocationByBarangay();  
     }, error => {
@@ -331,3 +346,4 @@ export class RealPropertyCreateComponent implements OnInit {
     });
   }
 }
+` `

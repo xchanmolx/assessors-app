@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
+using API.Helpers;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
@@ -20,12 +21,16 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Barangay>> GetBarangays()
+        public async Task<ActionResult<CountAndListBarangay<Barangay>>> GetBarangays(
+            [FromQuery] BarangaySpecParams barangaySpecParams)
         {
-            var spec = new BarangayOrderByNameSpecification();
-            var barangays = await _barangayRepo.ListAsync(spec);
+            var spec = new BarangayWithSpecification(barangaySpecParams);
+            var countSpec = new BarangayWithFiltersForCountSpecification(barangaySpecParams);
+            var totalItems = await _barangayRepo.CountAsync(countSpec);
 
-            return Ok(barangays);
+            var data = await _barangayRepo.ListAsync(spec);
+
+            return Ok(new CountAndListBarangay<Barangay>(totalItems, data));
         }
 
         [HttpPost]

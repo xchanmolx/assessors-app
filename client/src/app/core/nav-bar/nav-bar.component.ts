@@ -14,8 +14,9 @@ import { NotifierService } from '../services/notifier.service';
 export class NavBarComponent implements OnInit {
   currentUser$!: Observable<IUser>;
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
+  loading$ = this.loader.loading$;
 
-  constructor(private accountService: AccountService, public busyService: BusyService,
+  constructor(private accountService: AccountService, public loader: BusyService,
     private notifierService: NotifierService) { 
       this.currentUser$ = this.accountService.currentUser$;
     }

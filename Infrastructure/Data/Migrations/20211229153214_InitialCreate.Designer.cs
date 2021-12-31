@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AssessorContext))]
-    [Migration("20211122024448_InitialCreate")]
+    [Migration("20211229153214_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,6 +45,23 @@ namespace Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AgriculturalLands");
+                });
+
+            modelBuilder.Entity("Core.Entities.Barangay", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(90)
+                        .HasColumnType("nvarchar(90)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Barangays");
                 });
 
             modelBuilder.Entity("Core.Entities.Boundary", b =>
@@ -152,6 +169,11 @@ namespace Infrastructure.Data.Migrations
 
                     b.Property<int?>("IndustrialLandId")
                         .HasColumnType("int");
+
+                    b.Property<string>("KindOfLands")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<double>("Level")
                         .HasColumnType("float");

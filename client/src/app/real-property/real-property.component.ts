@@ -67,7 +67,7 @@ export class RealPropertyComponent implements OnInit {
 
   updateRowData(row_obj: IRealProperty){
     this.realProperties = this.realProperties.filter((value, key) => {
-      if(value.id == row_obj.id){
+      if(value.id == row_obj.id) {
         value.id = row_obj.id;
         value.tdNo = row_obj.tdNo;
         value.owner = row_obj.owner;
@@ -105,7 +105,7 @@ export class RealPropertyComponent implements OnInit {
         this.realPropertyService.updateRealProperty(value.id, value).subscribe((response) => {
           this.notifierService.showNotification(`${response.owner} has been updated successfully.`, 'OK', 'success');
         }, error => {
-          this.notifierService.showNotification(`${error.errors} Problem updating the real property.`, 'OK', 'error');
+          this.notifierService.showNotification(`Problem updating the real property. ${error.errors}`, 'OK', 'error');
 
           this.getRealProperties();
         });

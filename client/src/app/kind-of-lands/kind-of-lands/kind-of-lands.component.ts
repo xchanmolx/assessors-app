@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { IAgricultural } from 'src/app/shared/models/agricultural';
+import { ICommercial } from 'src/app/shared/models/commercial';
+import { KindOfLandsService } from '../kind-of-lands.service';
 
 @Component({
   selector: 'app-kind-of-lands',
@@ -7,9 +10,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class KindOfLandsComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private kindOfLandsService: KindOfLandsService) { }
+  
   ngOnInit(): void {
   }
-
+  
 }

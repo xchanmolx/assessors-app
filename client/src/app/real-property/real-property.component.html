@@ -177,6 +177,7 @@
                 <td mat-cell [hidden]="true" *matCellDef="let row"> 
                     <div class="text-muted" *ngFor="let kindOfProperty of row.kindOfProperties">
                         <p>{{kindOfProperty.id}}</p>
+                        <p>{{kindOfProperty.kindOfLands}}</p>
                         <p>{{kindOfProperty.classification}}</p>
                         <p>{{kindOfProperty.area | number}}</p>
                         <p>{{kindOfProperty.marketValue | number}}</p>
@@ -220,7 +221,7 @@
                 <!-- Approve by Column -->
                 <ng-container matColumnDef="approvedBy">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> Approve by </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.approvedBy | uppercase} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.approvedBy | uppercase}} </td>
                 </ng-container>
 
                 <!-- Date Column -->

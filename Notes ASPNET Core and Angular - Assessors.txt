@@ -262,3 +262,128 @@ for Publishing the DOTNET Core
 dotnet publish -c Release
 
 Search prefix in settings on VS Code then click to C# Extensions, then add underscore( _ )
+
+
+rxjs in practice --- --- --- Lesson 21 - video: 00:00
+
+put in service ---
+using filter
+commercials$ = this.http.get<ICommercial[]>(this.baseUrl + 'commercial')
+    .pipe(
+      tap(() => console.log('HTTP request executed')),
+      map(res => Object.values(res)),
+      shareReplay()
+    );
+
+beginnerCommercials$ = this.commercials$
+  .pipe(
+    map(comms => comms.filter(comm => comm.name == 'C-1'))
+  );
+
+advancedCommercials$ = this.commercials$
+  .pipe(
+    map(comms => comms.filter(comm => comm.name == 'C-2'))
+  );
+
+ngOnInit(): void {
+    const source1$ = of(1, 2, 3);
+    const source2$ = of(4, 5, 6);
+    const source3$ = of(7, 8, 9);
+    const result$ = concat(source1$, source2$, source3$);
+    result$.subscribe(val => console.log(val));
+
+    const interval$ = interval(1000);
+    const sub = interval$.subscribe(console.log);
+    setTimeout(() => sub.unsubscribe(), 5000);
+
+    fromEvent<any>(this.input.nativeElement, 'keyup')
+      .pipe(
+        map(event => event.target.value)
+      )
+      .subscribe(console.log);
+  }
+
+  private agriSubject = new Subject<number>();
+  agriSelectedAction$ = this.agriSubject.asObservable();
+  
+  agricultural$ = this.agriSelectedAction$.pipe(
+    distinctUntilChanged(),
+    switchMap(agriId => this.http.get<IAgricultural[]>(this.baseUrl + `agricultural?id=${agriId}`)
+      .pipe(
+        tap(data => JSON.stringify(data)),
+        catchError(err => {
+          console.error('Error loading the agricultural lands.');
+          console.error(err);
+          return EMPTY;  
+        })
+      ))
+  );
+
+  agriculturals$ = this.http.get<IAgricultural[]>(this.baseUrl + 'agricultural')
+        .pipe(
+            tap(data => JSON.stringify(data)),
+            catchError(err => {
+            console.error('Error loading the agricultural lands.');
+            console.error(err);
+            return EMPTY;  
+          })
+        );
+
+  selectedAgricultural$ = combineLatest([
+    this.agriculturals$,
+    this.agriSelectedAction$
+  ]).pipe(
+    map(([agriculturals, selectedAgriId]) => {
+      agriculturals.find(agri => agri.id === selectedAgriId);
+    })
+  );
+
+  commercials$ = this.http.get<ICommercial[]>(this.baseUrl + 'commercial').
+      pipe(
+        tap(data => JSON.stringify(data)),
+        catchError(err => {
+          console.error('Error loading the commercial lands.');
+          console.error(err);
+          return EMPTY;
+        })
+      );
+
+  agriculturals$ = this.http.get<IAgricultural[]>(this.baseUrl + 'agricultural').
+    pipe(
+      tap(() => console.log('HTTP request executed')),
+      map(res => Object.values(res)),
+      shareReplay()
+    );
+
+  beginnerAgriculturals$ = this.agriculturals$
+    .pipe(
+      map(agris => agris.filter(agri => agri.name == 'Corn Land'))
+    );
+
+  advancedAgriculturals$ = this.agriculturals$
+  .pipe(
+    map(agris => agris.filter(agri => agri.name == 'Bamboo Land'))
+  );
+
+  commercials$ = this.http.get<ICommercial[]>(this.baseUrl + 'commercial')
+    .pipe(
+      tap(() => console.log('HTTP request executed')),
+      map(res => Object.values(res)),
+      shareReplay()
+    );
+
+  beginnerCommercials$ = this.commercials$
+    .pipe(
+      map(comms => comms.filter(comm => comm.name == 'C-1'))
+    );
+
+  advancedCommercials$ = this.commercials$
+    .pipe(
+      map(comms => comms.filter(comm => comm.name == 'C-2'))
+    );
+
+  constructor(private http: HttpClient) { }
+
+  selectedAgriChanged(agriId: number) {
+    this.agriSubject.next(agriId);
+  }

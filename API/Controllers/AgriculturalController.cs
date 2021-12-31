@@ -1,6 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
+using API.Helpers;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
@@ -20,12 +23,24 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<AgriculturalLand>> GetAgriculturalLands()
+        public async Task<ActionResult<CountAndListKindOfLands<AgriculturalLand>>> GetAgriculturalLands(
+            [FromQuery] KindOfLandsSpecParams agriculturalSpecParams)
         {
-            var spec = new AgriculturalOrderByNameSpecification();
-            var agriLands = await _agriRepo.ListAsync(spec);
+            var spec = new AgriculturalWithSpecification(agriculturalSpecParams);
+            var countSpec = new AgriculturalWithFiltersForCountSpecification(agriculturalSpecParams);
+            var totalItems = await _agriRepo.CountAsync(countSpec);
 
-            return Ok(agriLands);
+            var data = await _agriRepo.ListAsync(spec);
+
+            return Ok(new CountAndListKindOfLands<AgriculturalLand>(totalItems, data));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<AgriculturalLand>> GetAgriculturalLand(int id)
+        {
+            var agriculturalLandFromRepo = await _agriRepo.GetByIdAsync(id);
+
+            return Ok(agriculturalLandFromRepo);
         }
 
         [HttpPost]

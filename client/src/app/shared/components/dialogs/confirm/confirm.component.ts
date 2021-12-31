@@ -2,13 +2,16 @@ import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { NotifierService } from 'src/app/core/services/notifier.service';
+import { KindOfLandsService } from 'src/app/kind-of-lands/kind-of-lands.service';
 import { RealPropertyService } from 'src/app/real-property/real-property.service';
 import { IAgricultural } from 'src/app/shared/models/agricultural';
+import { KindOfLandsParams } from 'src/app/shared/models/kindOfLandsParams';
 import { IBarangay } from 'src/app/shared/models/barangay';
 import { ICommercial } from 'src/app/shared/models/commercial';
 import { IIndustrial } from 'src/app/shared/models/industrial';
 import { IRealProperty } from 'src/app/shared/models/realProperty';
 import { IResidential } from 'src/app/shared/models/residential';
+import { BarangayParams } from 'src/app/shared/models/barangayParams';
 
 @Component({
   selector: 'app-confirm',
@@ -19,14 +22,21 @@ export class ConfirmComponent implements OnInit {
   local_data!: any;
   action!: string;
   barangays: IBarangay[] = [];
+  totalCountBara: number = 0;
   agriculturals: IAgricultural[] = [];
+  totalCountAgri: number = 0;
   commercials: ICommercial[] = [];
+  totalCountComm: number = 0;
   industrials: IIndustrial[] = [];
+  totalCountIndu: number = 0;
   residentials: IResidential[] = [];
+  totalCountResi: number = 0;
+  kindOfLandsParams = new KindOfLandsParams();
+  barangayParams = new BarangayParams();
 
   constructor(@Optional() @Inject(MAT_DIALOG_DATA) public data: IRealProperty,
       public dialogRef: MatDialogRef<ConfirmComponent>, public realPropertyService: RealPropertyService,
-      private notifierService: NotifierService) {
+      private notifierService: NotifierService, private kindOfLandsService: KindOfLandsService) {
         this.local_data = {...data};
         this.action = this.local_data.action;
 
@@ -48,18 +58,20 @@ export class ConfirmComponent implements OnInit {
   }
 
   getBarangays() {
-    this.realPropertyService.getBarangays().subscribe((response) => {
-      this.barangays = response;
+    this.kindOfLandsService.getBarangays(this.barangayParams).subscribe((response) => {
+      this.totalCountBara = response!.count;
+      this.barangays = response!.data;
     }, error => {
       this.notifierService.showNotification(`${error.errors} Problem loading the barangays.`, 'OK', 'error');
     });
   }
 
   getAgriculturals() {
-    this.realPropertyService.getAgriculturals().subscribe((response) => {
-      this.agriculturals = response;
+    this.kindOfLandsService.getAgriculturals(this.kindOfLandsParams).subscribe(response => {
+      this.totalCountAgri = response!.count;
+      this.agriculturals = response!.data;
     }, error => {
-      this.notifierService.showNotification(`${error.errors} Problem loading the agricultural lands.`, 'OK', 'error');
+      this.notifierService.showNotification(`Problem loading the agricultural land. ${error.errors}`, 'OK', 'error');
     });
   }
 
@@ -115,24 +127,27 @@ export class ConfirmComponent implements OnInit {
   }
 
   getCommercials() {
-    this.realPropertyService.getCommercials().subscribe((response) => {
-      this.commercials = response;
+    this.kindOfLandsService.getCommercials(this.kindOfLandsParams).subscribe((response) => {
+      this.totalCountComm = response!.count;
+      this.commercials = response!.data;
     }, error => {
       this.notifierService.showNotification(`${error.errors} Problem loading the commercial lands.`, 'OK', 'error');
     });
   }
 
   getIndustrials() {
-    this.realPropertyService.getIndustrials().subscribe((response) => {
-      this.industrials = response;
+    this.kindOfLandsService.getIndustrials(this.kindOfLandsParams).subscribe((response) => {
+      this.totalCountIndu = response!.count;
+      this.industrials = response!.data;
     }, error => {
       this.notifierService.showNotification(`${error.errors} Problem loading the industrial lands.`, 'OK', 'error');
     });
   }
 
   getResidentials() {
-    this.realPropertyService.getResidentials().subscribe((response) => {
-      this.residentials = response;
+    this.kindOfLandsService.getResidentials(this.kindOfLandsParams).subscribe((response) => {
+      this.totalCountResi = response!.count;
+      this.residentials = response!.data;
     }, error => {
       this.notifierService.showNotification(`${error.errors} Problem loading the residential lands.`, 'OK', 'error');
     });

@@ -5,22 +5,17 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class BusyService {
-  public isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  busyRequestCount = 0;
+  private _loading = new BehaviorSubject<boolean>(false);
+  public readonly loading$ = this._loading.asObservable();
 
   constructor() { }
 
-  busy() {
-    this.busyRequestCount++;
-    this.isLoading.next(true);
+  show() {
+    this._loading.next(true);
   }
 
-  idle() {
-    this.busyRequestCount--;
-    if (this.busyRequestCount <= 0) {
-      this.busyRequestCount = 0;
-      this.isLoading.next(false);
-    }
+  hide() {
+    this._loading.next(false);
   }
 
 }

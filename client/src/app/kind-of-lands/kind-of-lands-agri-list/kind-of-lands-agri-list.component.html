@@ -1,1 +1,61 @@
-<p>kind-of-lands-agri-list works!</p>
+<div class="d-flex my-3">
+    <mat-form-field style="width: 50%;" appearance="fill">
+        <mat-label>Search</mat-label>
+        <input #search (keyup.enter)="onSearch()" matInput #message maxlength="256" placeholder="Ex. Corn Land">
+        <mat-hint align="start"><strong>Search Name</strong> </mat-hint>
+        <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+    </mat-form-field>
+    <button matTooltip="Search" mat-icon-button (click)="onSearch()" class="btn btn-outline-primary">
+        <mat-icon aria-hidden="false" aria-label="Search">search</mat-icon>
+    </button>
+    <button matTooltip="Clear search box" mat-icon-button (click)="onReset()" class="btn btn-outline-success mx-1">
+        <mat-icon aria-hidden="false" aria-label="Reset">clear</mat-icon>
+    </button>
+    <button (click)="openDialog('Add', {})" matTooltip="Add agricultural information" mat-icon-button class="btn btn-outline-primary">
+        <mat-icon aria-hidden="false" aria-label="Add">add</mat-icon>
+    </button>
+    <div class="col d-flex justify-content-center">
+      <h3><span><strong>{{totalCount}}</strong> Results</span></h3>
+    </div>
+</div>
+<table mat-table [dataSource]="agris!" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+  
+    <!-- First Class Column -->
+    <ng-container matColumnDef="firstClass">
+      <th mat-header-cell *matHeaderCellDef> First Class </th>
+      <td mat-cell *matCellDef="let element"> {{element.firstClass | number}} </td>
+    </ng-container>
+  
+    <!-- Second Class Column -->
+    <ng-container matColumnDef="secondClass">
+      <th mat-header-cell *matHeaderCellDef> Second Class </th>
+      <td mat-cell *matCellDef="let element"> {{element.secondClass | number}} </td>
+    </ng-container>
+  
+    <!-- Third Class Column -->
+    <ng-container matColumnDef="thirdClass">
+      <th mat-header-cell *matHeaderCellDef> Third Class </th>
+      <td mat-cell *matCellDef="let element"> {{element.thirdClass | number}} </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let row">
+        <button (click)="openDialog('Update', row)" class="btn btn-outline-primary" mat-icon-button matTooltip="Edit"><mat-icon>edit</mat-icon></button>
+        <button (click)="openDialog('Delete', row)" class="btn btn-outline-danger" mat-icon-button color="warn" matTooltip="Delete"><mat-icon>delete</mat-icon></button>        
+    </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

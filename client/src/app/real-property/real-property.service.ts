@@ -3,17 +3,12 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 // import { environment } from 'src/environments/environment.prod'; // Production
 import { environment } from 'src/environments/environment'; // Development
-import { IAgricultural } from '../shared/models/agricultural';
-import { IBarangay } from '../shared/models/barangay';
-import { ICommercial } from '../shared/models/commercial';
-import { IIndustrial } from '../shared/models/industrial';
 import { IOwnerNamePhotos } from '../shared/models/ownerNamePhotos';
 import { IPagination } from '../shared/models/pagination';
 import { IPhoto } from '../shared/models/photo';
 import { PhotoParams } from '../shared/models/photoParams';
 import { IRealProperty } from '../shared/models/realProperty';
 import { RealPropertyParams } from '../shared/models/realPropertyParams';
-import { IResidential } from '../shared/models/residential';
 
 @Injectable({
   providedIn: 'root'
@@ -116,23 +111,4 @@ export class RealPropertyService {
     return this.http.delete<IRealProperty>(this.baseUrl + 'realProperties/' + id, { params });
   }
 
-  getAgriculturals() {
-    return this.http.get<IAgricultural[]>(this.baseUrl + 'agricultural');
-  }
-
-  getCommercials() {
-    return this.http.get<ICommercial[]>(this.baseUrl + 'commercial');
-  }
-
-  getIndustrials() {
-    return this.http.get<IIndustrial[]>(this.baseUrl + 'industrial');
-  }
-
-  getResidentials() {
-    return this.http.get<IResidential[]>(this.baseUrl + 'residential');
-  }
-
-  getBarangays() {
-    return this.http.get<IBarangay[]>(this.baseUrl + 'barangay');
-  }
 }

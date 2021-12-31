@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { AccountService } from 'src/app/account/account.service';
 import { NotifierService } from 'src/app/core/services/notifier.service';
+import { KindOfLandsService } from 'src/app/kind-of-lands/kind-of-lands.service';
 import { IBarangay } from 'src/app/shared/models/barangay';
+import { BarangayParams } from 'src/app/shared/models/barangayParams';
 import { IRealProperty } from 'src/app/shared/models/realProperty';
 import { RealPropertyParams } from 'src/app/shared/models/realPropertyParams';
 import { RealPropertyService } from '../real-property.service';
@@ -25,6 +27,8 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
     { name: 'Exempt', value: 'exempt'}
   ];
   barangays: IBarangay[] = [];
+  totalCountBara: number = 0;
+  barangayParams = new BarangayParams();
   defaultBarangaySelect!: string;
   maxYear!: number;
 
@@ -33,7 +37,7 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   showFirstLastButtons = true;
 
   constructor(private realPropertyService: RealPropertyService, private accountService: AccountService,
-    private notifierService: NotifierService) {
+    private notifierService: NotifierService, private kindOfLandsService: KindOfLandsService) {
     this.getRealPropertiesAssessmentRoll();
     this.getBarangays();
   }
@@ -85,11 +89,12 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   }
 
   getBarangays() {
-    this.realPropertyService.getBarangays().subscribe((response) => {
-      this.barangays = response;
+    this.kindOfLandsService.getBarangays(this.barangayParams).subscribe((response) => {
+      this.totalCountBara = response!.count;
+      this.barangays = response!.data;
 
       // First element or index of barangays array
-      this.defaultBarangaySelect = this.barangays[0]!.name;
+      this.defaultBarangaySelect = this.barangays[0].name;
 
       this.getMaxYear();
       this.getRealPropertiesAssessmentRoll();
@@ -100,6 +105,14 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
 
   getMaxYear() {
     // First element or index of year array
-    this.maxYear = this.realProperties[0]!.year;
+    this.maxYear = this.safetyCheck(() => this.realProperties[0].year);
+  }
+
+  safetyCheck(fn: any) {
+    try {
+      return fn();
+    } catch (error) {
+      return undefined;
+    }
   }
 }

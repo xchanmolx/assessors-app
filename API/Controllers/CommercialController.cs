@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
+using API.Helpers;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
@@ -20,12 +21,16 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<CommercialLand>> GetCommercialLands()
+        public async Task<ActionResult<CountAndListKindOfLands<CommercialLand>>> GetCommercialLands(
+            [FromQuery] KindOfLandsSpecParams commercialSpecParams)
         {
-            var spec = new CommercialOrderByNameSpecification();
-            var commLands = await _commRepo.ListAsync(spec);
+            var spec = new CommercialWithSpecification(commercialSpecParams);
+            var countSpec = new CommercialWithFiltersForCountSpecification(commercialSpecParams);
+            var totalItems = await _commRepo.CountAsync(countSpec);
 
-            return Ok(commLands);
+            var data = await _commRepo.ListAsync(spec);
+
+            return Ok(new CountAndListKindOfLands<CommercialLand>(totalItems, data));
         }
 
         [HttpPost]
