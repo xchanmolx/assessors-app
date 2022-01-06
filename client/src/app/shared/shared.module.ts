@@ -16,6 +16,9 @@ import { ConfirmImageComponent } from './components/dialogs/confirm-image/confir
 import { HasRoleDirective } from './directives/has-role.directive';
 import { ConfirmUserDeleteComponent } from './components/dialogs/confirm-user-delete/confirm-user-delete.component';
 import { ConfirmAgriComponent } from './components/dialogs/confirm-agri/confirm-agri.component';
+import { ConfirmCommComponent } from './components/dialogs/confirm-comm/confirm-comm.component';
+import { ConfirmInduComponent } from './components/dialogs/confirm-indu/confirm-indu.component';
+import { ConfirmResiComponent } from './components/dialogs/confirm-resi/confirm-resi.component';
 
 
 
@@ -28,7 +31,10 @@ import { ConfirmAgriComponent } from './components/dialogs/confirm-agri/confirm-
     ConfirmImageComponent,
     HasRoleDirective,
     ConfirmUserDeleteComponent,
-    ConfirmAgriComponent
+    ConfirmAgriComponent,
+    ConfirmCommComponent,
+    ConfirmInduComponent,
+    ConfirmResiComponent
   ],
   imports: [
     CommonModule,

@@ -87,7 +87,7 @@ export class KindOfLandsAgriListComponent implements OnInit {
 
     this.kindOfLandsService.deleteAgricultural(row_obj.id).subscribe(response => {
       this.notifierService.showNotification(`${response.name} has been deleted successfully.`, 'OK', 'success');
-      this.totalCount--;
+      this.getAgriculturals();
     }, error => {
       this.notifierService.showNotification(`Problem deleting the agricultural land. ${error.errors}`, 'OK', 'error');
     });

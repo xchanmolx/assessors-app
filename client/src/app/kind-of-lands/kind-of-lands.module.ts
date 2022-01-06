@@ -10,11 +10,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
 import { SharedModule } from '../shared/shared.module';
+import { KindOfLandsCommListComponent } from './kind-of-lands-comm-list/kind-of-lands-comm-list.component';
+import { KindOfLandsInduListComponent } from './kind-of-lands-indu-list/kind-of-lands-indu-list.component';
+import { KindOfLandsResiListComponent } from './kind-of-lands-resi-list/kind-of-lands-resi-list.component';
 
 @NgModule({
   declarations: [
     KindOfLandsComponent,
-    KindOfLandsAgriListComponent
+    KindOfLandsAgriListComponent,
+    KindOfLandsCommListComponent,
+    KindOfLandsInduListComponent,
+    KindOfLandsResiListComponent
   ],
   imports: [
     CommonModule,
