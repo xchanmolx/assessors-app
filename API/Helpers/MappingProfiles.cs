@@ -83,6 +83,9 @@ namespace API.Helpers
 
             // Delete for Barangay
             CreateMap<Barangay, BarangayToDeleteDto>();
+
+            // Creation for Staff
+            CreateMap<StaffToCreateDto, Staff>();
         }
     }
 }

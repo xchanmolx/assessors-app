@@ -19,6 +19,7 @@ import { ConfirmAgriComponent } from './components/dialogs/confirm-agri/confirm-
 import { ConfirmCommComponent } from './components/dialogs/confirm-comm/confirm-comm.component';
 import { ConfirmInduComponent } from './components/dialogs/confirm-indu/confirm-indu.component';
 import { ConfirmResiComponent } from './components/dialogs/confirm-resi/confirm-resi.component';
+import { ConfirmBrgyComponent } from './components/dialogs/confirm-brgy/confirm-brgy.component';
 
 
 
@@ -34,7 +35,8 @@ import { ConfirmResiComponent } from './components/dialogs/confirm-resi/confirm-
     ConfirmAgriComponent,
     ConfirmCommComponent,
     ConfirmInduComponent,
-    ConfirmResiComponent
+    ConfirmResiComponent,
+    ConfirmBrgyComponent
   ],
   imports: [
     CommonModule,

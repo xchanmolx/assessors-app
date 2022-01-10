@@ -75,57 +75,7 @@ namespace API.Controllers
 
             if (!string.IsNullOrEmpty(propertyParams.PropertyLocation))
             {
-                switch (propertyParams.PropertyLocation)
-                {
-                    case "angilan":
-                        properties = properties.Where(x => x.PropertyLocation == "angilan").ToList();
-                        break;
-                    case "bojo":
-                        properties = properties.Where(x => x.PropertyLocation == "bojo").ToList();
-                        break;
-                    case "bonbon":
-                        properties = properties.Where(x => x.PropertyLocation == "bonbon").ToList();
-                        break;
-                    case "esperanza":
-                        properties = properties.Where(x => x.PropertyLocation == "esperanza").ToList();
-                        break;
-                    case "kandingan":
-                        properties = properties.Where(x => x.PropertyLocation == "kandingan").ToList();
-                        break;
-                    case "kantabogon":
-                        properties = properties.Where(x => x.PropertyLocation == "kantabogon").ToList();
-                        break;
-                    case "kawasan":
-                        properties = properties.Where(x => x.PropertyLocation == "kawasan").ToList();
-                        break;
-                    case "olango":
-                        properties = properties.Where(x => x.PropertyLocation == "olango").ToList();
-                        break;
-                    case "poblacion":
-                        properties = properties.Where(x => x.PropertyLocation == "poblacion").ToList();
-                        break;
-                    case "punay":
-                        properties = properties.Where(x => x.PropertyLocation == "punay").ToList();
-                        break;
-                    case "rosario":
-                        properties = properties.Where(x => x.PropertyLocation == "rosario").ToList();
-                        break;
-                    case "saksak":
-                        properties = properties.Where(x => x.PropertyLocation == "saksak").ToList();
-                        break;
-                    case "tampaan":
-                        properties = properties.Where(x => x.PropertyLocation == "tampaan").ToList();
-                        break;
-                    case "toyokon":
-                        properties = properties.Where(x => x.PropertyLocation == "toyokon").ToList();
-                        break;
-                    case "zaragosa":
-                        properties = properties.Where(x => x.PropertyLocation == "zaragosa").ToList();
-                        break;
-                    default:
-                        properties = properties.Where(x => x.PropertyLocation == "angilan").ToList();
-                        break;
-                }
+                properties = properties.Where(x => x.PropertyLocation == propertyParams.PropertyLocation).ToList();
 
                 totalItems = properties.Count();
                 propertyParams.TotalAssessedValue = properties.Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue));

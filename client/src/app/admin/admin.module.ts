@@ -11,6 +11,9 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { SiteManagementComponent } from './site-management/site-management.component';
 
 
 
@@ -18,7 +21,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   declarations: [
     AdminPanelComponent,
     RolesModalComponent,
-    UserManagementComponent
+    UserManagementComponent,
+    SiteManagementComponent
   ],
   imports: [
     CommonModule,
@@ -29,6 +33,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
+    MatTableModule,
+    MatInputModule,
     ModalModule.forRoot()
   ]
 })

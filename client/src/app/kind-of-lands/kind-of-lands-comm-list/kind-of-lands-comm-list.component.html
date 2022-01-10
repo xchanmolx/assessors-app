@@ -1,7 +1,7 @@
 <div class="d-flex my-3">
     <mat-form-field style="width: 50%;" appearance="fill">
         <mat-label>Search</mat-label>
-        <input #search (keyup.enter)="onSearch()" matInput #message maxlength="256" placeholder="Ex. Corn Land">
+        <input #search (keyup.enter)="onSearch()" matInput #message maxlength="256" placeholder="Ex. c-3">
         <mat-hint align="start"><strong>Search Name</strong> </mat-hint>
         <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
     </mat-form-field>
@@ -11,7 +11,7 @@
     <button matTooltip="Clear search box" mat-icon-button (click)="onReset()" class="btn btn-outline-success mx-1">
         <mat-icon aria-hidden="false" aria-label="Reset">clear</mat-icon>
     </button>
-    <button (click)="openDialog('Add', {})" matTooltip="Add agricultural information" mat-icon-button class="btn btn-outline-primary">
+    <button (click)="openDialog('Add', {})" matTooltip="Add commercial information" mat-icon-button class="btn btn-outline-primary">
         <mat-icon aria-hidden="false" aria-label="Add">add</mat-icon>
     </button>
     <div class="col d-flex justify-content-center">
