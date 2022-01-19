@@ -41,51 +41,45 @@ namespace API.Helpers
 
             // Creation for Agricultural Land
             CreateMap<AgriculturalToCreateDto, AgriculturalLand>();
-
             // Update for Agricultural Land
             CreateMap<AgriculturalToUpdateDto, AgriculturalLand>();
-
             // Delete for Agricultural Land
             CreateMap<AgriculturalLand, AgriculturalToDeleteDto>();
 
             // Creation for Commercial Land
             CreateMap<CommercialToCreateDto, CommercialLand>();
-
             // Update for Commercial Land
             CreateMap<CommercialToUpdateDto, CommercialLand>();
-
             // Delete for Commercial Land
             CreateMap<CommercialLand, CommercialToDeleteDto>();
 
             // Creation for Industrial Land
             CreateMap<IndustrialToCreateDto, IndustrialLand>();
-
             // Update for Industrial Land
             CreateMap<IndustrialToUpdateDto, IndustrialLand>();
-
             // Delete for Industrial Land
             CreateMap<IndustrialLand, IndustrialToDeleteDto>();
 
             // Creation for Residential Land
             CreateMap<ResidentialToCreateDto, ResidentialLand>();
-
             // Update for Residential Land
             CreateMap<ResidentialToUpdateDto, ResidentialLand>();
-
             // Delete for Residential Land
             CreateMap<ResidentialLand, ResidentialToDeleteDto>();
 
             // Creation for Barangay
             CreateMap<BarangayToCreateDto, Barangay>();
-
             // Update for Barangay
             CreateMap<BarangayToUpdateDto, Barangay>();
-
             // Delete for Barangay
             CreateMap<Barangay, BarangayToDeleteDto>();
 
             // Creation for Staff
             CreateMap<StaffToCreateDto, Staff>();
+            // Update for Staff
+            CreateMap<StaffToUpdateDto, Staff>();
+            // Delete for Staff
+            CreateMap<Staff, StaffToDeleteDto>();
         }
     }
 }

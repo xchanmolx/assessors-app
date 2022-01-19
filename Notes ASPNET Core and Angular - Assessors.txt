@@ -215,10 +215,6 @@ receiving something = [class.active]="brand.id === brandIdSelected"
 Parent Element => position: relative, -> Child Element => position: absolute - 
 change the position whatever you want
 
-use DatabaseName
-GO
-sp_changedbowner 'sa'
-
 tsconfig.json = "strictDomEventTypes": false
 
 Object is possibly 'undefined'.ts(2532) --> ?
@@ -239,6 +235,12 @@ onChange(event: Event): void {
 
 SQL Server - Create User Id
 Go to Security create a login, then Server Roles --> dbcreator & sysadmin
+
+User Mapping - db_owner, db_datawriter, and db_datareader
+
+use DatabaseName
+GO
+sp_changedbowner 'sa'
 
 To enable Service Broker run: ALTER DATABASE [Database_name] SET ENABLE_BROKER WITH ROLLBACK IMMEDIATE;
 To disable Service Broker: ALTER DATABASE [Database_name] SET DISABLE_BROKER WITH ROLLBACK IMMEDIATE;
