@@ -20,6 +20,7 @@ import { ConfirmCommComponent } from './components/dialogs/confirm-comm/confirm-
 import { ConfirmInduComponent } from './components/dialogs/confirm-indu/confirm-indu.component';
 import { ConfirmResiComponent } from './components/dialogs/confirm-resi/confirm-resi.component';
 import { ConfirmBrgyComponent } from './components/dialogs/confirm-brgy/confirm-brgy.component';
+import { ConfirmStaffComponent } from './components/dialogs/confirm-staff/confirm-staff.component';
 
 
 
@@ -36,7 +37,8 @@ import { ConfirmBrgyComponent } from './components/dialogs/confirm-brgy/confirm-
     ConfirmCommComponent,
     ConfirmInduComponent,
     ConfirmResiComponent,
-    ConfirmBrgyComponent
+    ConfirmBrgyComponent,
+    ConfirmStaffComponent
   ],
   imports: [
     CommonModule,

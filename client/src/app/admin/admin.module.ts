@@ -14,6 +14,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { SiteManagementComponent } from './site-management/site-management.component';
+import { StaffComponent } from './site-management/staff/staff.component';
 
 
 
@@ -22,7 +23,8 @@ import { SiteManagementComponent } from './site-management/site-management.compo
     AdminPanelComponent,
     RolesModalComponent,
     UserManagementComponent,
-    SiteManagementComponent
+    SiteManagementComponent,
+    StaffComponent
   ],
   imports: [
     CommonModule,
