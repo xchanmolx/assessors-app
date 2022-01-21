@@ -47,3 +47,9 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+<ng-container *ngIf="totalCount === 0">
+    <div class="mt-3 text-center">
+        There are <strong>0</strong> results for this table
+    </div>
+</ng-container>
