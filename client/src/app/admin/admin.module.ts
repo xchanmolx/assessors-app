@@ -15,6 +15,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { SiteManagementComponent } from './site-management/site-management.component';
 import { StaffComponent } from './site-management/staff/staff.component';
+import { MunicipalityCityDistrictComponent } from './site-management/municipality-city-district/municipality-city-district.component';
 
 
 
@@ -24,7 +25,8 @@ import { StaffComponent } from './site-management/staff/staff.component';
     RolesModalComponent,
     UserManagementComponent,
     SiteManagementComponent,
-    StaffComponent
+    StaffComponent,
+    MunicipalityCityDistrictComponent
   ],
   imports: [
     CommonModule,

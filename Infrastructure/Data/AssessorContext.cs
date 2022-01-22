@@ -18,6 +18,7 @@ namespace Infrastructure.Data
         public DbSet<IndustrialLand> IndustrialLands { get; set; }
         public DbSet<Barangay> Barangays { get; set; }
         public DbSet<Staff> Staffs { get; set; }
+        public DbSet<MunicipalityCityDistrict> MunicipalityCityDistricts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {

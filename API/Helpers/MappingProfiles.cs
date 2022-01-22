@@ -80,6 +80,13 @@ namespace API.Helpers
             CreateMap<StaffToUpdateDto, Staff>();
             // Delete for Staff
             CreateMap<Staff, StaffToDeleteDto>();
+
+            // Creation for Municipality / City / District
+            CreateMap<MunicipalityCityDistrictToCreateDto, MunicipalityCityDistrict>();
+            // Update for Municipality / City / District
+            CreateMap<MunicipalityCityDistrictToUpdateDto, MunicipalityCityDistrict>();
+            // Delete for Municipality / City / District
+            CreateMap<MunicipalityCityDistrict, MunicipalityCityDistrictToDeleteDto>();
         }
     }
 }
