@@ -1,0 +1,52 @@
+<div class="header">
+    <h2 mat-dialog-title>
+        <strong>{{action}}</strong> data
+    </h2>
+    <button mat-icon-button [mat-dialog-close]="false">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<div mat-dialog-content>
+    <ng-container *ngIf="action == 'Add'">
+        <h2>Municipality / City / District</h2>
+        <app-text-input [(ngModel)]="local_data.name" [label]="'Name'" required></app-text-input>
+        <mat-form-field appearance="fill">
+            <mat-label>Level</mat-label>
+            <mat-select [(ngModel)]="local_data.level" placeholder="Level" required>
+              <mat-option value="municipality">Municipality</mat-option>
+              <mat-option value="city">City</mat-option>
+              <mat-option value="district">District</mat-option>
+            </mat-select>
+            <mat-error>Please select a level</mat-error>
+        </mat-form-field>
+    </ng-container>
+
+    <ng-container *ngIf="action == 'Update'">
+        <h2>Municipality / City / District</h2>
+        <app-text-input [(ngModel)]="local_data.name" [label]="'Name'" required></app-text-input>
+        <mat-form-field appearance="fill">
+            <mat-label>Level</mat-label>
+            <mat-select [(ngModel)]="local_data.level" placeholder="Level" required>
+              <mat-option value="municipality">Municipality</mat-option>
+              <mat-option value="city">City</mat-option>
+              <mat-option value="district">District</mat-option>
+            </mat-select>
+            <mat-error>Please select a level</mat-error>
+        </mat-form-field>
+    </ng-container>
+
+    <ng-container *ngIf="action == 'Delete'">
+        <h2>Municipality / City / District</h2>
+        Are you sure you want to delete <b>{{local_data.name}}?</b>
+    </ng-container>
+</div>
+
+<div mat-dialog-actions [align]="'end'">
+    <button (click)="closeDialog()" mat-raised-button [mat-dialog-close]="false">
+        Cancel
+    </button>
+    <button (click)="doAction()" mat-raised-button color="primary" [mat-dialog-close]="true">
+        {{action}}
+    </button>
+</div>

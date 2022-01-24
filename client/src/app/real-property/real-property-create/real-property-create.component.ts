@@ -13,6 +13,9 @@ import { PhotoParams } from 'src/app/shared/models/photoParams';
 import { IResidential } from 'src/app/shared/models/residential';
 import { RealPropertyService } from '../real-property.service';
 import { BarangayParams } from 'src/app/shared/models/barangayParams';
+import { AdminService } from 'src/app/admin/admin.service';
+import { IStaff } from 'src/app/shared/models/staff';
+import { StaffParams } from 'src/app/shared/models/staffParams';
 
 @Component({
   selector: 'app-real-property-create',
@@ -29,8 +32,6 @@ export class RealPropertyCreateComponent implements OnInit {
   defaultMemoranda = 'General Revision';
   defaultApprovedMessage = '*Approved by authority from Mariflor D. Vero, OIC-Provincial Assessor Per office memorandum dated January 14, 2020, & pursuant to SEC. 472 (b) (12) of R.A. 7160';
   defaultNotes = 'This declaration is for real property taxation purpose only and the valuation indicated herein are based on the schedule of base unit & fair market value prepared for the herein purpose and duly enacted into Ordinance by the Sangguniang Panlalawigan Under Ordinance No. 2019-17 dated December 26, 2019, & approved by Gwendolyn F. Garcia, Provincial Governor dated January 3, 2020, & office circular no. 01-2020.';
-  defaultRecommendedBy = 'Roy D. Bendanillo';
-  defaultApprovedBy = 'Roy D. Bendanillo';
   taxDecId!: number;
   photoParams = new PhotoParams();
   today = new Date().toLocaleDateString();
@@ -46,15 +47,20 @@ export class RealPropertyCreateComponent implements OnInit {
   totalCountBara: number = 0;
   barangayParams = new BarangayParams();
   kindOfLandsParams = new KindOfLandsParams();
+  staffParams = new StaffParams();
+  staffs: IStaff[] = [];
+  assessor!: IStaff | undefined;
 
   constructor(private fb: FormBuilder, public realPropertyService: RealPropertyService,
-    private notifierService: NotifierService, private kindOfLandsService: KindOfLandsService) {
+    private notifierService: NotifierService, private kindOfLandsService: KindOfLandsService, 
+    private adminService: AdminService) {
     this.createAddRealPropertyForm();
     this.getAgriculturals();
     this.getCommercials();
     this.getIndustrials();
     this.getResidentials();
     this.getBarangays();
+    this.getStaffs();
   }
 
   ngOnInit(): void {
@@ -107,8 +113,8 @@ export class RealPropertyCreateComponent implements OnInit {
       taxableExempt: [this.defaultTaxableExemptSelect, Validators.required],
       quarter: [null, Validators.required],
       year: ['0', Validators.required],
-      recommendedBy: [this.defaultRecommendedBy],
-      approvedBy: [this.defaultApprovedBy],
+      recommendedBy: [null],
+      approvedBy: [null],
       date: [this.today],
       declarationCancels: [null, Validators.required],
       ownerTdNoCancels: [null],
@@ -345,5 +351,21 @@ export class RealPropertyCreateComponent implements OnInit {
       propertyLocation: this.defaultPropertyLocationSelect
     });
   }
+
+  getStaffs() {
+    this.adminService.getStaffs(this.staffParams).subscribe(response => {
+      this.staffs = response!.data;
+
+      // Find the specific staff
+      this.assessor = this.staffs.find(staff => staff.designation == 'assessor');
+      
+      // Assign default value for recommended by and approved by
+      this.createForm.patchValue({
+        recommendedBy: this.assessor?.name,
+        approvedBy: this.assessor?.name
+      });
+    }, error => {
+      this.notifierService.showNotification(`Problem loading the staffs. ${error.errors}`, 'OK', 'error');
+    });
+  }
 }
-` `

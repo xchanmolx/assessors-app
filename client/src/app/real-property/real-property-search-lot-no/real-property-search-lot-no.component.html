@@ -19,7 +19,15 @@
             <img src="../../assets/images/logo-512.png" alt="aloguinsan logo" class="logo d-flex justify-content-center">
             <h6 class="d-flex justify-content-center m-0">Republic of the Philippines</h6>
             <h6 class="d-flex justify-content-center m-0">Province of Cebu</h6>
-            <h6 class="d-flex justify-content-center m-0">Municipality of Aloguinsan</h6>
+            <ng-container *ngIf="municipality">
+                <h6 class="d-flex justify-content-center m-0">Municipality of {{municipality.name | titlecase}}</h6>
+            </ng-container>
+            <ng-container *ngIf="city">
+                <h6 class="d-flex justify-content-center m-0">City of {{city.name | titlecase}}</h6>
+            </ng-container>
+            <ng-container *ngIf="district">
+                <h6 class="d-flex justify-content-center m-0">District of {{district.name | titlecase}}</h6>
+            </ng-container>
             <h5 class="d-flex justify-content-center m-0"><strong>OFFICE OF THE MUNICIPAL ASSESSOR</strong></h5>
         </div>
     </div>
@@ -131,7 +139,15 @@
                     </mat-form-field> 
                 </h6>
                 <h6 class="m-0">Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{formattedDate}}</h6>
-                <h6 class="m-0">Place &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Aloguinsan, Cebu</h6>
+                <ng-container *ngIf="municipality">
+                    <h6 class="m-0">Place &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{municipality.name | titlecase}}, Cebu</h6>
+                </ng-container>
+                <ng-container *ngIf="city">
+                    <h6 class="m-0">Place &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{city.name | titlecase}}, Cebu</h6>
+                </ng-container>
+                <ng-container *ngIf="district">
+                    <h6 class="m-0">Place &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{district.name | titlecase}}, Cebu</h6>
+                </ng-container>
             </div>
         </div>
     </div>

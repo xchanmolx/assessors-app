@@ -10,7 +10,6 @@ import { IStaff } from 'src/app/shared/models/staff';
 export class ConfirmStaffComponent implements OnInit {
   local_data!: any;
   action!: string;
-  selected: string = 'male'
 
   constructor(@Optional() @Inject(MAT_DIALOG_DATA) public data: IStaff,
   public dialogRef: MatDialogRef<ConfirmStaffComponent>) {
