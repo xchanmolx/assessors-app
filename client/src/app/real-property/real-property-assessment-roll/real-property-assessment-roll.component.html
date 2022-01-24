@@ -60,10 +60,18 @@
         
         <div class="row">
             <div class="col-4">
-                <h5 class="m-0">PROVINCE/CITY: <u>CEBU</u></h5>
+                <h5 class="m-0">PROVINCE: <u>CEBU</u></h5>
             </div>
             <div class="col-4">
-                <h5 class="m-0">MUNICIPALITY/DISTRICT: <u>ALOGUINSAN</u></h5>
+                <ng-container *ngIf="municipality">
+                    <h5 class="m-0">MUNICIPALITY/CITY/DISTRICT: <u>{{municipality.name | uppercase}}</u></h5>
+                </ng-container>
+                <ng-container *ngIf="city">
+                    <h5 class="m-0">MUNICIPALITY/CITY/DISTRICT: <u>{{city.name | uppercase}}</u></h5>
+                </ng-container>
+                <ng-container *ngIf="district">
+                    <h5 class="m-0">MUNICIPALITY/CITY/DISTRICT: <u>{{district.name | uppercase}}</u></h5>
+                </ng-container>
             </div>
             <div class="col-4">
                 <h5 class="m-0">BARANGAY: <u>{{defaultBarangaySelect | uppercase}}</u></h5>

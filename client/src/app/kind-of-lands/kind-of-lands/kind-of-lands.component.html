@@ -1,6 +1,14 @@
 <div class="container mt-3">
     <h3 class="d-flex justify-content-center m-0 fw-bold">SCHEDULE OF BASE UNIT MARKET VALUES FOR DIFFERENT LANDS</h3>
-    <h3 class="d-flex justify-content-center m-0 fw-bold">MUNICIPALITY OF ALOGUINSAN</h3>
+    <ng-container *ngIf="municipality">
+        <h3 class="d-flex justify-content-center m-0 fw-bold">MUNICIPALITY OF {{municipality.name | uppercase}}</h3>
+    </ng-container>
+    <ng-container *ngIf="city">
+        <h3 class="d-flex justify-content-center m-0 fw-bold">CITY OF {{city.name | uppercase}}</h3>
+    </ng-container>
+    <ng-container *ngIf="district">
+        <h3 class="d-flex justify-content-center m-0 fw-bold">DISTRICT OF {{district.name | uppercase}}</h3>
+    </ng-container>
     <h3 class="d-flex justify-content-center fw-bold">PROVINCE OF CEBU</h3>
     <mat-tab-group mat-align-tabs="center">
         <mat-tab label="Agricultural">

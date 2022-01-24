@@ -87,6 +87,13 @@ namespace API.Helpers
             CreateMap<MunicipalityCityDistrictToUpdateDto, MunicipalityCityDistrict>();
             // Delete for Municipality / City / District
             CreateMap<MunicipalityCityDistrict, MunicipalityCityDistrictToDeleteDto>();
+
+            // Creation for Province
+            CreateMap<ProvinceToCreateDto, Province>();
+            // Update for Province
+            CreateMap<ProvinceToUpdateDto, Province>();
+            // Delete for Province
+            CreateMap<Province, ProvinceToDeleteDto>();
         }
     }
 }

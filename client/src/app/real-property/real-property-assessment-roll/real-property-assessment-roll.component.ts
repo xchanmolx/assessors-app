@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { AccountService } from 'src/app/account/account.service';
+import { AdminService } from 'src/app/admin/admin.service';
 import { NotifierService } from 'src/app/core/services/notifier.service';
 import { KindOfLandsService } from 'src/app/kind-of-lands/kind-of-lands.service';
 import { IBarangay } from 'src/app/shared/models/barangay';
 import { BarangayParams } from 'src/app/shared/models/barangayParams';
+import { IMunicipalityCityDistrict } from 'src/app/shared/models/municipalityCityDistrict';
+import { MunicipalityCityDistrictParams } from 'src/app/shared/models/municipalityCityDistrictParams';
 import { IRealProperty } from 'src/app/shared/models/realProperty';
 import { RealPropertyParams } from 'src/app/shared/models/realPropertyParams';
 import { RealPropertyService } from '../real-property.service';
@@ -31,15 +34,22 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   barangayParams = new BarangayParams();
   defaultBarangaySelect!: string;
   maxYear!: number;
+  municipalityCityDistricts: IMunicipalityCityDistrict[] = [];
+  municipalityCityDistrictParams = new MunicipalityCityDistrictParams();
+  municipality!: IMunicipalityCityDistrict | undefined;
+  city!: IMunicipalityCityDistrict | undefined;
+  district!: IMunicipalityCityDistrict | undefined;
 
   displayedColumns: string[] = ['owner', 'propertyIndentificationNo', 'tdNo', 'arpNo', 'address',
    'kindOfPropertyAssessed', 'kindOfProperties.kindOfLands', 'propertyLocation', 'kindOfProperties.assessedValue', 'declarationCancels', 'previousAssessedValue', 'year'];
   showFirstLastButtons = true;
 
   constructor(private realPropertyService: RealPropertyService, private accountService: AccountService,
-    private notifierService: NotifierService, private kindOfLandsService: KindOfLandsService) {
+    private notifierService: NotifierService, private kindOfLandsService: KindOfLandsService,
+    private adminService: AdminService) {
     this.getRealPropertiesAssessmentRoll();
     this.getBarangays();
+    this.getMunicipalityCityDistricts();
   }
 
   ngOnInit(): void {
@@ -114,5 +124,22 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
     } catch (error) {
       return undefined;
     }
+  }
+
+  getMunicipalityCityDistricts() {
+    this.adminService.getMunicipalityCityDistricts(this.municipalityCityDistrictParams).subscribe(response => {
+      this.municipalityCityDistricts = response!.data;
+
+      // Find the specific municipality
+      this.municipality = this.municipalityCityDistricts.find(mun => mun.level == 'municipality');
+
+      // Find the specific city
+      this.city = this.municipalityCityDistricts.find(city => city.level == 'city');
+
+      // Find the specific district
+      this.district = this.municipalityCityDistricts.find(dis => dis.level == 'district');
+    }, error => {
+      this.notifierService.showNotification(`Problem loading the municipalies / cities / districts. ${error.errors}`, 'OK', 'error');
+    });
   }
 }
