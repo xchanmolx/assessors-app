@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { SiteManagementComponent } from './site-management/site-management.component';
 import { StaffComponent } from './site-management/staff/staff.component';
 import { MunicipalityCityDistrictComponent } from './site-management/municipality-city-district/municipality-city-district.component';
+import { ProvinceComponent } from './site-management/province/province.component';
 
 
 
@@ -26,7 +27,8 @@ import { MunicipalityCityDistrictComponent } from './site-management/municipalit
     UserManagementComponent,
     SiteManagementComponent,
     StaffComponent,
-    MunicipalityCityDistrictComponent
+    MunicipalityCityDistrictComponent,
+    ProvinceComponent
   ],
   imports: [
     CommonModule,

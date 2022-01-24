@@ -1,0 +1,34 @@
+<div class="header">
+    <h2 mat-dialog-title>
+        <strong>{{action}}</strong> data
+    </h2>
+    <button mat-icon-button [mat-dialog-close]="false">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<div mat-dialog-content>
+    <ng-container *ngIf="action == 'Add'">
+        <h2>Province</h2>
+        <app-text-input [(ngModel)]="local_data.name" [label]="'Name'" required></app-text-input>
+    </ng-container>
+
+    <ng-container *ngIf="action == 'Update'">
+        <h2>Province</h2>
+        <app-text-input [(ngModel)]="local_data.name" [label]="'Name'" required></app-text-input>
+    </ng-container>
+
+    <ng-container *ngIf="action == 'Delete'">
+        <h2>Province</h2>
+        Are you sure you want to delete <b>{{local_data.name}}?</b>
+    </ng-container>
+</div>
+
+<div mat-dialog-actions [align]="'end'">
+    <button (click)="closeDialog()" mat-raised-button [mat-dialog-close]="false">
+        Cancel
+    </button>
+    <button (click)="doAction()" mat-raised-button color="primary" [mat-dialog-close]="true">
+        {{action}}
+    </button>
+</div>

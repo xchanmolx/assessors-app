@@ -31,7 +31,7 @@ export class MunicipalityCityDistrictComponent implements OnInit {
       this.totalCount = response!.count;
       this.municipalityCityDistricts = response!.data;
     }, error => {
-      this.notifierService.showNotification(`Problem loading the municipality / city / district. ${error.errors}`, 'OK', 'error');
+      this.notifierService.showNotification(`Problem loading the municipalities / cities / districts. ${error.errors}`, 'OK', 'error');
     });
   }
 

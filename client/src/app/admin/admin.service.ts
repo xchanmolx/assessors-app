@@ -4,9 +4,12 @@ import { map } from 'rxjs/operators';
 // import { environment } from 'src/environments/environment.prod'; // Production
 import { environment } from 'src/environments/environment'; // Development
 import { ICountMunicipalityCityDistrict } from '../shared/models/countMunicipalityCityDistrict';
+import { ICountProvince } from '../shared/models/countProvince';
 import { ICountStaff } from '../shared/models/countStaff';
 import { IMunicipalityCityDistrict } from '../shared/models/municipalityCityDistrict';
 import { MunicipalityCityDistrictParams } from '../shared/models/municipalityCityDistrictParams';
+import { IProvince } from '../shared/models/province';
+import { ProvinceParams } from '../shared/models/provinceParams';
 import { IStaff } from '../shared/models/staff';
 import { StaffParams } from '../shared/models/staffParams';
 import { IUser } from '../shared/models/user';
@@ -89,5 +92,32 @@ export class AdminService {
 
   deleteMunicipalityCityDistrict(id: number) {
     return this.http.delete<IMunicipalityCityDistrict>(this.baseUrl + 'municipalityCityDistrict/' + id);
+  }
+
+  getProvinces(provinceParams: ProvinceParams) {
+    let params = new HttpParams();
+
+    if (provinceParams.search) {
+      params = params.append('search', provinceParams.search);
+    }
+
+    return this.http.get<ICountProvince>(this.baseUrl + 'province', { observe: 'response', params })
+      .pipe(
+        map(response => {
+          return response.body;
+        })
+      );
+  }
+
+  createProvince(values: IProvince) {
+    return this.http.post<IProvince>(this.baseUrl + 'province', values);
+  }
+
+  updateProvince(id: number, values: IProvince) {
+    return this.http.put<IProvince>(this.baseUrl + 'province/' + id, values);
+  }
+
+  deleteProvince(id: number) {
+    return this.http.delete<IProvince>(this.baseUrl + 'province/' + id);
   }
 }
