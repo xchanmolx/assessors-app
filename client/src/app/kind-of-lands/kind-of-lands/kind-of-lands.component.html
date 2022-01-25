@@ -9,7 +9,7 @@
     <ng-container *ngIf="district">
         <h3 class="d-flex justify-content-center m-0 fw-bold">DISTRICT OF {{district.name | uppercase}}</h3>
     </ng-container>
-    <h3 class="d-flex justify-content-center fw-bold">PROVINCE OF CEBU</h3>
+    <h3 class="d-flex justify-content-center fw-bold">PROVINCE OF {{province?.name | uppercase}}</h3>
     <mat-tab-group mat-align-tabs="center">
         <mat-tab label="Agricultural">
             <app-kind-of-lands-agri-list></app-kind-of-lands-agri-list>

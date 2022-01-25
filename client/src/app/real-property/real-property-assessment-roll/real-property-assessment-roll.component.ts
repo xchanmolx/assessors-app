@@ -8,6 +8,8 @@ import { IBarangay } from 'src/app/shared/models/barangay';
 import { BarangayParams } from 'src/app/shared/models/barangayParams';
 import { IMunicipalityCityDistrict } from 'src/app/shared/models/municipalityCityDistrict';
 import { MunicipalityCityDistrictParams } from 'src/app/shared/models/municipalityCityDistrictParams';
+import { IProvince } from 'src/app/shared/models/province';
+import { ProvinceParams } from 'src/app/shared/models/provinceParams';
 import { IRealProperty } from 'src/app/shared/models/realProperty';
 import { RealPropertyParams } from 'src/app/shared/models/realPropertyParams';
 import { RealPropertyService } from '../real-property.service';
@@ -39,6 +41,9 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   municipality!: IMunicipalityCityDistrict | undefined;
   city!: IMunicipalityCityDistrict | undefined;
   district!: IMunicipalityCityDistrict | undefined;
+  provinces: IProvince[] = [];
+  provinceParams = new ProvinceParams();
+  province!: IProvince;
 
   displayedColumns: string[] = ['owner', 'propertyIndentificationNo', 'tdNo', 'arpNo', 'address',
    'kindOfPropertyAssessed', 'kindOfProperties.kindOfLands', 'propertyLocation', 'kindOfProperties.assessedValue', 'declarationCancels', 'previousAssessedValue', 'year'];
@@ -50,6 +55,7 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
     this.getRealPropertiesAssessmentRoll();
     this.getBarangays();
     this.getMunicipalityCityDistricts();
+    this.getProvinces();
   }
 
   ngOnInit(): void {
@@ -142,4 +148,15 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
       this.notifierService.showNotification(`Problem loading the municipalies / cities / districts. ${error.errors}`, 'OK', 'error');
     });
   }
+
+  getProvinces() {
+    this.adminService.getProvinces(this.provinceParams).subscribe(response => {
+      this.provinces = response!.data;
+
+      this.province = this.provinces[0];
+    }, error => {
+      this.notifierService.showNotification(`Problem loading the provinces. ${error.errors}`, 'OK', 'error');
+    });
+  }
+
 }

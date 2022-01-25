@@ -18,8 +18,8 @@
         <div class="col">
             <img src="../../assets/images/logo-512.png" alt="aloguinsan logo" class="logo d-flex justify-content-center">
             <h6 class="d-flex justify-content-center m-0">Republic of the Philippines</h6>
-            <ng-container *ngIf="onlyOneProvince">
-                <h6 class="d-flex justify-content-center m-0">Province of {{onlyOneProvince.name | titlecase}}</h6>
+            <ng-container *ngIf="province">
+                <h6 class="d-flex justify-content-center m-0">Province of {{province.name | titlecase}}</h6>
             </ng-container>
             <ng-container *ngIf="municipality">
                 <h6 class="d-flex justify-content-center m-0">Municipality of {{municipality.name | titlecase}}</h6>
@@ -142,13 +142,13 @@
                 </h6>
                 <h6 class="m-0">Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{formattedDate}}</h6>
                 <ng-container *ngIf="municipality">
-                    <h6 class="m-0">Place &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{municipality.name | titlecase}}, {{onlyOneProvince?.name | titlecase}}</h6>
+                    <h6 class="m-0">Place &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{municipality.name | titlecase}}, {{province?.name | titlecase}}</h6>
                 </ng-container>
                 <ng-container *ngIf="city">
-                    <h6 class="m-0">Place &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{city.name | titlecase}}, {{onlyOneProvince?.name | titlecase}}</h6>
+                    <h6 class="m-0">Place &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{city.name | titlecase}}, {{province?.name | titlecase}}</h6>
                 </ng-container>
                 <ng-container *ngIf="district">
-                    <h6 class="m-0">Place &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{district.name | titlecase}}, {{onlyOneProvince?.name | titlecase}}</h6>
+                    <h6 class="m-0">Place &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{district.name | titlecase}}, {{province?.name | titlecase}}</h6>
                 </ng-container>
             </div>
         </div>

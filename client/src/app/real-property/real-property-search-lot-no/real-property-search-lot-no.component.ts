@@ -37,7 +37,7 @@ export class RealPropertySearchLotNoComponent implements OnInit {
   district!: IMunicipalityCityDistrict | undefined;
   provinces: IProvince[] = [];
   provinceParams = new ProvinceParams();
-  onlyOneProvince!: IProvince;
+  province!: IProvince;
 
   displayedColumns: string[] = ['owner', 'propertyLocation', 'tdNo', 'year', 'surveyLotNo', 'kindOfProperties', 'memoranda'];
 
@@ -97,7 +97,7 @@ export class RealPropertySearchLotNoComponent implements OnInit {
       // Find the specific district
       this.district = this.municipalityCityDistricts.find(dis => dis.level == 'district');
     }, error => {
-      this.notifierService.showNotification(`Problem loading the municipalies / cities / districts. ${error.errors}`, 'OK', 'error');
+      this.notifierService.showNotification(`Problem loading the municipalities / cities / districts. ${error.errors}`, 'OK', 'error');
     });
   }
 
@@ -105,7 +105,7 @@ export class RealPropertySearchLotNoComponent implements OnInit {
     this.adminService.getProvinces(this.provinceParams).subscribe(response => {
       this.provinces = response!.data;
 
-      this.onlyOneProvince = this.provinces[0];
+      this.province = this.provinces[0];
     }, error => {
       this.notifierService.showNotification(`Problem loading the provinces. ${error.errors}`, 'OK', 'error');
     });
