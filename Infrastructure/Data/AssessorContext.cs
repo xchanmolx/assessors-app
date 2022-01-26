@@ -20,6 +20,7 @@ namespace Infrastructure.Data
         public DbSet<Staff> Staffs { get; set; }
         public DbSet<MunicipalityCityDistrict> MunicipalityCityDistricts { get; set; }
         public DbSet<Province> Provinces { get; set; }
+        public DbSet<Logo> logos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {

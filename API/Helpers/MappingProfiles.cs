@@ -94,6 +94,14 @@ namespace API.Helpers
             CreateMap<ProvinceToUpdateDto, Province>();
             // Delete for Province
             CreateMap<Province, ProvinceToDeleteDto>();
+
+            // Creation for Logo
+            CreateMap<Logo, LogoForCreationDto>();
+            // Load for Logos
+            CreateMap<Logo, LogoForDetailsDto>()
+                .ForMember(d => d.Url, o => o.MapFrom<PropertyUrlResolverForLogo>());
+            // Delete for Logo
+            CreateMap<Logo, LogoToDeleteDto>();
         }
     }
 }
