@@ -16,7 +16,7 @@
 <div class="container-fluid" id="print-section">
     <div class="row mt-3">
         <div class="col">
-            <img src="../../assets/images/logo-512.png" alt="aloguinsan logo" class="logo d-flex justify-content-center">
+            <img src="{{logo1st?.url || '../../../../assets/images/logo-default.png'}}" alt="aloguinsan logo" class="logo d-flex justify-content-center">
             <h6 class="d-flex justify-content-center m-0">Republic of the Philippines</h6>
             <ng-container *ngIf="province">
                 <h6 class="d-flex justify-content-center m-0">Province of {{province.name | titlecase}}</h6>

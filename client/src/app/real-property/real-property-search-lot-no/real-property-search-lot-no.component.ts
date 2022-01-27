@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AccountService } from 'src/app/account/account.service';
 import { AdminService } from 'src/app/admin/admin.service';
 import { NotifierService } from 'src/app/core/services/notifier.service';
+import { ILogo } from 'src/app/shared/models/logo';
 import { IMunicipalityCityDistrict } from 'src/app/shared/models/municipalityCityDistrict';
 import { MunicipalityCityDistrictParams } from 'src/app/shared/models/municipalityCityDistrictParams';
 import { IProvince } from 'src/app/shared/models/province';
@@ -38,6 +39,8 @@ export class RealPropertySearchLotNoComponent implements OnInit {
   provinces: IProvince[] = [];
   provinceParams = new ProvinceParams();
   province!: IProvince;
+  logos: ILogo[] = [];
+  logo1st!: ILogo | undefined;
 
   displayedColumns: string[] = ['owner', 'propertyLocation', 'tdNo', 'year', 'surveyLotNo', 'kindOfProperties', 'memoranda'];
 
@@ -49,6 +52,7 @@ export class RealPropertySearchLotNoComponent implements OnInit {
       this.getStaffs();
       this.getMunicipalityCityDistricts();
       this.getProvinces();
+      this.getLogos();
      }
 
   ngOnInit(): void {
@@ -108,6 +112,17 @@ export class RealPropertySearchLotNoComponent implements OnInit {
       this.province = this.provinces[0];
     }, error => {
       this.notifierService.showNotification(`Problem loading the provinces. ${error.errors}`, 'OK', 'error');
+    });
+  }
+
+  getLogos() {
+    this.adminService.getLogos().subscribe(response => {
+      this.logos = response;
+
+      // Find the specific 1st logo
+      this.logo1st = this.logos.find(logo => logo.ordinal == 'logo1st');
+    }, error => {
+      this.notifierService.showNotification(`Problem loading the logos. ${error.errors}`, 'OK', 'error');
     });
   }
 
