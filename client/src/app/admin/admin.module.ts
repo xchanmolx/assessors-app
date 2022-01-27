@@ -17,6 +17,7 @@ import { SiteManagementComponent } from './site-management/site-management.compo
 import { StaffComponent } from './site-management/staff/staff.component';
 import { MunicipalityCityDistrictComponent } from './site-management/municipality-city-district/municipality-city-district.component';
 import { ProvinceComponent } from './site-management/province/province.component';
+import { LogoComponent } from './site-management/logo/logo.component';
 
 
 
@@ -28,7 +29,8 @@ import { ProvinceComponent } from './site-management/province/province.component
     SiteManagementComponent,
     StaffComponent,
     MunicipalityCityDistrictComponent,
-    ProvinceComponent
+    ProvinceComponent,
+    LogoComponent
   ],
   imports: [
     CommonModule,

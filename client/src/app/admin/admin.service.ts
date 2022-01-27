@@ -6,6 +6,8 @@ import { environment } from 'src/environments/environment'; // Development
 import { ICountMunicipalityCityDistrict } from '../shared/models/countMunicipalityCityDistrict';
 import { ICountProvince } from '../shared/models/countProvince';
 import { ICountStaff } from '../shared/models/countStaff';
+import { ILogo } from '../shared/models/logo';
+import { LogoParams } from '../shared/models/logoParams';
 import { IMunicipalityCityDistrict } from '../shared/models/municipalityCityDistrict';
 import { MunicipalityCityDistrictParams } from '../shared/models/municipalityCityDistrictParams';
 import { IProvince } from '../shared/models/province';
@@ -19,6 +21,7 @@ import { IUser } from '../shared/models/user';
 })
 export class AdminService {
   baseUrl = environment.apiUrl
+  formFiles: string[] = [];
 
   constructor(private http: HttpClient) { }
 
@@ -119,5 +122,41 @@ export class AdminService {
 
   deleteProvince(id: number) {
     return this.http.delete<IProvince>(this.baseUrl + 'province/' + id);
+  }
+
+  getLogos() {
+    return this.http.get<ILogo[]>(this.baseUrl + 'photos/logos');
+  }
+
+  onPhotoFileChange(event: any) {
+    for (var i = 0; i < event.target.files.length; i++) { 
+      this.formFiles.push(event.target.files[i]);
+    }
+  }
+
+  uploadLogos(logoParams: LogoParams) {
+    let params = new HttpParams();
+
+    if (logoParams.ordinal) {
+      params = params.append('ordinal', logoParams.ordinal);
+    }
+
+    params = params.append('subDirectory', logoParams.subDirectory);
+
+    let formData = new FormData();
+
+    for (let i = 0; i < this.formFiles.length; i++) {
+      formData.append('formFiles', this.formFiles[i]);
+    }
+
+    return this.http.post(this.baseUrl + 'photos/logo', formData, { params });
+  }
+
+  deleteLogo(id: number, logoParams: LogoParams) {
+    let params = new HttpParams();
+
+    params = params.append('subDirectory', logoParams.subDirectory);
+
+    return this.http.delete<ILogo>(this.baseUrl + 'photos/logo/' + id, { params });
   }
 }

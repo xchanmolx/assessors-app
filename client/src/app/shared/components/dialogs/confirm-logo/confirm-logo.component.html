@@ -1,0 +1,49 @@
+<div class="header">
+    <h2 mat-dialog-title>
+        <strong>{{action}}</strong> data
+    </h2>
+    <button mat-icon-button [mat-dialog-close]="false">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<div mat-dialog-content>
+    <ng-container *ngIf="action == 'Add'">
+        <h2>Logo</h2>
+        <mat-form-field appearance="fill">
+            <mat-label>Ordinal</mat-label>
+            <mat-select [(ngModel)]="local_data.ordinal" placeholder="Ordinal" required>
+              <mat-option value="logo1st">Logo 1st</mat-option>
+              <mat-option value="logo2nd">Logo 2nd</mat-option>
+              <mat-option value="logo3rd">Logo 3rd</mat-option>
+            </mat-select>
+            <mat-error>Please select an ordinal</mat-error>
+        </mat-form-field>
+        <div class="form-group mb-3">
+            <label for="formFiles">Upload Photos</label>
+            <input 
+                [(ngModel)]="local_data.formFiles"
+                id="formFiles" 
+                type="file" 
+                multiple
+                class="form-control"
+                accept="image/png, image/gif, image/jpeg"
+                (click)="clearInputFileValue()"
+                (change)="adminService.onPhotoFileChange($event)">
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="action == 'Delete'">
+        <h2>Logo</h2>
+        Are you sure you want to delete <b>{{local_data.ordinal}}?</b>
+    </ng-container>
+</div>
+
+<div mat-dialog-actions [align]="'end'">
+    <button (click)="closeDialog()" mat-raised-button [mat-dialog-close]="false">
+        Cancel
+    </button>
+    <button (click)="doAction()" mat-raised-button color="primary" [mat-dialog-close]="true">
+        {{action}}
+    </button>
+</div>

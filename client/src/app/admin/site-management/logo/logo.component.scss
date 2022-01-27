@@ -1,0 +1,13 @@
+table {
+  width: 100%;
+}
+
+.logo {
+  cursor: pointer;
+  max-height: 49px;
+  margin: 3px;
+
+  &:focus {
+      outline: none;
+  }
+}
