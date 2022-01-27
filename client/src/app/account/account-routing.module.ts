@@ -7,11 +7,12 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent, data: {title: 'Login Account'} },
+  { path: 'register', component: RegisterComponent, data: {title: 'Register Account'} },
   { path: 'edit', component: EditComponent,
     resolve: {user: UserEditResolver},
-    canDeactivate: [PreventUnsavedChangesGuard] }
+    canDeactivate: [PreventUnsavedChangesGuard],
+    data: {title: 'Edit Account'} }
 ];
 
 @NgModule({

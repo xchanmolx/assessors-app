@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { filter, map } from 'rxjs/operators';
 import { AccountService } from './account/account.service';
 
 @Component({
@@ -9,12 +12,32 @@ import { AccountService } from './account/account.service';
 })
 export class AppComponent implements OnInit {
   jwtHelper = new JwtHelperService();
+  title = 'Assessors Program';
 
-  constructor(private accountService: AccountService) { 
+  constructor(private accountService: AccountService, private titleService: Title,
+      private router: Router, private activatedRoute: ActivatedRoute) { 
     this.loadCurrentUser();
   }
 
   ngOnInit(): void {
+    // Dynamic Page Title
+    const appTitle = this.titleService.getTitle();
+    this.router
+      .events.pipe(
+        filter(event => event instanceof NavigationEnd),
+        map(() => {
+          let child = this.activatedRoute.firstChild;
+          while (child?.firstChild) {
+            child = child.firstChild;
+          }
+          if (child?.snapshot.data['title']) {
+            return child.snapshot.data['title'];
+          }
+          return appTitle;
+        })
+      ).subscribe((ttl: string) => {
+        this.titleService.setTitle(ttl);
+      });
   }
 
   loadCurrentUser() {

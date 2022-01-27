@@ -7,10 +7,10 @@ import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, data: {breadcrumb: 'Home'} },
-  { path: 'about', component: AboutComponent, data: {breadcrumb: 'About'} },
-  { path: 'server-error', component: ServerErrorComponent, data: {breadcrumb: 'Server Error'} },
-  { path: 'not-found', component: NotFoundComponent, data: {breadcrumb: 'Not Found'} },
+  { path: '', component: HomeComponent, data: {breadcrumb: 'Home', title: 'Assessor\'s Application'} },
+  { path: 'about', component: AboutComponent, data: {breadcrumb: 'About', title: 'About'} },
+  { path: 'server-error', component: ServerErrorComponent, data: {breadcrumb: 'Server Error', title: 'Server Error'} },
+  { path: 'not-found', component: NotFoundComponent, data: {breadcrumb: 'Not Found', title: 'Not Found'} },
   { path: 'real-property', loadChildren: () => import('./real-property/real-property.module').then(mod => mod.RealPropertyModule), 
     data: {breadcrumb: 'Real Property'}, canActivate: [AuthGuard], runGuardsAndResolvers: 'always' },
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(mod => mod.AdminModule),
