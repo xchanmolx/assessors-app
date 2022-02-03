@@ -7,7 +7,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, data: {breadcrumb: 'Home', title: 'Assessor\'s Application'} },
+  { path: '', component: HomeComponent, data: {breadcrumb: 'Home', title: 'Home'} },
   { path: 'about', component: AboutComponent, data: {breadcrumb: 'About', title: 'About'} },
   { path: 'server-error', component: ServerErrorComponent, data: {breadcrumb: 'Server Error', title: 'Server Error'} },
   { path: 'not-found', component: NotFoundComponent, data: {breadcrumb: 'Not Found', title: 'Not Found'} },
