@@ -5,8 +5,14 @@ namespace API.Dtos
     public class KindOfPropertyToUpdateDto
     {
         public int Id { get; set; }
-        public string KindOfLands { get; set; }
 
+        private string _kindOfLands;
+        public string KindOfLands
+        {
+            get { return _kindOfLands; }
+            set { _kindOfLands = value.ToLower(); }
+        }
+        
         [Required]
         public string Classification { get; set; }
 

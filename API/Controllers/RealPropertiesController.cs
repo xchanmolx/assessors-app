@@ -88,6 +88,48 @@ namespace API.Controllers
                 totalItems, propertyParams.TotalAssessedValue, propertyParams.TotalPrevAssessedValue, data));
         }
 
+        [HttpGet("land")]
+        public async Task<ActionResult<Land<LandPropertyToReturnDto>>> GetPropertiesWithLandYear(
+            [FromQuery] LandPropertySpecParams landPropertyParams)
+        {
+            var spec = new LandPropertyWithRealPropertiesSpecification();
+
+            var countSpec = new LandPropertyWithFiltersForCountSpecification();
+
+            var totalItems = await _propertyRepo.CountAsync(countSpec);
+
+            var properties = await _propertyRepo.ListAsync(spec);
+
+            decimal totalMarketValue, totalAssessedValue, totalPrevMarketValue, totalPrevAssessedValue;
+
+            if (landPropertyParams.Year > 0)
+            {
+                properties = properties.Where(x => x.Year == landPropertyParams.Year).ToList();
+
+                totalItems = properties.Count();
+
+                totalMarketValue = properties.Sum(x => x.KindOfProperties.Sum(x => x.MarketValue));
+                totalAssessedValue = properties.Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue));
+                
+                totalPrevAssessedValue = properties.Sum(x => x.PreviousAssessedValue);
+            }
+
+            if (!string.IsNullOrEmpty(landPropertyParams.KindOfLand))
+            {
+                properties = properties.Where(x => x.KindOfProperties.Any(x => x.KindOfLands == landPropertyParams.KindOfLand));
+
+                var newList = properties.GroupBy(x => new {x.PropertyLocation})
+                    .Select(x => new LandPropertyToReturnDto(x.Key.PropertyLocation, x.Sum(x => x.PreviousAssessedValue)))
+                    .ToList();
+
+                totalItems = properties.Count();
+            }
+
+            var data = _mapper.Map<IEnumerable<LandPropertyToReturnDto>>(properties);
+
+            return Ok(new Land<LandPropertyToReturnDto>(totalItems, data));
+        }
+
         [HttpPost]
         public async Task<ActionResult<PropertyToCreateDto>> CreateProperty(PropertyToCreateDto propertyToCreateDto)
         {
