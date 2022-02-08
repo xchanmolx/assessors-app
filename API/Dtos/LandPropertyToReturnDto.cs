@@ -6,20 +6,28 @@ namespace API.Dtos
 {
     public class LandPropertyToReturnDto
     {
-        public LandPropertyToReturnDto(string propertyLocation, decimal previousAssessedValue)
+        public LandPropertyToReturnDto(string propertyLocation, decimal currentMarketValue, decimal currentAssessedValue,
+            decimal previousMarketValue, decimal previousAssessedValue, double area, int rpus)
         {
             PropertyLocation = propertyLocation;
+            CurrentMarketValue = currentMarketValue;
+            CurrentAssessedValue = currentAssessedValue;
+
+            PreviousMarketValue = previousMarketValue;
+
             PreviousAssessedValue = previousAssessedValue;
+            Area = area;
+            Rpus = rpus;
         }
 
-        // public int Id { get; set; }
-        // public string TdNo { get; set; }
-        // public string Owner { get; set; }
         public string PropertyLocation { get; set; }
-        // public List<KindOfPropertyForListDto> KindOfProperties { get; set; }
-        // public string TaxableExempt { get; set; }
-        // public int Year { get; set; }
-        // public string DeclarationCancels { get; set; }
+        public decimal CurrentMarketValue { get; set; }
+        public decimal CurrentAssessedValue { get; set; }
+
+        public decimal PreviousMarketValue { get; set; }
+
         public decimal PreviousAssessedValue { get; set; }
+        public double Area { get; set; }
+        public int Rpus { get; set; }
     }
 }

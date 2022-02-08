@@ -6,8 +6,13 @@ namespace API.Dtos
 {
     public class PropertyToCreateDto
     {
+        private string _tdNo;
         [Required(ErrorMessage = "The tax declaration number field is required.")]
-        public string TdNo { get; set; }
+        public string TdNo
+        {
+            get { return _tdNo; }
+            set { _tdNo = value.ToLower(); }
+        }
 
         [Required]
         public string Owner { get; set; }
@@ -61,8 +66,13 @@ namespace API.Dtos
         [Required]
         public DateTime Date { get; set; }
 
+        private string _declarationCancels;
         [Required(ErrorMessage = "The declaration cancels field is required.")]
-        public string DeclarationCancels { get; set; }
+        public string DeclarationCancels
+        {
+            get { return _declarationCancels; }
+            set { _declarationCancels = value.ToLower(); }
+        }
 
         public string OwnerTdNoCancels { get; set; }
         public decimal PreviousAssessedValue { get; set; }

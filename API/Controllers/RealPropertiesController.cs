@@ -100,32 +100,37 @@ namespace API.Controllers
 
             var properties = await _propertyRepo.ListAsync(spec);
 
-            decimal totalMarketValue, totalAssessedValue, totalPrevMarketValue, totalPrevAssessedValue;
+            List<LandPropertyToReturnDto> newList = new List<LandPropertyToReturnDto>();
+            List<TaxDecOfRealProperty> mergeListTD = new List<TaxDecOfRealProperty>();
 
-            if (landPropertyParams.Year > 0)
+            if (landPropertyParams.YearOne > 0 && landPropertyParams.YearTwo > 0)
             {
-                properties = properties.Where(x => x.Year == landPropertyParams.Year).ToList();
+                var propYearOne = properties.Where(x => x.Year == landPropertyParams.YearOne).ToList();
 
-                totalItems = properties.Count();
+                var propYearTwo = properties.Where(x => x.Year == landPropertyParams.YearTwo).ToList();
 
-                totalMarketValue = properties.Sum(x => x.KindOfProperties.Sum(x => x.MarketValue));
-                totalAssessedValue = properties.Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue));
-                
-                totalPrevAssessedValue = properties.Sum(x => x.PreviousAssessedValue);
+                mergeListTD = mergeListTD.Concat(propYearOne)
+                                            .Concat(propYearTwo)
+                                            .ToList();
+
+                totalItems = mergeListTD.Count();
             }
 
             if (!string.IsNullOrEmpty(landPropertyParams.KindOfLand))
             {
-                properties = properties.Where(x => x.KindOfProperties.Any(x => x.KindOfLands == landPropertyParams.KindOfLand));
+                var newListTaxDec = mergeListTD.Where(x => x.KindOfProperties.Any(x => x.KindOfLands == landPropertyParams.KindOfLand));
 
-                var newList = properties.GroupBy(x => new {x.PropertyLocation})
-                    .Select(x => new LandPropertyToReturnDto(x.Key.PropertyLocation, x.Sum(x => x.PreviousAssessedValue)))
-                    .ToList();
+                newList = newListTaxDec.GroupBy(x => new {x.PropertyLocation})
+                    .Select(x => new LandPropertyToReturnDto(x.Key.PropertyLocation, x.Where(x => x.Year == landPropertyParams.YearOne).Sum(x => x.KindOfProperties.Sum(x => x.MarketValue)),
+                            x.Where(x => x.Year == landPropertyParams.YearOne).Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue)),
+                            x.Where(x => x.Year == landPropertyParams.YearTwo).Sum(x => x.KindOfProperties.Sum(x => x.MarketValue)), x.Where(x => x.Year == landPropertyParams.YearOne).Sum(x => x.PreviousAssessedValue),
+                            x.Where(x => x.Year == landPropertyParams.YearOne).Sum(x => x.KindOfProperties.Sum(x => x.Area)), x.Where(x => x.Year == landPropertyParams.YearOne).Count()))
+                        .ToList();
 
-                totalItems = properties.Count();
+                totalItems = newList.Count();
             }
 
-            var data = _mapper.Map<IEnumerable<LandPropertyToReturnDto>>(properties);
+            var data = _mapper.Map<IEnumerable<LandPropertyToReturnDto>>(newList);
 
             return Ok(new Land<LandPropertyToReturnDto>(totalItems, data));
         }
