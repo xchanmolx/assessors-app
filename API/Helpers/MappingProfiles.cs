@@ -29,6 +29,9 @@ namespace API.Helpers
             // Lists for Land Real Property
             CreateMap<TaxDecOfRealProperty, LandPropertyToReturnDto>();
 
+            // List for Real Property for Years
+            CreateMap<TaxDecOfRealProperty, PropertyForYearsToReturnDto>();
+
             // Creation for Real Property
             CreateMap<PropertyToCreateDto, TaxDecOfRealProperty>();
             CreateMap<BoundaryToCreateDto, Boundary>();

@@ -1,0 +1,63 @@
+<!-- Material Table  -->
+<table mat-table [dataSource]="realPropMergeOfLands" #mytable class="my-table mat-elevation-z8">
+            
+    <!-- Property Location Column -->
+    <ng-container matColumnDef="propertyLocation">
+    <th mat-header-cell *matHeaderCellDef> BARANGAY </th>
+    <td mat-cell *matCellDef="let element"> {{element.propertyLocation | uppercase}} </td>
+    <td mat-footer-cell *matFooterCellDef> TOTAL </td>
+    </ng-container>
+
+    <!-- Current Market Value Column -->
+    <ng-container matColumnDef="currentMarketValue">
+    <th mat-header-cell *matHeaderCellDef> CURRENT MV </th>
+    <td mat-cell *matCellDef="let element"> {{element.currentMarketValue | number}} </td>
+    <td mat-footer-cell *matFooterCellDef> {{getTotalCurrentMarketValue() | number}} </td>
+    </ng-container>
+
+    <!-- Current Assessed Value Column -->
+    <ng-container matColumnDef="currentAssessedValue">
+    <th mat-header-cell *matHeaderCellDef> CURRENT AV </th>
+    <td mat-cell *matCellDef="let element"> {{element.currentAssessedValue | number}} </td>
+    <td mat-footer-cell *matFooterCellDef> {{getTotalCurrentAssessedValue() | number}} </td>
+    </ng-container>
+
+    <!-- Previous Market Value Column -->
+    <ng-container matColumnDef="previousMarketValue">
+    <th mat-header-cell *matHeaderCellDef> PREVIOUS MV </th>
+    <td mat-cell *matCellDef="let element"> {{element.previousMarketValue | number}} </td>
+    <td mat-footer-cell *matFooterCellDef> {{getTotalPreviousMarketValue() | number}} </td>
+    </ng-container>
+
+    <!-- Previous Assessed Value Column -->
+    <ng-container matColumnDef="previousAssessedValue">
+    <th mat-header-cell *matHeaderCellDef> PREVIOUS AV </th>
+    <td mat-cell *matCellDef="let element"> {{element.previousAssessedValue | number}} </td>
+    <td mat-footer-cell *matFooterCellDef> {{getTotalPreviousAssessedValue() | number}} </td>
+    </ng-container>
+
+    <!-- Area Column -->
+    <ng-container matColumnDef="area">
+    <th mat-header-cell *matHeaderCellDef> AREA </th>
+    <td mat-cell *matCellDef="let element"> {{element.area | number}} </td>
+    <td mat-footer-cell *matFooterCellDef> {{getTotalArea() | number}} </td>
+    </ng-container>
+
+    <!-- RPU'S Column -->
+    <ng-container matColumnDef="rpus">
+    <th mat-header-cell *matHeaderCellDef> RPU'S </th>
+    <td mat-cell *matCellDef="let element"> {{element.rpus | number}} </td>
+    <td mat-footer-cell *matFooterCellDef> {{getTotalRpus() | number}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+
+</table>
+
+<ng-container *ngIf="totalCount === 0">
+    <div class="mt-3 text-center">
+        There are <strong>0</strong> results for this table
+    </div>
+</ng-container>

@@ -88,6 +88,20 @@ namespace API.Controllers
                 totalItems, propertyParams.TotalAssessedValue, propertyParams.TotalPrevAssessedValue, data));
         }
 
+        [HttpGet("merge-years")]
+        public async Task<ActionResult<IEnumerable<PropertyForYearsToReturnDto>>> GetPropertiesForMergeYears()
+        {
+            var years = await _propertyRepo.ListAllAsync();
+
+            var mergeYears = years.GroupBy(x => new {x.Year})
+                .Select(x => new PropertyForYearsToReturnDto(x.Key.Year))
+                .ToList();
+
+            var data = _mapper.Map<IEnumerable<PropertyForYearsToReturnDto>>(mergeYears);
+
+            return Ok(data); 
+        }
+
         [HttpGet("land")]
         public async Task<ActionResult<Land<LandPropertyToReturnDto>>> GetPropertiesWithLandYear(
             [FromQuery] LandPropertySpecParams landPropertySpecParams)

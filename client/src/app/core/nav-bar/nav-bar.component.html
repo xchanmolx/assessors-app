@@ -71,6 +71,11 @@
           <div mat-line>Assessment Roll</div>
         </mat-list-item>
 
+        <mat-list-item *appHasRole="['Admin', 'Moderator']" routerLink="/real-property/merge-of-lands">
+          <mat-icon mat-list-icon>collections</mat-icon>
+          <div mat-line>Merge of Lands</div>
+        </mat-list-item>
+
         <mat-list-item *appHasRole="['Admin', 'Moderator']" routerLink="/kind-of-lands">
           <mat-icon mat-list-icon>vrpano</mat-icon>
           <div mat-line>Kind of Lands</div>

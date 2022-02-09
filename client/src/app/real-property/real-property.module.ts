@@ -21,6 +21,9 @@ import { MatInputAutofocusDirective } from './mat-input-autofocus.directive';
 import { RealPropertySearchLotNoComponent } from './real-property-search-lot-no/real-property-search-lot-no.component';
 import { NgxPrintModule } from 'ngx-print';
 import { RealPropertyAssessmentRollComponent } from './real-property-assessment-roll/real-property-assessment-roll.component';
+import { MergeOfLandsComponent } from './merge-of-lands/merge-of-lands.component';
+import { SingleUseLandComponent } from './merge-of-lands/single-use-land/single-use-land.component';
+import { MixUseLandComponent } from './merge-of-lands/mix-use-land/mix-use-land.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import { RealPropertyAssessmentRollComponent } from './real-property-assessment-
     RealPropertyCreateComponent,
     MatInputAutofocusDirective,
     RealPropertySearchLotNoComponent,
-    RealPropertyAssessmentRollComponent
+    RealPropertyAssessmentRollComponent,
+    MergeOfLandsComponent,
+    SingleUseLandComponent,
+    MixUseLandComponent
   ],
   imports: [
     CommonModule,

@@ -79,7 +79,7 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
       this.totalAssessedValue = response!.totalAssessedValue;
       this.totalPrevAssessedValue = response!.totalPrevAssessedValue;
     }, error => {
-      this.notifierService.showNotification(`${error.errors} Problem loading the assessment roll data.`, 'OK', 'error');
+      this.notifierService.showNotification(`Problem loading the assessment roll data. ${error.errors}`, 'OK', 'error');
     });
   }
 

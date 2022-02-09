@@ -5,5 +5,7 @@ export class RealPropertyParams {
     search?: string;
     taxableExempt?: string;
     year?: number;
+    yearTwo?: number;
+    kindOfLand?: string;
     propertyLocation?: string;
 }

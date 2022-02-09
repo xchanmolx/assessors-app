@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 // import { environment } from 'src/environments/environment.prod'; // Production
 import { environment } from 'src/environments/environment'; // Development
+import { ICountMergeLand } from '../shared/models/mergeLand';
 import { IOwnerNamePhotos } from '../shared/models/ownerNamePhotos';
 import { IPagination } from '../shared/models/pagination';
 import { IPhoto } from '../shared/models/photo';
@@ -43,6 +44,52 @@ export class RealPropertyService {
     params = params.append('pageSize', realPropertyParams.pageSize.toString());
 
     return this.http.get<IPagination>(this.baseUrl + 'realProperties', { observe: 'response', params })
+      .pipe(
+        map(response => {
+          return response.body;
+        })
+      );
+  }
+
+  getRealPropertiesSingleUseLand(realPropertyParams: RealPropertyParams) {
+    let params = new HttpParams();
+
+    if (realPropertyParams.year) {
+      params = params.append('yearOne', realPropertyParams.year);
+    }
+
+    if (realPropertyParams.yearTwo) {
+      params = params.append('yearTwo', realPropertyParams.yearTwo);
+    }
+
+    if (realPropertyParams.kindOfLand) {
+      params = params.append('kindOfLand', realPropertyParams.kindOfLand);
+    }
+
+    return this.http.get<ICountMergeLand>(this.baseUrl + 'realProperties/land', { observe: 'response', params })
+      .pipe(
+        map(response => {
+          return response.body;
+        })
+      );
+  }
+
+  getRealPropertiesMixUseLands(realPropertyParams: RealPropertyParams) {
+    let params = new HttpParams();
+
+    if (realPropertyParams.year) {
+      params = params.append('yearOne', realPropertyParams.year);
+    }
+
+    if (realPropertyParams.yearTwo) {
+      params = params.append('yearTwo', realPropertyParams.yearTwo);
+    }
+
+    if (realPropertyParams.kindOfLand) {
+      params = params.append('kindOfLand', realPropertyParams.kindOfLand);
+    }
+
+    return this.http.get<ICountMergeLand>(this.baseUrl + 'realProperties/lands/mixuse', { observe: 'response', params })
       .pipe(
         map(response => {
           return response.body;
