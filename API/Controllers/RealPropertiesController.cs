@@ -90,7 +90,7 @@ namespace API.Controllers
 
         [HttpGet("land")]
         public async Task<ActionResult<Land<LandPropertyToReturnDto>>> GetPropertiesWithLandYear(
-            [FromQuery] LandPropertySpecParams landPropertyParams)
+            [FromQuery] LandPropertySpecParams landPropertySpecParams)
         {
             var spec = new LandPropertyWithRealPropertiesSpecification();
 
@@ -103,11 +103,11 @@ namespace API.Controllers
             List<LandPropertyToReturnDto> newList = new List<LandPropertyToReturnDto>();
             List<TaxDecOfRealProperty> mergeListTD = new List<TaxDecOfRealProperty>();
 
-            if (landPropertyParams.YearOne > 0 && landPropertyParams.YearTwo > 0)
+            if (landPropertySpecParams.YearOne > 0 && landPropertySpecParams.YearTwo > 0)
             {
-                var propYearOne = properties.Where(x => x.Year == landPropertyParams.YearOne).ToList();
+                var propYearOne = properties.Where(x => x.Year == landPropertySpecParams.YearOne).ToList();
 
-                var propYearTwo = properties.Where(x => x.Year == landPropertyParams.YearTwo).ToList();
+                var propYearTwo = properties.Where(x => x.Year == landPropertySpecParams.YearTwo).ToList();
 
                 mergeListTD = mergeListTD.Concat(propYearOne)
                                             .Concat(propYearTwo)
@@ -116,15 +116,62 @@ namespace API.Controllers
                 totalItems = mergeListTD.Count();
             }
 
-            if (!string.IsNullOrEmpty(landPropertyParams.KindOfLand))
+            if (!string.IsNullOrEmpty(landPropertySpecParams.KindOfLand))
             {
-                var newListTaxDec = mergeListTD.Where(x => x.KindOfProperties.Any(x => x.KindOfLands == landPropertyParams.KindOfLand));
+                var newListTaxDec = mergeListTD.Where(x => x.KindOfProperties.Count() <= 1).Where(x => x.KindOfProperties.Any(x => x.KindOfLands == landPropertySpecParams.KindOfLand)).ToList();
 
                 newList = newListTaxDec.GroupBy(x => new {x.PropertyLocation})
-                    .Select(x => new LandPropertyToReturnDto(x.Key.PropertyLocation, x.Where(x => x.Year == landPropertyParams.YearOne).Sum(x => x.KindOfProperties.Sum(x => x.MarketValue)),
-                            x.Where(x => x.Year == landPropertyParams.YearOne).Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue)),
-                            x.Where(x => x.Year == landPropertyParams.YearTwo).Sum(x => x.KindOfProperties.Sum(x => x.MarketValue)), x.Where(x => x.Year == landPropertyParams.YearOne).Sum(x => x.PreviousAssessedValue),
-                            x.Where(x => x.Year == landPropertyParams.YearOne).Sum(x => x.KindOfProperties.Sum(x => x.Area)), x.Where(x => x.Year == landPropertyParams.YearOne).Count()))
+                    .Select(x => new LandPropertyToReturnDto(x.Key.PropertyLocation, x.Where(x => x.Year == landPropertySpecParams.YearOne).Sum(x => x.KindOfProperties.Sum(x => x.MarketValue)),
+                            x.Where(x => x.Year == landPropertySpecParams.YearOne).Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue)),
+                            x.Where(x => x.Year == landPropertySpecParams.YearTwo).Sum(x => x.KindOfProperties.Sum(x => x.MarketValue)), x.Where(x => x.Year == landPropertySpecParams.YearOne).Sum(x => x.PreviousAssessedValue),
+                            x.Where(x => x.Year == landPropertySpecParams.YearOne).Sum(x => x.KindOfProperties.Sum(x => x.Area)), x.Where(x => x.Year == landPropertySpecParams.YearOne).Count()))
+                        .ToList();
+
+                totalItems = newList.Count();
+            }
+
+            var data = _mapper.Map<IEnumerable<LandPropertyToReturnDto>>(newList);
+
+            return Ok(new Land<LandPropertyToReturnDto>(totalItems, data));
+        }
+
+        [HttpGet("lands/mixuse")]
+        public async Task<ActionResult<Land<LandPropertyToReturnDto>>> GetPropertiesWithLandsMixUse(
+            [FromQuery] LandPropertySpecParams landPropertySpecParams)
+        {
+            var spec = new LandPropertyWithRealPropertiesSpecification();
+
+            var countSpec = new LandPropertyWithFiltersForCountSpecification();
+
+            var totalItems = await _propertyRepo.CountAsync(countSpec);
+
+            var properties = await _propertyRepo.ListAsync(spec);
+
+            List<LandPropertyToReturnDto> newList = new List<LandPropertyToReturnDto>();
+            List<TaxDecOfRealProperty> mergeListTD = new List<TaxDecOfRealProperty>();
+
+            if (landPropertySpecParams.YearOne > 0 && landPropertySpecParams.YearTwo > 0)
+            {
+                var propYearOne = properties.Where(x => x.Year == landPropertySpecParams.YearOne).ToList();
+
+                var propYearTwo = properties.Where(x => x.Year == landPropertySpecParams.YearTwo).ToList();
+
+                mergeListTD = mergeListTD.Concat(propYearOne)
+                                            .Concat(propYearTwo)
+                                            .ToList();
+
+                totalItems = mergeListTD.Count();
+            }
+
+            if (!string.IsNullOrEmpty(landPropertySpecParams.KindOfLand))
+            {
+                var newListTaxDec = mergeListTD.Where(x => x.KindOfProperties.Count() > 1).Where(x => x.KindOfProperties.Any(x => x.KindOfLands == landPropertySpecParams.KindOfLand)).ToList();
+
+                newList = newListTaxDec.GroupBy(x => new {x.PropertyLocation})
+                    .Select(x => new LandPropertyToReturnDto(x.Key.PropertyLocation, x.Where(x => x.Year == landPropertySpecParams.YearOne).Sum(x => x.KindOfProperties.Sum(x => x.MarketValue)),
+                            x.Where(x => x.Year == landPropertySpecParams.YearOne).Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue)),
+                            x.Where(x => x.Year == landPropertySpecParams.YearTwo).Sum(x => x.KindOfProperties.Sum(x => x.MarketValue)), x.Where(x => x.Year == landPropertySpecParams.YearOne).Sum(x => x.PreviousAssessedValue),
+                            x.Where(x => x.Year == landPropertySpecParams.YearOne).Sum(x => x.KindOfProperties.Sum(x => x.Area)), x.Where(x => x.Year == landPropertySpecParams.YearOne).Count()))
                         .ToList();
 
                 totalItems = newList.Count();
