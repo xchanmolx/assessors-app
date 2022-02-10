@@ -1,9 +1,75 @@
-<div class="container-fluid mt-3">
-    <div class="text-center">
+<div class="container mt-3">
 
+    <div class="row p-3">
+        <div class="col-2 d-flex justify-content-center">
+            <h3><span><strong>{{totalCount}}</strong> Results</span></h3>
+        </div>
+        <div class="col-3">
+            <ng-container>
+                <mat-form-field appearance="fill">
+                    <mat-label>Select Kind of Land</mat-label>
+                    <mat-select (selectionChange)="onKindOfLandSelected($event)" [(ngModel)]="defaultKindOfLand">
+                      <mat-option *ngFor="let kindOfLand of kindOfLandsOptions" [value]="kindOfLand.value">
+                          {{kindOfLand.name | titlecase}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </ng-container>
+        </div>
+        <div class="col-3">
+            <ng-container>
+                <mat-form-field appearance="fill">
+                    <mat-label>Select Latest Year</mat-label>
+                    <mat-select (selectionChange)="onLatestYearSelected($event)" [(ngModel)]="defaultLatestYear">
+                      <mat-option *ngFor="let mergeYear of mergeYears" [value]="mergeYear.year">
+                          {{mergeYear.year}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </ng-container>
+        </div>
+        <div class="col-3">
+            <ng-container>
+                <mat-form-field appearance="fill">
+                    <mat-label>Select Old Year</mat-label>
+                    <mat-select (selectionChange)="onOldYearSelected($event)" [(ngModel)]="defaultOldYear">
+                      <mat-option *ngFor="let mergeYear of mergeYears" [value]="mergeYear.year">
+                          {{mergeYear.year}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </ng-container>
+        </div>
+        <div class="col-1">
+            <ng-container *ngIf="loggedIn()">
+                <button *appHasRole="['Admin', 'Moderator']" mat-icon-button matTooltip="Print"
+                [useExistingCss]="true"
+                printTitle="Merge of Lands"
+                printSectionId="print-section"
+                ngxPrint><mat-icon>print</mat-icon></button> 
+            </ng-container>
+        </div>
     </div>
-    <div class="text-center border border-dark bg-warning h5 fw-bold">
-        <span style="color: #990099;">AGRICULTURAL LAND</span>
+
+    <div id="print-section">
+        <h3 class="d-flex justify-content-center m-0 fw-bold">DIFFERENT KIND OF LANDS</h3>
+        <h3 class="d-flex justify-content-center m-0 fw-bold">PROVINCE OF {{province?.name | uppercase}}</h3>
+        <ng-container *ngIf="municipality">
+            <h3 class="d-flex justify-content-center m-0 fw-bold">MUNICIPALITY OF {{municipality.name | uppercase}}</h3>
+        </ng-container>
+        <ng-container *ngIf="city">
+            <h3 class="d-flex justify-content-center m-0 fw-bold">CITY OF {{city.name | uppercase}}</h3>
+        </ng-container>
+        <ng-container *ngIf="district">
+            <h3 class="d-flex justify-content-center m-0 fw-bold">DISTRICT OF {{district.name | uppercase}}</h3>
+        </ng-container>
+        <h6 class="d-flex justify-content-center m-0 fw-bold">Get the total of current market value, current assessed value, previous market value, previous assessed value, area, and rpu's by barangays</h6>
+        <div class="text-center border border-dark bg-warning h5 fw-bold">
+            <span style="color: #990099;">{{defaultKindOfLand | uppercase}} LAND</span>
+        </div>
+        <app-single-use-land 
+            [totalCount]="totalCount"
+            [realPropMergeOfLands]="realPropMergeOfLands">
+        </app-single-use-land>
     </div>
-    <app-single-use-land></app-single-use-land>
 </div>

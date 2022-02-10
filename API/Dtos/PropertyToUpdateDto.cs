@@ -54,8 +54,13 @@ namespace API.Dtos
         [Required(ErrorMessage = "The taxable or exempt field is required.")]
         public string TaxableExempt { get; set; }
 
+        private string _quarter;
         [Required]
-        public string Quarter { get; set; }
+        public string Quarter
+        {
+            get { return _quarter; }
+            set { _quarter = value.ToLower(); }
+        }
 
         [Required]
         public int Year { get; set; }

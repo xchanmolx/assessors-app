@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 // import { environment } from 'src/environments/environment.prod'; // Production
 import { environment } from 'src/environments/environment'; // Development
 import { ICountMergeLand } from '../shared/models/mergeLand';
+import { IMergeYears } from '../shared/models/mergeYears';
 import { IOwnerNamePhotos } from '../shared/models/ownerNamePhotos';
 import { IPagination } from '../shared/models/pagination';
 import { IPhoto } from '../shared/models/photo';
@@ -49,6 +50,10 @@ export class RealPropertyService {
           return response.body;
         })
       );
+  }
+
+  getMergeYears() {
+    return this.http.get<IMergeYears[]>(this.baseUrl + 'realProperties/merge-years');
   }
 
   getRealPropertiesSingleUseLand(realPropertyParams: RealPropertyParams) {

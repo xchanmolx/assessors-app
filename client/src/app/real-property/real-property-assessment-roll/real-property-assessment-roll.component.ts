@@ -6,6 +6,7 @@ import { NotifierService } from 'src/app/core/services/notifier.service';
 import { KindOfLandsService } from 'src/app/kind-of-lands/kind-of-lands.service';
 import { IBarangay } from 'src/app/shared/models/barangay';
 import { BarangayParams } from 'src/app/shared/models/barangayParams';
+import { IMergeYears } from 'src/app/shared/models/mergeYears';
 import { IMunicipalityCityDistrict } from 'src/app/shared/models/municipalityCityDistrict';
 import { MunicipalityCityDistrictParams } from 'src/app/shared/models/municipalityCityDistrictParams';
 import { IProvince } from 'src/app/shared/models/province';
@@ -34,8 +35,7 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   barangays: IBarangay[] = [];
   totalCountBara: number = 0;
   barangayParams = new BarangayParams();
-  defaultBarangaySelect!: string;
-  maxYear!: number;
+  defaultBarangaySelect: any;
   municipalityCityDistricts: IMunicipalityCityDistrict[] = [];
   municipalityCityDistrictParams = new MunicipalityCityDistrictParams();
   municipality!: IMunicipalityCityDistrict | undefined;
@@ -44,6 +44,8 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   provinces: IProvince[] = [];
   provinceParams = new ProvinceParams();
   province!: IProvince;
+  mergeYears: IMergeYears[] = [];
+  defaultLatestYear: any;
 
   displayedColumns: string[] = ['owner', 'propertyIndentificationNo', 'tdNo', 'arpNo', 'address',
    'kindOfPropertyAssessed', 'kindOfProperties.kindOfLands', 'propertyLocation', 'kindOfProperties.assessedValue', 'declarationCancels', 'previousAssessedValue', 'year'];
@@ -67,7 +69,7 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
 
   getRealPropertiesAssessmentRoll() {
     this.realPropertyParams.sort = "yearDesc";
-    this.realPropertyParams.year = this.maxYear;
+    this.realPropertyParams.year = this.defaultLatestYear;
     this.realPropertyParams.propertyLocation = this.defaultBarangaySelect;
     this.realPropertyParams.pageSize = this.defaultPageSize;
     this.realPropertyParams.taxableExempt = this.defaultTaxableSelect;
@@ -94,12 +96,12 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   }
 
   onEffectiveYear() {
-    this.realPropertyParams.year = this.maxYear;
+    this.realPropertyParams.year = this.defaultLatestYear;
     this.getRealPropertiesAssessmentRoll();
   }
 
   onReset() {
-    this.maxYear = 0;
+    this.defaultLatestYear = '';
     this.realPropertyParams = new RealPropertyParams();
     this.getRealPropertiesAssessmentRoll();
   }
@@ -110,26 +112,30 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
       this.barangays = response!.data;
 
       // First element or index of barangays array
-      this.defaultBarangaySelect = this.barangays[0].name;
+      var firstBarangay = this.barangays.find(x => x.name !== undefined);
 
-      this.getMaxYear();
+      this.defaultBarangaySelect = firstBarangay?.name;
+
+      this.getMergeYears();
       this.getRealPropertiesAssessmentRoll();
     }, error => {
       this.notifierService.showNotification(`${error.errors} Problem loading the barangays.`, 'OK', 'error');
     });
   }
 
-  getMaxYear() {
-    // First element or index of year array
-    this.maxYear = this.safetyCheck(() => this.realProperties[0].year);
-  }
+  getMergeYears() {
+    this.realPropertyService.getMergeYears().subscribe(response => {
+      this.mergeYears = response;
+      
+      // Get the max year value in an array
+      var maxYear = Math.max.apply(Math, this.mergeYears.map(function(y) {return y.year}));
 
-  safetyCheck(fn: any) {
-    try {
-      return fn();
-    } catch (error) {
-      return undefined;
-    }
+      this.defaultLatestYear = maxYear;
+      
+      this.getRealPropertiesAssessmentRoll();
+    }, error => {
+      this.notifierService.showNotification(`Problem loading the merge years. ${error.errors}`, 'OK', 'error');
+    });
   }
 
   getMunicipalityCityDistricts() {

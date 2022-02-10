@@ -31,8 +31,8 @@
         <div class="col-4">
             <mat-form-field style="width: 50%;" appearance="fill">
                 <mat-label>Effective Year</mat-label>
-                <input [(ngModel)]="maxYear" (keyup.enter)="onEffectiveYear()" matInput appMatInputAutofocus #message maxlength="4" placeholder="Ex. 2020" type="number" oninput="if(this.value.length > this.maxLength) 
-                this.value = this.value.slice(0, this.maxLength);" [value]="maxYear">
+                <input [(ngModel)]="defaultLatestYear" (keyup.enter)="onEffectiveYear()" matInput appMatInputAutofocus #message maxlength="4" placeholder="Ex. 2020" type="number" oninput="if(this.value.length > this.maxLength) 
+                this.value = this.value.slice(0, this.maxLength);" [value]="defaultLatestYear">
                 <mat-hint align="start"><strong>Type a year.</strong> </mat-hint>
                 <mat-hint align="end">{{message.value.length}} / 4</mat-hint>
             </mat-form-field>
@@ -56,7 +56,7 @@
         
         <h2 class="d-flex justify-content-center m-0" style="font-weight: bold;">ASSESSMENT ROLL</h2>
         <h4 class="d-flex justify-content-center m-0">{{defaultTaxableSelect | titlecase}} Properties</h4>
-        <h4 class="d-flex justify-content-center mb-1">(General Revision Year {{maxYear}})</h4>
+        <h4 class="d-flex justify-content-center mb-1">(General Revision Year {{defaultLatestYear}})</h4>
         
         <div class="row">
             <div class="col-4">
