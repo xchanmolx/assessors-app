@@ -29,25 +29,22 @@
             </ng-container>
         </div>
         <div class="col-4">
-            <mat-form-field style="width: 50%;" appearance="fill">
-                <mat-label>Effective Year</mat-label>
-                <input [(ngModel)]="defaultLatestYear" (keyup.enter)="onEffectiveYear()" matInput appMatInputAutofocus #message maxlength="4" placeholder="Ex. 2020" type="number" oninput="if(this.value.length > this.maxLength) 
-                this.value = this.value.slice(0, this.maxLength);" [value]="defaultLatestYear">
-                <mat-hint align="start"><strong>Type a year.</strong> </mat-hint>
-                <mat-hint align="end">{{message.value.length}} / 4</mat-hint>
-            </mat-form-field>
-            <button matTooltip="Search Effective Year" mat-icon-button (click)="onEffectiveYear()" class="btn btn-outline-primary">
-                <mat-icon aria-hidden="false" aria-label="Search">search</mat-icon>
-            </button>
-            <button matTooltip="Clear effective year box" mat-icon-button (click)="onReset()" class="btn btn-outline-success mx-1">
-                <mat-icon aria-hidden="false" aria-label="Reset">clear</mat-icon>
-            </button>
+            <ng-container>
+                <mat-form-field style="width: 50%; margin-right: 19px;" appearance="fill">
+                    <mat-label>Select Effective Year</mat-label>
+                    <mat-select (selectionChange)="onLatestYearSelected($event)" [(ngModel)]="defaultLatestYear">
+                      <mat-option *ngFor="let mergeYear of mergeYears" [value]="mergeYear.year">
+                          {{mergeYear.year}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </ng-container> 
             <ng-container *ngIf="loggedIn()">
                 <button *appHasRole="['Admin', 'Moderator']" mat-icon-button matTooltip="Print"
                 [useExistingCss]="true"
                 printTitle="Assessment Roll"
                 printSectionId="print-section"
-                ngxPrint><mat-icon>print</mat-icon></button> 
+                ngxPrint><mat-icon>print</mat-icon></button>
             </ng-container>
         </div>
     </div>

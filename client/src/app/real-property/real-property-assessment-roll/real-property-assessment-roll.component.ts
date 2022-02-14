@@ -54,10 +54,11 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   constructor(private realPropertyService: RealPropertyService, private accountService: AccountService,
     private notifierService: NotifierService, private kindOfLandsService: KindOfLandsService,
     private adminService: AdminService) {
-    this.getRealPropertiesAssessmentRoll();
-    this.getBarangays();
-    this.getMunicipalityCityDistricts();
-    this.getProvinces();
+      this.getBarangays();
+      this.getMergeYears();
+      this.getRealPropertiesAssessmentRoll();
+      this.getMunicipalityCityDistricts();
+      this.getProvinces();
   }
 
   ngOnInit(): void {
@@ -68,11 +69,10 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   }
 
   getRealPropertiesAssessmentRoll() {
-    this.realPropertyParams.sort = "yearDesc";
-    this.realPropertyParams.year = this.defaultLatestYear;
     this.realPropertyParams.propertyLocation = this.defaultBarangaySelect;
-    this.realPropertyParams.pageSize = this.defaultPageSize;
     this.realPropertyParams.taxableExempt = this.defaultTaxableSelect;
+    this.realPropertyParams.year = this.defaultLatestYear;
+    this.realPropertyParams.pageSize = this.defaultPageSize;
 
     this.realPropertyService.getRealProperties(this.realPropertyParams).subscribe(response => {
       this.realProperties = response!.data;
@@ -95,14 +95,8 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
     this.getRealPropertiesAssessmentRoll();
   }
 
-  onEffectiveYear() {
-    this.realPropertyParams.year = this.defaultLatestYear;
-    this.getRealPropertiesAssessmentRoll();
-  }
-
-  onReset() {
-    this.defaultLatestYear = '';
-    this.realPropertyParams = new RealPropertyParams();
+  onLatestYearSelected(event: MatSelectChange) {
+    this.realPropertyParams.year = event.value;
     this.getRealPropertiesAssessmentRoll();
   }
 
