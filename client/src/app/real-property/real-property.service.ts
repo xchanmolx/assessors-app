@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 // import { environment } from 'src/environments/environment.prod'; // Production
 import { environment } from 'src/environments/environment'; // Development
-import { ICountMergeLand } from '../shared/models/mergeLand';
+import { ICountMergeLand } from '../shared/models/countMergeLand';
+import { ICountMergeLandMixUse } from '../shared/models/countMergeLandMixUse';
 import { IMergeYears } from '../shared/models/mergeYears';
 import { IOwnerNamePhotos } from '../shared/models/ownerNamePhotos';
 import { IPagination } from '../shared/models/pagination';
@@ -79,27 +80,8 @@ export class RealPropertyService {
       );
   }
 
-  getRealPropertiesMixUseLands(realPropertyParams: RealPropertyParams) {
-    let params = new HttpParams();
-
-    if (realPropertyParams.year) {
-      params = params.append('yearOne', realPropertyParams.year);
-    }
-
-    if (realPropertyParams.yearTwo) {
-      params = params.append('yearTwo', realPropertyParams.yearTwo);
-    }
-
-    if (realPropertyParams.kindOfLand) {
-      params = params.append('kindOfLand', realPropertyParams.kindOfLand);
-    }
-
-    return this.http.get<ICountMergeLand>(this.baseUrl + 'realProperties/lands/mixuse', { observe: 'response', params })
-      .pipe(
-        map(response => {
-          return response.body;
-        })
-      );
+  getRealPropertiesMixUseLands() {
+    return this.http.get<ICountMergeLandMixUse>(this.baseUrl + 'realProperties/lands/mixuse');
   }
 
   getRealPropertyPhotos(id: number) {

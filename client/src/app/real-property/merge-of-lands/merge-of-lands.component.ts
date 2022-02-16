@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
-import { merge } from 'rxjs/operators';
 import { AccountService } from 'src/app/account/account.service';
 import { AdminService } from 'src/app/admin/admin.service';
 import { NotifierService } from 'src/app/core/services/notifier.service';
 import { IMergeOfLands } from 'src/app/shared/models/mergeOfLands';
+import { IMergeOfLandsMixUse } from 'src/app/shared/models/mergeOfLandsMixUse';
 import { IMergeYears } from 'src/app/shared/models/mergeYears';
 import { IMunicipalityCityDistrict } from 'src/app/shared/models/municipalityCityDistrict';
 import { MunicipalityCityDistrictParams } from 'src/app/shared/models/municipalityCityDistrictParams';
@@ -20,7 +20,9 @@ import { RealPropertyService } from '../real-property.service';
 })
 export class MergeOfLandsComponent implements OnInit {
   totalCount: number = 0;
+  totalCountMixUse: number = 0;
   realPropMergeOfLands: IMergeOfLands[] = [];
+  realPropMergeOfLandsMixUse: IMergeOfLandsMixUse[] = [];
   realPropertyParams = new RealPropertyParams();
   defaultKindOfLand = 'agricultural';
   kindOfLandsOptions = [
@@ -28,6 +30,11 @@ export class MergeOfLandsComponent implements OnInit {
     { name: 'Commercial', value: 'commercial'},
     { name: 'Industrial', value: 'industrial'},
     { name: 'Residential', value: 'residential'}
+  ];
+  defaultSingleMixLand = 'single';
+  singleMixOptions = [
+    { name: 'Single Use of Land', value: 'single'},
+    { name: 'Mix Use of Land', value: 'mix'}
   ];
   municipalityCityDistricts: IMunicipalityCityDistrict[] = [];
   municipalityCityDistrictParams = new MunicipalityCityDistrictParams();
@@ -47,6 +54,7 @@ export class MergeOfLandsComponent implements OnInit {
     this.getMunicipalityCityDistricts();
     this.getProvinces();
     this.getMergeYears();
+    this.getRealPropertiesMixUseLand();
   }
 
   ngOnInit(): void {
@@ -69,6 +77,10 @@ export class MergeOfLandsComponent implements OnInit {
   onOldYearSelected(event: MatSelectChange) {
     this.realPropertyParams.yearTwo = event.value;
     this.getRealPropertiesSingleUseLand();
+  }
+
+  onSingleMixLandSelected(event: MatSelectChange) {
+    this.defaultSingleMixLand = event.value;
   }
 
   getMergeYears() {
@@ -101,6 +113,15 @@ export class MergeOfLandsComponent implements OnInit {
     this.realPropertyService.getRealPropertiesSingleUseLand(this.realPropertyParams).subscribe(response => {
       this.realPropMergeOfLands = response!.data;
       this.totalCount = response!.count;
+    }, error => {
+      this.notifierService.showNotification(`Problem loading the data. ${error.errors}`, 'OK', 'error');
+    });
+  }
+  
+  getRealPropertiesMixUseLand() {
+    this.realPropertyService.getRealPropertiesMixUseLands().subscribe(response => {
+      this.realPropMergeOfLandsMixUse = response.data;
+      this.totalCountMixUse = response.count;
     }, error => {
       this.notifierService.showNotification(`Problem loading the data. ${error.errors}`, 'OK', 'error');
     });

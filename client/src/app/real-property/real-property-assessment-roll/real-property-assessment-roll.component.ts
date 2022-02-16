@@ -54,9 +54,9 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   constructor(private realPropertyService: RealPropertyService, private accountService: AccountService,
     private notifierService: NotifierService, private kindOfLandsService: KindOfLandsService,
     private adminService: AdminService) {
+      this.getRealPropertiesAssessmentRoll();
       this.getBarangays();
       this.getMergeYears();
-      this.getRealPropertiesAssessmentRoll();
       this.getMunicipalityCityDistricts();
       this.getProvinces();
   }
@@ -69,10 +69,10 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   }
 
   getRealPropertiesAssessmentRoll() {
-    this.realPropertyParams.propertyLocation = this.defaultBarangaySelect;
-    this.realPropertyParams.taxableExempt = this.defaultTaxableSelect;
-    this.realPropertyParams.year = this.defaultLatestYear;
     this.realPropertyParams.pageSize = this.defaultPageSize;
+    this.realPropertyParams.taxableExempt = this.defaultTaxableSelect;
+    this.realPropertyParams.propertyLocation = this.defaultBarangaySelect;
+    this.realPropertyParams.year = this.defaultLatestYear;
 
     this.realPropertyService.getRealProperties(this.realPropertyParams).subscribe(response => {
       this.realProperties = response!.data;
@@ -110,7 +110,6 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
 
       this.defaultBarangaySelect = firstBarangay?.name;
 
-      this.getMergeYears();
       this.getRealPropertiesAssessmentRoll();
     }, error => {
       this.notifierService.showNotification(`${error.errors} Problem loading the barangays.`, 'OK', 'error');

@@ -150,8 +150,7 @@ namespace API.Controllers
         }
 
         [HttpGet("lands/mixuse")]
-        public async Task<ActionResult<Land<LandPropertyToReturnDto>>> GetPropertiesWithLandsMixUse(
-            [FromQuery] LandPropertySpecParams landPropertySpecParams)
+        public async Task<ActionResult<Land<LandPropertyMixUseToReturnDto>>> GetPropertiesWithLandsMixUse()
         {
             var spec = new LandPropertyWithRealPropertiesSpecification();
 
@@ -161,39 +160,13 @@ namespace API.Controllers
 
             var properties = await _propertyRepo.ListAsync(spec);
 
-            List<LandPropertyToReturnDto> newList = new List<LandPropertyToReturnDto>();
-            List<TaxDecOfRealProperty> mergeListTD = new List<TaxDecOfRealProperty>();
+            properties = properties.Where(x => x.KindOfProperties.Count() > 1).ToList();
 
-            if (landPropertySpecParams.YearOne > 0 && landPropertySpecParams.YearTwo > 0)
-            {
-                var propYearOne = properties.Where(x => x.Year == landPropertySpecParams.YearOne).ToList();
+            totalItems = properties.Count();
 
-                var propYearTwo = properties.Where(x => x.Year == landPropertySpecParams.YearTwo).ToList();
+            var data = _mapper.Map<IEnumerable<LandPropertyMixUseToReturnDto>>(properties);
 
-                mergeListTD = mergeListTD.Concat(propYearOne)
-                                            .Concat(propYearTwo)
-                                            .ToList();
-
-                totalItems = mergeListTD.Count();
-            }
-
-            if (!string.IsNullOrEmpty(landPropertySpecParams.KindOfLand))
-            {
-                var newListTaxDec = mergeListTD.Where(x => x.KindOfProperties.Count() > 1).Where(x => x.KindOfProperties.Any(x => x.KindOfLands == landPropertySpecParams.KindOfLand)).ToList();
-
-                newList = newListTaxDec.GroupBy(x => new {x.PropertyLocation})
-                    .Select(x => new LandPropertyToReturnDto(x.Key.PropertyLocation, x.Where(x => x.Year == landPropertySpecParams.YearOne).Sum(x => x.KindOfProperties.Sum(x => x.MarketValue)),
-                            x.Where(x => x.Year == landPropertySpecParams.YearOne).Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue)),
-                            x.Where(x => x.Year == landPropertySpecParams.YearTwo).Sum(x => x.KindOfProperties.Sum(x => x.MarketValue)), x.Where(x => x.Year == landPropertySpecParams.YearOne).Sum(x => x.PreviousAssessedValue),
-                            x.Where(x => x.Year == landPropertySpecParams.YearOne).Sum(x => x.KindOfProperties.Sum(x => x.Area)), x.Where(x => x.Year == landPropertySpecParams.YearOne).Count()))
-                        .ToList();
-
-                totalItems = newList.Count();
-            }
-
-            var data = _mapper.Map<IEnumerable<LandPropertyToReturnDto>>(newList);
-
-            return Ok(new Land<LandPropertyToReturnDto>(totalItems, data));
+            return Ok(new Land<LandPropertyMixUseToReturnDto>(totalItems, data));
         }
 
         [HttpPost]

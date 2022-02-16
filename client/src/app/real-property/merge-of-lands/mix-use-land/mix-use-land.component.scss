@@ -1,0 +1,39 @@
+.full-width {
+    width: 100%;
+}
+
+table {
+    width: 100%;
+}
+  
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+.mat-column-propertyLocation {
+    width: 90px;
+    border-right: 1px solid currentColor;
+    padding-right: 24px;
+    text-align: center;
+}
+
+.mat-column-year {
+    width: 33px;
+    border-left: 1px solid currentColor;
+    padding-right: 24px;
+    padding-left: 24px;
+    text-align: center;
+}
+
+.mat-header-cell {
+    text-align: center;
+}
+
+.mat-cell {
+    text-align: center;
+}
+
+.mat-footer-cell {
+    text-align: center;
+}

@@ -25,9 +25,15 @@ namespace API.Helpers
             CreateMap<TaxDecOfRealProperty, PropertyToReturnDto>();
             CreateMap<Boundary, BoundaryForListDto>();
             CreateMap<KindOfProperty, KindOfPropertyForListDto>();
+            
+            // Lists for Real Property Mix Use
+            CreateMap<KindOfProperty, KindOfPropertyMixUseForListDto>();
 
             // Lists for Land Real Property
             CreateMap<TaxDecOfRealProperty, LandPropertyToReturnDto>();
+
+            // Lists for Land Real Property
+            CreateMap<TaxDecOfRealProperty, LandPropertyMixUseToReturnDto>();
 
             // List for Real Property for Years
             CreateMap<TaxDecOfRealProperty, PropertyForYearsToReturnDto>();
