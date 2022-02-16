@@ -120,7 +120,7 @@ namespace API.Controllers
         }
         
         [HttpGet("revise/{id}")]
-        public async Task<ActionResult> GetPropertyWithReviseId(int id)
+        public async Task<ActionResult<PropertyToReturnDto>> GetPropertyWithReviseId(int id)
         {
             var spec = new PropertyWithBoundaryKindOfPropertiesSpecification();
             var properties = await _propertyRepo.ListAsync(spec);

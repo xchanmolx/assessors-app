@@ -61,6 +61,11 @@
           <div mat-line>Admin</div>
         </mat-list-item>
 
+        <mat-list-item *appHasRole="['Admin', 'Moderator']" routerLink="/real-property/revise">
+          <mat-icon mat-list-icon>next_plan</mat-icon>
+          <div mat-line>Revise</div>
+        </mat-list-item>
+
         <mat-list-item *appHasRole="['Admin', 'Moderator', 'Member']" routerLink="/real-property">
           <mat-icon mat-list-icon>landscape</mat-icon>
           <div mat-line>Real Property</div>

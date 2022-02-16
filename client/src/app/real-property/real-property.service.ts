@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment'; // Development
 import { ICountMergeLand } from '../shared/models/countMergeLand';
 import { ICountMergeLandMixUse } from '../shared/models/countMergeLandMixUse';
+import { ICountRevise } from '../shared/models/countRevise';
 import { IMergeYears } from '../shared/models/mergeYears';
 import { IOwnerNamePhotos } from '../shared/models/ownerNamePhotos';
 import { IPagination } from '../shared/models/pagination';
@@ -51,6 +52,33 @@ export class RealPropertyService {
           return response.body;
         })
       );
+  }
+
+  getRealPropertiesRevise(reviseParams: RealPropertyParams) {
+    let params = new HttpParams();
+
+    if (reviseParams.search) {
+      params = params.append('search', reviseParams.search);
+    }
+
+    if (reviseParams.year) {
+      params = params.append('year', reviseParams.year);
+    }
+
+    if (reviseParams.propertyLocation) {
+      params = params.append('propertyLocation', reviseParams.propertyLocation);
+    }
+
+    return this.http.get<ICountRevise>(this.baseUrl + 'realProperties/revise', { observe: 'response', params })
+      .pipe(
+        map(response => {
+          return response.body;
+        })
+      );
+  }
+
+  getRealPropertyReviseWithId(id: number) {
+    return this.http.get<IRealProperty>(this.baseUrl + 'realProperties/revise/' + id);
   }
 
   getMergeYears() {
