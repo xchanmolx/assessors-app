@@ -88,6 +88,103 @@ namespace API.Controllers
                 totalItems, propertyParams.TotalAssessedValue, propertyParams.TotalPrevAssessedValue, data));
         }
 
+        [HttpGet("revise")]
+        public async Task<ActionResult<CountAndReviseList<PropertyToReturnDto>>> GetPropertiesWithRevise(
+            [FromQuery] ReviseSpecParams reviseParams)
+        {
+            var spec = new RevisePropertyWithRealPropertiesSpecification(reviseParams);
+
+            var countSpec = new RevisePropertyWithFiltersForCountSpecification(reviseParams);
+
+            var totalItems = await _propertyRepo.CountAsync(countSpec);
+
+            var properties = await _propertyRepo.ListAsync(spec);
+
+            if (reviseParams.Year > 0)
+            {
+                properties = properties.Where(x => x.Year == reviseParams.Year).ToList();
+
+                totalItems = properties.Count();
+            }
+
+            if (!string.IsNullOrEmpty(reviseParams.PropertyLocation))
+            {
+                properties = properties.Where(x => x.PropertyLocation == reviseParams.PropertyLocation).ToList();
+
+                totalItems = properties.Count();
+            }
+
+            var data = _mapper.Map<IEnumerable<PropertyToReturnDto>>(properties);
+
+            return Ok(new CountAndReviseList<PropertyToReturnDto>(totalItems, data));
+        }
+        
+        [HttpGet("revise/{id}")]
+        public async Task<ActionResult> GetPropertyWithReviseId(int id)
+        {
+            var spec = new PropertyWithBoundaryKindOfPropertiesSpecification();
+            var properties = await _propertyRepo.ListAsync(spec);
+            var property = properties.Where(x => x.Id == id).FirstOrDefault();
+
+            var kindOfProperties = property.KindOfProperties.Where(x => x.TaxDecOfRealPropertyId == id).ToList();
+
+            foreach (var kindOfProperty in kindOfProperties)
+            {
+                var agriLands = await _agriRepo.ListAllAsync();
+                if (kindOfProperty.AgriculturalLandId > 0)
+                {
+                    var agriLand = agriLands.Where(x => x.Id == kindOfProperty.AgriculturalLandId).FirstOrDefault();
+                    if (kindOfProperty.ActualUse == agriLand.Name)
+                    {
+                        if (kindOfProperty.Classification.Contains("3rd class"))
+                        {
+                            kindOfProperty.MarketValueAgri = agriLand.ThirdClass;
+                        }
+                        else if (kindOfProperty.Classification.Contains("2nd class"))
+                        {
+                            kindOfProperty.MarketValueAgri = agriLand.SecondClass;
+                        }
+                        else if (kindOfProperty.Classification.Contains("1st class"))
+                        {
+                            kindOfProperty.MarketValueAgri = agriLand.FirstClass;
+                        }
+                    }
+                }
+
+                var commLands = await _commRepo.ListAllAsync();
+                if (kindOfProperty.CommercialLandId > 0)
+                {
+                    var commLand = commLands.Where(x => x.Id == kindOfProperty.CommercialLandId).FirstOrDefault();
+                    if (kindOfProperty.Classification == commLand.Name)
+                    {
+                        kindOfProperty.MarketValueComm = commLand.MarketValue;
+                    }
+                }
+
+                var induLands = await _induRepo.ListAllAsync();
+                if (kindOfProperty.IndustrialLandId > 0)
+                {
+                    var induLand = induLands.Where(x => x.Id == kindOfProperty.IndustrialLandId).FirstOrDefault();
+                    if (kindOfProperty.Classification == induLand.Name)
+                    {
+                        kindOfProperty.MarketValueIndu = induLand.MarketValue;
+                    }
+                }
+
+                var resiLands = await _resiRepo.ListAllAsync();
+                if (kindOfProperty.ResidentialLandId > 0)
+                {
+                    var resiLand = resiLands.Where(x => x.Id == kindOfProperty.ResidentialLandId).FirstOrDefault();
+                    if (kindOfProperty.Classification == resiLand.Name)
+                    {
+                        kindOfProperty.MarketValueResi = resiLand.MarketValue;
+                    }
+                }
+            }
+
+            return Ok(property);
+        }
+
         [HttpGet("merge-years")]
         public async Task<ActionResult<IEnumerable<PropertyForYearsToReturnDto>>> GetPropertiesForMergeYears()
         {
@@ -255,72 +352,6 @@ namespace API.Controllers
             var propertiesMap = _mapper.Map<IEnumerable<PropertyToTraceDto>>(properties);
 
             return Ok(propertiesMap);
-        }
-
-        [HttpGet("revise/{id}")]
-        public async Task<ActionResult> GetPropertyWithRevise(int id)
-        {
-            var spec = new PropertyWithBoundaryKindOfPropertiesSpecification();
-            var properties = await _propertyRepo.ListAsync(spec);
-            var property = properties.Where(x => x.Id == id).FirstOrDefault();
-
-            var kindOfProperties = property.KindOfProperties.Where(x => x.TaxDecOfRealPropertyId == id).ToList();
-
-            foreach (var kindOfProperty in kindOfProperties)
-            {
-                var agriLands = await _agriRepo.ListAllAsync();
-                if (kindOfProperty.AgriculturalLandId > 0)
-                {
-                    var agriLand = agriLands.Where(x => x.Id == kindOfProperty.AgriculturalLandId).FirstOrDefault();
-                    if (kindOfProperty.ActualUse == agriLand.Name)
-                    {
-                        if (kindOfProperty.Classification.Contains("3rd class"))
-                        {
-                            kindOfProperty.MarketValueAgri = agriLand.ThirdClass;
-                        }
-                        else if (kindOfProperty.Classification.Contains("2nd class"))
-                        {
-                            kindOfProperty.MarketValueAgri = agriLand.SecondClass;
-                        }
-                        else if (kindOfProperty.Classification.Contains("1st class"))
-                        {
-                            kindOfProperty.MarketValueAgri = agriLand.FirstClass;
-                        }
-                    }
-                }
-
-                var commLands = await _commRepo.ListAllAsync();
-                if (kindOfProperty.CommercialLandId > 0)
-                {
-                    var commLand = commLands.Where(x => x.Id == kindOfProperty.CommercialLandId).FirstOrDefault();
-                    if (kindOfProperty.Classification == commLand.Name)
-                    {
-                        kindOfProperty.MarketValueComm = commLand.MarketValue;
-                    }
-                }
-
-                var induLands = await _induRepo.ListAllAsync();
-                if (kindOfProperty.IndustrialLandId > 0)
-                {
-                    var induLand = induLands.Where(x => x.Id == kindOfProperty.IndustrialLandId).FirstOrDefault();
-                    if (kindOfProperty.Classification == induLand.Name)
-                    {
-                        kindOfProperty.MarketValueIndu = induLand.MarketValue;
-                    }
-                }
-
-                var resiLands = await _resiRepo.ListAllAsync();
-                if (kindOfProperty.ResidentialLandId > 0)
-                {
-                    var resiLand = resiLands.Where(x => x.Id == kindOfProperty.ResidentialLandId).FirstOrDefault();
-                    if (kindOfProperty.Classification == resiLand.Name)
-                    {
-                        kindOfProperty.MarketValueResi = resiLand.MarketValue;
-                    }
-                }
-            }
-
-            return Ok(property);
         }
     }
 }
