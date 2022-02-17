@@ -176,6 +176,8 @@ export class RealPropertyCreateComponent implements OnInit {
 
       this.textInputComponent.ngAfterViewInit();
 
+      this.getStaffs();
+
       this.uploadPhoto();
     }, error => {
       console.log(`${error.errors} Adding Kind of Property.`); // Console log error consider, because of the error of addKindOfProperty method

@@ -19,7 +19,7 @@ namespace API.Dtos
             Area = area;
             Rpus = rpus;
         }
-
+        
         public string PropertyLocation { get; set; }
         public decimal CurrentMarketValue { get; set; }
         public decimal CurrentAssessedValue { get; set; }

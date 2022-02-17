@@ -26,7 +26,7 @@ export class ReviseComponent implements OnInit {
 
   constructor(private realPropertyService: RealPropertyService, private accountService: AccountService,
     public dialog: MatDialog, private notifierService: NotifierService) {
-
+      
   }
 
   ngOnInit(): void {

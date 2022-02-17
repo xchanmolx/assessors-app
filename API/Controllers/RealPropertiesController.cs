@@ -22,6 +22,8 @@ namespace API.Controllers
         private readonly IGenericRepository<CommercialLand> _commRepo;
         private readonly IGenericRepository<IndustrialLand> _induRepo;
         private readonly IGenericRepository<ResidentialLand> _resiRepo;
+        private decimal _totalAssessedValue;
+        private decimal _totalPrevAssessedValue;
         public RealPropertiesController(IGenericRepository<TaxDecOfRealProperty> propertyRepo,
         IGenericRepository<Photo> photoRepo, IGenericRepository<AgriculturalLand> agriRepo,
         IGenericRepository<CommercialLand> commRepo, IGenericRepository<IndustrialLand> induRepo, 
@@ -60,8 +62,6 @@ namespace API.Controllers
                 }
 
                 totalItems = properties.Count();
-                propertyParams.TotalAssessedValue = properties.Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue));
-                propertyParams.TotalPrevAssessedValue = properties.Sum(x => x.PreviousAssessedValue);
             }
 
             if (propertyParams.Year > 0)
@@ -69,8 +69,6 @@ namespace API.Controllers
                 properties = properties.Where(x => x.Year == propertyParams.Year).ToList();
 
                 totalItems = properties.Count();
-                propertyParams.TotalAssessedValue = properties.Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue));
-                propertyParams.TotalPrevAssessedValue = properties.Sum(x => x.PreviousAssessedValue);
             }
 
             if (!string.IsNullOrEmpty(propertyParams.PropertyLocation))
@@ -78,14 +76,55 @@ namespace API.Controllers
                 properties = properties.Where(x => x.PropertyLocation == propertyParams.PropertyLocation).ToList();
 
                 totalItems = properties.Count();
-                propertyParams.TotalAssessedValue = properties.Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue));
-                propertyParams.TotalPrevAssessedValue = properties.Sum(x => x.PreviousAssessedValue);
             }
 
             var data = _mapper.Map<IEnumerable<PropertyToReturnDto>>(properties);
 
-            return Ok(new Pagination<PropertyToReturnDto>(propertyParams.PageIndex, propertyParams.PageSize,
-                totalItems, propertyParams.TotalAssessedValue, propertyParams.TotalPrevAssessedValue, data));
+            return Ok(new Pagination<PropertyToReturnDto>(propertyParams.PageIndex, propertyParams.PageSize, totalItems, data));
+        }
+
+        [HttpGet("assessment-roll")]
+        public async Task<ActionResult<CountAndAssessmentRoll<PropertyToReturnDto>>> GetPropertiesWithAssessmentRoll(
+            [FromQuery] AssessmentRollSpecParams assessmentRollParams)
+        {
+            var spec = new AssessmentRollPropertyWithRealPropertiesSpecification();
+
+            var countSpec = new AssessmentRollPropertyWithFiltersForCountSpecification();
+
+            var totalItems = await _propertyRepo.CountAsync(countSpec);
+
+            var properties = await _propertyRepo.ListAsync(spec);
+
+            if (!string.IsNullOrEmpty(assessmentRollParams.TaxableExempt))
+            {
+                properties = properties.Where(x => x.TaxableExempt == assessmentRollParams.TaxableExempt).ToList();
+
+                totalItems = properties.Count();
+                _totalAssessedValue = properties.Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue));
+                _totalPrevAssessedValue = properties.Sum(x => x.PreviousAssessedValue);
+            }
+
+            if (!string.IsNullOrEmpty(assessmentRollParams.PropertyLocation))
+            {
+                properties = properties.Where(x => x.PropertyLocation == assessmentRollParams.PropertyLocation).ToList();
+
+                totalItems = properties.Count();
+                _totalAssessedValue = properties.Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue));
+                _totalPrevAssessedValue = properties.Sum(x => x.PreviousAssessedValue);
+            }
+
+            if (assessmentRollParams.Year > 0)
+            {
+                properties = properties.Where(x => x.Year == assessmentRollParams.Year).ToList();
+
+                totalItems = properties.Count();
+                _totalAssessedValue = properties.Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue));
+                _totalPrevAssessedValue = properties.Sum(x => x.PreviousAssessedValue);
+            }
+
+            var data = _mapper.Map<IEnumerable<PropertyToReturnDto>>(properties);
+
+            return Ok(new CountAndAssessmentRoll<PropertyToReturnDto>(_totalAssessedValue, _totalPrevAssessedValue, totalItems, data));
         }
 
         [HttpGet("revise")]

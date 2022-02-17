@@ -35,8 +35,5 @@ namespace Core.Specifications
             get => _propertyLocation;
             set => _propertyLocation = value.ToLower();
         }
-
-        public decimal TotalAssessedValue { get; set; }        
-        public decimal TotalPrevAssessedValue { get; set; }        
     }
 }

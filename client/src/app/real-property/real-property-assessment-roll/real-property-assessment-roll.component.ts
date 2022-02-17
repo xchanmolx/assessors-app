@@ -26,7 +26,6 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   totalCount: number = 0;
   totalAssessedValue: number = 0;
   totalPrevAssessedValue: number = 0;
-  defaultPageSize = 300000;
   defaultTaxableSelect = 'taxable';
   taxableExemptOptions = [
     { name: 'Taxable', value: 'taxable' },
@@ -54,11 +53,11 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   constructor(private realPropertyService: RealPropertyService, private accountService: AccountService,
     private notifierService: NotifierService, private kindOfLandsService: KindOfLandsService,
     private adminService: AdminService) {
-      this.getRealPropertiesAssessmentRoll();
       this.getBarangays();
       this.getMergeYears();
-      this.getMunicipalityCityDistricts();
       this.getProvinces();
+      this.getMunicipalityCityDistricts();
+      this.getRealPropertiesAssessmentRoll();
   }
 
   ngOnInit(): void {
@@ -69,14 +68,12 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   }
 
   getRealPropertiesAssessmentRoll() {
-    this.realPropertyParams.pageSize = this.defaultPageSize;
-    this.realPropertyParams.taxableExempt = this.defaultTaxableSelect;
     this.realPropertyParams.propertyLocation = this.defaultBarangaySelect;
+    this.realPropertyParams.taxableExempt = this.defaultTaxableSelect;
     this.realPropertyParams.year = this.defaultLatestYear;
 
-    this.realPropertyService.getRealProperties(this.realPropertyParams).subscribe(response => {
+    this.realPropertyService.getRealPropertiesAssessmentRoll(this.realPropertyParams).subscribe(response => {
       this.realProperties = response!.data;
-      this.realPropertyParams.pageNumber = response!.pageIndex;
       this.totalCount = response!.count;
       this.totalAssessedValue = response!.totalAssessedValue;
       this.totalPrevAssessedValue = response!.totalPrevAssessedValue;

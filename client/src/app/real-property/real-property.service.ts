@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 // import { environment } from 'src/environments/environment.prod'; // Production
 import { environment } from 'src/environments/environment'; // Development
+import { ICountAssessmentRoll } from '../shared/models/countAssessmentRoll';
 import { ICountMergeLand } from '../shared/models/countMergeLand';
 import { ICountMergeLandMixUse } from '../shared/models/countMergeLandMixUse';
 import { ICountRevise } from '../shared/models/countRevise';
@@ -47,6 +48,29 @@ export class RealPropertyService {
     params = params.append('pageSize', realPropertyParams.pageSize.toString());
 
     return this.http.get<IPagination>(this.baseUrl + 'realProperties', { observe: 'response', params })
+      .pipe(
+        map(response => {
+          return response.body;
+        })
+      );
+  }
+
+  getRealPropertiesAssessmentRoll(assessmentRollParams: RealPropertyParams) {
+    let params = new HttpParams();
+
+    if (assessmentRollParams.propertyLocation) {
+      params = params.append('propertyLocation', assessmentRollParams.propertyLocation);
+    }
+
+    if (assessmentRollParams.taxableExempt) {
+      params = params.append('taxableExempt', assessmentRollParams.taxableExempt);
+    }
+
+    if (assessmentRollParams.year) {
+      params = params.append('year', assessmentRollParams.year);
+    }
+    
+    return this.http.get<ICountAssessmentRoll>(this.baseUrl + 'realProperties/assessment-roll', { observe: 'response', params})
       .pipe(
         map(response => {
           return response.body;
