@@ -1,6 +1,6 @@
-import { IRealProperty } from "./realProperty";
+import { IReviseList } from "./reviseList";
 
 export interface ICountRevise {
     count: number;
-    data: IRealProperty[];
+    data: IReviseList[];
 }

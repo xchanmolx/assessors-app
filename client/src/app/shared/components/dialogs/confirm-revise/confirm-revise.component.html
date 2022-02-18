@@ -1,0 +1,25 @@
+<div class="header">
+    <h2 mat-dialog-title>
+        <strong>{{action}}</strong> data
+    </h2>
+    <button mat-icon-button [mat-dialog-close]="false">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<div mat-dialog-content>
+    <ng-container *ngIf="action == 'Revise'">
+        <h2>Revise</h2>
+        <app-text-input [(ngModel)]="local_data.owner" [label]="'Owner'" required></app-text-input>
+        <app-text-input [(ngModel)]="local_data.approvedBy" [label]="'Approved by'" required></app-text-input>
+    </ng-container>
+</div>
+
+<div mat-dialog-actions [align]="'end'">
+    <button (click)="closeDialog()" mat-raised-button [mat-dialog-close]="false">
+        Cancel
+    </button>
+    <button (click)="doAction()" mat-raised-button color="primary" [mat-dialog-close]="true">
+        {{action}}
+    </button>
+</div>

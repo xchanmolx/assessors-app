@@ -128,7 +128,7 @@ namespace API.Controllers
         }
 
         [HttpGet("revise")]
-        public async Task<ActionResult<CountAndReviseList<PropertyToReturnDto>>> GetPropertiesWithRevise(
+        public async Task<ActionResult<CountAndReviseList<ReviseToReturnDto>>> GetPropertiesWithRevise(
             [FromQuery] ReviseSpecParams reviseParams)
         {
             var spec = new RevisePropertyWithRealPropertiesSpecification(reviseParams);
@@ -153,9 +153,9 @@ namespace API.Controllers
                 totalItems = properties.Count();
             }
 
-            var data = _mapper.Map<IEnumerable<PropertyToReturnDto>>(properties);
+            var data = _mapper.Map<IEnumerable<ReviseToReturnDto>>(properties);
 
-            return Ok(new CountAndReviseList<PropertyToReturnDto>(totalItems, data));
+            return Ok(new CountAndReviseList<ReviseToReturnDto>(totalItems, data));
         }
         
         [HttpGet("revise/{id}")]

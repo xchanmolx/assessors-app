@@ -24,6 +24,7 @@ import { ConfirmStaffComponent } from './components/dialogs/confirm-staff/confir
 import { ConfirmMunicipalityCityDistrictComponent } from './components/dialogs/confirm-municipality-city-district/confirm-municipality-city-district.component';
 import { ConfirmProvinceComponent } from './components/dialogs/confirm-province/confirm-province.component';
 import { ConfirmLogoComponent } from './components/dialogs/confirm-logo/confirm-logo.component';
+import { ConfirmReviseComponent } from './components/dialogs/confirm-revise/confirm-revise.component';
 
 
 
@@ -44,7 +45,8 @@ import { ConfirmLogoComponent } from './components/dialogs/confirm-logo/confirm-
     ConfirmStaffComponent,
     ConfirmMunicipalityCityDistrictComponent,
     ConfirmProvinceComponent,
-    ConfirmLogoComponent
+    ConfirmLogoComponent,
+    ConfirmReviseComponent
   ],
   imports: [
     CommonModule,

@@ -33,6 +33,9 @@ namespace API.Helpers
             CreateMap<TaxDecOfRealProperty, LandPropertyToReturnDto>();
 
             // Lists for Land Real Property
+            CreateMap<TaxDecOfRealProperty, ReviseToReturnDto>();
+
+            // Lists for Land Real Property
             CreateMap<TaxDecOfRealProperty, LandPropertyMixUseToReturnDto>();
 
             // List for Real Property for Years
