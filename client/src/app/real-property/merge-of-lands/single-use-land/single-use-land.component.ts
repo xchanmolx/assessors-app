@@ -1,10 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { AccountService } from 'src/app/account/account.service';
-import { NotifierService } from 'src/app/core/services/notifier.service';
-import { ConfirmSingleUseLandComponent } from 'src/app/shared/components/dialogs/confirm-single-use-land/confirm-single-use-land.component';
 import { IMergeOfLands } from 'src/app/shared/models/mergeOfLands';
-import { RealPropertyService } from '../../real-property.service';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-single-use-land',
@@ -12,53 +9,37 @@ import { RealPropertyService } from '../../real-property.service';
   styleUrls: ['./single-use-land.component.scss']
 })
 export class SingleUseLandComponent implements OnInit {
+  @ViewChild('TABLE', { static: false }) table!: ElementRef;
   @Input() realPropMergeOfLands!: IMergeOfLands[];
   @Input() totalCount: number = 0;
+  @Input() defaultKindOfLand!: string;
+  @Input() defaultLatestYear!: any;
+  @Input() defaultOldYear!: any;
 
   displayedColumns: string[] = ['propertyLocation', 'currentMarketValue', 'currentAssessedValue',
-   'previousMarketValue', 'previousAssessedValue', 'area', 'rpus', 'actions'];
+   'previousMarketValue', 'previousAssessedValue', 'area', 'rpus'];
 
-  constructor(private realPropertyService: RealPropertyService, private accountService: AccountService,
-    public dialog: MatDialog, private notifierService: NotifierService) {
+  constructor(private accountService: AccountService) {
 
   }
 
   ngOnInit(): void {
   }
 
+  exportAsExcel() {
+    let sheetName = `${this.defaultKindOfLand}_${this.defaultLatestYear}-${this.defaultOldYear}`;
+    let fileName = `${this.defaultKindOfLand}_${this.defaultLatestYear}-${this.defaultOldYear}.xlsx`;
+
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement); //converts a DOM TABLE element to a worksheet
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, sheetName);
+
+    /* save to file */
+    XLSX.writeFile(wb, fileName);
+  }
+
   loggedIn() {
     return this.accountService.loggedIn();
-  }
-
-  openDialog(action: any, obj: any) {
-    obj.action = action;
-    const dialogRef = this.dialog.open(ConfirmSingleUseLandComponent, {
-      data: obj,
-      width: '600px',
-      disableClose: true
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result.event == 'Update') {
-        this.updateRowData(result.data);
-      }
-    });
-  }
-
-  updateRowData(row_obj: IMergeOfLands) {
-    this.realPropMergeOfLands = this.realPropMergeOfLands.filter((value, key) => {
-      if (value.propertyLocation == row_obj.propertyLocation) {
-        value.propertyLocation = row_obj.propertyLocation;
-        value.currentMarketValue = row_obj.currentMarketValue;
-        value.currentAssessedValue = row_obj.currentAssessedValue;
-        value.previousMarketValue = row_obj.previousMarketValue;
-        value.previousAssessedValue = row_obj.previousAssessedValue;
-        value.area = row_obj.area;
-        value.rpus = row_obj.rpus;        
-      }
-
-      return true;
-    });
   }
 
   getTotalCurrentMarketValue() {
@@ -82,7 +63,7 @@ export class SingleUseLandComponent implements OnInit {
   }
 
   getTotalRpus() {
-    return this.realPropMergeOfLands.map(t => (t.rpus)).reduce((acc, value) => acc + value, 0);
+      return this.realPropMergeOfLands.map(t => (t.rpus)).reduce((acc, value) => acc + value, 0);
   }
 
 }

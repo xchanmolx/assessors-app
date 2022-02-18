@@ -109,6 +109,7 @@ npm install material-icons@latest
 npm install @auth0/angular-jwt
 npm i ng2-file-upload --save
 npm install ngx-print
+npm i xlsx
 
 Make git to github
 cd .. to parent folder
