@@ -3,7 +3,7 @@ export interface IReviseList {
     tdNo: string;
     owner: string;
     address: string;
-    propertyLocation: string;
+    barangay: string;
     surveyLotNo: string;
     year: number;
 }

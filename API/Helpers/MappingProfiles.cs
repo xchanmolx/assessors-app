@@ -29,8 +29,14 @@ namespace API.Helpers
             // Lists for Real Property Mix Use
             CreateMap<KindOfProperty, KindOfPropertyMixUseForListDto>();
 
+            // List for Assessment Roll
+            CreateMap<KindOfProperty, KindOfPropertyForAssessmentRollDto>();
+
             // Lists for Land Real Property
             CreateMap<TaxDecOfRealProperty, LandPropertyToReturnDto>();
+
+            // Lists for Assessment Roll
+            CreateMap<TaxDecOfRealProperty, AssessmentRollToReturnDto>();
 
             // Lists for Land Real Property
             CreateMap<TaxDecOfRealProperty, ReviseToReturnDto>();

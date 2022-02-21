@@ -10,7 +10,7 @@ export class MixUseLandComponent implements OnInit {
   @Input() realPropMergeOfLandsMixUse!: IMergeOfLandsMixUse[];
   @Input() totalCount: number = 0;
 
-  displayedColumns: string[] = ['tdNo', 'propertyLocation', 'kindOfProperties.kindOfLands', 
+  displayedColumns: string[] = ['tdNo', 'barangay', 'kindOfProperties.kindOfLands', 
     'kindOfProperties.marketValue', 'kindOfProperties.assessedValue', 'kindOfProperties.area', 'previousAssessedValue', 'year'];
 
   constructor() { }

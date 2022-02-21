@@ -47,7 +47,7 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   defaultLatestYear: any;
 
   displayedColumns: string[] = ['owner', 'propertyIndentificationNo', 'tdNo', 'arpNo', 'address',
-   'kindOfPropertyAssessed', 'kindOfProperties.kindOfLands', 'propertyLocation', 'kindOfProperties.assessedValue', 'declarationCancels', 'previousAssessedValue', 'year'];
+   'kindOfPropertyAssessed', 'kindOfProperties.kindOfLands', 'barangay', 'kindOfProperties.assessedValue', 'declarationCancels', 'previousAssessedValue', 'year'];
   showFirstLastButtons = true;
 
   constructor(private realPropertyService: RealPropertyService, private accountService: AccountService,
@@ -68,7 +68,7 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   }
 
   getRealPropertiesAssessmentRoll() {
-    this.realPropertyParams.propertyLocation = this.defaultBarangaySelect;
+    this.realPropertyParams.barangay = this.defaultBarangaySelect;
     this.realPropertyParams.taxableExempt = this.defaultTaxableSelect;
     this.realPropertyParams.year = this.defaultLatestYear;
 
@@ -88,7 +88,7 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   }
 
   onBarangaySelected(event: MatSelectChange) {
-    this.realPropertyParams.propertyLocation = event.value;
+    this.realPropertyParams.barangay = event.value;
     this.getRealPropertiesAssessmentRoll();
   }
 

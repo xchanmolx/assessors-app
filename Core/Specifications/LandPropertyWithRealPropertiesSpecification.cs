@@ -7,7 +7,7 @@ namespace Core.Specifications
         public LandPropertyWithRealPropertiesSpecification()
         {
             AddInclude(x => x.KindOfProperties);
-            AddOrderBy(x => x.PropertyLocation);
+            AddOrderBy(x => x.Barangay);
         }
     }
 }

@@ -11,11 +11,11 @@ namespace Core.Specifications
         
         public int Year { get; set; }
         
-        private string _propertyLocation;
-        public string PropertyLocation
+        private string _barangay;
+        public string Barangay
         {
-            get => _propertyLocation;
-            set => _propertyLocation = value.ToLower();
+            get => _barangay;
+            set => _barangay = value.ToLower();
         }
     }
 }

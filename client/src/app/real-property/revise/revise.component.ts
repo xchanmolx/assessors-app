@@ -29,7 +29,7 @@ export class ReviseComponent implements OnInit {
   mergeYears: IMergeYears[] = [];
   defaultLatestYear: any;
 
-  displayedColumns: string[] = ['id', 'tdNo', 'owner', 'address', 'propertyLocation', 'surveyLotNo', 'year', 'actions'];
+  displayedColumns: string[] = ['id', 'tdNo', 'owner', 'address', 'barangay', 'surveyLotNo', 'year', 'actions'];
 
   constructor(private realPropertyService: RealPropertyService, private accountService: AccountService,
     public dialog: MatDialog, private notifierService: NotifierService, private kindOfLandsService: KindOfLandsService) {
@@ -71,7 +71,7 @@ export class ReviseComponent implements OnInit {
   }
 
   getReviseList() {
-    this.reviseParams.propertyLocation = this.defaultBarangaySelect;
+    this.reviseParams.barangay = this.defaultBarangaySelect;
     this.reviseParams.year = this.defaultLatestYear;
 
     this.realPropertyService.getRealPropertiesRevise(this.reviseParams).subscribe(response => {
@@ -83,7 +83,7 @@ export class ReviseComponent implements OnInit {
   }
 
   onBarangaySelected(event: MatSelectChange) {
-    this.reviseParams.propertyLocation = event.value;
+    this.reviseParams.barangay = event.value;
     this.getReviseList();
   }
 

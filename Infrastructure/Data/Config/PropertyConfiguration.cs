@@ -12,7 +12,10 @@ namespace Infrastructure.Data.Config
             builder.Property(x => x.TdNo).IsRequired().HasMaxLength(20);
             builder.Property(x => x.Owner).IsRequired().HasMaxLength(230);
             builder.Property(x => x.Address).IsRequired().HasMaxLength(100);
-            builder.Property(x => x.PropertyLocation).IsRequired().HasMaxLength(30);
+            builder.Property(x => x.Street).IsRequired().HasMaxLength(60);
+            builder.Property(x => x.Barangay).IsRequired().HasMaxLength(30);
+            builder.Property(x => x.Municipality).IsRequired().HasMaxLength(60);
+            builder.Property(x => x.Province).IsRequired().HasMaxLength(60);
             builder.Property(x => x.PropertyIndentificationNo).IsRequired().HasMaxLength(30);
             builder.Property(x => x.ArpNo).HasMaxLength(30);
             builder.Property(x => x.TinNo).HasMaxLength(30);

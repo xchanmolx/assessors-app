@@ -39,8 +39,8 @@ export class RealPropertyService {
       params = params.append('year', realPropertyParams.year);
     }
 
-    if (realPropertyParams.propertyLocation) {
-      params = params.append('propertyLocation', realPropertyParams.propertyLocation);
+    if (realPropertyParams.barangay) {
+      params = params.append('barangay', realPropertyParams.barangay);
     }
 
     params = params.append('sort', realPropertyParams.sort);
@@ -58,8 +58,8 @@ export class RealPropertyService {
   getRealPropertiesAssessmentRoll(assessmentRollParams: RealPropertyParams) {
     let params = new HttpParams();
 
-    if (assessmentRollParams.propertyLocation) {
-      params = params.append('propertyLocation', assessmentRollParams.propertyLocation);
+    if (assessmentRollParams.barangay) {
+      params = params.append('barangay', assessmentRollParams.barangay);
     }
 
     if (assessmentRollParams.taxableExempt) {
@@ -89,8 +89,8 @@ export class RealPropertyService {
       params = params.append('year', reviseParams.year);
     }
 
-    if (reviseParams.propertyLocation) {
-      params = params.append('propertyLocation', reviseParams.propertyLocation);
+    if (reviseParams.barangay) {
+      params = params.append('barangay', reviseParams.barangay);
     }
 
     return this.http.get<ICountRevise>(this.baseUrl + 'realProperties/revise', { observe: 'response', params })

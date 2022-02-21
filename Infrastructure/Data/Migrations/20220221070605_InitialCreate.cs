@@ -65,6 +65,47 @@ namespace Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "logos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Url = table.Column<string>(type: "nvarchar(230)", maxLength: 230, nullable: false),
+                    Ordinal = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_logos", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MunicipalityCityDistricts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: false),
+                    Level = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MunicipalityCityDistricts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Provinces",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Provinces", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ResidentialLands",
                 columns: table => new
                 {
@@ -79,6 +120,23 @@ namespace Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Staffs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: false),
+                    Contact = table.Column<string>(type: "nvarchar(39)", maxLength: 39, nullable: false),
+                    Designation = table.Column<string>(type: "nvarchar(39)", maxLength: 39, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Staffs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TaxDecOfRealProperties",
                 columns: table => new
                 {
@@ -87,7 +145,10 @@ namespace Infrastructure.Data.Migrations
                     TdNo = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Owner = table.Column<string>(type: "nvarchar(230)", maxLength: 230, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    PropertyLocation = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Street = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    Barangay = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Municipality = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    Province = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
                     PropertyIndentificationNo = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     ArpNo = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     TinNo = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
@@ -236,10 +297,22 @@ namespace Infrastructure.Data.Migrations
                 name: "KindOfProperties");
 
             migrationBuilder.DropTable(
+                name: "logos");
+
+            migrationBuilder.DropTable(
+                name: "MunicipalityCityDistricts");
+
+            migrationBuilder.DropTable(
                 name: "Photos");
 
             migrationBuilder.DropTable(
+                name: "Provinces");
+
+            migrationBuilder.DropTable(
                 name: "ResidentialLands");
+
+            migrationBuilder.DropTable(
+                name: "Staffs");
 
             migrationBuilder.DropTable(
                 name: "TaxDecOfRealProperties");

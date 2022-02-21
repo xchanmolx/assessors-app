@@ -71,9 +71,9 @@ namespace API.Controllers
                 totalItems = properties.Count();
             }
 
-            if (!string.IsNullOrEmpty(propertyParams.PropertyLocation))
+            if (!string.IsNullOrEmpty(propertyParams.Barangay))
             {
-                properties = properties.Where(x => x.PropertyLocation == propertyParams.PropertyLocation).ToList();
+                properties = properties.Where(x => x.Barangay == propertyParams.Barangay).ToList();
 
                 totalItems = properties.Count();
             }
@@ -84,7 +84,7 @@ namespace API.Controllers
         }
 
         [HttpGet("assessment-roll")]
-        public async Task<ActionResult<CountAndAssessmentRoll<PropertyToReturnDto>>> GetPropertiesWithAssessmentRoll(
+        public async Task<ActionResult<CountAndAssessmentRoll<AssessmentRollToReturnDto>>> GetPropertiesWithAssessmentRoll(
             [FromQuery] AssessmentRollSpecParams assessmentRollParams)
         {
             var spec = new AssessmentRollPropertyWithRealPropertiesSpecification();
@@ -104,9 +104,9 @@ namespace API.Controllers
                 _totalPrevAssessedValue = properties.Sum(x => x.PreviousAssessedValue);
             }
 
-            if (!string.IsNullOrEmpty(assessmentRollParams.PropertyLocation))
+            if (!string.IsNullOrEmpty(assessmentRollParams.Barangay))
             {
-                properties = properties.Where(x => x.PropertyLocation == assessmentRollParams.PropertyLocation).ToList();
+                properties = properties.Where(x => x.Barangay == assessmentRollParams.Barangay).ToList();
 
                 totalItems = properties.Count();
                 _totalAssessedValue = properties.Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue));
@@ -122,9 +122,9 @@ namespace API.Controllers
                 _totalPrevAssessedValue = properties.Sum(x => x.PreviousAssessedValue);
             }
 
-            var data = _mapper.Map<IEnumerable<PropertyToReturnDto>>(properties);
+            var data = _mapper.Map<IEnumerable<AssessmentRollToReturnDto>>(properties);
 
-            return Ok(new CountAndAssessmentRoll<PropertyToReturnDto>(_totalAssessedValue, _totalPrevAssessedValue, totalItems, data));
+            return Ok(new CountAndAssessmentRoll<AssessmentRollToReturnDto>(_totalAssessedValue, _totalPrevAssessedValue, totalItems, data));
         }
 
         [HttpGet("revise")]
@@ -146,9 +146,9 @@ namespace API.Controllers
                 totalItems = properties.Count();
             }
 
-            if (!string.IsNullOrEmpty(reviseParams.PropertyLocation))
+            if (!string.IsNullOrEmpty(reviseParams.Barangay))
             {
-                properties = properties.Where(x => x.PropertyLocation == reviseParams.PropertyLocation).ToList();
+                properties = properties.Where(x => x.Barangay == reviseParams.Barangay).ToList();
 
                 totalItems = properties.Count();
             }
@@ -270,8 +270,8 @@ namespace API.Controllers
             {
                 var newListTaxDec = mergeListTD.Where(x => x.KindOfProperties.Count() <= 1).Where(x => x.KindOfProperties.Any(x => x.KindOfLands == landPropertySpecParams.KindOfLand)).ToList();
 
-                newList = newListTaxDec.GroupBy(x => new {x.PropertyLocation})
-                    .Select(x => new LandPropertyToReturnDto(x.Key.PropertyLocation, x.Where(x => x.Year == landPropertySpecParams.YearOne).Sum(x => x.KindOfProperties.Sum(x => x.MarketValue)),
+                newList = newListTaxDec.GroupBy(x => new {x.Barangay})
+                    .Select(x => new LandPropertyToReturnDto(x.Key.Barangay, x.Where(x => x.Year == landPropertySpecParams.YearOne).Sum(x => x.KindOfProperties.Sum(x => x.MarketValue)),
                             x.Where(x => x.Year == landPropertySpecParams.YearOne).Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue)),
                             x.Where(x => x.Year == landPropertySpecParams.YearTwo).Sum(x => x.KindOfProperties.Sum(x => x.MarketValue)), x.Where(x => x.Year == landPropertySpecParams.YearOne).Sum(x => x.PreviousAssessedValue),
                             x.Where(x => x.Year == landPropertySpecParams.YearOne).Sum(x => x.KindOfProperties.Sum(x => x.Area)), x.Where(x => x.Year == landPropertySpecParams.YearOne).Count()))

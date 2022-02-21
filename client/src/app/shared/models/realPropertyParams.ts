@@ -7,5 +7,5 @@ export class RealPropertyParams {
     year?: number;
     yearTwo?: number;
     kindOfLand?: string;
-    propertyLocation?: string;
+    barangay?: string;
 }

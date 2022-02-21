@@ -10,9 +10,65 @@
 <div mat-dialog-content>
     <ng-container *ngIf="action == 'Revise'">
         <h2>Revise</h2>
-        <app-text-input [(ngModel)]="local_data.owner" [label]="'Owner'" required></app-text-input>
-        <app-text-input [(ngModel)]="local_data.approvedBy" [label]="'Approved by'" required></app-text-input>
     </ng-container>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col border border-dark">
+                <strong> REAL PROPERTY FIELD APPRAISAL & ASSESSMENT SHEET - LAND/PLANTS & TREES</strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 border border-dark">
+                ARP No. {{local_data.arpNo}}
+            </div>
+            <div class="col-6 border border-dark">
+                PIN: {{local_data.propertyIndentificationNo}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 border border-dark">
+                OCT/TCT NO. {{local_data.octTctCloaNo}}
+            </div>
+            <div class="col-6 border border-dark">
+                Survey No. {{local_data.surveyLotNo}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 border border-dark">
+                Owner: {{local_data.owner | titlecase}}
+            </div>
+            <div class="col-6 border border-dark">
+                Address: {{local_data.address | titlecase}}
+                <p>Tel. No. {{local_data.telephoneNo}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 border border-dark">
+                Administrative Occupant: 
+            </div>
+            <div class="col-6 border border-dark">
+                Address: 
+                <p>Tel. No. </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 border border-dark">
+                Property Location
+                <p>No./Street: </p>
+            </div>
+            <div class="col-6 border border-dark">
+                Barangay/District: {{local_data.propertyLocation | titlecase}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 border border-dark">
+                Municipality: 
+            </div>
+            <div class="col-6 border border-dark">
+                Province/City: 
+            </div>
+        </div>
+    </div>
 </div>
 
 <div mat-dialog-actions [align]="'end'">

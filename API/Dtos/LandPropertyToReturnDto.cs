@@ -6,10 +6,10 @@ namespace API.Dtos
 {
     public class LandPropertyToReturnDto
     {
-        public LandPropertyToReturnDto(string propertyLocation, decimal currentMarketValue, decimal currentAssessedValue,
+        public LandPropertyToReturnDto(string barangay, decimal currentMarketValue, decimal currentAssessedValue,
             decimal previousMarketValue, decimal previousAssessedValue, double area, int rpus)
         {
-            PropertyLocation = propertyLocation;
+            Barangay = barangay;
             CurrentMarketValue = currentMarketValue;
             CurrentAssessedValue = currentAssessedValue;
 
@@ -20,7 +20,7 @@ namespace API.Dtos
             Rpus = rpus;
         }
         
-        public string PropertyLocation { get; set; }
+        public string Barangay { get; set; }
         public decimal CurrentMarketValue { get; set; }
         public decimal CurrentAssessedValue { get; set; }
 

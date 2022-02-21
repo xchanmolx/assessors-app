@@ -66,11 +66,29 @@
                 <th mat-header-cell *matHeaderCellDef> Address </th>
                 <td mat-cell *matCellDef="let element"> {{element.address | uppercase}} </td>
                 </ng-container>
+
+                <!-- Street Column -->
+                <ng-container matColumnDef="street">
+                <th mat-header-cell [hidden]="true" *matHeaderCellDef> Street </th>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.street | uppercase}} </td>
+                </ng-container>
             
-                <!-- Property Location Column -->
-                <ng-container matColumnDef="propertyLocation">
-                <th mat-header-cell *matHeaderCellDef> Property Location </th>
-                <td mat-cell *matCellDef="let element"> {{element.propertyLocation | uppercase}} </td>
+                <!-- Barangay Column -->
+                <ng-container matColumnDef="barangay">
+                <th mat-header-cell *matHeaderCellDef> Barangay </th>
+                <td mat-cell *matCellDef="let element"> {{element.barangay | uppercase}} </td>
+                </ng-container>
+
+                <!-- Municipality Column -->
+                <ng-container matColumnDef="municipality">
+                <th mat-header-cell [hidden]="true" *matHeaderCellDef> Municipality </th>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.municipality | uppercase}} </td>
+                </ng-container>
+
+                <!-- Province Column -->
+                <ng-container matColumnDef="province">
+                <th mat-header-cell [hidden]="true" *matHeaderCellDef> Province </th>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.province | uppercase}} </td>
                 </ng-container>
 
                 <!-- Property Identification No. Column -->

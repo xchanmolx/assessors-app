@@ -16,7 +16,7 @@
                 </button>
             </div>
         </div>
-        <div class="col-3 d-flex justify-content-center">
+        <div class="col-2 d-flex justify-content-center">
             <ng-container>
                 <mat-form-field appearance="fill">
                     <mat-label>Select Barangay</mat-label>
@@ -28,9 +28,9 @@
                 </mat-form-field>
             </ng-container>
         </div>
-        <div class="col-3">
+        <div class="col-2">
             <ng-container>
-                <mat-form-field style="width: 50%; margin-right: 19px;" appearance="fill">
+                <mat-form-field appearance="fill">
                     <mat-label>Select Year</mat-label>
                     <mat-select (selectionChange)="onLatestYearSelected($event)" [(ngModel)]="defaultLatestYear">
                       <mat-option *ngFor="let mergeYear of mergeYears" [value]="mergeYear.year">
@@ -39,6 +39,9 @@
                     </mat-select>
                 </mat-form-field>
             </ng-container>
+        </div>
+        <div class="col-2 d-flex justify-content-center">
+            <h3><span><strong>{{totalCount}}</strong> Results</span></h3>
         </div>
     </div>
 
@@ -69,10 +72,10 @@
         <td mat-cell *matCellDef="let element"> {{element.address | uppercase}} </td>
         </ng-container>
 
-        <!-- Property Location Column -->
-        <ng-container matColumnDef="propertyLocation">
-        <th mat-header-cell *matHeaderCellDef> Property Location </th>
-        <td mat-cell *matCellDef="let element"> {{element.propertyLocation | uppercase}} </td>
+        <!-- Barangay Column -->
+        <ng-container matColumnDef="barangay">
+        <th mat-header-cell *matHeaderCellDef> Barangay </th>
+        <td mat-cell *matCellDef="let element"> {{element.barangay | uppercase}} </td>
         </ng-container>
 
         <!-- Survey Lot No. Column -->

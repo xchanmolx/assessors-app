@@ -8,7 +8,7 @@ namespace API.Dtos
         public int Id { get; set; }
         public string TdNo { get; set; }
         public string Owner { get; set; }
-        public string PropertyLocation { get; set; }
+        public string Barangay { get; set; }
         public string SurveyLotNo { get; set; }
         public int Year { get; set; }
         public List<KindOfPropertyForAreaDto> KindOfProperties { get; set; }

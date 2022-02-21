@@ -16,18 +16,35 @@
                 <app-text-input [(ngModel)]="local_data.tdNo" [label]="'TD No.'" required></app-text-input>
                 <app-text-input [(ngModel)]="local_data.owner" [label]="'Owner'" required></app-text-input>
                 <app-text-input [(ngModel)]="local_data.address" [label]="'Address'" required></app-text-input>
-                <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>Location of Property</mat-label>
-                    <mat-select [(ngModel)]="local_data.propertyLocation">
-                      <mat-option *ngFor="let barangay of barangays" [value]="barangay.name">{{barangay.name | titlecase}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
             </div>
             <div class="col-6">
                 <app-text-input [(ngModel)]="local_data.propertyIndentificationNo" [label]="'Property Identification No.'" required></app-text-input>
                 <app-text-input [(ngModel)]="local_data.arpNo" [label]="'ARP No.'"></app-text-input>
                 <app-text-input [(ngModel)]="local_data.tinNo" [label]="'TIN No.'"></app-text-input>
                 <app-text-input [(ngModel)]="local_data.telephoneNo" [label]="'Telephone No.'"></app-text-input>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-3 h6">
+                    Location of Property:
+                </div>
+                <div class="col-3">
+                    <app-text-input [(ngModel)]="local_data.street" [label]="'Number and Street'"></app-text-input>
+                </div>
+                <div class="col-2">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Barangay/District</mat-label>
+                        <mat-select [(ngModel)]="local_data.barangay">
+                          <mat-option *ngFor="let barangay of barangays" [value]="barangay.name">{{barangay.name | titlecase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-2">
+                    <app-text-input [(ngModel)]="local_data.municipality" [label]="'Municipality/City'"></app-text-input>
+                </div>
+                <div class="col-2">
+                    <app-text-input [(ngModel)]="local_data.province" [label]="'Province'"></app-text-input>
+                </div>
             </div>
         </div>
 

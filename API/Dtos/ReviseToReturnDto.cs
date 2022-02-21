@@ -10,7 +10,7 @@ namespace API.Dtos
         public string TdNo { get; set; }
         public string Owner { get; set; }
         public string Address { get; set; }
-        public string PropertyLocation { get; set; }
+        public string Barangay { get; set; }
         public string SurveyLotNo { get; set; }
         public int Year { get; set; }
     }

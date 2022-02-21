@@ -16,6 +16,10 @@ import { BarangayParams } from 'src/app/shared/models/barangayParams';
 import { AdminService } from 'src/app/admin/admin.service';
 import { IStaff } from 'src/app/shared/models/staff';
 import { StaffParams } from 'src/app/shared/models/staffParams';
+import { IMunicipalityCityDistrict } from 'src/app/shared/models/municipalityCityDistrict';
+import { MunicipalityCityDistrictParams } from 'src/app/shared/models/municipalityCityDistrictParams';
+import { IProvince } from 'src/app/shared/models/province';
+import { ProvinceParams } from 'src/app/shared/models/provinceParams';
 
 @Component({
   selector: 'app-real-property-create',
@@ -50,6 +54,14 @@ export class RealPropertyCreateComponent implements OnInit {
   staffParams = new StaffParams();
   staffs: IStaff[] = [];
   assessor!: IStaff | undefined;
+  municipalityCityDistricts: IMunicipalityCityDistrict[] = [];
+  municipalityCityDistrictParams = new MunicipalityCityDistrictParams();
+  municipality!: IMunicipalityCityDistrict | undefined;
+  city!: IMunicipalityCityDistrict | undefined;
+  district!: IMunicipalityCityDistrict | undefined;
+  provinces: IProvince[] = [];
+  provinceParams = new ProvinceParams();
+  province!: IProvince;
 
   constructor(private fb: FormBuilder, public realPropertyService: RealPropertyService,
     private notifierService: NotifierService, private kindOfLandsService: KindOfLandsService, 
@@ -61,6 +73,8 @@ export class RealPropertyCreateComponent implements OnInit {
     this.getResidentials();
     this.getBarangays();
     this.getStaffs();
+    this.getMunicipalityCityDistricts();
+    this.getProvinces();
   }
 
   ngOnInit(): void {
@@ -71,7 +85,10 @@ export class RealPropertyCreateComponent implements OnInit {
       tdNo: [null, Validators.required],
       owner: [null, Validators.required],
       address: [null, Validators.required],
-      propertyLocation: [null, Validators.required],
+      street: [null, Validators.required],
+      barangay: [null, Validators.required],
+      municipality: [null, Validators.required],
+      province: [null, Validators.required],
       propertyIndentificationNo: [null, Validators.required],
       arpNo: [null],
       tinNo: [null],
@@ -177,6 +194,8 @@ export class RealPropertyCreateComponent implements OnInit {
       this.textInputComponent.ngAfterViewInit();
 
       this.getStaffs();
+      this.getMunicipalityCityDistricts();
+      this.getProvinces();
 
       this.uploadPhoto();
     }, error => {
@@ -350,7 +369,7 @@ export class RealPropertyCreateComponent implements OnInit {
   setDefaultPropertyLocationByBarangay() {
     this.defaultPropertyLocationSelect = this.barangays[0]!.name;
     this.createForm.patchValue({
-      propertyLocation: this.defaultPropertyLocationSelect
+      barangay: this.defaultPropertyLocationSelect
     });
   }
 
@@ -368,6 +387,43 @@ export class RealPropertyCreateComponent implements OnInit {
       });
     }, error => {
       this.notifierService.showNotification(`Problem loading the staffs. ${error.errors}`, 'OK', 'error');
+    });
+  }
+
+  getMunicipalityCityDistricts() {
+    this.adminService.getMunicipalityCityDistricts(this.municipalityCityDistrictParams).subscribe(response => {
+      this.municipalityCityDistricts = response!.data;
+
+      // Find the specific municipality
+      this.municipality = this.municipalityCityDistricts.find(mun => mun.level == 'municipality');
+
+      // Find the specific city
+      this.city = this.municipalityCityDistricts.find(city => city.level == 'city');
+
+      // Find the specific district
+      this.district = this.municipalityCityDistricts.find(dis => dis.level == 'district');
+
+      // Assign default value for Municipality/City
+      this.createForm.patchValue({
+        municipality: this.municipality?.name || this.city?.name || this.district?.name
+      });
+    }, error => {
+      this.notifierService.showNotification(`Problem loading the municipalies / cities / districts. ${error.errors}`, 'OK', 'error');
+    });
+  }
+
+  getProvinces() {
+    this.adminService.getProvinces(this.provinceParams).subscribe(response => {
+      this.provinces = response!.data;
+
+      this.province = this.provinces[0];
+
+      // Assign default value for Province
+      this.createForm.patchValue({
+        province: this.province.name
+      });
+    }, error => {
+      this.notifierService.showNotification(`Problem loading the provinces. ${error.errors}`, 'OK', 'error');
     });
   }
 }

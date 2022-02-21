@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AssessorContext))]
-    [Migration("20220121062508_MunicipalityCityDistrict")]
-    partial class MunicipalityCityDistrict
+    [Migration("20220221070605_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -206,6 +206,28 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("KindOfProperties");
                 });
 
+            modelBuilder.Entity("Core.Entities.Logo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Ordinal")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(230)
+                        .HasColumnType("nvarchar(230)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("logos");
+                });
+
             modelBuilder.Entity("Core.Entities.MunicipalityCityDistrict", b =>
                 {
                     b.Property<int>("Id")
@@ -248,6 +270,23 @@ namespace Infrastructure.Data.Migrations
                     b.HasIndex("TaxDecOfRealPropertyId");
 
                     b.ToTable("Photos");
+                });
+
+            modelBuilder.Entity("Core.Entities.Province", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(90)
+                        .HasColumnType("nvarchar(90)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Provinces");
                 });
 
             modelBuilder.Entity("Core.Entities.ResidentialLand", b =>
@@ -335,6 +374,11 @@ namespace Infrastructure.Data.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<string>("Barangay")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
                     b.Property<string>("BlkNo")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
@@ -362,6 +406,11 @@ namespace Infrastructure.Data.Migrations
                     b.Property<string>("Memoranda")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Municipality")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("NoOfStoreys")
                         .HasMaxLength(10)
@@ -396,10 +445,10 @@ namespace Infrastructure.Data.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<string>("PropertyLocation")
+                    b.Property<string>("Province")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("Quarter")
                         .IsRequired()
@@ -413,6 +462,11 @@ namespace Infrastructure.Data.Migrations
                     b.Property<string>("Specify")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("SurveyLotNo")
                         .IsRequired()

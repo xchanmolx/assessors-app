@@ -20,8 +20,17 @@ namespace API.Dtos
         [Required]
         public string Address { get; set; }
 
-        [Required(ErrorMessage = "The property location field is required.")]
-        public string PropertyLocation { get; set; }
+        [Required]
+        public string Street { get; set; }
+
+        [Required]
+        public string Barangay { get; set; }
+
+        [Required]
+        public string Municipality { get; set; }
+
+        [Required]
+        public string Province { get; set; }
 
         [Required(ErrorMessage = "The property identification number field is required.")]
         public string PropertyIndentificationNo { get; set; }
@@ -33,8 +42,13 @@ namespace API.Dtos
         public string OctNo { get; set; }
         public string Dated { get; set; }
 
+        private string _surveyLotNo;
         [Required(ErrorMessage = "The survey lot number field is required.")]
-        public string SurveyLotNo { get; set; }
+        public string SurveyLotNo
+        {
+            get { return _surveyLotNo; }
+            set { _surveyLotNo = value.ToLower(); }
+        }
 
         public string AssessorLotNo { get; set; }
         public string BlkNo { get; set; }

@@ -6,19 +6,36 @@
                 <app-text-input formControlName="tdNo" [label]="'TD_Number'"></app-text-input>
                 <app-text-input formControlName="owner" [label]="'Owner'"></app-text-input>
                 <app-text-input formControlName="address" [label]="'Address'"></app-text-input>
-                <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>Location of Property</mat-label>
-                    <mat-select formControlName="propertyLocation">
-                      <mat-option *ngFor="let barangay of barangays" [value]="barangay.name">{{barangay.name | titlecase}}</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="createForm.get('propertyLocation')!.hasError('required')">Please select location of property</mat-error>
-                </mat-form-field>
             </div>
             <div class="col-6">
                 <app-text-input formControlName="propertyIndentificationNo" [label]="'Property Identification No.'"></app-text-input>
                 <app-text-input formControlName="arpNo" [label]="'ARP No.'"></app-text-input>
                 <app-text-input formControlName="tinNo" [label]="'TIN No.'"></app-text-input>
                 <app-text-input formControlName="telephoneNo" [label]="'Telephone No.'"></app-text-input>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-3 h6">
+                    Location of Property:
+                </div>
+                <div class="col-3">
+                    <app-text-input formControlName="street" [label]="'Number and Street'"></app-text-input>
+                </div>
+                <div class="col-2">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Barangay/District</mat-label>
+                        <mat-select formControlName="barangay">
+                          <mat-option *ngFor="let barangay of barangays" [value]="barangay.name">{{barangay.name | titlecase}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="createForm.get('barangay')!.hasError('required')">Please select barangay</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-2">
+                    <app-text-input formControlName="municipality" [label]="'Municipality/City'"></app-text-input>
+                </div>
+                <div class="col-2">
+                    <app-text-input formControlName="province" [label]="'Province'"></app-text-input>
+                </div>
             </div>
         </div>
         <div class="row border border-secondary p-3 my-3">

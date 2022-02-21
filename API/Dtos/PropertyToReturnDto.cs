@@ -10,7 +10,10 @@ namespace API.Dtos
         public string TdNo { get; set; }
         public string Owner { get; set; }
         public string Address { get; set; }
-        public string PropertyLocation { get; set; }
+        public string Street { get; set; }
+        public string Barangay { get; set; }
+        public string Municipality { get; set; }
+        public string Province { get; set; }
         public string PropertyIndentificationNo { get; set; }
         public string ArpNo { get; set; }
         public string TinNo { get; set; }

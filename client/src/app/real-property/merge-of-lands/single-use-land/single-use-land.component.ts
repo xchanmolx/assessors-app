@@ -16,7 +16,7 @@ export class SingleUseLandComponent implements OnInit {
   @Input() defaultLatestYear!: any;
   @Input() defaultOldYear!: any;
 
-  displayedColumns: string[] = ['propertyLocation', 'currentMarketValue', 'currentAssessedValue',
+  displayedColumns: string[] = ['barangay', 'currentMarketValue', 'currentAssessedValue',
    'previousMarketValue', 'previousAssessedValue', 'area', 'rpus'];
 
   constructor(private accountService: AccountService) {

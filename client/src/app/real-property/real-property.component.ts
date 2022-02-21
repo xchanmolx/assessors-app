@@ -28,7 +28,7 @@ export class RealPropertyComponent implements OnInit {
     { name: 'Effective Year: Latest Year', value: 'yearDesc'}
   ];
   
-  displayedColumns: string[] = ['tdNo', 'owner', 'address', 'propertyLocation', 'propertyIndentificationNo',
+  displayedColumns: string[] = ['tdNo', 'owner', 'address', 'street', 'barangay', 'municipality', 'province', 'propertyIndentificationNo',
   'arpNo', 'tinNo', 'telephoneNo', 'octTctCloaNo', 'octNo', 'dated', 'surveyLotNo', 'assessorLotNo', 'blkNo',
   'boundary', 'kindOfPropertyAssessed', 'noOfStoreys', 'briefDescription', 'specify',
   'kindOfProperties', 'totalAssessedValueInWord', 'taxableExempt', 'quarter', 'year', 'recommendedBy',
@@ -72,7 +72,10 @@ export class RealPropertyComponent implements OnInit {
         value.tdNo = row_obj.tdNo;
         value.owner = row_obj.owner;
         value.address = row_obj.address;
-        value.propertyLocation = row_obj.propertyLocation;
+        value.street = row_obj.street;
+        value.barangay = row_obj.barangay;
+        value.municipality = row_obj.municipality;``
+        value.province = row_obj.province;
         value.propertyIndentificationNo = row_obj.propertyIndentificationNo;
         value.arpNo = row_obj.arpNo;
         value.tinNo = row_obj.tinNo;

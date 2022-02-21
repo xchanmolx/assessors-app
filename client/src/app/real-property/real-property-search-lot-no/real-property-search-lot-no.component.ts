@@ -42,7 +42,7 @@ export class RealPropertySearchLotNoComponent implements OnInit {
   logos: ILogo[] = [];
   logo1st!: ILogo | undefined;
 
-  displayedColumns: string[] = ['owner', 'propertyLocation', 'tdNo', 'year', 'surveyLotNo', 'kindOfProperties', 'memoranda'];
+  displayedColumns: string[] = ['owner', 'barangay', 'tdNo', 'year', 'surveyLotNo', 'kindOfProperties', 'memoranda'];
 
   constructor(private realPropertyService: RealPropertyService, private activatedRoute: ActivatedRoute, 
     private accountService: AccountService, private notifierService: NotifierService, private adminService: AdminService) { 

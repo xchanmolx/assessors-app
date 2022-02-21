@@ -2,11 +2,11 @@ namespace Core.Specifications
 {
     public class AssessmentRollSpecParams
     {
-        private string _propertyLocation;
-        public string PropertyLocation
+        private string _barangay;
+        public string Barangay
         {
-            get => _propertyLocation;
-            set => _propertyLocation = value.ToLower();
+            get => _barangay;
+            set => _barangay = value.ToLower();
         }
 
         private string _taxableExempt;

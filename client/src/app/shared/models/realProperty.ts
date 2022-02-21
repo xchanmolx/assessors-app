@@ -6,7 +6,10 @@ export interface IRealProperty {
     tdNo: string;
     owner: string;
     address: string;
-    propertyLocation: string;
+    street: string;
+    barangay: string;
+    municipality: string;
+    province: string;
     propertyIndentificationNo: string;
     arpNo: string;
     tinNo: string;
