@@ -54,18 +54,18 @@
         <div class="row">
             <div class="col-6 border border-dark">
                 Property Location
-                <p>No./Street: </p>
+                <p>No./Street: {{local_data.street}}</p>
             </div>
             <div class="col-6 border border-dark">
-                Barangay/District: {{local_data.propertyLocation | titlecase}}
+                Barangay/District: {{local_data.barangay | titlecase}}
             </div>
         </div>
         <div class="row">
             <div class="col-6 border border-dark">
-                Municipality: 
+                Municipality/City: {{local_data.municipality | titlecase}}
             </div>
             <div class="col-6 border border-dark">
-                Province/City: 
+                Province: {{local_data.province | titlecase}}
             </div>
         </div>
     </div>
