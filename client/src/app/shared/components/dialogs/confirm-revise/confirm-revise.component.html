@@ -14,7 +14,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col border border-dark">
-                <strong> REAL PROPERTY FIELD APPRAISAL & ASSESSMENT SHEET - LAND/PLANTS & TREES</strong>
+                <strong>REAL PROPERTY FIELD APPRAISAL & ASSESSMENT SHEET - LAND/PLANTS & TREES</strong>
             </div>
         </div>
         <div class="row">
@@ -53,7 +53,7 @@
         </div>
         <div class="row">
             <div class="col-6 border border-dark">
-                Property Location
+                <strong>Property Location</strong>
                 <p>No./Street: {{local_data.street}}</p>
             </div>
             <div class="col-6 border border-dark">
@@ -66,6 +66,345 @@
             </div>
             <div class="col-6 border border-dark">
                 Province: {{local_data.province | titlecase}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 border border-dark">
+                <strong>Property Boundaries</strong>
+            </div>
+            <div class="col-6 border border-dark">
+                <strong>Land Sketch</strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 border border-dark">
+                <div class="row">
+                    <div class="col-6 border border-secondary">
+                        North
+                    </div>
+                    <div class="col-6 border border-secondary">
+                        {{local_data.boundary?.north}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 border border-secondary">
+                        East
+                    </div>
+                    <div class="col-6 border border-secondary">
+                        {{local_data.boundary?.east}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 border border-secondary">
+                        South
+                    </div>
+                    <div class="col-6 border border-secondary">
+                        {{local_data.boundary?.south}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 border border-secondary">
+                        West
+                    </div>
+                    <div class="col-6 border border-secondary">
+                        {{local_data.boundary?.west}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 border border-bottom-0 border-dark">
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 border border-dark">
+                <strong>Land Appraisal</strong>
+            </div>
+            <div class="col-3 border border-dark">
+                
+            </div>
+            <div class="col-6 border border-bottom border-top-0 border-dark">
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col border border-dark">
+                    <!-- Material Table  -->
+                <table mat-table [dataSource]="local_data.kindOfProperties" #mytable class="my-table mat-elevation-z8">
+        
+                    <!-- Kind of Lands Column -->
+                    <ng-container matColumnDef="kindOfLands">
+                    <th mat-header-cell *matHeaderCellDef> Classification </th>
+                    <td mat-cell *matCellDef="let element"> {{element.kindOfLands | titlecase}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Total </td>
+                    </ng-container>
+        
+                    <!-- Classification Column -->
+                    <ng-container matColumnDef="classification">
+                    <th mat-header-cell *matHeaderCellDef> Sub-class </th>
+                    <td mat-cell *matCellDef="let element"> {{element.classification}} </td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                    </ng-container>
+        
+                    <!-- Area Column -->
+                    <ng-container matColumnDef="area">
+                    <th mat-header-cell *matHeaderCellDef> Area </th>
+                    <td mat-cell *matCellDef="let element"> {{element.area | number: '0.1-4'}} </td>
+                    <td mat-footer-cell *matFooterCellDef> {{getTotalArea() | number: '0.1-4'}} </td>
+                    </ng-container>
+        
+                    <!-- Actual Use Column -->
+                    <ng-container matColumnDef="actualUse">
+                    <th mat-header-cell *matHeaderCellDef> Actual Use </th>
+                    <td mat-cell *matCellDef="let element"> {{element.actualUse | titlecase}} </td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                    </ng-container>
+        
+                    <!-- Unit Value Column -->
+                    <ng-container matColumnDef="marketValueLands">
+                    <th mat-header-cell *matHeaderCellDef> Unit Value </th>
+                    <td mat-cell *matCellDef="let element"> {{element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi | number}} </td>
+                    <td mat-footer-cell *matFooterCellDef> {{getTotalUnitValue() | number}} </td>
+                    </ng-container>
+        
+                    <!-- Market Value Column -->
+                    <ng-container matColumnDef="marketValue">
+                    <th mat-header-cell *matHeaderCellDef> Market Value </th>
+                    <td mat-cell *matCellDef="let element"> {{element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi) | number}} </td>
+                    <td mat-footer-cell *matFooterCellDef> {{getTotalMarketValue() | number}} </td>
+                    </ng-container>
+        
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+        
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col border border-dark"><strong>Plants and Trees Appraisal</strong></div>
+        </div>
+        <div class="row">
+            <div class="col-2 border border-dark">
+                Product Class
+            </div>
+            <div class="col-1 border border-dark">
+                Area Planted
+            </div>
+            <div class="col-1 border border-dark">
+                Total Number
+            </div>
+            <div class="col-2 border border-dark">
+                Non Fruit Bearing
+            </div>
+            <div class="col-2 border border-dark">
+                Fruit Bearing
+            </div>
+            <div class="col-1 border border-dark">
+                Age
+            </div>
+            <div class="col-1 border border-dark">
+                Unit Price
+            </div>
+            <div class="col-2 border border-dark">
+                Market Place
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 border border-dark">
+                &nbsp;
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-2 border border-dark">
+                
+            </div>
+            <div class="col-2 border border-dark">
+                
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-2 border border-dark">
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 border border-dark">
+                &nbsp;
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-2 border border-dark">
+                
+            </div>
+            <div class="col-2 border border-dark">
+                
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-2 border border-dark">
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 border border-dark">
+                &nbsp;
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-2 border border-dark">
+                
+            </div>
+            <div class="col-2 border border-dark">
+                
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-2 border border-dark">
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 border border-dark">
+                &nbsp;
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-2 border border-dark">
+                
+            </div>
+            <div class="col-2 border border-dark">
+                
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-2 border border-dark">
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 border border-dark">
+                Total
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-2 border border-dark">
+                
+            </div>
+            <div class="col-2 border border-dark">
+                
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-1 border border-dark">
+                
+            </div>
+            <div class="col-2 border border-dark">
+                
+            </div>
+        </div>
+        <p>&nbsp;</p>
+        <hr/>
+        <p>&nbsp;</p>
+        <div class="row">
+            <div class="col border border-dark"><strong>Value Adjustments Factors</strong></div>
+        </div>
+        <div class="row">
+            <div class="col border border-dark">
+                    <!-- Material Table  -->
+                <table mat-table [dataSource]="local_data.kindOfProperties" #mytable class="my-table mat-elevation-z8">
+        
+                    <!-- Market Value Column -->
+                    <ng-container matColumnDef="marketValue">
+                    <th mat-header-cell *matHeaderCellDef> Market Value </th>
+                    <td mat-cell *matCellDef="let element"> {{element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi) | number}} </td>
+                    <td mat-footer-cell *matFooterCellDef> {{getTotalMarketValue() | number}} </td>
+                    </ng-container>
+        
+                    <!-- Adjustment Factor Column -->
+                    <ng-container matColumnDef="adjustmentFactor">
+                    <th mat-header-cell *matHeaderCellDef> Adjustment Factor </th>
+                    <td mat-cell *matCellDef="let element"> </td>
+                    <td mat-footer-cell *matFooterCellDef> Total </td>
+                    </ng-container>
+        
+                    <!-- Percent Adjustment Column -->
+                    <ng-container matColumnDef="percentAdjustment">
+                    <th mat-header-cell *matHeaderCellDef> % Adjustment </th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <ng-container>
+                            <mat-form-field appearance="fill" style="width: 70px;">
+                                <mat-label>  </mat-label>
+                                <mat-select (selectionChange)="onPercentAdjustmentSelected($event)" [(ngModel)]="defaultPercentAdjustmentSelect">
+                                  <mat-option *ngFor="let percentAdj of percentAdjustmentOptions" [value]="percentAdj.value">
+                                      {{percentAdj.name}}
+                                  </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                    </ng-container>
+        
+                    <!-- Value Adjustment Column -->
+                    <ng-container matColumnDef="valueAdjustment">
+                    <th mat-header-cell *matHeaderCellDef> Value Adjustment </th>
+                    <td mat-cell *matCellDef="let element"> 
+                        {{(element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) * 0.08 | number: '0.1-2'}} 
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                    </ng-container>
+        
+                    <!-- Adjusted Market Value Column -->
+                    <ng-container matColumnDef="adjustedMarketValue">
+                    <th mat-header-cell *matHeaderCellDef> Adjusted Market Value </th>
+                    <td mat-cell *matCellDef="let element"> 
+                        {{(element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) - ((element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) * 0.08) | number: '0.1-2'}} 
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                    </ng-container>
+        
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumns2"></tr>
+        
+                </table>
             </div>
         </div>
     </div>

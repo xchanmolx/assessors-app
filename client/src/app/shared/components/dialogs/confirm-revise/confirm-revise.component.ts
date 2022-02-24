@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
 import { NotifierService } from 'src/app/core/services/notifier.service';
 import { RealPropertyService } from 'src/app/real-property/real-property.service';
 import { IRealProperty } from 'src/app/shared/models/realProperty';
@@ -13,6 +14,20 @@ export class ConfirmReviseComponent implements OnInit {
   local_data!: any;
   action!: string;
 
+  defaultPercentAdjustmentSelect!: number;
+  percentAdjustmentOptions = [
+    { name: '- 8%', value: 0.08 },
+    { name: '+ 6%', value: 0.06 }
+  ];
+
+  valueAdjustment!: number
+  adjustedMarketValue!: number
+
+  displayedColumns: string[] = ['kindOfLands', 'classification', 'area',
+    'actualUse', 'marketValueLands', 'marketValue'];
+
+  displayedColumns2: string[] = ['marketValue', 'adjustmentFactor', 'percentAdjustment', 'valueAdjustment', 'adjustedMarketValue'];
+
   constructor(@Optional() @Inject(MAT_DIALOG_DATA) public data: IRealProperty, private realPropertyService: RealPropertyService,
   private notifierService: NotifierService, public dialogRef: MatDialogRef<ConfirmReviseComponent>) { 
     this.local_data = {...data};
@@ -24,7 +39,39 @@ export class ConfirmReviseComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onPercentAdjustmentSelected(event: MatSelectChange) {
+    if (event.value === 0.08 ) {
+      this.valueAdjustment = (this.local_data.area * (this.local_data.marketValueAgri || this.local_data.marketValueComm || this.local_data.marketValueIndu || this.local_data.marketValueResi)) * this.defaultPercentAdjustmentSelect;
+      this.adjustedMarketValue = (this.local_data.area * (this.local_data.marketValueAgri || this.local_data.marketValueComm || this.local_data.marketValueIndu || this.local_data.marketValueResi)) - ((this.local_data.area * (this.local_data.marketValueAgri || this.local_data.marketValueComm || this.local_data.marketValueIndu || this.local_data.marketValueResi)) * this.defaultPercentAdjustmentSelect)
+    }
+
+    if (event.value === 0.06) {
+      this.valueAdjustment = (this.local_data.area * (this.local_data.marketValueAgri || this.local_data.marketValueComm || this.local_data.marketValueIndu || this.local_data.marketValueResi)) * this.defaultPercentAdjustmentSelect;
+      this.adjustedMarketValue = (this.local_data.area * (this.local_data.marketValueAgri || this.local_data.marketValueComm || this.local_data.marketValueIndu || this.local_data.marketValueResi)) + ((this.local_data.area * (this.local_data.marketValueAgri || this.local_data.marketValueComm || this.local_data.marketValueIndu || this.local_data.marketValueResi)) * this.defaultPercentAdjustmentSelect)
+    }
+
+    // this.loadIndividualRevise();
+  }
+
+  getTotalArea() {
+    return this.local_data.kindOfProperties?.reduce((accum: any, curr: any) => accum + curr.area, 0);
+  }
+
+  getTotalUnitValue() {
+    return this.local_data.kindOfProperties?.reduce((accum: any, curr: any) => accum + (curr.marketValueAgri || curr.marketValueComm || curr.marketValueIndu || curr.marketValueResi), 0);
+  }
+
+  getTotalMarketValue() {
+    return this.local_data.kindOfProperties?.reduce((accum: any, curr: any) => accum + (curr.area * (curr.marketValueAgri || curr.marketValueComm || curr.marketValueIndu || curr.marketValueResi)), 0);
+  }
+
   loadIndividualRevise() {
+    if (this.local_data.barangay === 'poblacion') {
+      this.defaultPercentAdjustmentSelect = 0.06;
+    } else {
+      this.defaultPercentAdjustmentSelect = 0.08;
+    }
+
     this.realPropertyService.getRealPropertyReviseWithId(this.local_data.id).subscribe(response => {
       this.local_data = response!;
 
