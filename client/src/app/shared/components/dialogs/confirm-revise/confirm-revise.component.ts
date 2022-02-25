@@ -20,9 +20,6 @@ export class ConfirmReviseComponent implements OnInit {
     { name: '+ 6%', value: 0.06 }
   ];
 
-  valueAdjustment!: number
-  adjustedMarketValue!: number
-
   displayedColumns: string[] = ['kindOfLands', 'classification', 'area',
     'actualUse', 'marketValueLands', 'marketValue'];
 
@@ -40,17 +37,7 @@ export class ConfirmReviseComponent implements OnInit {
   }
 
   onPercentAdjustmentSelected(event: MatSelectChange) {
-    if (event.value === 0.08 ) {
-      this.valueAdjustment = (this.local_data.area * (this.local_data.marketValueAgri || this.local_data.marketValueComm || this.local_data.marketValueIndu || this.local_data.marketValueResi)) * this.defaultPercentAdjustmentSelect;
-      this.adjustedMarketValue = (this.local_data.area * (this.local_data.marketValueAgri || this.local_data.marketValueComm || this.local_data.marketValueIndu || this.local_data.marketValueResi)) - ((this.local_data.area * (this.local_data.marketValueAgri || this.local_data.marketValueComm || this.local_data.marketValueIndu || this.local_data.marketValueResi)) * this.defaultPercentAdjustmentSelect)
-    }
-
-    if (event.value === 0.06) {
-      this.valueAdjustment = (this.local_data.area * (this.local_data.marketValueAgri || this.local_data.marketValueComm || this.local_data.marketValueIndu || this.local_data.marketValueResi)) * this.defaultPercentAdjustmentSelect;
-      this.adjustedMarketValue = (this.local_data.area * (this.local_data.marketValueAgri || this.local_data.marketValueComm || this.local_data.marketValueIndu || this.local_data.marketValueResi)) + ((this.local_data.area * (this.local_data.marketValueAgri || this.local_data.marketValueComm || this.local_data.marketValueIndu || this.local_data.marketValueResi)) * this.defaultPercentAdjustmentSelect)
-    }
-
-    // this.loadIndividualRevise();
+    this.defaultPercentAdjustmentSelect = event.value;
   }
 
   getTotalArea() {
