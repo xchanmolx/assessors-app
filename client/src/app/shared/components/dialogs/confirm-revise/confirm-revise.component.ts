@@ -16,14 +16,16 @@ export class ConfirmReviseComponent implements OnInit {
 
   defaultPercentAdjustmentSelect!: number;
   percentAdjustmentOptions = [
-    { name: '- 8%', value: 0.08 },
-    { name: '+ 6%', value: 0.06 }
+    { name: '- 8%', value: 8 },
+    { name: '+ 6%', value: 6 }
   ];
 
   displayedColumns: string[] = ['kindOfLands', 'classification', 'area',
     'actualUse', 'marketValueLands', 'marketValue'];
 
   displayedColumns2: string[] = ['marketValue', 'adjustmentFactor', 'percentAdjustment', 'valueAdjustment', 'adjustedMarketValue'];
+
+  displayedColumns3: string[] = ['kind', 'actualUse', 'adjustedMarketValue', 'assessmentLevel', 'assessedValue'];
 
   constructor(@Optional() @Inject(MAT_DIALOG_DATA) public data: IRealProperty, private realPropertyService: RealPropertyService,
   private notifierService: NotifierService, public dialogRef: MatDialogRef<ConfirmReviseComponent>) { 
@@ -40,6 +42,38 @@ export class ConfirmReviseComponent implements OnInit {
     this.defaultPercentAdjustmentSelect = event.value;
   }
 
+  convertPercentToDecimal(percent: number) {
+    return percent/100;
+  }
+
+  roundOffToTheNearestTens(number: number) {
+    return Math.round(number/10) * 10;
+  }
+
+  getTotalPercentAdjustment() {
+    return this.local_data.kindOfProperties?.reduce((accum: any, curr: any) => accum + this.defaultPercentAdjustmentSelect, 0);
+  }
+
+  getTotalValueAdjustment() {
+    if (this.defaultPercentAdjustmentSelect === 8) {
+      return this.local_data.kindOfProperties?.reduce((accum: any, curr: any) => accum + (curr.area * (curr.marketValueAgri || curr.marketValueComm || curr.marketValueIndu || curr.marketValueResi)) * this.convertPercentToDecimal(8), 0);
+    }
+
+    if (this.defaultPercentAdjustmentSelect === 6) {
+      return this.local_data.kindOfProperties?.reduce((accum: any, curr: any) => accum + (curr.area * (curr.marketValueAgri || curr.marketValueComm || curr.marketValueIndu || curr.marketValueResi)) * this.convertPercentToDecimal(6), 0);
+    }
+  }
+
+  getTotalAdjustedMarketValue() {
+    if (this.defaultPercentAdjustmentSelect === 8) {
+      return this.local_data.kindOfProperties?.reduce((accum: any, curr: any) => accum + (curr.area * (curr.marketValueAgri || curr.marketValueComm || curr.marketValueIndu || curr.marketValueResi)) - ((curr.area * (curr.marketValueAgri || curr.marketValueComm || curr.marketValueIndu || curr.marketValueResi)) * this.convertPercentToDecimal(8)), 0);
+    }
+
+    if (this.defaultPercentAdjustmentSelect === 6) {
+      return this.local_data.kindOfProperties?.reduce((accum: any, curr: any) => accum + (curr.area * (curr.marketValueAgri || curr.marketValueComm || curr.marketValueIndu || curr.marketValueResi)) + ((curr.area * (curr.marketValueAgri || curr.marketValueComm || curr.marketValueIndu || curr.marketValueResi)) * this.convertPercentToDecimal(6)), 0);
+    }
+  }
+
   getTotalArea() {
     return this.local_data.kindOfProperties?.reduce((accum: any, curr: any) => accum + curr.area, 0);
   }
@@ -54,9 +88,9 @@ export class ConfirmReviseComponent implements OnInit {
 
   loadIndividualRevise() {
     if (this.local_data.barangay === 'poblacion') {
-      this.defaultPercentAdjustmentSelect = 0.06;
+      this.defaultPercentAdjustmentSelect = 6;
     } else {
-      this.defaultPercentAdjustmentSelect = 0.08;
+      this.defaultPercentAdjustmentSelect = 8;
     }
 
     this.realPropertyService.getRealPropertyReviseWithId(this.local_data.id).subscribe(response => {

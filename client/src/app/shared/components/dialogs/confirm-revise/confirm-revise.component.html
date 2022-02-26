@@ -128,7 +128,7 @@
         </div>
         <div class="row">
             <div class="col border border-dark">
-                    <!-- Material Table  -->
+                    <!-- Material Table 1 -->
                 <table mat-table [dataSource]="local_data.kindOfProperties" #mytable class="my-table mat-elevation-z8">
         
                     <!-- Kind of Lands Column -->
@@ -347,7 +347,7 @@
         </div>
         <div class="row">
             <div class="col border border-dark">
-                    <!-- Material Table  -->
+                    <!-- Material Table 2 -->
                 <table mat-table [dataSource]="local_data.kindOfProperties" #mytable class="my-table mat-elevation-z8">
         
                     <!-- Market Value Column -->
@@ -379,35 +379,35 @@
                             </mat-form-field>
                         </ng-container>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef> </td>
+                    <td mat-footer-cell *matFooterCellDef> {{getTotalPercentAdjustment()}}% </td>
                     </ng-container>
         
                     <!-- Value Adjustment Column -->
                     <ng-container matColumnDef="valueAdjustment">
                     <th mat-header-cell *matHeaderCellDef> Value Adjustment </th>
                     <td mat-cell *matCellDef="let element"> 
-                        <ng-container *ngIf="defaultPercentAdjustmentSelect === 0.08">
-                            {{(element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) * 0.08 | number: '0.1-2'}} 
+                        <ng-container *ngIf="defaultPercentAdjustmentSelect === 8">
+                            {{(element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) * convertPercentToDecimal(8) | number: '0.1-2'}} 
                         </ng-container>
-                        <ng-container *ngIf="defaultPercentAdjustmentSelect === 0.06">
-                            {{(element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) * 0.06 | number: '0.1-2'}} 
+                        <ng-container *ngIf="defaultPercentAdjustmentSelect === 6">
+                            {{(element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) * convertPercentToDecimal(6) | number: '0.1-2'}} 
                         </ng-container>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef> </td>
+                    <td mat-footer-cell *matFooterCellDef> {{getTotalValueAdjustment() | number: '0.1-2'}} </td>
                     </ng-container>
         
                     <!-- Adjusted Market Value Column -->
                     <ng-container matColumnDef="adjustedMarketValue">
                     <th mat-header-cell *matHeaderCellDef> Adjusted Market Value </th>
                     <td mat-cell *matCellDef="let element"> 
-                        <ng-container *ngIf="defaultPercentAdjustmentSelect === 0.08">
-                            {{(element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) - ((element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) * 0.08) | number: '0.1-2'}} 
+                        <ng-container *ngIf="defaultPercentAdjustmentSelect === 8">
+                            {{(element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) - ((element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) * convertPercentToDecimal(8)) | number: '0.1-2'}} 
                         </ng-container>
-                        <ng-container *ngIf="defaultPercentAdjustmentSelect === 0.06">
-                            {{(element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) + ((element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) * 0.06) | number: '0.1-2'}} 
+                        <ng-container *ngIf="defaultPercentAdjustmentSelect === 6">
+                            {{(element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) + ((element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) * convertPercentToDecimal(6)) | number: '0.1-2'}} 
                         </ng-container>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef> </td>
+                    <td mat-footer-cell *matFooterCellDef> {{getTotalAdjustedMarketValue() | number: '0.1-2'}} </td>
                     </ng-container>
         
                     <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
@@ -415,6 +415,67 @@
                     <tr mat-footer-row *matFooterRowDef="displayedColumns2"></tr>
         
                 </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col border border-dark">
+                    <!-- Material Table 3 -->
+                    <table mat-table [dataSource]="local_data.kindOfProperties" #mytable class="my-table mat-elevation-z8">
+        
+                        <!-- Kind Column -->
+                        <ng-container matColumnDef="kind">
+                        <th mat-header-cell *matHeaderCellDef> Kind </th>
+                        <td mat-cell *matCellDef="let element"> {{local_data.kindOfPropertyAssessed | titlecase}} </td>
+                        <td mat-footer-cell *matFooterCellDef> Total </td>
+                        </ng-container>
+            
+                        <!-- Actual Use Column -->
+                        <ng-container matColumnDef="actualUse">
+                        <th mat-header-cell *matHeaderCellDef> Actual Use </th>
+                        <td mat-cell *matCellDef="let element"> {{element.actualUse | titlecase}} </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+            
+                        <!-- Adjusted Market Value Column -->
+                        <ng-container matColumnDef="adjustedMarketValue">
+                        <th mat-header-cell *matHeaderCellDef> Adjusted Market Value </th>
+                        <td mat-cell *matCellDef="let element"> 
+                            <ng-container *ngIf="defaultPercentAdjustmentSelect === 8">
+                                {{roundOffToTheNearestTens((element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) - ((element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) * convertPercentToDecimal(8))) | number}} 
+                            </ng-container>
+                            <ng-container *ngIf="defaultPercentAdjustmentSelect === 6">
+                                {{roundOffToTheNearestTens((element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) + ((element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) * convertPercentToDecimal(6))) | number}} 
+                            </ng-container>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+            
+                        <!-- Assessment Level Column -->
+                        <ng-container matColumnDef="assessmentLevel">
+                        <th mat-header-cell *matHeaderCellDef> Assessment Level </th>
+                        <td mat-cell *matCellDef="let element"> {{element.level}}% </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+            
+                        <!-- Assessed Value Column -->
+                        <ng-container matColumnDef="assessedValue">
+                        <th mat-header-cell *matHeaderCellDef> Assessed Value </th>
+                        <td mat-cell *matCellDef="let element"> 
+                            <ng-container *ngIf="defaultPercentAdjustmentSelect === 8">
+                                {{roundOffToTheNearestTens(roundOffToTheNearestTens((element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) - ((element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) * convertPercentToDecimal(8))) * convertPercentToDecimal(element.level)) | number}} 
+                            </ng-container>
+                            <ng-container *ngIf="defaultPercentAdjustmentSelect === 6">
+                                {{roundOffToTheNearestTens(roundOffToTheNearestTens((element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) + ((element.area * (element.marketValueAgri || element.marketValueComm || element.marketValueIndu || element.marketValueResi)) * convertPercentToDecimal(6))) * convertPercentToDecimal(element.level)) | number}} 
+                            </ng-container>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+            
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+                        <tr mat-footer-row *matFooterRowDef="displayedColumns3"></tr>
+            
+                    </table>
             </div>
         </div>
     </div>
