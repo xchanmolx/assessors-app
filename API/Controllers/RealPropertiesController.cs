@@ -83,6 +83,37 @@ namespace API.Controllers
             return Ok(new Pagination<PropertyToReturnDto>(propertyParams.PageIndex, propertyParams.PageSize, totalItems, data));
         }
 
+        [HttpGet("revise")]
+        public async Task<ActionResult<CountAndReviseList<ReviseToReturnDto>>> GetPropertiesWithRevise(
+            [FromQuery] ReviseSpecParams reviseParams)
+        {
+            var spec = new RevisePropertyWithRealPropertiesSpecification(reviseParams);
+
+            var countSpec = new RevisePropertyWithFiltersForCountSpecification(reviseParams);
+
+            var totalItems = await _propertyRepo.CountAsync(countSpec);
+
+            var properties = await _propertyRepo.ListAsync(spec);
+
+            if (reviseParams.Year > 0)
+            {
+                properties = properties.Where(x => x.Year == reviseParams.Year).ToList();
+
+                totalItems = properties.Count();
+            }
+
+            if (!string.IsNullOrEmpty(reviseParams.Barangay))
+            {
+                properties = properties.Where(x => x.Barangay == reviseParams.Barangay).ToList();
+
+                totalItems = properties.Count();
+            }
+
+            var data = _mapper.Map<IEnumerable<ReviseToReturnDto>>(properties);
+
+            return Ok(new CountAndReviseList<ReviseToReturnDto>(totalItems, data));
+        }
+
         [HttpGet("assessment-roll")]
         public async Task<ActionResult<CountAndAssessmentRoll<AssessmentRollToReturnDto>>> GetPropertiesWithAssessmentRoll(
             [FromQuery] AssessmentRollSpecParams assessmentRollParams)
@@ -125,37 +156,6 @@ namespace API.Controllers
             var data = _mapper.Map<IEnumerable<AssessmentRollToReturnDto>>(properties);
 
             return Ok(new CountAndAssessmentRoll<AssessmentRollToReturnDto>(_totalAssessedValue, _totalPrevAssessedValue, totalItems, data));
-        }
-
-        [HttpGet("revise")]
-        public async Task<ActionResult<CountAndReviseList<ReviseToReturnDto>>> GetPropertiesWithRevise(
-            [FromQuery] ReviseSpecParams reviseParams)
-        {
-            var spec = new RevisePropertyWithRealPropertiesSpecification(reviseParams);
-
-            var countSpec = new RevisePropertyWithFiltersForCountSpecification(reviseParams);
-
-            var totalItems = await _propertyRepo.CountAsync(countSpec);
-
-            var properties = await _propertyRepo.ListAsync(spec);
-
-            if (reviseParams.Year > 0)
-            {
-                properties = properties.Where(x => x.Year == reviseParams.Year).ToList();
-
-                totalItems = properties.Count();
-            }
-
-            if (!string.IsNullOrEmpty(reviseParams.Barangay))
-            {
-                properties = properties.Where(x => x.Barangay == reviseParams.Barangay).ToList();
-
-                totalItems = properties.Count();
-            }
-
-            var data = _mapper.Map<IEnumerable<ReviseToReturnDto>>(properties);
-
-            return Ok(new CountAndReviseList<ReviseToReturnDto>(totalItems, data));
         }
         
         [HttpGet("revise/{id}")]

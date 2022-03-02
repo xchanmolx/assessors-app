@@ -19,8 +19,6 @@ namespace API.Dtos
         
         [Required]
         public string Address { get; set; }
-
-        [Required]
         public string Street { get; set; }
 
         [Required]

@@ -74,6 +74,24 @@ export class ConfirmReviseComponent implements OnInit {
     }
   }
 
+  getTotalAssessmentLevel() {
+    return this.local_data.kindOfProperties?.reduce((accum: any, curr: any) => accum + curr.level, 0);
+  }
+
+  getTotalAssessedValue() {
+    if (this.defaultPercentAdjustmentSelect === 8) {
+      return this.local_data.kindOfProperties?.reduce((accum: any, curr: any) => accum + this.roundOffToTheNearestTens(this.roundOffToTheNearestTens((curr.area * (curr.marketValueAgri || curr.marketValueComm || curr.marketValueIndu || curr.marketValueResi)) - ((curr.area * (curr.marketValueAgri || curr.marketValueComm || curr.marketValueIndu || curr.marketValueResi)) * this.convertPercentToDecimal(8))) * this.convertPercentToDecimal(curr.level)), 0);
+    }
+
+    if (this.defaultPercentAdjustmentSelect === 6) {
+      return this.local_data.kindOfProperties?.reduce((accum: any, curr: any) => accum + this.roundOffToTheNearestTens(this.roundOffToTheNearestTens((curr.area * (curr.marketValueAgri || curr.marketValueComm || curr.marketValueIndu || curr.marketValueResi)) + ((curr.area * (curr.marketValueAgri || curr.marketValueComm || curr.marketValueIndu || curr.marketValueResi)) * this.convertPercentToDecimal(6))) * this.convertPercentToDecimal(curr.level)), 0);
+    }
+  }
+
+  getTotalPreviousAssessedValue() {
+    return this.local_data.kindOfProperties?.reduce((accum: any, curr: any) => accum + curr.assessedValue, 0);
+  }
+
   getTotalArea() {
     return this.local_data.kindOfProperties?.reduce((accum: any, curr: any) => accum + curr.area, 0);
   }

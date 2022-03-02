@@ -85,7 +85,7 @@ export class RealPropertyCreateComponent implements OnInit {
       tdNo: [null, Validators.required],
       owner: [null, Validators.required],
       address: [null, Validators.required],
-      street: [null, Validators.required],
+      street: [null],
       barangay: [null, Validators.required],
       municipality: [null, Validators.required],
       province: [null, Validators.required],

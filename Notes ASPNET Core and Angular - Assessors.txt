@@ -72,6 +72,7 @@ dotnet run
 dotnet watch run
 
 for Angular powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
 npm install -g @angular/cli
 ng new client
 ng serve
@@ -134,7 +135,6 @@ Auto Rename Tag
 ESLint
 C#
 C# Extensions
-Debugger for Chrome
 Material Icon Theme
 NuGet Package Manager
 

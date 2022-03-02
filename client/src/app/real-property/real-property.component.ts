@@ -74,7 +74,7 @@ export class RealPropertyComponent implements OnInit {
         value.address = row_obj.address;
         value.street = row_obj.street;
         value.barangay = row_obj.barangay;
-        value.municipality = row_obj.municipality;``
+        value.municipality = row_obj.municipality;
         value.province = row_obj.province;
         value.propertyIndentificationNo = row_obj.propertyIndentificationNo;
         value.arpNo = row_obj.arpNo;
