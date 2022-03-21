@@ -95,19 +95,13 @@ namespace API.Controllers
 
             var properties = await _propertyRepo.ListAsync(spec);
 
-            if (reviseParams.Year > 0)
-            {
-                properties = properties.Where(x => x.Year == reviseParams.Year).ToList();
+            // Year - Property List
+            properties = properties.Where(x => x.Year == reviseParams.Year).ToList();
 
-                totalItems = properties.Count();
-            }
+            // Barangay - Property List
+            properties = properties.Where(x => x.Barangay == reviseParams.Barangay).ToList();
 
-            if (!string.IsNullOrEmpty(reviseParams.Barangay))
-            {
-                properties = properties.Where(x => x.Barangay == reviseParams.Barangay).ToList();
-
-                totalItems = properties.Count();
-            }
+            totalItems = properties.Count();
 
             var data = _mapper.Map<IEnumerable<ReviseToReturnDto>>(properties);
 
@@ -125,33 +119,19 @@ namespace API.Controllers
             var totalItems = await _propertyRepo.CountAsync(countSpec);
 
             var properties = await _propertyRepo.ListAsync(spec);
+            
+            // Taxable or Exempt - Property List
+            properties = properties.Where(x => x.TaxableExempt == assessmentRollParams.TaxableExempt).ToList();
 
-            if (!string.IsNullOrEmpty(assessmentRollParams.TaxableExempt))
-            {
-                properties = properties.Where(x => x.TaxableExempt == assessmentRollParams.TaxableExempt).ToList();
+            // Barangay - Property List
+            properties = properties.Where(x => x.Barangay == assessmentRollParams.Barangay).ToList();
 
-                totalItems = properties.Count();
-                _totalAssessedValue = properties.Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue));
-                _totalPrevAssessedValue = properties.Sum(x => x.PreviousAssessedValue);
-            }
+            // Year - Property List
+            properties = properties.Where(x => x.Year == assessmentRollParams.Year).ToList();
 
-            if (!string.IsNullOrEmpty(assessmentRollParams.Barangay))
-            {
-                properties = properties.Where(x => x.Barangay == assessmentRollParams.Barangay).ToList();
-
-                totalItems = properties.Count();
-                _totalAssessedValue = properties.Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue));
-                _totalPrevAssessedValue = properties.Sum(x => x.PreviousAssessedValue);
-            }
-
-            if (assessmentRollParams.Year > 0)
-            {
-                properties = properties.Where(x => x.Year == assessmentRollParams.Year).ToList();
-
-                totalItems = properties.Count();
-                _totalAssessedValue = properties.Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue));
-                _totalPrevAssessedValue = properties.Sum(x => x.PreviousAssessedValue);
-            }
+            totalItems = properties.Count();
+            _totalAssessedValue = properties.Sum(x => x.KindOfProperties.Sum(x => x.AssessedValue));
+            _totalPrevAssessedValue = properties.Sum(x => x.PreviousAssessedValue);
 
             var data = _mapper.Map<IEnumerable<AssessmentRollToReturnDto>>(properties);
 
