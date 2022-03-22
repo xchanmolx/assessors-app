@@ -142,5 +142,11 @@
         "FirstClass": 150000,
         "SecondClass": 100000,
         "ThirdClass": 50000
+    },
+    {
+        "Name": "Plants/Trees",
+        "FirstClass": 0,
+        "SecondClass": 0,
+        "ThirdClass": 0
     }
 ]
