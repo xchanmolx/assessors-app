@@ -13,6 +13,9 @@ import { IRealProperty } from 'src/app/shared/models/realProperty';
 export class ConfirmReviseComponent implements OnInit {
   local_data!: any;
   action!: string;
+  year = new Date().getFullYear();
+  today = new Date();
+  quarter = Math.floor((this.today.getMonth() + 3) / 3);
 
   defaultPercentAdjustmentSelect!: number;
   percentAdjustmentOptions = [

@@ -503,7 +503,18 @@
                 <strong>Effectivity</strong>
             </div>
             <div class="col-3 border border-dark">
-                {{local_data.quarter}} Qtr. {{local_data.year}}
+                <div *ngIf="quarter == 1">
+                    {{quarter}}st Qtr. {{year}}
+                </div>
+                <div *ngIf="quarter == 2">
+                    {{quarter}}nd Qtr. {{year}}
+                </div>
+                <div *ngIf="quarter == 3">
+                    {{quarter}}rd Qtr. {{year}}
+                </div>
+                <div *ngIf="quarter == 4">
+                    {{quarter}}th Qtr. {{year}}
+                </div>
             </div>
         </div>
     </div>

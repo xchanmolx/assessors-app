@@ -61,13 +61,7 @@ export class ReviseComponent implements OnInit {
   }
 
   reviseSaveData(row_obj: IRealProperty) {
-    this.reviseList = this.reviseList.filter((value, key) => {
-      if(value.id == row_obj.id) {
-        value = row_obj;
-      }
-
-      return true;
-    });
+    
   }
 
   getReviseList() {
