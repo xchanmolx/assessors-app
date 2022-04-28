@@ -9,9 +9,22 @@
 
 <div mat-dialog-content>
     <ng-container *ngIf="action == 'Revise'">
-        <h2>Revise</h2>
+        <div class="row">
+            <div class="col-8">
+                <h2>Revise</h2>
+            </div>
+            <div class="col-4">
+                <button mat-icon-button tabindex="-1" class="float-end mx-3" matTooltip="Print"
+                [useExistingCss]="true"
+                printTitle="Tracer"
+                printSectionId="print-section" 
+                ngxPrint><mat-icon>print</mat-icon>
+            </button>
+            </div>
+        </div>
     </ng-container>
-    <div class="container-fluid">
+    <app-text-input required [(ngModel)]="local_data.tdNo" [label]="'New Tax Declaration Number'"></app-text-input>
+    <div class="container-fluid" id="print-section">
         <div class="row">
             <div class="col border border-dark">
                 <strong>REAL PROPERTY FIELD APPRAISAL & ASSESSMENT SHEET - LAND/PLANTS & TREES</strong>
@@ -515,6 +528,45 @@
                 <div *ngIf="quarter == 4">
                     {{quarter}}th Qtr. {{year}}
                 </div>
+            </div>
+        </div>
+        <p>&nbsp;</p>
+        <div class="row">
+            <p><strong>APPRAISED:</strong></p>
+            <div class="col-6">
+                <mat-form-field appearance="fill" style="height: 40%;">
+                    <mat-select [value]="staffDefault?.name" required>
+                      <mat-option *ngFor="let staff of staffsFilter" [value]="staff.name">{{staff.name | uppercase}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <h6 class="mt-1">&nbsp;&nbsp;&nbsp; Name</h6>
+            </div>
+            <div class="col-6" >
+                <h6 style="width: 50%;">Date <hr></h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <p><strong>RECOMMENDING APPROVAL:</strong></p>
+            </div>
+            <div class="col-6">
+                <p><strong>APPROVED:</strong></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h6 class="m-0"><strong><u>{{assessor?.name | uppercase}}</u></strong></h6>
+                <h6>Municipal Assessor &nbsp;&nbsp;&nbsp;</h6>
+            </div>
+            <div class="col">
+                <h6>Date <hr></h6>
+            </div>
+            <div class="col">
+                <h6 class="m-0"><strong><u>{{provincialAssessor?.name | uppercase}}</u></strong></h6>
+                <h6>OIC/Provincial Assessor &nbsp;&nbsp;&nbsp;</h6>
+            </div>
+            <div class="col">
+                <h6>Date <hr></h6>
             </div>
         </div>
     </div>

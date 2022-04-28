@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
+import { NgxPrintModule } from 'ngx-print';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { PagerComponent } from './components/pager/pager.component';
 import { PagingHeaderComponent } from './components/paging-header/paging-header.component';
@@ -59,7 +61,9 @@ import { ConfirmReviseComponent } from './components/dialogs/confirm-revise/conf
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatTableModule
+    MatTableModule,
+    NgxPrintModule,
+    MatTooltipModule
   ],
   exports: [
     PagingHeaderComponent,

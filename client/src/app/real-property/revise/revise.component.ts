@@ -61,7 +61,13 @@ export class ReviseComponent implements OnInit {
   }
 
   reviseSaveData(row_obj: IRealProperty) {
-    
+    this.realPropertyService.createRealProperty(row_obj).subscribe((response) => {
+      row_obj.id = response.id;
+
+      console.log(row_obj);
+    }, error => {
+      this.notifierService.showNotification(`Problem saving the revise data. ${error.errors}`, 'OK', 'error');
+    });
   }
 
   getReviseList() {

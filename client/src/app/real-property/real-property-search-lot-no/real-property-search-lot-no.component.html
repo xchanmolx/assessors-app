@@ -119,7 +119,7 @@
         <div class="row mt-3">
             <div class="col">
                 Verified by: <br><br>
-                <mat-form-field appearance="fill" style="width: 19%; height: 40%;">
+                <mat-form-field appearance="fill" style="width: 30%; height: 40%;">
                     <mat-select [value]="staffDefault?.name" required>
                       <mat-option *ngFor="let staff of staffsFilter" [value]="staff.name">{{staff.name | uppercase}}</mat-option>
                     </mat-select>
