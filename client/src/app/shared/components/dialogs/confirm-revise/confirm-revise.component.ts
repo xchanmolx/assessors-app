@@ -25,6 +25,7 @@ export class ConfirmReviseComponent implements OnInit {
   provincialAssessor!: IStaff | undefined;
   staffsFilter!: IStaff[] | undefined;
   staffDefault!: IStaff | undefined;
+  copiedTdNo!: string;
 
   defaultPercentAdjustmentSelect!: number;
   percentAdjustmentOptions = [
@@ -46,6 +47,8 @@ export class ConfirmReviseComponent implements OnInit {
 
     this.loadIndividualRevise();
     this.getStaffs();
+
+    this.copiedTdNo = this.local_data.tdNo;
   }
 
   ngOnInit(): void {
