@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { AdminService } from 'src/app/admin/admin.service';
@@ -40,18 +41,160 @@ export class ConfirmReviseComponent implements OnInit {
 
   displayedColumns3: string[] = ['kind', 'actualUse', 'adjustedMarketValue', 'assessmentLevel', 'assessedValue'];
 
+  createForm!: FormGroup;
+
   constructor(@Optional() @Inject(MAT_DIALOG_DATA) public data: IRealProperty, private realPropertyService: RealPropertyService,
-  private notifierService: NotifierService, private adminService: AdminService, public dialogRef: MatDialogRef<ConfirmReviseComponent>) { 
+  private notifierService: NotifierService, private adminService: AdminService, private fb: FormBuilder, public dialogRef: MatDialogRef<ConfirmReviseComponent>) { 
     this.local_data = {...data};
     this.action = this.local_data.action;
-
-    this.loadIndividualRevise();
-    this.getStaffs();
-
+    
     this.copiedTdNo = this.local_data.tdNo;
+    this.loadIndividualRevise();    
+    this.getStaffs();
+    
+    this.createAddRealPropertyForm();
+
+    this.updatePropertyForm();
+
+    console.log(this.createForm.value.kindOfProperties);
   }
 
   ngOnInit(): void {
+  }
+
+  createAddRealPropertyForm() {
+    this.createForm = this.fb.group({
+      id: [null, Validators.required],
+      tdNo: [null, Validators.required],
+      owner: [null, Validators.required],
+      address: [null, Validators.required],
+      street: [null],
+      barangay: [null, Validators.required],
+      municipality: [null, Validators.required],
+      province: [null, Validators.required],
+      propertyIndentificationNo: [null, Validators.required],
+      arpNo: [null],
+      tinNo: [null],
+      telephoneNo: [null],
+      octTctCloaNo: [null],
+      octNo: [null],
+      dated: [null],
+      surveyLotNo: [null, Validators.required],
+      assessorLotNo: [null],
+      blkNo: [null],
+      boundary: this.fb.group({
+        north: [null],
+        east: [null],
+        south: [null],
+        west: [null],
+      }),
+      kindOfPropertyAssessed: [null],
+      noOfStoreys: [null],
+      briefDescription: [null],
+      specify: [null],
+      kindOfProperties: this.fb.array([
+        this.fb.group(
+          {
+            kindOfLands: [null, Validators.required],
+            classification: [null, Validators.required],
+            area: ['0', Validators.required],
+            marketValue: ['0', Validators.required],
+            actualUse: [null, Validators.required],
+            level: ['0', Validators.required],
+            assessedValue: ['0', Validators.required],
+            agriculturalLandId: ['0'],
+            commercialLandId: ['0'],
+            industrialLandId: ['0'],
+            residentialLandId: ['0']
+          }
+        )
+      ]),
+      totalAssessedValueInWord: [null, Validators.required],
+      taxableExempt: [null, Validators.required],
+      quarter: [null, Validators.required],
+      year: ['0', Validators.required],
+      recommendedBy: [null],
+      approvedBy: [null],
+      date: [this.today],
+      declarationCancels: [null, Validators.required],
+      ownerTdNoCancels: [null],
+      previousAssessedValue: ['0'],
+      memoranda: [null],
+      approvedMessage: [null],
+      notes: [null],
+      defaultPercentAdjustmentSelect: [this.defaultPercentAdjustmentSelect]
+    });
+  }
+
+  updatePropertyForm() {
+    this.createForm.patchValue({
+      id: this.local_data.id,
+      tdNo: this.local_data.tdNo,
+      owner: this.local_data.owner,
+      address: this.local_data.address,
+      street: this.local_data.street,
+      barangay: this.local_data.barangay,
+      municipality: this.local_data.municipality,
+      province: this.local_data.province,
+      propertyIndentificationNo: this.local_data.propertyIndentificationNo,
+      arpNo: this.local_data.arpNo,
+      tinNo: this.local_data.tinNo,
+      telephoneNo: this.local_data.telephoneNo,
+      octTctCloaNo: this.local_data.octTctCloaNo,
+      octNo: this.local_data.octNo,
+      dated: this.local_data.dated,
+      surveyLotNo: this.local_data.surveyLotNo,
+      assessorLotNo: this.local_data.assessorLotNo,
+      blkNo: this.local_data.blkNo,
+      boundary: {
+        north: this.local_data.boundary?.north,
+        east: this.local_data.boundary?.east,
+        south: this.local_data.boundary?.south,
+        west: this.local_data.boundary?.west
+      },
+      kindOfPropertyAssessed: this.local_data.kindOfPropertyAssessed,
+      noOfStoreys: this.local_data.noOfStoreys,
+      briefDescription: this.local_data.briefDescription,
+      specify: this.local_data.specify,
+      kindOfProperties: [{
+        kindOfLands: this.local_data.kindOfProperties?.kindOfLands,
+        classification: this.local_data.kindOfProperties?.classification,
+        area: this.local_data.kindOfProperties?.area,
+        marketValue: this.local_data.kindOfProperties?.marketValue,
+        actualUse: this.local_data.kindOfProperties?.actualUse,
+        level: this.local_data.kindOfProperties?.level,
+        assessedValue: this.local_data.kindOfProperties?.assessedValue,
+        marketValueAgri: this.local_data.kindOfProperties?.marketValueAgri,
+        agriculturalLandId: this.local_data.kindOfProperties?.agriculturalLandId,
+        marketValueComm: this.local_data.kindOfProperties?.marketValueComm,
+        commercialLandId: this.local_data.kindOfProperties?.commercialLandId,
+        marketValueIndu: this.local_data.kindOfProperties?.marketValueIndu,
+        industrialLandId: this.local_data.kindOfProperties?.industrialLandId,
+        marketValueResi: this.local_data.kindOfProperties?.marketValueResi,
+        residentialLandId: this.local_data.kindOfProperties?.residentialLandId
+      }], 
+      totalAssessedValueInWord: this.local_data.totalAssessedValueInWord,
+      taxableExempt: this.local_data.taxableExempt,
+      quarter: this.quarter,
+      year: this.year,
+      recommendedBy: this.local_data.recommendedBy,
+      approvedBy: this.local_data.approvedBy,
+      date: this.today,
+      declarationCancels: this.local_data.declarationCancels,
+      ownerTdNoCancels: this.local_data.ownerTdNoCancels,
+      previousAssessedValue: this.local_data.previousAssessedValue,
+      memoranda: this.local_data.memoranda,
+      approvedMessage: this.local_data.approvedMessage,
+      notes: this.local_data.notes
+    });
+  }
+
+  onSubmit() {
+    this.realPropertyService.createRealProperty(this.createForm.value).subscribe((response) => {
+      this.local_data.id = response.id;
+    }, error => {
+      this.notifierService.showNotification(`Problem saving the revise data. ${error.errors}`, 'OK', 'error');
+    });
   }
 
   onPercentAdjustmentSelected(event: MatSelectChange) {
@@ -149,8 +292,6 @@ export class ConfirmReviseComponent implements OnInit {
 
     this.realPropertyService.getRealPropertyReviseWithId(this.local_data.id).subscribe(response => {
       this.local_data = response!;
-
-      console.log(this.local_data);
     }, error => {
       this.notifierService.showNotification(`Problem loading the individual revise data. ${error.errors}`, 'OK', 'error');
     });

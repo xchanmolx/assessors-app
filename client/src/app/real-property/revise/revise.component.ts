@@ -29,7 +29,12 @@ export class ReviseComponent implements OnInit {
   mergeYears: IMergeYears[] = [];
   defaultLatestYear: any;
 
-  displayedColumns: string[] = ['id', 'tdNo', 'owner', 'address', 'barangay', 'surveyLotNo', 'year', 'actions'];
+  displayedColumns: string[] = ['id', 'tdNo', 'owner', 'address', 'street', 'barangay', 'municipality', 'province', 'propertyIndentificationNo',
+                                'arpNo', 'tinNo', 'telephoneNo', 'octTctCloaNo', 'octNo', 'dated', 'surveyLotNo', 'assessorLotNo',
+                                'blkNo', 'boundary', 'kindOfPropertyAssessed', 'noOfStoreys', 'briefDescription', 'specify',
+                                'kindOfProperties', 'totalAssessedValueInWord', 'taxableExempt', 'quarter', 'year', 'recommendedBy',
+                                'approvedBy', 'date', 'declarationCancels', 'ownerTdNoCancels', 'previousAssessedValue',
+                                'memoranda', 'approvedMessage', 'notes', 'actions'];
 
   constructor(private realPropertyService: RealPropertyService, private accountService: AccountService,
     public dialog: MatDialog, private notifierService: NotifierService, private kindOfLandsService: KindOfLandsService) {
@@ -61,13 +66,13 @@ export class ReviseComponent implements OnInit {
   }
 
   reviseSaveData(row_obj: IRealProperty) {
-    this.realPropertyService.createRealProperty(row_obj).subscribe((response) => {
-      row_obj.id = response.id;
+    // this.realPropertyService.createRealProperty(row_obj).subscribe((response) => {
+    //   row_obj.id = response.id;
 
-      console.log(row_obj);
-    }, error => {
-      this.notifierService.showNotification(`Problem saving the revise data. ${error.errors}`, 'OK', 'error');
-    });
+    //   console.log(row_obj);
+    // }, error => {
+    //   this.notifierService.showNotification(`Problem saving the revise data. ${error.errors}`, 'OK', 'error');
+    // });
   }
 
   getReviseList() {
