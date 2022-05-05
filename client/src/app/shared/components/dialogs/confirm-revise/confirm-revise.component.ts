@@ -27,6 +27,8 @@ export class ConfirmReviseComponent implements OnInit {
   staffsFilter!: IStaff[] | undefined;
   staffDefault!: IStaff | undefined;
   copiedTdNo!: string;
+  newMarketValue!: number;
+  newAssessedValue!: number;
 
   defaultPercentAdjustmentSelect!: number;
   percentAdjustmentOptions = [
@@ -51,12 +53,9 @@ export class ConfirmReviseComponent implements OnInit {
     this.copiedTdNo = this.local_data.tdNo;
     this.loadIndividualRevise();    
     this.getStaffs();
-    
+
     this.createAddRealPropertyForm();
-
     this.updatePropertyForm();
-
-    console.log(this.createForm.value.kindOfProperties);
   }
 
   ngOnInit(): void {
@@ -127,73 +126,89 @@ export class ConfirmReviseComponent implements OnInit {
   }
 
   updatePropertyForm() {
-    this.createForm.patchValue({
-      id: this.local_data.id,
-      tdNo: this.local_data.tdNo,
-      owner: this.local_data.owner,
-      address: this.local_data.address,
-      street: this.local_data.street,
-      barangay: this.local_data.barangay,
-      municipality: this.local_data.municipality,
-      province: this.local_data.province,
-      propertyIndentificationNo: this.local_data.propertyIndentificationNo,
-      arpNo: this.local_data.arpNo,
-      tinNo: this.local_data.tinNo,
-      telephoneNo: this.local_data.telephoneNo,
-      octTctCloaNo: this.local_data.octTctCloaNo,
-      octNo: this.local_data.octNo,
-      dated: this.local_data.dated,
-      surveyLotNo: this.local_data.surveyLotNo,
-      assessorLotNo: this.local_data.assessorLotNo,
-      blkNo: this.local_data.blkNo,
-      boundary: {
-        north: this.local_data.boundary?.north,
-        east: this.local_data.boundary?.east,
-        south: this.local_data.boundary?.south,
-        west: this.local_data.boundary?.west
-      },
-      kindOfPropertyAssessed: this.local_data.kindOfPropertyAssessed,
-      noOfStoreys: this.local_data.noOfStoreys,
-      briefDescription: this.local_data.briefDescription,
-      specify: this.local_data.specify,
-      kindOfProperties: [{
-        kindOfLands: this.local_data.kindOfProperties?.kindOfLands,
-        classification: this.local_data.kindOfProperties?.classification,
-        area: this.local_data.kindOfProperties?.area,
-        marketValue: this.local_data.kindOfProperties?.marketValue,
-        actualUse: this.local_data.kindOfProperties?.actualUse,
-        level: this.local_data.kindOfProperties?.level,
-        assessedValue: this.local_data.kindOfProperties?.assessedValue,
-        marketValueAgri: this.local_data.kindOfProperties?.marketValueAgri,
-        agriculturalLandId: this.local_data.kindOfProperties?.agriculturalLandId,
-        marketValueComm: this.local_data.kindOfProperties?.marketValueComm,
-        commercialLandId: this.local_data.kindOfProperties?.commercialLandId,
-        marketValueIndu: this.local_data.kindOfProperties?.marketValueIndu,
-        industrialLandId: this.local_data.kindOfProperties?.industrialLandId,
-        marketValueResi: this.local_data.kindOfProperties?.marketValueResi,
-        residentialLandId: this.local_data.kindOfProperties?.residentialLandId
-      }], 
-      totalAssessedValueInWord: this.local_data.totalAssessedValueInWord,
-      taxableExempt: this.local_data.taxableExempt,
-      quarter: this.quarter,
-      year: this.year,
-      recommendedBy: this.local_data.recommendedBy,
-      approvedBy: this.local_data.approvedBy,
-      date: this.today,
-      declarationCancels: this.local_data.declarationCancels,
-      ownerTdNoCancels: this.local_data.ownerTdNoCancels,
-      previousAssessedValue: this.local_data.previousAssessedValue,
-      memoranda: this.local_data.memoranda,
-      approvedMessage: this.local_data.approvedMessage,
-      notes: this.local_data.notes
-    });
+    for(let kindOfProperty of this.local_data.kindOfProperties) {
+      this.createForm.patchValue({
+        id: this.local_data.id,
+        tdNo: this.local_data.tdNo,
+        owner: this.local_data.owner,
+        address: this.local_data.address,
+        street: this.local_data.street,
+        barangay: this.local_data.barangay,
+        municipality: this.local_data.municipality,
+        province: this.local_data.province,
+        propertyIndentificationNo: this.local_data.propertyIndentificationNo,
+        arpNo: this.local_data.arpNo,
+        tinNo: this.local_data.tinNo,
+        telephoneNo: this.local_data.telephoneNo,
+        octTctCloaNo: this.local_data.octTctCloaNo,
+        octNo: this.local_data.octNo,
+        dated: this.local_data.dated,
+        surveyLotNo: this.local_data.surveyLotNo,
+        assessorLotNo: this.local_data.assessorLotNo,
+        blkNo: this.local_data.blkNo,
+        boundary: {
+          north: this.local_data.boundary?.north,
+          east: this.local_data.boundary?.east,
+          south: this.local_data.boundary?.south,
+          west: this.local_data.boundary?.west
+        },
+        kindOfPropertyAssessed: this.local_data.kindOfPropertyAssessed,
+        noOfStoreys: this.local_data.noOfStoreys,
+        briefDescription: this.local_data.briefDescription,
+        specify: this.local_data.specify,
+        kindOfProperties: [{
+          kindOfLands: kindOfProperty?.kindOfLands,
+          classification: kindOfProperty?.classification,
+          area: kindOfProperty?.area,
+          marketValue: kindOfProperty?.marketValue, // Market Value - change to solve
+          actualUse: kindOfProperty?.actualUse,
+          level: kindOfProperty?.level,
+          assessedValue: kindOfProperty?.assessedValue, // Assessed Value - change to solve
+          agriculturalLandId: kindOfProperty?.agriculturalLandId,
+          commercialLandId: kindOfProperty?.commercialLandId,
+          industrialLandId: kindOfProperty?.industrialLandId,
+          residentialLandId: kindOfProperty?.residentialLandId
+        }], 
+        totalAssessedValueInWord: this.local_data.totalAssessedValueInWord,
+        taxableExempt: this.local_data.taxableExempt,
+        quarter: this.quarter,
+        year: this.year,
+        recommendedBy: this.local_data.recommendedBy,
+        approvedBy: this.local_data.approvedBy,
+        date: this.today,
+        declarationCancels: this.local_data.declarationCancels,
+        ownerTdNoCancels: this.local_data.ownerTdNoCancels,
+        previousAssessedValue: this.local_data.previousAssessedValue,
+        memoranda: this.local_data.memoranda,
+        approvedMessage: this.local_data.approvedMessage,
+        notes: this.local_data.notes
+      });
+    }
   }
 
   onSubmit() {
     this.realPropertyService.createRealProperty(this.createForm.value).subscribe((response) => {
-      this.local_data.id = response.id;
+      this.notifierService.showNotification(`${this.createForm.get('owner')?.value} has been revised successfully.`, 'OK', 'success');
     }, error => {
       this.notifierService.showNotification(`Problem saving the revise data. ${error.errors}`, 'OK', 'error');
+    });
+  }
+
+  loadIndividualRevise() {
+    if (this.local_data.barangay === 'poblacion') {
+      this.defaultPercentAdjustmentSelect = 6;
+    } else {
+      this.defaultPercentAdjustmentSelect = 8;
+    }
+
+    this.realPropertyService.getRealPropertyReviseWithId(this.local_data.id).subscribe(response => {
+      this.local_data = response!;
+
+      this.getAdjustedMarketValue();
+      this.getAssessedValue();
+      this.updatePropertyForm();
+    }, error => {
+      this.notifierService.showNotification(`Problem loading the individual revise data. ${error.errors}`, 'OK', 'error');
     });
   }
 
@@ -233,6 +248,19 @@ export class ConfirmReviseComponent implements OnInit {
     }
   }
 
+  getAdjustedMarketValue() {
+    // Barangay Poblacion +6%
+    if (this.local_data.barangay === 'poblacion') {
+      for(let kindOfProperty of this.local_data.kindOfProperties) {
+        kindOfProperty.marketValue = this.roundOffToTheNearestTens((kindOfProperty.area * (kindOfProperty.marketValueAgri || kindOfProperty.marketValueComm || kindOfProperty.marketValueIndu || kindOfProperty.marketValueResi)) + ((kindOfProperty.area * (kindOfProperty.marketValueAgri || kindOfProperty.marketValueComm || kindOfProperty.marketValueIndu || kindOfProperty.marketValueResi)) * this.convertPercentToDecimal(6)));
+      }
+    } else {
+      for(let kindOfProperty of this.local_data.kindOfProperties) {
+        kindOfProperty.marketValue = this.roundOffToTheNearestTens((kindOfProperty.area * (kindOfProperty.marketValueAgri || kindOfProperty.marketValueComm || kindOfProperty.marketValueIndu || kindOfProperty.marketValueResi)) - ((kindOfProperty.area * (kindOfProperty.marketValueAgri || kindOfProperty.marketValueComm || kindOfProperty.marketValueIndu || kindOfProperty.marketValueResi)) * this.convertPercentToDecimal(8)));
+      }
+    }
+  }
+
   getTotalAssessmentLevel() {
     return this.local_data.kindOfProperties?.reduce((accum: any, curr: any) => accum + curr.level, 0);
   }
@@ -244,6 +272,18 @@ export class ConfirmReviseComponent implements OnInit {
 
     if (this.defaultPercentAdjustmentSelect === 6) {
       return this.local_data.kindOfProperties?.reduce((accum: any, curr: any) => accum + this.roundOffToTheNearestTens(this.roundOffToTheNearestTens((curr.area * (curr.marketValueAgri || curr.marketValueComm || curr.marketValueIndu || curr.marketValueResi)) + ((curr.area * (curr.marketValueAgri || curr.marketValueComm || curr.marketValueIndu || curr.marketValueResi)) * this.convertPercentToDecimal(6))) * this.convertPercentToDecimal(curr.level)), 0);
+    }
+  }
+
+  getAssessedValue() {
+    if (this.local_data.barangay === 'poblacion') {
+      for(let kindOfProperty of this.local_data.kindOfProperties) {
+        kindOfProperty.assessedValue = this.roundOffToTheNearestTens(this.roundOffToTheNearestTens((kindOfProperty.area * (kindOfProperty.marketValueAgri || kindOfProperty.marketValueComm || kindOfProperty.marketValueIndu || kindOfProperty.marketValueResi)) + ((kindOfProperty.area * (kindOfProperty.marketValueAgri || kindOfProperty.marketValueComm || kindOfProperty.marketValueIndu || kindOfProperty.marketValueResi)) * this.convertPercentToDecimal(6))) * this.convertPercentToDecimal(kindOfProperty.level));
+      }
+    } else {
+      for(let kindOfProperty of this.local_data.kindOfProperties) {
+        kindOfProperty.assessedValue = this.roundOffToTheNearestTens(this.roundOffToTheNearestTens((kindOfProperty.area * (kindOfProperty.marketValueAgri || kindOfProperty.marketValueComm || kindOfProperty.marketValueIndu || kindOfProperty.marketValueResi)) - ((kindOfProperty.area * (kindOfProperty.marketValueAgri || kindOfProperty.marketValueComm || kindOfProperty.marketValueIndu || kindOfProperty.marketValueResi)) * this.convertPercentToDecimal(8))) * this.convertPercentToDecimal(kindOfProperty.level));
+      }
     }
   }
 
@@ -280,20 +320,6 @@ export class ConfirmReviseComponent implements OnInit {
       this.staffDefault = this.staffsFilter[0];
     }, error => {
       this.notifierService.showNotification(`Problem loading the staffs. ${error.errors}`, 'OK', 'error');
-    });
-  }
-
-  loadIndividualRevise() {
-    if (this.local_data.barangay === 'poblacion') {
-      this.defaultPercentAdjustmentSelect = 6;
-    } else {
-      this.defaultPercentAdjustmentSelect = 8;
-    }
-
-    this.realPropertyService.getRealPropertyReviseWithId(this.local_data.id).subscribe(response => {
-      this.local_data = response!;
-    }, error => {
-      this.notifierService.showNotification(`Problem loading the individual revise data. ${error.errors}`, 'OK', 'error');
     });
   }
 
