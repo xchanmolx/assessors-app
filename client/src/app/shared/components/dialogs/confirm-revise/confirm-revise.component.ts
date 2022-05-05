@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { AdminService } from 'src/app/admin/admin.service';
@@ -27,8 +27,7 @@ export class ConfirmReviseComponent implements OnInit {
   staffsFilter!: IStaff[] | undefined;
   staffDefault!: IStaff | undefined;
   copiedTdNo!: string;
-  newMarketValue!: number;
-  newAssessedValue!: number;
+  copiedPreviousAssessedValue!: number;
 
   defaultPercentAdjustmentSelect!: number;
   percentAdjustmentOptions = [
@@ -51,11 +50,13 @@ export class ConfirmReviseComponent implements OnInit {
     this.action = this.local_data.action;
     
     this.copiedTdNo = this.local_data.tdNo;
+    this.copiedPreviousAssessedValue = this.getTotalPreviousAssessedValue();
+
     this.loadIndividualRevise();    
     this.getStaffs();
 
     this.createAddRealPropertyForm();
-    this.updatePropertyForm();
+    // this.updatePropertyForm();
   }
 
   ngOnInit(): void {
@@ -128,66 +129,98 @@ export class ConfirmReviseComponent implements OnInit {
   updatePropertyForm() {
     for(let kindOfProperty of this.local_data.kindOfProperties) {
       this.createForm.patchValue({
-        id: this.local_data.id,
-        tdNo: this.local_data.tdNo,
-        owner: this.local_data.owner,
-        address: this.local_data.address,
-        street: this.local_data.street,
-        barangay: this.local_data.barangay,
-        municipality: this.local_data.municipality,
-        province: this.local_data.province,
-        propertyIndentificationNo: this.local_data.propertyIndentificationNo,
-        arpNo: this.local_data.arpNo,
-        tinNo: this.local_data.tinNo,
-        telephoneNo: this.local_data.telephoneNo,
-        octTctCloaNo: this.local_data.octTctCloaNo,
-        octNo: this.local_data.octNo,
-        dated: this.local_data.dated,
-        surveyLotNo: this.local_data.surveyLotNo,
-        assessorLotNo: this.local_data.assessorLotNo,
-        blkNo: this.local_data.blkNo,
-        boundary: {
-          north: this.local_data.boundary?.north,
-          east: this.local_data.boundary?.east,
-          south: this.local_data.boundary?.south,
-          west: this.local_data.boundary?.west
-        },
-        kindOfPropertyAssessed: this.local_data.kindOfPropertyAssessed,
-        noOfStoreys: this.local_data.noOfStoreys,
-        briefDescription: this.local_data.briefDescription,
-        specify: this.local_data.specify,
-        kindOfProperties: [{
-          kindOfLands: kindOfProperty?.kindOfLands,
-          classification: kindOfProperty?.classification,
-          area: kindOfProperty?.area,
-          marketValue: kindOfProperty?.marketValue, // Market Value - change to solve
-          actualUse: kindOfProperty?.actualUse,
-          level: kindOfProperty?.level,
-          assessedValue: kindOfProperty?.assessedValue, // Assessed Value - change to solve
-          agriculturalLandId: kindOfProperty?.agriculturalLandId,
-          commercialLandId: kindOfProperty?.commercialLandId,
-          industrialLandId: kindOfProperty?.industrialLandId,
-          residentialLandId: kindOfProperty?.residentialLandId
-        }], 
-        totalAssessedValueInWord: this.local_data.totalAssessedValueInWord,
-        taxableExempt: this.local_data.taxableExempt,
-        quarter: this.quarter,
-        year: this.year,
-        recommendedBy: this.local_data.recommendedBy,
-        approvedBy: this.local_data.approvedBy,
-        date: this.today,
-        declarationCancels: this.local_data.declarationCancels,
-        ownerTdNoCancels: this.local_data.ownerTdNoCancels,
-        previousAssessedValue: this.local_data.previousAssessedValue,
-        memoranda: this.local_data.memoranda,
-        approvedMessage: this.local_data.approvedMessage,
-        notes: this.local_data.notes
-      });
+          id: this.local_data.id,
+          tdNo: this.local_data.tdNo,
+          owner: this.local_data.owner,
+          address: this.local_data.address,
+          street: this.local_data.street,
+          barangay: this.local_data.barangay,
+          municipality: this.local_data.municipality,
+          province: this.local_data.province,
+          propertyIndentificationNo: this.local_data.propertyIndentificationNo,
+          arpNo: this.local_data.arpNo,
+          tinNo: this.local_data.tinNo,
+          telephoneNo: this.local_data.telephoneNo,
+          octTctCloaNo: this.local_data.octTctCloaNo,
+          octNo: this.local_data.octNo,
+          dated: this.local_data.dated,
+          surveyLotNo: this.local_data.surveyLotNo,
+          assessorLotNo: this.local_data.assessorLotNo,
+          blkNo: this.local_data.blkNo,
+          boundary: {
+            id: this.local_data.boundary?.id,
+            north: this.local_data.boundary?.north,
+            east: this.local_data.boundary?.east,
+            south: this.local_data.boundary?.south,
+            west: this.local_data.boundary?.west
+          },
+          kindOfPropertyAssessed: this.local_data.kindOfPropertyAssessed,
+          noOfStoreys: this.local_data.noOfStoreys,
+          briefDescription: this.local_data.briefDescription,
+          specify: this.local_data.specify,
+          kindOfProperties: [
+            {
+              id: kindOfProperty?.id,
+              kindOfLands: kindOfProperty?.kindOfLands,
+              classification: kindOfProperty?.classification,
+              area: kindOfProperty?.area,
+              marketValue: kindOfProperty?.marketValue, // Market Value - change to solve
+              actualUse: kindOfProperty?.actualUse,
+              level: kindOfProperty?.level,
+              assessedValue: kindOfProperty?.assessedValue, // Assessed Value - change to solve
+              agriculturalLandId: kindOfProperty?.agriculturalLandId,
+              commercialLandId: kindOfProperty?.commercialLandId,
+              industrialLandId: kindOfProperty?.industrialLandId,
+              residentialLandId: kindOfProperty?.residentialLandId
+            }
+          ],
+          totalAssessedValueInWord: this.local_data.totalAssessedValueInWord,
+          taxableExempt: this.local_data.taxableExempt,
+          quarter: this.quarter,
+          year: this.year,
+          recommendedBy: this.local_data.recommendedBy,
+          approvedBy: this.local_data.approvedBy,
+          date: this.today,
+          declarationCancels: this.local_data.declarationCancels,
+          ownerTdNoCancels: this.local_data.ownerTdNoCancels,
+          previousAssessedValue: this.copiedPreviousAssessedValue, // Previous Assessed Value - change to solve
+          memoranda: this.local_data.memoranda,
+          approvedMessage: this.local_data.approvedMessage,
+          notes: this.local_data.notes
+        });
+
+        this.createKindOfProperties();
+    }
+  }
+
+  get kindOfProperties() {
+    return this.createForm.get('kindOfProperties') as FormArray;
+  }
+
+  createKindOfProperties() {
+    for (let kindOfProperty of this.local_data.kindOfProperties) {
+      this.kindOfProperties.push(
+        this.fb.group({
+          id: kindOfProperty.id,
+          kindOfLands: kindOfProperty.kindOfLands,
+          classification: kindOfProperty.classification,
+          area: kindOfProperty.area,
+          marketValue: kindOfProperty.marketValue,
+          actualUse: kindOfProperty.actualUse,
+          level: kindOfProperty.level,
+          assessedValue: kindOfProperty.assessedValue,
+          agriculturalLandId: kindOfProperty.agriculturalLandId,
+          commercialLandId: kindOfProperty.commercialLandId,
+          industrialLandId: kindOfProperty.industrialLandId,
+          residentialLandId: kindOfProperty.residentialLandId
+        })
+      );
     }
   }
 
   onSubmit() {
-    this.realPropertyService.createRealProperty(this.createForm.value).subscribe((response) => {
+    this.realPropertyService.createRealProperty(this.createForm.value).subscribe(() => {
+
       this.notifierService.showNotification(`${this.createForm.get('owner')?.value} has been revised successfully.`, 'OK', 'success');
     }, error => {
       this.notifierService.showNotification(`Problem saving the revise data. ${error.errors}`, 'OK', 'error');
