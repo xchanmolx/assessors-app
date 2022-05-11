@@ -14,7 +14,7 @@ namespace API.Dtos
         public string Barangay { get; set; }
         public string Municipality { get; set; }
         public string Province { get; set; }
-        public string PropertyIndentificationNo { get; set; }
+        public string PropertyIdentificationNo { get; set; }
         public string ArpNo { get; set; }
         public string TinNo { get; set; }
         public string TelephoneNo { get; set; }

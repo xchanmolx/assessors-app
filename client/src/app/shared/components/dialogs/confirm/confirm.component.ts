@@ -12,6 +12,7 @@ import { IIndustrial } from 'src/app/shared/models/industrial';
 import { IRealProperty } from 'src/app/shared/models/realProperty';
 import { IResidential } from 'src/app/shared/models/residential';
 import { BarangayParams } from 'src/app/shared/models/barangayParams';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-confirm',
@@ -34,11 +35,17 @@ export class ConfirmComponent implements OnInit {
   kindOfLandsParams = new KindOfLandsParams();
   barangayParams = new BarangayParams();
 
+  createForm!: FormGroup;
+  today = new Date().toLocaleDateString();
+  defaultKindOfLandsSelect = 'agricultural';
+
   constructor(@Optional() @Inject(MAT_DIALOG_DATA) public data: IRealProperty,
-      public dialogRef: MatDialogRef<ConfirmComponent>, public realPropertyService: RealPropertyService,
+      public dialogRef: MatDialogRef<ConfirmComponent>, private fb: FormBuilder, public realPropertyService: RealPropertyService,
       private notifierService: NotifierService, private kindOfLandsService: KindOfLandsService) {
         this.local_data = {...data};
         this.action = this.local_data.action;
+
+        this.createRealPropertyForm();
 
         this.getBarangays();
         this.getAgriculturals();
@@ -49,12 +56,66 @@ export class ConfirmComponent implements OnInit {
       
   ngOnInit(): void {  }
 
+  createRealPropertyForm() {
+    this.createForm = this.fb.group({
+      kindOfProperties: this.fb.array([
+        this.fb.group(
+          {
+            kindOfLands: [this.defaultKindOfLandsSelect, Validators.required],
+            classification: [null, Validators.required],
+            area: ['0', Validators.required],
+            marketValue: ['0.00', Validators.required],
+            actualUse: [null, Validators.required],
+            level: ['0', Validators.required],
+            assessedValue: ['0.00', Validators.required],
+            agriculturalLandId: ['0'],
+            commercialLandId: ['0'],
+            industrialLandId: ['0'],
+            residentialLandId: ['0'],
+            taxDecOfRealPropertyId: [this.local_data.id]
+          }
+        )
+      ])
+    });
+  }
+
+  get kindOfProperties() {
+    return this.createForm.get('kindOfProperties') as FormArray;
+  }
+
+  addKindOfProperty() {
+    this.kindOfProperties.push(
+      this.fb.group({
+        kindOfLands: [this.defaultKindOfLandsSelect, Validators.required],
+        classification: [null, Validators.required],
+        area: ['0', Validators.required],
+        marketValue: ['0.00', Validators.required],
+        actualUse: [null, Validators.required],
+        level: ['0', Validators.required],
+        assessedValue: ['0.00', Validators.required],
+        agriculturalLandId: ['0'],
+        commercialLandId: ['0'],
+        industrialLandId: ['0'],
+        residentialLandId: ['0'],
+        taxDecOfRealPropertyId: [this.local_data.id]
+      })
+    );
+  }
+
+  deleteKindOfProperty(index: number) {
+    this.kindOfProperties.removeAt(index);
+  }
+
   doAction() {
     this.dialogRef.close({event: this.action, data: this.local_data});
   }
 
   closeDialog() {
     this.dialogRef.close({event: 'Cancel'});
+  }
+
+  onSubmit() {
+
   }
 
   getBarangays() {

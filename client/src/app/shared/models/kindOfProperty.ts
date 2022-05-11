@@ -15,4 +15,5 @@ export interface IKindOfProperty {
     industrialLandId: number;
     marketValueResi: number;
     residentialLandId: number;
+    taxDecOfRealPropertyId: number;
 }

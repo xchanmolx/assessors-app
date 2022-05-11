@@ -10,7 +10,7 @@ namespace API.Dtos
         public string Owner { get; set; }
         public string Address { get; set; }
         public string Barangay { get; set; }
-        public string PropertyIndentificationNo { get; set; }
+        public string PropertyIdentificationNo { get; set; }
         public string ArpNo { get; set; }
         public string KindOfPropertyAssessed { get; set; }
         public List<KindOfPropertyForAssessmentRollDto> KindOfProperties { get; set; }

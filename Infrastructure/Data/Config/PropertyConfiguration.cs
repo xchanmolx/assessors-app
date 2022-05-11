@@ -16,7 +16,7 @@ namespace Infrastructure.Data.Config
             builder.Property(x => x.Barangay).IsRequired().HasMaxLength(30);
             builder.Property(x => x.Municipality).IsRequired().HasMaxLength(60);
             builder.Property(x => x.Province).IsRequired().HasMaxLength(60);
-            builder.Property(x => x.PropertyIndentificationNo).IsRequired().HasMaxLength(30);
+            builder.Property(x => x.PropertyIdentificationNo).IsRequired().HasMaxLength(30);
             builder.Property(x => x.ArpNo).HasMaxLength(30);
             builder.Property(x => x.TinNo).HasMaxLength(30);
             builder.Property(x => x.TelephoneNo).HasMaxLength(30);

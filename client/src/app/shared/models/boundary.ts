@@ -4,4 +4,5 @@ export interface IBoundary {
     east: string;
     south: string;
     west: string;
+    taxDecOfRealPropertyId: number;
 }

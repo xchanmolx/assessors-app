@@ -18,7 +18,7 @@
                 <app-text-input [(ngModel)]="local_data.address" [label]="'Address'" required></app-text-input>
             </div>
             <div class="col-6">
-                <app-text-input [(ngModel)]="local_data.propertyIndentificationNo" [label]="'Property Identification No.'" required></app-text-input>
+                <app-text-input [(ngModel)]="local_data.propertyIdentificationNo" [label]="'Property Identification No.'" required></app-text-input>
                 <app-text-input [(ngModel)]="local_data.arpNo" [label]="'ARP No.'"></app-text-input>
                 <app-text-input [(ngModel)]="local_data.tinNo" [label]="'TIN No.'"></app-text-input>
                 <app-text-input [(ngModel)]="local_data.telephoneNo" [label]="'Telephone No.'"></app-text-input>
@@ -35,7 +35,7 @@
                     <mat-form-field appearance="fill" style="width: 100%;">
                         <mat-label>Barangay/District</mat-label>
                         <mat-select [(ngModel)]="local_data.barangay">
-                          <mat-option *ngFor="let barangay of barangays" [value]="barangay.name">{{barangay.name | titlecase}}</mat-option>
+                        <mat-option *ngFor="let barangay of barangays" [value]="barangay.name">{{barangay.name | titlecase}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -78,10 +78,10 @@
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Kind of Property Assessed</mat-label>
                     <mat-select [(ngModel)]="local_data.kindOfPropertyAssessed">
-                      <mat-option value="land">Land</mat-option>
-                      <mat-option value="building">Building</mat-option>
-                      <mat-option value="machinery">Machinery</mat-option>
-                      <mat-option value="others">Others</mat-option>
+                    <mat-option value="land">Land</mat-option>
+                    <mat-option value="building">Building</mat-option>
+                    <mat-option value="machinery">Machinery</mat-option>
+                    <mat-option value="others">Others</mat-option>
                     </mat-select>
                 </mat-form-field>
             </ng-container>
@@ -98,127 +98,260 @@
             <ng-container *ngIf="local_data.kindOfPropertyAssessed === 'others'">
                 <app-text-input [(ngModel)]="local_data.specify" [label]="'Specify'"></app-text-input>
             </ng-container>
-            
-            <div class="m-0" *ngFor="let kindOfProperty of local_data.kindOfProperties; let i=index">
-                <p class="m-0">
-                    <strong>Kind of Property Assessed {{i+1}}</strong>
-                </p>
-                <div class="border border-secondary mb-3 p-3">
-                    <div class="row">
-                        <ng-container>
-                            <mat-form-field appearance="fill" style="width: 100%;">
-                                <mat-label>Kind of Lands</mat-label>
-                                <mat-select (selectionChange)="zerosKindOfLandsIdSelected($event)" [(ngModel)]="kindOfProperty.kindOfLands">
+        </div>
+
+        <div class="m-0" *ngFor="let kindOfProperty of local_data.kindOfProperties; let i=index">
+            <p class="m-0">
+                <strong>Kind of Property Assessed {{i+1}}</strong>
+            </p>
+            <div class="border border-secondary mb-3 p-3">
+                <div class="row">
+                    <ng-container>
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Kind of Lands</mat-label>
+                            <mat-select (selectionChange)="zerosKindOfLandsIdSelected($event)" [(ngModel)]="kindOfProperty.kindOfLands">
                                 <mat-option value="agricultural">Agricultural</mat-option>
                                 <mat-option value="commercial">Commercial</mat-option>
                                 <mat-option value="industrial">Industrial</mat-option>
                                 <mat-option value="residential">Residential</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </ng-container>
-                        <div class="col-2"> <!-- Classification -->
-                            <ng-container *ngIf="local_data.kindOfPropertyAssessed === 'building'; else elseTemplate1">
-                                <mat-form-field appearance="fill" style="width: 100%;">
-                                    <mat-label>Classification</mat-label>
-                                    <mat-select [(ngModel)]="kindOfProperty.classification">
+                            </mat-select>
+                        </mat-form-field>
+                    </ng-container>
+                    <div class="col-2"> <!-- Classification -->
+                        <ng-container *ngIf="local_data.kindOfPropertyAssessed === 'building'; else elseTemplate1">
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                                <mat-label>Classification</mat-label>
+                                <mat-select [(ngModel)]="kindOfProperty.classification" #select="ngModel" required>
                                     <mat-option value="agricultural">Agricultural</mat-option>
                                     <mat-option value="commercial">Commercial</mat-option>
                                     <mat-option value="industrial">Industrial</mat-option>
                                     <mat-option value="residential">Residential</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="select.hasError('required')">Please select a classification</mat-error>
+                            </mat-form-field>
+                        </ng-container>
+                        <ng-template #elseTemplate1>
+                            <ng-container *ngIf="kindOfProperty.kindOfLands === 'agricultural'">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Classification</mat-label>
+                                    <mat-select [(ngModel)]="kindOfProperty.classification" #select="ngModel" required>
+                                        <mat-option value="1st class">1st class</mat-option>
+                                        <mat-option value="2nd class">2nd class</mat-option>
+                                        <mat-option value="3rd class">3rd class</mat-option>
+                                        <mat-option value="plants/trees">Plants/Trees</mat-option>
                                     </mat-select>
+                                    <mat-error *ngIf="select.hasError('required')">Please select a classification</mat-error>
                                 </mat-form-field>
                             </ng-container>
 
-                            <ng-template #elseTemplate1>
-                                <ng-container *ngIf="kindOfProperty.kindOfLands === 'agricultural'">
-                                    <mat-form-field appearance="fill" style="width: 100%;">
-                                        <mat-label>Classification</mat-label>
-                                        <mat-select [(ngModel)]="kindOfProperty.classification" #classification="ngModel" required>
-                                            <mat-option value="1st class">1st class</mat-option>
-                                            <mat-option value="2nd class">2nd class</mat-option>
-                                            <mat-option value="3rd class">3rd class</mat-option>
-                                            <mat-option value="plants/trees">Plants/Trees</mat-option>
-                                        </mat-select>
-                                        <mat-error *ngIf="classification.invalid && (classification.dirty || classification.touched)">Please select a classification</mat-error>
-                                    </mat-form-field>
-                                </ng-container>
-
-                                <ng-container *ngIf="kindOfProperty.kindOfLands === 'commercial'">
-                                    <mat-form-field appearance="fill" style="width: 100%;">
-                                        <mat-label>Classification</mat-label>
-                                        <mat-select (selectionChange)="onClassificationCommSelected($event)" [(ngModel)]="kindOfProperty.classification" #classification="ngModel" required>
-                                            <mat-option *ngFor="let comm of commercials" [value]="comm.name">{{comm.name}}</mat-option>
-                                        </mat-select>
-                                        <mat-error *ngIf="classification.invalid && (classification.dirty || classification.touched)">Please select a classification</mat-error>
-                                    </mat-form-field>
-                                </ng-container>
-
-                                <ng-container *ngIf="kindOfProperty.kindOfLands === 'industrial'">
-                                    <mat-form-field appearance="fill" style="width: 100%;">
-                                        <mat-label>Classification</mat-label>
-                                        <mat-select (selectionChange)="onClassificationInduSelected($event)" [(ngModel)]="kindOfProperty.classification" #classification="ngModel" required>
-                                            <mat-option *ngFor="let indu of industrials" [value]="indu.name">{{indu.name}}</mat-option>
-                                        </mat-select>
-                                        <mat-error *ngIf="classification.invalid && (classification.dirty || classification.touched)">Please select a classification</mat-error>
-                                    </mat-form-field>
-                                </ng-container>
-
-                                <ng-container *ngIf="kindOfProperty.kindOfLands === 'residential'">
-                                    <mat-form-field appearance="fill" style="width: 100%;">
-                                        <mat-label>Classification</mat-label>
-                                        <mat-select (selectionChange)="onClassificationResiSelected($event)" [(ngModel)]="kindOfProperty.classification" #classification="ngModel" required>
-                                            <mat-option *ngFor="let resi of residentials" [value]="resi.name">{{resi.name}}</mat-option>
-                                        </mat-select>
-                                        <mat-error *ngIf="classification.invalid && (classification.dirty || classification.touched)">Please select a classification</mat-error>
-                                    </mat-form-field>
-                                </ng-container>
-                            </ng-template>
-                        </div>
-                        <div class="col-2">
-                            <app-text-input [(ngModel)]="kindOfProperty.area" [label]="'Area in hectares'" [type]="'number'" required></app-text-input>
-                        </div>
-                        <div class="col-2">
-                            <app-text-input [(ngModel)]="kindOfProperty.marketValue" [label]="'Market Value'" [type]="'number'" required></app-text-input>
-                        </div>
-                        <div class="col-2"> <!-- Actual Use -->
-                            <ng-container *ngIf="local_data.kindOfPropertyAssessed === 'building'; else elseTemplate2">
-                                <app-text-input [(ngModel)]="kindOfProperty.actualUse" [label]="'Actual Use'" required></app-text-input>
+                            <ng-container *ngIf="kindOfProperty.kindOfLands === 'commercial'">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Classification</mat-label>
+                                    <mat-select (selectionChange)="onClassificationCommSelected($event)" [(ngModel)]="kindOfProperty.classification" #select="ngModel" required>
+                                        <mat-option *ngFor="let comm of commercials" [value]="comm.name">{{comm.name}}</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="select.hasError('required')">Please select a classification</mat-error>
+                                </mat-form-field>
                             </ng-container>
-                            <ng-template #elseTemplate2>
-                                <ng-container *ngIf="kindOfProperty.kindOfLands === 'agricultural'">
-                                    <mat-form-field appearance="fill" style="width: 100%;">
-                                        <mat-label>Actual Use</mat-label>
-                                        <mat-select (selectionChange)="onActualUseAgriSelected($event)" [(ngModel)]="kindOfProperty.actualUse" #actualUse="ngModel" required>
-                                            <mat-option *ngFor="let agri of agriculturals" [value]="agri.name">{{agri.name}}</mat-option>
-                                        </mat-select>
-                                        <mat-error *ngIf="actualUse.invalid && (actualUse.dirty || actualUse.touched)">Please select an actual use</mat-error>
-                                    </mat-form-field>
-                                </ng-container>
 
-                                <ng-container *ngIf="kindOfProperty.kindOfLands === 'commercial'">
-                                    <app-text-input [(ngModel)]="kindOfProperty.actualUse" [label]="'Actual Use'" required></app-text-input>
-                                </ng-container>
+                            <ng-container *ngIf="kindOfProperty.kindOfLands === 'industrial'">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Classification</mat-label>
+                                    <mat-select (selectionChange)="onClassificationInduSelected($event)" [(ngModel)]="kindOfProperty.classification" #select="ngModel" required>
+                                        <mat-option *ngFor="let indu of industrials" [value]="indu.name">{{indu.name}}</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="select.hasError('required')">Please select a classification</mat-error>
+                                </mat-form-field>
+                            </ng-container>
 
-                                <ng-container *ngIf="kindOfProperty.kindOfLands === 'industrial'">
-                                    <app-text-input [(ngModel)]="kindOfProperty.actualUse" [label]="'Actual Use'" required></app-text-input>
-                                </ng-container>
+                            <ng-container *ngIf="kindOfProperty.kindOfLands === 'residential'">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Classification</mat-label>
+                                    <mat-select (selectionChange)="onClassificationResiSelected($event)" [(ngModel)]="kindOfProperty.classification" #select="ngModel" required>
+                                        <mat-option *ngFor="let resi of residentials" [value]="resi.name">{{resi.name}}</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="select.hasError('required')">Please select a classification</mat-error>
+                                </mat-form-field>
+                            </ng-container>
+                        </ng-template>
+                    </div>
+                    <div class="col-2">
+                        <app-text-input [(ngModel)]="kindOfProperty.area" [label]="'Area in hectares'" [type]="'number'" required></app-text-input>
+                    </div>
+                    <div class="col-2">
+                        <app-text-input [(ngModel)]="kindOfProperty.marketValue" [label]="'Market Value'" [type]="'number'" required></app-text-input>
+                    </div>
+                    <div class="col-2"> <!-- Actual Use -->
+                        <ng-container *ngIf="local_data.kindOfPropertyAssessed === 'building'; else elseTemplate2">
+                            <app-text-input [(ngModel)]="kindOfProperty.actualUse" [label]="'Actual Use'" required>{{kindOfProperty.actualUse}}</app-text-input>
+                        </ng-container>
+                        <ng-template #elseTemplate2>
+                            <ng-container *ngIf="kindOfProperty.kindOfLands === 'agricultural'">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Actual Use</mat-label>
+                                    <mat-select (selectionChange)="onActualUseAgriSelected($event)" [(ngModel)]="kindOfProperty.actualUse" #select="ngModel" required>
+                                        <mat-option *ngFor="let agri of agriculturals" [value]="agri.name">{{agri.name}}</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="select.hasError('required')">Please select an actual use</mat-error>
+                                </mat-form-field>
+                            </ng-container>
 
-                                <ng-container *ngIf="kindOfProperty.kindOfLands === 'residential'">
-                                    <app-text-input [(ngModel)]="kindOfProperty.actualUse" [label]="'Actual Use'" required></app-text-input>
-                                </ng-container>
-                            </ng-template>
-                        </div>
-                        <div class="col-2">
-                            <app-text-input [(ngModel)]="kindOfProperty.level" [label]="'Level'" [type]="'number'" required></app-text-input>
-                        </div>
-                        <div class="col-2">
-                            <app-text-input [(ngModel)]="kindOfProperty.assessedValue" [label]="'Assessed Value'" [type]="'number'" required></app-text-input>
-                        </div>
+                            <ng-container *ngIf="kindOfProperty.kindOfLands === 'commercial'">
+                                <app-text-input [(ngModel)]="kindOfProperty.actualUse" [label]="'Actual Use'">{{kindOfProperty.actualUse}}</app-text-input>
+                            </ng-container>
+
+                            <ng-container *ngIf="kindOfProperty.kindOfLands === 'industrial'">
+                                <app-text-input [(ngModel)]="kindOfProperty.actualUse" [label]="'Actual Use'" required>{{kindOfProperty.actualUse}}</app-text-input>
+                            </ng-container>
+
+                            <ng-container *ngIf="kindOfProperty.kindOfLands === 'residential'">
+                                <app-text-input [(ngModel)]="kindOfProperty.actualUse" [label]="'Actual Use'" required>{{kindOfProperty.actualUse}}</app-text-input>
+                            </ng-container>
+                        </ng-template>
+                    </div>
+                    <div class="col-2">
+                        <app-text-input [(ngModel)]="kindOfProperty.level" [label]="'Level'" [type]="'number'" required></app-text-input>
+                    </div>
+                    <div class="col-2">
+                        <app-text-input [(ngModel)]="kindOfProperty.assessedValue" [label]="'Assessed Value'" [type]="'number'" required></app-text-input>
                     </div>
                 </div>
             </div>
-            <app-text-input [(ngModel)]="local_data.totalAssessedValueInWord" [label]="'Total Assessed Value (Amount in Words)'" required></app-text-input>
         </div>
+        
+        <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+            <div formArrayName="kindOfProperties">
+                <p class="m-0">
+                    <strong>Add Kind of Property Assessed</strong>
+                    <button matTooltip="Add another Kind of Property Assessed" mat-icon-button (click)="addKindOfProperty()" class="btn btn-outline-primary m-0">
+                        <mat-icon aria-hidden="false" aria-label="Search">add</mat-icon>
+                    </button>
+                </p>
+                <div class="m-0" *ngFor="let kindOfProperty of kindOfProperties.controls; let i=index">
+                    <div [formGroupName]="i" *ngIf="i >= 1" class="border border-secondary mb-3 p-3">
+                        <strong>Add Kind of Property Assessed {{i}}</strong>
+                        <div class="row">
+                            <ng-container>
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Kind of Lands</mat-label>
+                                    <mat-select (selectionChange)="zerosKindOfLandsIdSelected($event)" formControlName="kindOfLands">
+                                      <mat-option value="agricultural">Agricultural</mat-option>
+                                      <mat-option value="commercial">Commercial</mat-option>
+                                      <mat-option value="industrial">Industrial</mat-option>
+                                      <mat-option value="residential">Residential</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </ng-container>
+                            <div class="col-2"> <!-- Classification -->
+                                <ng-container *ngIf="local_data.kindOfPropertyAssessed === 'building'; else elseTemplate1">
+                                    <mat-form-field appearance="fill" style="width: 100%;">
+                                        <mat-label>Classification</mat-label>
+                                        <mat-select formControlName="classification">
+                                          <mat-option value="agricultural">Agricultural</mat-option>
+                                          <mat-option value="commercial">Commercial</mat-option>
+                                          <mat-option value="industrial">Industrial</mat-option>
+                                          <mat-option value="residential">Residential</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="kindOfProperty.get('classification')!.hasError('required')">Please select a classification</mat-error>
+                                    </mat-form-field>
+                                </ng-container>
+                                <ng-template #elseTemplate1>
+                                    <ng-container *ngIf="kindOfProperty.get('kindOfLands')!.value === 'agricultural'">
+                                        <mat-form-field appearance="fill" style="width: 100%;">
+                                            <mat-label>Classification</mat-label>
+                                            <mat-select formControlName="classification">
+                                                <mat-option value="1st class">1st class</mat-option>
+                                                <mat-option value="2nd class">2nd class</mat-option>
+                                                <mat-option value="3rd class">3rd class</mat-option>
+                                                <mat-option value="plants/trees">Plants/Trees</mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="kindOfProperty.get('classification')!.hasError('required')">Please select a classification</mat-error>
+                                        </mat-form-field>
+                                    </ng-container>
+    
+                                    <ng-container *ngIf="kindOfProperty.get('kindOfLands')!.value === 'commercial'">
+                                        <mat-form-field appearance="fill" style="width: 100%;">
+                                            <mat-label>Classification</mat-label>
+                                            <mat-select (selectionChange)="onClassificationCommSelected($event)" formControlName="classification">
+                                                <mat-option *ngFor="let comm of commercials" [value]="comm.name">{{comm.name}}</mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="kindOfProperty.get('classification')!.hasError('required')">Please select a classification</mat-error>
+                                        </mat-form-field>
+                                    </ng-container>
+    
+                                    <ng-container *ngIf="kindOfProperty.get('kindOfLands')!.value === 'industrial'">
+                                        <mat-form-field appearance="fill" style="width: 100%;">
+                                            <mat-label>Classification</mat-label>
+                                            <mat-select (selectionChange)="onClassificationInduSelected($event)" formControlName="classification">
+                                                <mat-option *ngFor="let indu of industrials" [value]="indu.name">{{indu.name}}</mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="kindOfProperty.get('classification')!.hasError('required')">Please select a classification</mat-error>
+                                        </mat-form-field>
+                                    </ng-container>
+    
+                                    <ng-container *ngIf="kindOfProperty.get('kindOfLands')!.value === 'residential'">
+                                        <mat-form-field appearance="fill" style="width: 100%;">
+                                            <mat-label>Classification</mat-label>
+                                            <mat-select (selectionChange)="onClassificationResiSelected($event)" formControlName="classification">
+                                                <mat-option *ngFor="let resi of residentials" [value]="resi.name">{{resi.name}}</mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="kindOfProperty.get('classification')!.hasError('required')">Please select a classification</mat-error>
+                                        </mat-form-field>
+                                    </ng-container>
+                                </ng-template>
+                            </div>
+                            <div class="col-2">
+                                <app-text-input formControlName="area" [label]="'Area in hectares'" [type]="'number'" required></app-text-input>
+                            </div>
+                            <div class="col-2">
+                                <app-text-input formControlName="marketValue" [label]="'Market Value'" [type]="'number'" required></app-text-input>
+                            </div>
+                            <div class="col-2"> <!-- Actual Use -->
+                                <ng-container *ngIf="local_data.kindOfPropertyAssessed === 'building'; else elseTemplate2">
+                                    <app-text-input formControlName="actualUse" [label]="'Actual Use'">{{kindOfProperty.get('actualUse')!.value}}</app-text-input>
+                                </ng-container>
+                                <ng-template #elseTemplate2>
+                                    <ng-container *ngIf="kindOfProperty.get('kindOfLands')!.value === 'agricultural'">
+                                        <mat-form-field appearance="fill" style="width: 100%;">
+                                            <mat-label>Actual Use</mat-label>
+                                            <mat-select (selectionChange)="onActualUseAgriSelected($event)" formControlName="actualUse">
+                                                <mat-option *ngFor="let agri of agriculturals" [value]="agri.name">{{agri.name}}</mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="kindOfProperty.get('actualUse')!.hasError('required')">Please select an actual use</mat-error>
+                                        </mat-form-field>
+                                    </ng-container>
+    
+                                    <ng-container *ngIf="kindOfProperty.get('kindOfLands')!.value === 'commercial'">
+                                        <app-text-input formControlName="actualUse" [label]="'Actual Use'">{{kindOfProperty.get('actualUse')!.value}}</app-text-input>
+                                    </ng-container>
+    
+                                    <ng-container *ngIf="kindOfProperty.get('kindOfLands')!.value === 'industrial'">
+                                        <app-text-input formControlName="actualUse" [label]="'Actual Use'">{{kindOfProperty.get('actualUse')!.value}}</app-text-input>
+                                    </ng-container>
+    
+                                    <ng-container *ngIf="kindOfProperty.get('kindOfLands')!.value === 'residential'">
+                                        <app-text-input formControlName="actualUse" [label]="'Actual Use'">{{kindOfProperty.get('actualUse')!.value}}</app-text-input>
+                                    </ng-container>
+                                </ng-template>
+                            </div>
+                            <div class="col-2">
+                                <app-text-input formControlName="level" [label]="'Level'" [type]="'number'" required></app-text-input>
+                            </div>
+                            <div class="col-2">
+                                <app-text-input formControlName="assessedValue" [label]="'Assessed Value'" [type]="'number'" required></app-text-input>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="i >= 1">
+                            <button matTooltip="Delete Kind of Property Assessed" mat-icon-button (click)="deleteKindOfProperty(i)" class="btn btn-outline-danger">
+                                <mat-icon aria-hidden="false" aria-label="Search">delete</mat-icon>
+                            </button>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <app-text-input [(ngModel)]="local_data.totalAssessedValueInWord" [label]="'Total Assessed Value (Amount in Words)'" required></app-text-input>
 
         <div class="row border border-secondary p-3">
             <div class="col-4">
@@ -264,7 +397,7 @@
             <textarea id="notes" rows="4" class="w-100 mb-3" [(ngModel)]="local_data.notes" placeholder="Notes"></textarea>
         </div>
     </ng-container>
-
+    
     <ng-template #elseTemplate>
         Are you sure you want to delete <b>{{local_data.owner}}?</b>
     </ng-template>
@@ -274,7 +407,7 @@
     <button (click)="closeDialog()" mat-raised-button [mat-dialog-close]="false">
         Cancel
     </button>
-    <button (click)="doAction()" mat-raised-button color="primary" [mat-dialog-close]="true">
+    <button type="submit" (click)="doAction()" mat-raised-button color="primary" [mat-dialog-close]="true">
         {{action}}
     </button>
 </div>

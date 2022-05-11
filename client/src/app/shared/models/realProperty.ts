@@ -10,7 +10,7 @@ export interface IRealProperty {
     barangay: string;
     municipality: string;
     province: string;
-    propertyIndentificationNo: string;
+    propertyIdentificationNo: string;
     arpNo: string;
     tinNo: string;
     telephoneNo: string;

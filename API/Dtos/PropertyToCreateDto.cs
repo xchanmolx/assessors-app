@@ -31,7 +31,7 @@ namespace API.Dtos
         public string Province { get; set; }
 
         [Required(ErrorMessage = "The property identification number field is required.")]
-        public string PropertyIndentificationNo { get; set; }
+        public string PropertyIdentificationNo { get; set; }
 
         public string ArpNo { get; set; }
         public string TinNo { get; set; }

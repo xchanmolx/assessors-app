@@ -92,9 +92,9 @@
                 </ng-container>
 
                 <!-- Property Identification No. Column -->
-                <ng-container matColumnDef="propertyIndentificationNo">
+                <ng-container matColumnDef="propertyIdentificationNo">
                 <th mat-header-cell [hidden]="true" *matHeaderCellDef> PIN </th>
-                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.propertyIndentificationNo | uppercase}} </td>
+                <td mat-cell [hidden]="true" *matCellDef="let element"> {{element.propertyIdentificationNo | uppercase}} </td>
                 </ng-container>
 
                 <!-- ARP No. Column -->
@@ -161,6 +161,7 @@
                         <p>{{row.boundary.east | uppercase}}</p>
                         <p>{{row.boundary.south | uppercase}}</p>
                         <p>{{row.boundary.west | uppercase}}</p>
+                        <p>{{row.boundary.taxDecOfRealPropertyId}}</p>
                     </div>
                 </td>
                 </ng-container>
@@ -202,6 +203,7 @@
                         <p>{{kindOfProperty.actualUse}}</p>
                         <p>{{kindOfProperty.level | number}}%</p>
                         <p>{{kindOfProperty.assessedValue | number}}</p>
+                        <p>{{kindOfProperty.taxDecOfRealPropertyId}}</p>
                     </div>
                 </td>
                 </ng-container>

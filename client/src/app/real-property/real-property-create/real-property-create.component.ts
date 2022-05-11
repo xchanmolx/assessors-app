@@ -89,7 +89,7 @@ export class RealPropertyCreateComponent implements OnInit {
       barangay: [null, Validators.required],
       municipality: [null, Validators.required],
       province: [null, Validators.required],
-      propertyIndentificationNo: [null, Validators.required],
+      propertyIdentificationNo: [null, Validators.required],
       arpNo: [null],
       tinNo: [null],
       telephoneNo: [null],
