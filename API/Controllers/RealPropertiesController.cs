@@ -22,12 +22,13 @@ namespace API.Controllers
         private readonly IGenericRepository<CommercialLand> _commRepo;
         private readonly IGenericRepository<IndustrialLand> _induRepo;
         private readonly IGenericRepository<ResidentialLand> _resiRepo;
+        private readonly IGenericRepository<KindOfProperty> _kindOfPropertyRepo;
         private decimal _totalAssessedValue;
         private decimal _totalPrevAssessedValue;
         public RealPropertiesController(IGenericRepository<TaxDecOfRealProperty> propertyRepo,
         IGenericRepository<Photo> photoRepo, IGenericRepository<AgriculturalLand> agriRepo,
         IGenericRepository<CommercialLand> commRepo, IGenericRepository<IndustrialLand> induRepo, 
-        IGenericRepository<ResidentialLand> resiRepo, IMapper mapper)
+        IGenericRepository<ResidentialLand> resiRepo, IGenericRepository<KindOfProperty> kindOfPropertyRepo, IMapper mapper)
         {
             _propertyRepo = propertyRepo;
             _photoRepo = photoRepo;
@@ -36,6 +37,7 @@ namespace API.Controllers
             _commRepo = commRepo;
             _induRepo = induRepo;
             _resiRepo = resiRepo;
+            _kindOfPropertyRepo = kindOfPropertyRepo;
         }
 
         [HttpGet]
@@ -294,6 +296,39 @@ namespace API.Controllers
 
             if (await _propertyRepo.SaveAll())
                 return Ok(property);
+
+            return BadRequest(new ApiResponse(400));
+        }
+
+        [HttpPost("kindOfProperties")]
+        public async Task<ActionResult<List<KindOfPropertyToCreateDto>>> CreateKindOfProperties(List<KindOfPropertyToCreateDto> kindOfPropertiesToCreateDto, int taxDecId)
+        {
+            var kindOfProperties = new List<KindOfProperty>();
+
+            kindOfPropertiesToCreateDto.ForEach(kindOfPropertyToCreateDto => {
+                kindOfProperties.Add(new KindOfProperty()
+                {
+                    KindOfLands = kindOfPropertyToCreateDto.KindOfLands,
+                    Classification = kindOfPropertyToCreateDto.Classification,
+                    Area = kindOfPropertyToCreateDto.Area,
+                    MarketValue = kindOfPropertyToCreateDto.MarketValue,
+                    ActualUse = kindOfPropertyToCreateDto.ActualUse,
+                    Level = kindOfPropertyToCreateDto.Level,
+                    AssessedValue = kindOfPropertyToCreateDto.AssessedValue,
+                    AgriculturalLandId = kindOfPropertyToCreateDto.AgriculturalLandId,
+                    CommercialLandId = kindOfPropertyToCreateDto.CommercialLandId,
+                    IndustrialLandId = kindOfPropertyToCreateDto.IndustrialLandId,
+                    ResidentialLandId = kindOfPropertyToCreateDto.ResidentialLandId,
+                    TaxDecOfRealPropertyId = taxDecId
+                });
+            });
+
+            kindOfProperties.ForEach(kindOfProperty => {
+                _kindOfPropertyRepo.Add(kindOfProperty);
+            });
+
+            if (await _kindOfPropertyRepo.SaveAll())
+                return Ok(_mapper.Map<List<KindOfPropertyToCreateDto>>(kindOfProperties));
 
             return BadRequest(new ApiResponse(400));
         }

@@ -51,6 +51,7 @@ namespace API.Helpers
             CreateMap<PropertyToCreateDto, TaxDecOfRealProperty>();
             CreateMap<BoundaryToCreateDto, Boundary>();
             CreateMap<KindOfPropertyToCreateDto, KindOfProperty>();
+            CreateMap<KindOfProperty, KindOfPropertyToCreateDto>();
 
             // Creation for Photos
             CreateMap<Photo, PhotoForCreationDto>();
