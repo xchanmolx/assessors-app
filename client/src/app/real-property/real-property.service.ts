@@ -7,6 +7,7 @@ import { ICountAssessmentRoll } from '../shared/models/countAssessmentRoll';
 import { ICountMergeLand } from '../shared/models/countMergeLand';
 import { ICountMergeLandMixUse } from '../shared/models/countMergeLandMixUse';
 import { ICountRevise } from '../shared/models/countRevise';
+import { IKindOfProperty } from '../shared/models/kindOfProperty';
 import { IMergeYears } from '../shared/models/mergeYears';
 import { IOwnerNamePhotos } from '../shared/models/ownerNamePhotos';
 import { IPagination } from '../shared/models/pagination';
@@ -151,6 +152,15 @@ export class RealPropertyService {
     headers = headers.set('Authorization', `Bearer ${token}`);
     
     return this.http.post<IRealProperty>(this.baseUrl + 'realProperties', values, {headers});
+  }
+
+  createKindOfProperties(kindOfProperties: IKindOfProperty[], taxDecId: number) {
+    const token = localStorage.getItem('token');
+
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', `Bearer ${token}`);
+
+    return this.http.post<IKindOfProperty[]>(this.baseUrl + 'realProperties/kindOfProperties/' + taxDecId, kindOfProperties, {headers});
   }
 
   onPhotoFileChange(event: any) {

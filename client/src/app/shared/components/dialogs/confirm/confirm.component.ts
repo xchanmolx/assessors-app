@@ -38,14 +38,14 @@ export class ConfirmComponent implements OnInit {
   createForm!: FormGroup;
   today = new Date().toLocaleDateString();
   defaultKindOfLandsSelect = 'agricultural';
+  isClicked = false;
+  isHideShowCreateKindOfPropertyForm = true;
 
   constructor(@Optional() @Inject(MAT_DIALOG_DATA) public data: IRealProperty,
       public dialogRef: MatDialogRef<ConfirmComponent>, private fb: FormBuilder, public realPropertyService: RealPropertyService,
       private notifierService: NotifierService, private kindOfLandsService: KindOfLandsService) {
         this.local_data = {...data};
         this.action = this.local_data.action;
-
-        this.createRealPropertyForm();
 
         this.getBarangays();
         this.getAgriculturals();
@@ -56,7 +56,15 @@ export class ConfirmComponent implements OnInit {
       
   ngOnInit(): void {  }
 
-  createRealPropertyForm() {
+  showCreateKindOfPropertyForm() {
+    this.isClicked = true;
+
+    this.createKindOfPropertyForm();
+
+    this.isHideShowCreateKindOfPropertyForm = false;
+  }
+
+  createKindOfPropertyForm() {
     this.createForm = this.fb.group({
       kindOfProperties: this.fb.array([
         this.fb.group(
@@ -108,6 +116,10 @@ export class ConfirmComponent implements OnInit {
 
   doAction() {
     this.dialogRef.close({event: this.action, data: this.local_data});
+
+    if (this.isClicked === true) {
+      this.onSubmit();
+    }
   }
 
   closeDialog() {
@@ -115,7 +127,11 @@ export class ConfirmComponent implements OnInit {
   }
 
   onSubmit() {
-
+    this.realPropertyService.createKindOfProperties(this.createForm.value.kindOfProperties, this.local_data.id).subscribe((response) => {
+      // console.log(response);
+    }, error => {
+      this.notifierService.showNotification(`${error.errors} Problem saving the kind of properties.`, 'OK', 'error');
+    });
   }
 
   getBarangays() {

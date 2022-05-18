@@ -300,8 +300,8 @@ namespace API.Controllers
             return BadRequest(new ApiResponse(400));
         }
 
-        [HttpPost("kindOfProperties")]
-        public async Task<ActionResult<List<KindOfPropertyToCreateDto>>> CreateKindOfProperties(List<KindOfPropertyToCreateDto> kindOfPropertiesToCreateDto, int taxDecId)
+        [HttpPost("kindOfProperties/{id}")]
+        public async Task<ActionResult<List<KindOfPropertyToCreateDto>>> CreateKindOfProperties(List<KindOfPropertyToCreateDto> kindOfPropertiesToCreateDto, int id)
         {
             var kindOfProperties = new List<KindOfProperty>();
 
@@ -319,7 +319,7 @@ namespace API.Controllers
                     CommercialLandId = kindOfPropertyToCreateDto.CommercialLandId,
                     IndustrialLandId = kindOfPropertyToCreateDto.IndustrialLandId,
                     ResidentialLandId = kindOfPropertyToCreateDto.ResidentialLandId,
-                    TaxDecOfRealPropertyId = taxDecId
+                    TaxDecOfRealPropertyId = id
                 });
             });
 

@@ -219,17 +219,23 @@
             </div>
         </div>
         
-        <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+        <p class="m-0" *ngIf="isHideShowCreateKindOfPropertyForm">
+            <strong>Add Kind of Property Assessed</strong>
+            <button matTooltip="Add another Kind of Property Assessed" mat-icon-button (click)="showCreateKindOfPropertyForm()" class="btn btn-outline-primary m-0">
+                <mat-icon aria-hidden="false" aria-label="Search">add</mat-icon>
+            </button>
+        </p>
+        <p class="m-0" *ngIf="isClicked === true">
+            <strong>Add Kind of Property Assessed</strong>
+            <button matTooltip="Add another Kind of Property Assessed" mat-icon-button (click)="addKindOfProperty()" class="btn btn-outline-primary m-0">
+                <mat-icon aria-hidden="false" aria-label="Search">add</mat-icon>
+            </button>
+        </p>
+        <form *ngIf="isClicked === true" [formGroup]="createForm" (ngSubmit)="onSubmit()">
             <div formArrayName="kindOfProperties">
-                <p class="m-0">
-                    <strong>Add Kind of Property Assessed</strong>
-                    <button matTooltip="Add another Kind of Property Assessed" mat-icon-button (click)="addKindOfProperty()" class="btn btn-outline-primary m-0">
-                        <mat-icon aria-hidden="false" aria-label="Search">add</mat-icon>
-                    </button>
-                </p>
-                <div class="m-0" *ngFor="let kindOfProperty of kindOfProperties.controls; let i=index">
-                    <div [formGroupName]="i" *ngIf="i >= 1" class="border border-secondary mb-3 p-3">
-                        <strong>Add Kind of Property Assessed {{i}}</strong>
+                <div class="m-0" *ngFor="let kindOfProperty of kindOfProperties.controls; let i=index;">
+                    <div [formGroupName]="i" class="border border-secondary mb-3 p-3">
+                        <strong>Add Kind of Property Assessed {{i+1}}</strong>
                         <div class="row">
                             <ng-container>
                                 <mat-form-field appearance="fill" style="width: 100%;">
@@ -341,7 +347,7 @@
                                 <app-text-input formControlName="assessedValue" [label]="'Assessed Value'" [type]="'number'" required></app-text-input>
                             </div>
                         </div>
-                        <ng-container *ngIf="i >= 1">
+                        <ng-container *ngIf="i >= 0">
                             <button matTooltip="Delete Kind of Property Assessed" mat-icon-button (click)="deleteKindOfProperty(i)" class="btn btn-outline-danger">
                                 <mat-icon aria-hidden="false" aria-label="Search">delete</mat-icon>
                             </button>

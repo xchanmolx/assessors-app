@@ -107,6 +107,8 @@ export class RealPropertyComponent implements OnInit {
 
         this.realPropertyService.updateRealProperty(value.id, value).subscribe((response) => {
           this.notifierService.showNotification(`${response.owner} has been updated successfully.`, 'OK', 'success');
+
+          this.getRealProperties();
         }, error => {
           this.notifierService.showNotification(`Problem updating the real property. ${error.errors}`, 'OK', 'error');
 
