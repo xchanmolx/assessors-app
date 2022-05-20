@@ -21,6 +21,9 @@ namespace API.Helpers
             CreateMap<Photo, PhotoToDeleteDto>();
             CreateMap<AppUser, UserToDeleteDto>();
 
+            // To delete kind of property
+            CreateMap<KindOfProperty, KindOfPropertyToDeleteDto>();
+
             // Lists for Real Property
             CreateMap<TaxDecOfRealProperty, PropertyToReturnDto>();
             CreateMap<Boundary, BoundaryForListDto>();

@@ -333,6 +333,24 @@ namespace API.Controllers
             return BadRequest(new ApiResponse(400));
         }
 
+        [HttpDelete("kindOfProperties/{id}")]
+        public async Task<ActionResult<KindOfPropertyToDeleteDto>> DeleteKindOfProperty(int id)
+        {
+            var kindOfPropertyFromRepo = await _kindOfPropertyRepo.GetByIdAsync(id);
+
+            if (kindOfPropertyFromRepo.Id > 0)
+            {
+                _kindOfPropertyRepo.Delete(kindOfPropertyFromRepo);
+            }
+
+            _kindOfPropertyRepo.Delete(kindOfPropertyFromRepo);
+
+            if (await _kindOfPropertyRepo.SaveAll())
+                return Ok(_mapper.Map<KindOfPropertyToDeleteDto>(kindOfPropertyFromRepo));
+
+            return BadRequest(new ApiResponse(400));
+        }
+
         [HttpPut("{id}")]
         public async Task<ActionResult<PropertyToUpdateDto>> UpdateProperty(int id, PropertyToUpdateDto propertyToUpdateDto)
         {

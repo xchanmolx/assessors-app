@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { NotifierService } from 'src/app/core/services/notifier.service';
 import { KindOfLandsService } from 'src/app/kind-of-lands/kind-of-lands.service';
@@ -13,6 +13,8 @@ import { IRealProperty } from 'src/app/shared/models/realProperty';
 import { IResidential } from 'src/app/shared/models/residential';
 import { BarangayParams } from 'src/app/shared/models/barangayParams';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IKindOfProperty } from 'src/app/shared/models/kindOfProperty';
+import { ConfirmKindOfPropertyComponent } from '../confirm-kind-of-property/confirm-kind-of-property.component';
 
 @Component({
   selector: 'app-confirm',
@@ -43,7 +45,7 @@ export class ConfirmComponent implements OnInit {
 
   constructor(@Optional() @Inject(MAT_DIALOG_DATA) public data: IRealProperty,
       public dialogRef: MatDialogRef<ConfirmComponent>, private fb: FormBuilder, public realPropertyService: RealPropertyService,
-      private notifierService: NotifierService, private kindOfLandsService: KindOfLandsService) {
+      private notifierService: NotifierService, private kindOfLandsService: KindOfLandsService, public dialog: MatDialog) {
         this.local_data = {...data};
         this.action = this.local_data.action;
 
@@ -55,6 +57,33 @@ export class ConfirmComponent implements OnInit {
       }
       
   ngOnInit(): void {  }
+
+  openDialog(action: any, obj: any) {
+    obj.action = action;
+    const dialogRef = this.dialog.open(ConfirmKindOfPropertyComponent, {
+      data: obj,
+      width: '600px',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.event == 'Delete') {
+        this.deleteRowData(result.data);
+      }
+    });
+  }
+
+  deleteRowData(row_obj: IKindOfProperty) {
+    this.local_data.kindOfProperties = this.local_data.kindOfProperties.filter((value: any, key: any) => {
+      return value.id != row_obj.id;
+    });
+
+    this.realPropertyService.deleteKindOfProperty(row_obj.id).subscribe((response) => {
+      this.notifierService.showNotification(`${response.kindOfLands}, ${response.classification}, ${response.actualUse} has been deleted successfully.`, 'OK', 'success');
+    }, error => {
+      this.notifierService.showNotification(`${error.errors} Problem deleting kind of property.`, 'OK', 'error');
+    });
+  }
 
   showCreateKindOfPropertyForm() {
     this.isClicked = true;
@@ -87,12 +116,12 @@ export class ConfirmComponent implements OnInit {
     });
   }
 
-  get kindOfProperties() {
+  get kindOfPropertiesFormArray() {
     return this.createForm.get('kindOfProperties') as FormArray;
   }
 
   addKindOfProperty() {
-    this.kindOfProperties.push(
+    this.kindOfPropertiesFormArray.push(
       this.fb.group({
         kindOfLands: [this.defaultKindOfLandsSelect, Validators.required],
         classification: [null, Validators.required],
@@ -111,7 +140,7 @@ export class ConfirmComponent implements OnInit {
   }
 
   deleteKindOfProperty(index: number) {
-    this.kindOfProperties.removeAt(index);
+    this.kindOfPropertiesFormArray.removeAt(index);
   }
 
   doAction() {
@@ -164,6 +193,18 @@ export class ConfirmComponent implements OnInit {
     this.getAgriculturals();
   }
 
+  onActualUseAgriSelectedForAddingKindOfProperty(event: MatSelectChange) {
+    let agri = this.agriculturals.find(agri => agri.name === event.value);
+
+    for (const kindOfProperty of this.kindOfPropertiesFormArray.controls) {
+      if (agri?.name === kindOfProperty.get('actualUse')!.value) {
+         kindOfProperty.patchValue({agriculturalLandId: agri?.id});
+      }
+    }
+      
+    this.getAgriculturals();
+  }
+
   onClassificationCommSelected(event: MatSelectChange) {
     let comm = this.commercials.find(comm => comm.name === event.value);
 
@@ -171,6 +212,21 @@ export class ConfirmComponent implements OnInit {
       if (comm?.name === kindOfProperty.classification) {
         kindOfProperty.commercialLandId = comm?.id;
         kindOfProperty.actualUse = 'Commercial';
+      }
+    }
+      
+    this.getCommercials();
+  }
+
+  onClassificationCommSelectedForAddingKindOfProperty(event: MatSelectChange) {
+    let comm = this.commercials.find(comm => comm.name === event.value);
+
+    for (const kindOfProperty of this.kindOfPropertiesFormArray.controls) {
+      if (comm?.name === kindOfProperty.get('classification')!.value) {
+          kindOfProperty.patchValue({
+            commercialLandId: comm?.id, 
+            actualUse: 'Commercial'
+          });
       }
     }
       
@@ -190,6 +246,21 @@ export class ConfirmComponent implements OnInit {
     this.getIndustrials();
   }
 
+  onClassificationInduSelectedForAddingKindOfProperty(event: MatSelectChange) {
+    let indu = this.industrials.find(indu => indu.name === event.value);
+
+    for (const kindOfProperty of this.kindOfPropertiesFormArray.controls) {
+      if (indu?.name === kindOfProperty.get('classification')!.value) {
+          kindOfProperty.patchValue({
+            industrialLandId: indu?.id,
+            actualUse: 'Industrial'
+          });
+      }
+    }
+      
+    this.getIndustrials();
+  }
+
   onClassificationResiSelected(event: MatSelectChange) {
     let resi = this.residentials.find(resi => resi.name === event.value);
 
@@ -197,6 +268,21 @@ export class ConfirmComponent implements OnInit {
       if (resi?.name === kindOfProperty.classification) {
         kindOfProperty.residentialLandId = resi?.id;
         kindOfProperty.actualUse = 'Residential';
+      }
+    }
+      
+    this.getResidentials();
+  }
+
+  onClassificationResiSelectedForAddingKindOfProperty(event: MatSelectChange) {
+    let resi = this.residentials.find(resi => resi.name === event.value);
+
+    for (const kindOfProperty of this.kindOfPropertiesFormArray.controls) {
+      if (resi?.name === kindOfProperty.get('classification')!.value) {
+          kindOfProperty.patchValue({
+            residentialLandId: resi?.id,
+            actualUse: 'Residential'
+          });
       }
     }
       

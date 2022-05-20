@@ -163,6 +163,15 @@ export class RealPropertyService {
     return this.http.post<IKindOfProperty[]>(this.baseUrl + 'realProperties/kindOfProperties/' + taxDecId, kindOfProperties, {headers});
   }
 
+  deleteKindOfProperty(id: number) {
+    const token = localStorage.getItem('token');
+
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', `Bearer ${token}`);
+
+    return this.http.post<IKindOfProperty>(this.baseUrl + 'realProperties/kindOfProperties/' + id, {headers});
+  }
+
   onPhotoFileChange(event: any) {
     for (var i = 0; i < event.target.files.length; i++) { 
       this.formFiles.push(event.target.files[i]);

@@ -28,6 +28,7 @@ import { ConfirmMunicipalityCityDistrictComponent } from './components/dialogs/c
 import { ConfirmProvinceComponent } from './components/dialogs/confirm-province/confirm-province.component';
 import { ConfirmLogoComponent } from './components/dialogs/confirm-logo/confirm-logo.component';
 import { ConfirmReviseComponent } from './components/dialogs/confirm-revise/confirm-revise.component';
+import { ConfirmKindOfPropertyComponent } from './components/dialogs/confirm-kind-of-property/confirm-kind-of-property.component';
 
 
 
@@ -49,7 +50,8 @@ import { ConfirmReviseComponent } from './components/dialogs/confirm-revise/conf
     ConfirmMunicipalityCityDistrictComponent,
     ConfirmProvinceComponent,
     ConfirmLogoComponent,
-    ConfirmReviseComponent
+    ConfirmReviseComponent,
+    ConfirmKindOfPropertyComponent
   ],
   imports: [
     CommonModule,

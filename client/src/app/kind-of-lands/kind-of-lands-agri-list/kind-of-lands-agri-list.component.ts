@@ -16,7 +16,7 @@ export class KindOfLandsAgriListComponent implements OnInit {
   agris: IAgricultural[] = [];
   agriculturalParams = new KindOfLandsParams();
   totalCount: number = 0;
-  displayedColumns: string[] = ['name', 'firstClass', 'secondClass', 'thirdClass', 'actions'];
+  displayedColumns: string[] = ['id', 'name', 'firstClass', 'secondClass', 'thirdClass', 'actions'];
 
   constructor(public dialog: MatDialog, private kindOfLandsService: KindOfLandsService,
     private notifierService: NotifierService) { 

@@ -16,7 +16,7 @@ export class KindOfLandsCommListComponent implements OnInit {
   comms: ICommercial[] = [];
   commercialParams = new KindOfLandsParams();
   totalCount: number = 0;
-  displayedColumns: string[] = ['name', 'marketValue', 'actions'];
+  displayedColumns: string[] = ['id', 'name', 'marketValue', 'actions'];
 
   constructor(public dialog: MatDialog, private kindOfLandsService: KindOfLandsService,
     private notifierService: NotifierService) {
