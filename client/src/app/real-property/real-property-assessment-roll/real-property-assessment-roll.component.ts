@@ -46,7 +46,7 @@ export class RealPropertyAssessmentRollComponent implements OnInit {
   mergeYears: IMergeYears[] = [];
   defaultLatestYear: any;
 
-  displayedColumns: string[] = ['owner', 'propertyIndentificationNo', 'tdNo', 'arpNo', 'address',
+  displayedColumns: string[] = ['owner', 'propertyIdentificationNo', 'tdNo', 'arpNo', 'address',
    'kindOfPropertyAssessed', 'kindOfProperties.kindOfLands', 'barangay', 'kindOfProperties.assessedValue', 'declarationCancels', 'previousAssessedValue', 'year'];
   showFirstLastButtons = true;
 

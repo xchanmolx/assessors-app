@@ -28,7 +28,7 @@ export class ReviseComponent implements OnInit {
   mergeYears: IMergeYears[] = [];
   defaultLatestYear: any;
 
-  displayedColumns: string[] = ['id', 'tdNo', 'owner', 'address', 'street', 'barangay', 'municipality', 'province', 'propertyIndentificationNo',
+  displayedColumns: string[] = ['id', 'tdNo', 'owner', 'address', 'street', 'barangay', 'municipality', 'province', 'propertyIdentificationNo',
                                 'arpNo', 'tinNo', 'telephoneNo', 'octTctCloaNo', 'octNo', 'dated', 'surveyLotNo', 'assessorLotNo',
                                 'blkNo', 'boundary', 'kindOfPropertyAssessed', 'noOfStoreys', 'briefDescription', 'specify',
                                 'kindOfProperties', 'totalAssessedValueInWord', 'taxableExempt', 'quarter', 'year', 'recommendedBy',
