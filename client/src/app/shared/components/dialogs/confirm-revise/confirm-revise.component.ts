@@ -205,6 +205,8 @@ export class ConfirmReviseComponent implements OnInit {
 
     this.realPropertyFromLoadIndividualRevise.year = this.year;
 
+    this.realPropertyFromLoadIndividualRevise.declarationCancels = this.copiedTdNo;
+
     this.realPropertyFromLoadIndividualRevise.previousAssessedValue = this.copiedPreviousAssessedValue;
 
     this.realPropertyFromLoadIndividualRevise.kindOfProperties.forEach(kindOfPropertyIndividualRevise => {
