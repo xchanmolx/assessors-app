@@ -8,7 +8,6 @@ import { ConfirmReviseComponent } from 'src/app/shared/components/dialogs/confir
 import { IBarangay } from 'src/app/shared/models/barangay';
 import { BarangayParams } from 'src/app/shared/models/barangayParams';
 import { IMergeYears } from 'src/app/shared/models/mergeYears';
-import { IRealProperty } from 'src/app/shared/models/realProperty';
 import { RealPropertyParams } from 'src/app/shared/models/realPropertyParams';
 import { IReviseList } from 'src/app/shared/models/reviseList';
 import { RealPropertyService } from '../real-property.service';
@@ -50,10 +49,10 @@ export class ReviseComponent implements OnInit {
     return this.accountService.loggedIn();
   }
 
-  openDialog(action: any, obj: any) {
-    obj.action = action;
+  openDialog(action: any, realProperty: any) {
+    realProperty.action = action;
     this.dialog.open(ConfirmReviseComponent, {
-      data: obj,
+      data: realProperty,
       width: '1200px',
       disableClose: true
     });
