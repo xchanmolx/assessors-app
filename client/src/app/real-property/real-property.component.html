@@ -20,6 +20,11 @@
                         <mat-icon aria-hidden="false" aria-label="Add">add</mat-icon>
                     </button>
                 </ng-container>
+                <ng-container *ngIf="loggedIn()">
+                    <button *appHasRole="['Admin', 'Moderator']" routerLink="/real-property/print" matTooltip="Print real properties" mat-icon-button class="btn btn-outline-dark">
+                        <mat-icon aria-hidden="false" aria-label="Print">print</mat-icon>
+                    </button>
+                </ng-container>
             </div>
         </div>
         <div class="col-3 d-flex justify-content-center">

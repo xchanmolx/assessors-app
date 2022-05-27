@@ -1,0 +1,81 @@
+<div class="container-fluid">
+    <div class="row p-3">
+        <div class="col-5">
+            <div class="d-flex" *ngIf="realProperties">
+                <mat-form-field style="width: 90%;" appearance="fill">
+                    <mat-label>Search</mat-label>
+                    <input #search (keyup.enter)="onSearch()" matInput appMatInputAutofocus #message maxlength="256" placeholder="Ex. juan dela cruz">
+                    <mat-hint align="start"><strong>You can search Owner's Name, Tax Declaration #, and Survey Lot #.</strong> </mat-hint>
+                    <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+                </mat-form-field>
+                <button matTooltip="Search" mat-icon-button (click)="onSearch()" class="btn btn-outline-primary">
+                    <mat-icon aria-hidden="false" aria-label="Search">search</mat-icon>
+                </button>
+                <button matTooltip="Clear search box" mat-icon-button (click)="onReset()" class="btn btn-outline-success mx-1">
+                    <mat-icon aria-hidden="false" aria-label="Reset">clear</mat-icon>
+                </button>
+                <ng-container>
+                    <button mat-icon-button class="float-end" matTooltip="Print" 
+                    [useExistingCss]="true"
+                    printTitle="Real Properties"
+                    printSectionId="print-section"
+                    ngxPrint><mat-icon>print</mat-icon></button>
+                </ng-container>
+            </div>
+        </div>
+        <div class="col-2 d-flex justify-content-center">
+            <ng-container>
+                <mat-form-field appearance="fill">
+                    <mat-label>Select Barangay</mat-label>
+                    <mat-select (selectionChange)="onBarangaySelected($event)">
+                      <mat-option *ngFor="let barangay of barangays" [value]="barangay.name">
+                          {{barangay.name | titlecase}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </ng-container>
+        </div>
+        <div class="col-2">
+            <ng-container>
+                <mat-form-field appearance="fill">
+                    <mat-label>Select Year</mat-label>
+                    <mat-select (selectionChange)="onLatestYearSelected($event)">
+                      <mat-option *ngFor="let mergeYear of mergeYears" [value]="mergeYear.year">
+                          {{mergeYear.year}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </ng-container>
+        </div>
+        <div class="col-3 d-flex justify-content-center">
+            <app-paging-header
+                [totalCount]="totalCount"
+                [pageSize]="realPropertyParams.pageSize"
+                [pageNumber]="realPropertyParams.pageNumber">
+            </app-paging-header>
+        </div>
+    </div>
+
+    <div id="print-section">
+        <div *ngFor="let realProperty of realProperties">
+            
+        </div>
+    </div>
+
+    <ng-container *ngIf="totalCount === 0">
+        <div class="mt-3 text-center">
+            There are <strong>0</strong> results for this data
+        </div>
+    </ng-container>
+
+    <div *ngIf="totalCount > 0">
+        <mat-paginator #paginator
+          [length]="totalCount"
+          [pageSize]="realPropertyParams.pageSize"
+          [pageSizeOptions]="[5, 10, 25, 50, 100, 250, 500, 1000, 2000, 3000, 6000, 9000]"
+          [showFirstLastButtons]="showFirstLastButtons"
+          (page)="onPageChanged($event)"
+          aria-label="Select page">
+        </mat-paginator>
+    </div>
+</div>

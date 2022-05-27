@@ -25,6 +25,7 @@ import { MergeOfLandsComponent } from './merge-of-lands/merge-of-lands.component
 import { SingleUseLandComponent } from './merge-of-lands/single-use-land/single-use-land.component';
 import { MixUseLandComponent } from './merge-of-lands/mix-use-land/mix-use-land.component';
 import { ReviseComponent } from './revise/revise.component';
+import { RealPropertyPrintComponent } from './real-property-print/real-property-print.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ReviseComponent } from './revise/revise.component';
     MergeOfLandsComponent,
     SingleUseLandComponent,
     MixUseLandComponent,
-    ReviseComponent
+    ReviseComponent,
+    RealPropertyPrintComponent
   ],
   imports: [
     CommonModule,
