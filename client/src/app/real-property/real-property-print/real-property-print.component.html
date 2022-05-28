@@ -1,64 +1,176 @@
-<div class="container-fluid">
-    <div class="row p-3">
-        <div class="col-5">
-            <div class="d-flex" *ngIf="realProperties">
-                <mat-form-field style="width: 90%;" appearance="fill">
-                    <mat-label>Search</mat-label>
-                    <input #search (keyup.enter)="onSearch()" matInput appMatInputAutofocus #message maxlength="256" placeholder="Ex. juan dela cruz">
-                    <mat-hint align="start"><strong>You can search Owner's Name, Tax Declaration #, and Survey Lot #.</strong> </mat-hint>
-                    <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
-                </mat-form-field>
-                <button matTooltip="Search" mat-icon-button (click)="onSearch()" class="btn btn-outline-primary">
-                    <mat-icon aria-hidden="false" aria-label="Search">search</mat-icon>
-                </button>
-                <button matTooltip="Clear search box" mat-icon-button (click)="onReset()" class="btn btn-outline-success mx-1">
-                    <mat-icon aria-hidden="false" aria-label="Reset">clear</mat-icon>
-                </button>
-                <ng-container>
-                    <button mat-icon-button class="float-end" matTooltip="Print" 
-                    [useExistingCss]="true"
-                    printTitle="Real Properties"
-                    printSectionId="print-section"
-                    ngxPrint><mat-icon>print</mat-icon></button>
-                </ng-container>
-            </div>
-        </div>
-        <div class="col-2 d-flex justify-content-center">
+<div class="row p-3 container-fluid">
+    <div class="col-5">
+        <div class="d-flex" *ngIf="realProperties">
+            <mat-form-field style="width: 90%;" appearance="fill">
+                <mat-label>Search</mat-label>
+                <input #search (keyup.enter)="onSearch()" matInput appMatInputAutofocus #message maxlength="256" placeholder="Ex. juan dela cruz">
+                <mat-hint align="start"><strong>You can search Owner's Name, Tax Declaration #, and Survey Lot #.</strong> </mat-hint>
+                <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+            </mat-form-field>
+            <button matTooltip="Search" mat-icon-button (click)="onSearch()" class="btn btn-outline-primary">
+                <mat-icon aria-hidden="false" aria-label="Search">search</mat-icon>
+            </button>
+            <button matTooltip="Clear search box" mat-icon-button (click)="onReset()" class="btn btn-outline-success mx-1">
+                <mat-icon aria-hidden="false" aria-label="Reset">clear</mat-icon>
+            </button>
             <ng-container>
-                <mat-form-field appearance="fill">
-                    <mat-label>Select Barangay</mat-label>
-                    <mat-select (selectionChange)="onBarangaySelected($event)">
-                      <mat-option *ngFor="let barangay of barangays" [value]="barangay.name">
-                          {{barangay.name | titlecase}}
-                      </mat-option>
-                    </mat-select>
-                </mat-form-field>
+                <button mat-icon-button class="float-end" matTooltip="Print" 
+                [useExistingCss]="true"
+                printTitle="Real Properties"
+                printSectionId="print-section"
+                ngxPrint><mat-icon>print</mat-icon></button>
             </ng-container>
-        </div>
-        <div class="col-2">
-            <ng-container>
-                <mat-form-field appearance="fill">
-                    <mat-label>Select Year</mat-label>
-                    <mat-select (selectionChange)="onLatestYearSelected($event)">
-                      <mat-option *ngFor="let mergeYear of mergeYears" [value]="mergeYear.year">
-                          {{mergeYear.year}}
-                      </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </ng-container>
-        </div>
-        <div class="col-3 d-flex justify-content-center">
-            <app-paging-header
-                [totalCount]="totalCount"
-                [pageSize]="realPropertyParams.pageSize"
-                [pageNumber]="realPropertyParams.pageNumber">
-            </app-paging-header>
         </div>
     </div>
+    <div class="col-2 d-flex justify-content-center">
+        <ng-container>
+            <mat-form-field appearance="fill">
+                <mat-label>Select Barangay</mat-label>
+                <mat-select (selectionChange)="onBarangaySelected($event)">
+                  <mat-option *ngFor="let barangay of barangays" [value]="barangay.name">
+                      {{barangay.name | titlecase}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ng-container>
+    </div>
+    <div class="col-2">
+        <ng-container>
+            <mat-form-field appearance="fill">
+                <mat-label>Select Year</mat-label>
+                <mat-select (selectionChange)="onLatestYearSelected($event)">
+                  <mat-option *ngFor="let mergeYear of mergeYears" [value]="mergeYear.year">
+                      {{mergeYear.year}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ng-container>
+    </div>
+    <div class="col-3 d-flex justify-content-center">
+        <app-paging-header
+            [totalCount]="totalCount"
+            [pageSize]="realPropertyParams.pageSize"
+            [pageNumber]="realPropertyParams.pageNumber">
+        </app-paging-header>
+    </div>
+</div>
 
+<div class="container">
+    <hr>
     <div id="print-section">
-        <div *ngFor="let realProperty of realProperties">
-            
+        <div class="my-3" *ngFor="let realProperty of realProperties">
+            <div class="row">
+                <div class="col">
+                    <img src="{{logo1st?.url || '../../../../assets/images/logo-default.png'}}" alt="aloguinsan logo" class="logo d-flex justify-content-center">
+                    <h6 class="d-flex justify-content-center m-0">Republic of the Philippines</h6>
+                    <ng-container *ngIf="province">
+                        <h6 class="d-flex justify-content-center m-0">Province of {{province.name | titlecase}}</h6>
+                    </ng-container>
+                    <ng-container *ngIf="municipality">
+                        <h6 class="d-flex justify-content-center m-0">Municipality of {{municipality.name | titlecase}}</h6>
+                    </ng-container>
+                    <ng-container *ngIf="city">
+                        <h6 class="d-flex justify-content-center m-0">City of {{city.name | titlecase}}</h6>
+                    </ng-container>
+                    <ng-container *ngIf="district">
+                        <h6 class="d-flex justify-content-center m-0">District of {{district.name | titlecase}}</h6>
+                    </ng-container>
+                    <h5 class="d-flex justify-content-center m-0"><strong>TAX DECLARATION OF REAL PROPERTY</strong></h5>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col justify-content-center m-0">
+                    <p>TD No. <b><u>{{realProperty.tdNo}}</u></b></p>
+                </div>
+                <div class="col justify-content-center m-0">
+                    <p class="m-0">Property Identification No. <b><u>{{realProperty.propertyIdentificationNo}}</u></b></p>
+                    <p class="m-0">ARP No. <b><u>{{realProperty.arpNo}}</u></b></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col justify-content-center m-0">
+                    <p>Owner: <b><u>{{realProperty.owner | uppercase}}</u></b></p>
+                </div>
+                <div class="col justify-content-center m-0">
+                    <p>TIN No. <b><u>{{realProperty.tinNo}}</u></b></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="m-0"><b>Administrator/Beneficial User</b></p>
+                    <p>Address: <b><u>{{realProperty.address | uppercase}}</u></b></p>
+                </div>
+                <div class="col">
+                    <p class="m-0">Telephone No. <b><u>{{realProperty.telephoneNo}}</u></b></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <p>Location of Property:</p>
+                </div>
+                <div class="col">
+                    <p class="m-0"><b><u><span *ngIf="realProperty.street">{{realProperty.street | uppercase}},</span><br></u></b></p>
+                    <p class="text-muted m-0">(Number and Street)</p>
+                </div>
+                <div class="col">
+                    <p class="m-0"><b><u>{{realProperty.barangay | uppercase}},</u></b></p>
+                    <p class="text-muted m-0">(Barangay/District)</p>
+                </div>
+                <div class="col">
+                    <p class="m-0"><b><u>{{realProperty.municipality | uppercase}},</u></b></p>
+                    <p class="text-muted m-0">(Municipality/City)</p>
+                </div>
+                <div class="col">
+                    <p class="m-0"><b><u>{{realProperty.province | uppercase}},</u></b></p>
+                    <p class="text-muted m-0">(Province)</p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    <p class="m-0">OCT/TCTCLOA No. <b><u>{{realProperty.octTctCloaNo}}</u></b></p>
+                    <p class="m-0">OCT No. <b><u>{{realProperty.octNo}}</u></b></p>
+                    <p class="m-0">Dated <b><u>{{realProperty.dated}}</u></b></p>
+                </div>
+                <div class="col">
+                    <p class="m-0">Survey No. LOT No. <b><u>{{realProperty.surveyLotNo}}</u></b></p>
+                    <p class="m-0">Assessor's Lot No. <b><u>{{realProperty.assessorLotNo}}</u></b></p>
+                    <p class="m-0">Blk No. <b><u>{{realProperty.blkNo}}</u></b></p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <b>Boundaries</b>
+                <div class="col">
+                    <p class="m-0" style="padding-left: 3em">North: <b><u>{{realProperty.boundary.north | uppercase}}</u></b></p>
+                    <p class="m-0" style="padding-left: 3em">East: <b><u>{{realProperty.boundary.east | uppercase}}</u></b></p>
+                </div>
+                <div class="col">
+                    <p class="m-0">South: <b><u>{{realProperty.boundary.south | uppercase}}</u></b></p>
+                    <p class="m-0">West: <b><u>{{realProperty.boundary.west | uppercase}}</u></b></p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <b>KIND OF PROPERTY ASSESSED:</b>
+                <div class="col">
+                    <p class="m-0" style="padding-left: 3em">/ <span *ngIf="realProperty.kindOfPropertyAssessed === 'land'"><b><u>X</u></b></span> / <b>LAND</b></p>
+                    <p class="m-0" style="padding-left: 3em">/ <span *ngIf="realProperty.kindOfPropertyAssessed === 'building'"><b><u>X</u></b></span> / <b>BUILDING</b></p>
+                    <p class="m-0" style="padding-left: 5em">No. Of Storeys <span *ngIf="realProperty.kindOfPropertyAssessed === 'building'"><b><u>{{realProperty.noOfStoreys}}</u></b></span></p>
+                    <p class="m-0" style="padding-left: 5em">Brief Description: <span *ngIf="realProperty.kindOfPropertyAssessed === 'building'"><b><u>{{realProperty.briefDescription}}</u></b></span></p>
+                </div>
+                <div class="col">
+                    <p class="m-0">/ <span *ngIf="realProperty.kindOfPropertyAssessed === 'machinery'"><b><u>X</u></b></span> / <b>MACHINERY</b></p>
+                    <p class="m-0" style="padding-left: 3em">Brief Description: <span *ngIf="realProperty.kindOfPropertyAssessed === 'machinery'"><b><u>{{realProperty.briefDescription}}</u></b></span></p>
+                    <p class="m-0">/ <span *ngIf="realProperty.kindOfPropertyAssessed === 'others'"><b><u>X</u></b></span> / <b>OTHERS</b></p>
+                    <p class="m-0" style="padding-left: 3em">Specify: <span *ngIf="realProperty.kindOfPropertyAssessed === 'others'"><b><u>{{realProperty.specify}}</u></b></span></p>
+                </div>
+            </div>
+            <!-- TABLE - KIND OF PROPERTY ASSESSED -->
+            <div class="row mt-3">
+                <div class="col">
+                    
+                </div>
+            </div>
+            <hr>
         </div>
     </div>
 

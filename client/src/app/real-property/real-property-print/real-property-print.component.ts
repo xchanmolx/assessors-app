@@ -1,13 +1,21 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSelectChange } from '@angular/material/select';
+import { AdminService } from 'src/app/admin/admin.service';
 import { NotifierService } from 'src/app/core/services/notifier.service';
 import { KindOfLandsService } from 'src/app/kind-of-lands/kind-of-lands.service';
 import { IBarangay } from 'src/app/shared/models/barangay';
 import { BarangayParams } from 'src/app/shared/models/barangayParams';
+import { ILogo } from 'src/app/shared/models/logo';
 import { IMergeYears } from 'src/app/shared/models/mergeYears';
+import { IMunicipalityCityDistrict } from 'src/app/shared/models/municipalityCityDistrict';
+import { MunicipalityCityDistrictParams } from 'src/app/shared/models/municipalityCityDistrictParams';
+import { IProvince } from 'src/app/shared/models/province';
+import { ProvinceParams } from 'src/app/shared/models/provinceParams';
 import { IRealProperty } from 'src/app/shared/models/realProperty';
 import { RealPropertyParams } from 'src/app/shared/models/realPropertyParams';
+import { IStaff } from 'src/app/shared/models/staff';
+import { StaffParams } from 'src/app/shared/models/staffParams';
 import { RealPropertyService } from '../real-property.service';
 
 @Component({
@@ -26,12 +34,31 @@ export class RealPropertyPrintComponent implements OnInit {
   mergeYears: IMergeYears[] = [];
   defaultLatestYear: any;
   showFirstLastButtons = true;
+  staffs: IStaff[] = [];
+  staffParams = new StaffParams();
+  assessor!: IStaff | undefined;
+  staffsFilter!: IStaff[] | undefined;
+  staffDefault!: IStaff | undefined;
+  municipalityCityDistricts: IMunicipalityCityDistrict[] = [];
+  municipalityCityDistrictParams = new MunicipalityCityDistrictParams();
+  municipality!: IMunicipalityCityDistrict | undefined;
+  city!: IMunicipalityCityDistrict | undefined;
+  district!: IMunicipalityCityDistrict | undefined;
+  provinces: IProvince[] = [];
+  provinceParams = new ProvinceParams();
+  province!: IProvince;
+  logos: ILogo[] = [];
+  logo1st!: ILogo | undefined;
 
   constructor(private realPropertyService: RealPropertyService, private notifierService: NotifierService,
-    private kindOfLandsService: KindOfLandsService) {
+    private kindOfLandsService: KindOfLandsService, private adminService: AdminService) {
       this.getBarangays();
       this.getMergeYears();
       this.getRealProperties();
+      this.getStaffs();
+      this.getMunicipalityCityDistricts();
+      this.getProvinces();
+      this.getLogos();
   }
 
   ngOnInit(): void {
@@ -106,6 +133,62 @@ export class RealPropertyPrintComponent implements OnInit {
       this.getRealProperties();
     }, error => {
       this.notifierService.showNotification(`Problem loading the merge years. ${error.errors}`, 'OK', 'error');
+    });
+  }
+
+  getStaffs() {
+    this.adminService.getStaffs(this.staffParams).subscribe(response => {
+      this.totalCount = response!.count;
+      this.staffs = response!.data;
+
+      // Find the specific staff
+      this.assessor = this.staffs.find(staff => staff.designation == 'assessor');
+
+      // Find the staffs with a designation of staff
+      this.staffsFilter = this.staffs.filter(staff => staff.designation == 'staff');
+
+      // Find the 1st value of staffsFilter
+      this.staffDefault = this.staffsFilter[0];
+    }, error => {
+      this.notifierService.showNotification(`Problem loading the staffs. ${error.errors}`, 'OK', 'error');
+    });
+  }
+
+  getMunicipalityCityDistricts() {
+    this.adminService.getMunicipalityCityDistricts(this.municipalityCityDistrictParams).subscribe(response => {
+      this.municipalityCityDistricts = response!.data;
+
+      // Find the specific municipality
+      this.municipality = this.municipalityCityDistricts.find(mun => mun.level == 'municipality');
+
+      // Find the specific city
+      this.city = this.municipalityCityDistricts.find(city => city.level == 'city');
+
+      // Find the specific district
+      this.district = this.municipalityCityDistricts.find(dis => dis.level == 'district');
+    }, error => {
+      this.notifierService.showNotification(`Problem loading the municipalities / cities / districts. ${error.errors}`, 'OK', 'error');
+    });
+  }
+
+  getProvinces() {
+    this.adminService.getProvinces(this.provinceParams).subscribe(response => {
+      this.provinces = response!.data;
+
+      this.province = this.provinces[0];
+    }, error => {
+      this.notifierService.showNotification(`Problem loading the provinces. ${error.errors}`, 'OK', 'error');
+    });
+  }
+
+  getLogos() {
+    this.adminService.getLogos().subscribe(response => {
+      this.logos = response;
+
+      // Find the specific 1st logo
+      this.logo1st = this.logos.find(logo => logo.ordinal == 'logo1st');
+    }, error => {
+      this.notifierService.showNotification(`Problem loading the logos. ${error.errors}`, 'OK', 'error');
     });
   }
 }
