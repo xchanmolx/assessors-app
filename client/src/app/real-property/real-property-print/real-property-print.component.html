@@ -122,11 +122,11 @@
                     <p class="text-muted m-0">(Municipality/City)</p>
                 </div>
                 <div class="col">
-                    <p class="m-0"><b><u>{{realProperty.province | uppercase}},</u></b></p>
+                    <p class="m-0"><b><u>{{realProperty.province | uppercase}}</u></b></p>
                     <p class="text-muted m-0">(Province)</p>
                 </div>
             </div>
-            <div class="row mt-3">
+            <div class="row mt-1">
                 <div class="col">
                     <p class="m-0">OCT/TCTCLOA No. <b><u>{{realProperty.octTctCloaNo}}</u></b></p>
                     <p class="m-0">OCT No. <b><u>{{realProperty.octNo}}</u></b></p>
@@ -138,7 +138,7 @@
                     <p class="m-0">Blk No. <b><u>{{realProperty.blkNo}}</u></b></p>
                 </div>
             </div>
-            <div class="row mt-3">
+            <div class="row mt-1">
                 <b>Boundaries</b>
                 <div class="col">
                     <p class="m-0" style="padding-left: 3em">North: <b><u>{{realProperty.boundary.north | uppercase}}</u></b></p>
@@ -149,7 +149,7 @@
                     <p class="m-0">West: <b><u>{{realProperty.boundary.west | uppercase}}</u></b></p>
                 </div>
             </div>
-            <div class="row mt-3">
+            <div class="row mt-1">
                 <b>KIND OF PROPERTY ASSESSED:</b>
                 <div class="col">
                     <p class="m-0" style="padding-left: 3em">/ <span *ngIf="realProperty.kindOfPropertyAssessed === 'land'"><b><u>X</u></b></span> / <b>LAND</b></p>
@@ -165,7 +165,7 @@
                 </div>
             </div>
             <!-- TABLE - KIND OF PROPERTY ASSESSED -->
-            <div class="row mt-3">
+            <div class="row mt-1">
                 <div class="col">
                     <!-- Material Table  -->
                     <table mat-table [dataSource]="realProperty.kindOfProperties" #mytable class="my-table mat-elevation-z8">
@@ -226,6 +226,52 @@
                 <div class="col-9">
                     <p class="m-0"><b><u>{{realProperty.totalAssessedValueInWord | uppercase}}</u></b></p>
                     <p class="text-muted">(Amount in Words)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <p>Taxable / <span *ngIf="realProperty.taxableExempt === 'taxable'"><b><u>X</u></b></span> / &nbsp; Exempt / <span *ngIf="realProperty.taxableExempt === 'exempt'"><b><u>X</u></b></span> /</p> 
+                </div>
+                <div class="col-6">
+                    <p>Effectivity of Assessment/Reassessment</p>
+                </div>
+                <div class="col-2">
+                    <p class="m-0"><b><u>{{realProperty.quarter}}</u></b> &nbsp; <b><u>{{realProperty.year}}</u></b></p>
+                    <p class="text-muted">Qtr. &nbsp; Year</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5">
+                    <p>Recommended by:</p>
+                    <p class="m-0" style="padding-left: 3em"><b><u>{{realProperty.recommendedBy | uppercase}}</u></b>&nbsp;</p>
+                    <p class="text-muted" style="padding-left: 3em">Municipal Assessor</p>
+                </div>
+                <div class="col-5">
+                    <p>APPROVED BY:</p>
+                    <p class="m-0" style="padding-left: 3em"><b><u>{{realProperty.approvedBy | uppercase}}</u></b></p>
+                    <p class="text-muted" style="padding-left: 3em">Provincial/Municipal Assessor</p>
+                </div>
+                <div class="col-2">
+                    <p>&nbsp;</p>
+                    <p class="m-0"><b><u>{{realProperty.date | date: 'MM-dd-yyyy'}}</u></b></p>
+                    <p class="text-muted">Date</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8">
+                    <p class="m-0">This declaration cancels <b><u>{{realProperty.declarationCancels}}</u></b></p>
+                    <p class="m-0">Owner: <b><u>{{realProperty.ownerTdNoCancels | uppercase}}</u></b></p>
+                    <p class="m-0">MEMORANDA: {{realProperty.memoranda | uppercase}}</p>
+                </div>
+                <div class="col-4">
+                    <p class="m-0">Previous Assessed Value <b>{{realProperty.previousAssessedValue | currency : 'PHP':'symbol-narrow':'1.2-2'}}</b></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <small class="m-0">{{realProperty.approvedMessage}}</small>
+                    <p class="m-0"><b>Notes:</b></p>
+                    <small style="padding-left: 3em">{{realProperty.notes}}</small>
                 </div>
             </div>
             <hr>
