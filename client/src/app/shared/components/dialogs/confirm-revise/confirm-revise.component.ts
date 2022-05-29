@@ -203,6 +203,8 @@ export class ConfirmReviseComponent implements OnInit {
       this.realPropertyFromLoadIndividualRevise.quarter = this.quarter.toString() + 'th';
     }
 
+    this.realPropertyFromLoadIndividualRevise.date = this.today;
+
     this.realPropertyFromLoadIndividualRevise.year = this.year;
 
     this.realPropertyFromLoadIndividualRevise.declarationCancels = this.copiedTdNo;
