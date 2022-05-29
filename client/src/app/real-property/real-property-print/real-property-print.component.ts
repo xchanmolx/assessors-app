@@ -6,6 +6,7 @@ import { NotifierService } from 'src/app/core/services/notifier.service';
 import { KindOfLandsService } from 'src/app/kind-of-lands/kind-of-lands.service';
 import { IBarangay } from 'src/app/shared/models/barangay';
 import { BarangayParams } from 'src/app/shared/models/barangayParams';
+import { IKindOfProperty } from 'src/app/shared/models/kindOfProperty';
 import { ILogo } from 'src/app/shared/models/logo';
 import { IMergeYears } from 'src/app/shared/models/mergeYears';
 import { IMunicipalityCityDistrict } from 'src/app/shared/models/municipalityCityDistrict';
@@ -49,6 +50,8 @@ export class RealPropertyPrintComponent implements OnInit {
   province!: IProvince;
   logos: ILogo[] = [];
   logo1st!: ILogo | undefined;
+
+  displayedColumns: string[] = ['classification', 'area', 'marketValue', 'actualUse', 'level', 'assessedValue'];
 
   constructor(private realPropertyService: RealPropertyService, private notifierService: NotifierService,
     private kindOfLandsService: KindOfLandsService, private adminService: AdminService) {
@@ -190,5 +193,21 @@ export class RealPropertyPrintComponent implements OnInit {
     }, error => {
       this.notifierService.showNotification(`Problem loading the logos. ${error.errors}`, 'OK', 'error');
     });
+  }
+
+  getTotalArea(kindOfProperties: IKindOfProperty[]) {
+    return kindOfProperties.reduce((acc, kindProperty) => acc + kindProperty.area, 0);
+  }
+
+  getTotalMarketValue(kindOfProperties: IKindOfProperty[]) {
+    return kindOfProperties.reduce((acc, kindProperty) => acc + kindProperty.marketValue, 0);
+  }
+
+  getTotalLevel(kindOfProperties: IKindOfProperty[]) {
+    return kindOfProperties.reduce((acc, kindProperty) => acc + kindProperty.level, 0);
+  }
+
+  getTotalAssessedValue(kindOfProperties: IKindOfProperty[]) {
+    return kindOfProperties.reduce((acc, kindProperty) => acc + kindProperty.assessedValue, 0);
   }
 }
