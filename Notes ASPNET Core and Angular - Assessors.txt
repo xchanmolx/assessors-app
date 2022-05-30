@@ -262,7 +262,7 @@ ng build
 
 --------------------------------------------
 for Publishing the DOTNET Core
-dotnet publish -c Release
+dotnet publish -c Release -o publish assessors-app.sln
 
 Search prefix in settings on VS Code then click to C# Extensions, then add underscore( _ )
 

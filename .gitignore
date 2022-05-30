@@ -3,5 +3,7 @@ bin
 obj
 *.db
 appsettings.json
-wwwroot
+*.rdb
 Content
+publish
+wwwroot

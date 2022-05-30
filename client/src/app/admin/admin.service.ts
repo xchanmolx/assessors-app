@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-// import { environment } from 'src/environments/environment.prod'; // Production
-import { environment } from 'src/environments/environment'; // Development
+import { environment } from 'src/environments/environment.prod'; // Production
+// import { environment } from 'src/environments/environment'; // Development
 import { ICountMunicipalityCityDistrict } from '../shared/models/countMunicipalityCityDistrict';
 import { ICountProvince } from '../shared/models/countProvince';
 import { ICountStaff } from '../shared/models/countStaff';

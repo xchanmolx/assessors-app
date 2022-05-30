@@ -1,7 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod'; // Production
+// import { environment } from 'src/environments/environment'; // Development
 import { IAgricultural } from '../shared/models/agricultural';
 import { KindOfLandsParams } from '../shared/models/kindOfLandsParams';
 import { ICommercial } from '../shared/models/commercial';

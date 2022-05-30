@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AssessorContext))]
-    [Migration("20220322131220_StreetNullable")]
-    partial class StreetNullable
+    [Migration("20220530081222_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -440,7 +440,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<decimal>("PreviousAssessedValue")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("PropertyIndentificationNo")
+                    b.Property<string>("PropertyIdentificationNo")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
