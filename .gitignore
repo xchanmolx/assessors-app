@@ -4,6 +4,5 @@ obj
 *.db
 appsettings.json
 *.rdb
-Content
 publish
 wwwroot
