@@ -83,14 +83,9 @@ namespace API.Controllers
         return BadRequest("Problem deleting the user");
     }
 
-    [HttpGet("emailexists")]
-    public async Task<ActionResult<bool>> CheckEmailExistsAsync([FromQuery] string email)
-    {
-        return await _userManager.FindByEmailAsync(email) != null;
-    }
-
+    [Authorize]
     [HttpPost("changePassword/{id}")]
-    public async Task<ActionResult> changePassword(string id)
+    public async Task<ActionResult> changePassword(string id, string newPassword)
     {
         if (string.IsNullOrEmpty(id))
             return NotFound();
@@ -99,12 +94,18 @@ namespace API.Controllers
 
         var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-        var result = await _userManager.ResetPasswordAsync(user, token, "Free232469*");
+        var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
 
         if (result.Succeeded)
             return Ok(result);
 
         return BadRequest(result);
+    }
+
+    [HttpGet("emailexists")]
+    public async Task<ActionResult<bool>> CheckEmailExistsAsync([FromQuery] string email)
+    {
+        return await _userManager.FindByEmailAsync(email) != null;
     }
 
     [HttpPost("login")]
