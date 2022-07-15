@@ -16,12 +16,16 @@ namespace Infrastructure.Data
          {
              try
              {
-                 var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                // for Production Server like GoDaddy
+                //  var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
                  if (!context.TaxDecOfRealProperties.Any())
                  {
-                     var propertiesData = File.ReadAllText(path + @"/Data/SeedData/realProperties.json");
-                    //  var propertiesData = File.ReadAllText("../Infrastructure/Data/SeedData/realProperties.json");
+                    // for Production Server like GoDaddy
+                    //  var propertiesData = File.ReadAllText(path + @"/Data/SeedData/realProperties.json");
+
+                    // for Development & Production for IIS
+                     var propertiesData = File.ReadAllText("../Infrastructure/Data/SeedData/realProperties.json");
 
                      var properties = JsonSerializer.Deserialize<List<TaxDecOfRealProperty>>(propertiesData);
 
@@ -35,7 +39,8 @@ namespace Infrastructure.Data
 
                  if (!context.AgriculturalLands.Any())
                  {
-                     var agriLandData = File.ReadAllText(path + @"/Data/SeedData/agriculturalLand.json");
+                    //  var agriLandData = File.ReadAllText(path + @"/Data/SeedData/agriculturalLand.json");
+                     var agriLandData = File.ReadAllText("../Infrastructure/Data/SeedData/agriculturalLand.json");
 
                      var agriLands = JsonSerializer.Deserialize<List<AgriculturalLand>>(agriLandData);
 
@@ -49,7 +54,8 @@ namespace Infrastructure.Data
 
                  if (!context.ResidentialLands.Any())
                  {
-                     var residentialLandData = File.ReadAllText(path + @"/Data/SeedData/residentialLand.json");
+                    //  var residentialLandData = File.ReadAllText(path + @"/Data/SeedData/residentialLand.json");
+                     var residentialLandData = File.ReadAllText("../Infrastructure/Data/SeedData/residentialLand.json");
 
                      var residentialLands = JsonSerializer.Deserialize<List<ResidentialLand>>(residentialLandData);
 
@@ -63,7 +69,8 @@ namespace Infrastructure.Data
 
                  if (!context.CommercialLands.Any())
                  {
-                     var commercialLandData = File.ReadAllText(path + @"/Data/SeedData/commercialLand.json");
+                    //  var commercialLandData = File.ReadAllText(path + @"/Data/SeedData/commercialLand.json");
+                     var commercialLandData = File.ReadAllText("../Infrastructure/Data/SeedData/commercialLand.json");
 
                      var commercialLands = JsonSerializer.Deserialize<List<CommercialLand>>(commercialLandData);
 
@@ -77,7 +84,8 @@ namespace Infrastructure.Data
 
                  if (!context.IndustrialLands.Any())
                  {
-                     var industrialLandData = File.ReadAllText(path + @"/Data/SeedData/industrialLand.json");
+                    //  var industrialLandData = File.ReadAllText(path + @"/Data/SeedData/industrialLand.json");
+                     var industrialLandData = File.ReadAllText("../Infrastructure/Data/SeedData/industrialLand.json");
 
                      var industrialLands = JsonSerializer.Deserialize<List<IndustrialLand>>(industrialLandData);
 
@@ -91,7 +99,8 @@ namespace Infrastructure.Data
 
                  if (!context.Barangays.Any())
                  {
-                     var barangayData = File.ReadAllText(path + @"/Data/SeedData/barangay.json");
+                    //  var barangayData = File.ReadAllText(path + @"/Data/SeedData/barangay.json");
+                     var barangayData = File.ReadAllText("../Infrastructure/Data/SeedData/barangay.json");
 
                      var barangays = JsonSerializer.Deserialize<List<Barangay>>(barangayData);
 

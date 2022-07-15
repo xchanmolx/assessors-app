@@ -13,8 +13,15 @@ namespace Infrastructure.Identity
         public static async Task SeedUsersAsync(UserManager<AppUser> userManager,
             RoleManager<Role> roleManager)
         {
+            // for Production Server like GoDaddy
+            // var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
             if (!userManager.Users.Any())
             {
+                // for Production Server like GoDaddy
+                // var userData = File.ReadAllText(path + @"/Data/SeedData/userSeedData.json");
+
+                // for Development & Production for IIS
                 var userData = File.ReadAllText("../Infrastructure/Data/SeedData/userSeedData.json");
                 var users = JsonConvert.DeserializeObject<List<AppUser>>(userData);
 
